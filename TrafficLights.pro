@@ -4,15 +4,9 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
-
 TARGET = TrafficLights
-TEMPLATE = app
+TEMPLATE = subdirs
 
-
-SOURCES += main.cpp\
-        root-window.cpp
-
-HEADERS  += root-window.h
-
-FORMS    += root-window.ui
+SUBDIRS += Ui \
+           Logic \
+           Build
