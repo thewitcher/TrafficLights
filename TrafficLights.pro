@@ -9,4 +9,6 @@ TEMPLATE = subdirs
 
 SUBDIRS += Ui \
            Logic \
-           Build
+           Build \
+           Logger \
+           Settings

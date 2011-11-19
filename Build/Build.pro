@@ -12,9 +12,18 @@ TEMPLATE = app
 SOURCES += main.cpp
 
 LIBS += -L../Logic/ -lLogic \
-        -L../Ui/ -lUi
+        -L../Ui/ -lUi \
+        -L../Logger/ -lLogger \
+        -L../Settings/ -lSettings
 
 INCLUDEPATH += ../Logic \
-               ../Ui
+               ../Ui \
+               ../Logger \
+               ../Settings
+
 DEPENDPATH += ../Logic \
-              ../Ui
+              ../Ui \
+              ../Logger \
+              ../Settings
+
+
