@@ -6,6 +6,7 @@
 
 TARGET = TrafficLights
 TEMPLATE = subdirs
+CONFIG += ordered
 
 SUBDIRS += Ui \
            Logic \
