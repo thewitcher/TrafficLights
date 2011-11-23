@@ -6,4 +6,5 @@ HEADERS += Root_window/root-window.h \
 
 FORMS   += Root_window/root-window.ui
 
+QT += opengl
 
