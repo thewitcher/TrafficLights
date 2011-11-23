@@ -11,7 +11,24 @@ TEMPLATE = app
 
 SOURCES += main.cpp
 
-LIBS += -L../Logic/ -lLogic \
-        -L../Ui/ -lUi \
-        -L../Logger/ -lLogger \
-        -L../Settings/ -lSettings
+win32:debug {
+    LIBS += -L../Logic/debug/ -lLogic \
+            -L../Ui/debug/ -lUi \
+            -L../Logger/debug/ -lLogger \
+            -L../Settings/debug/ -lSettings
+}
+
+win32:release {
+    LIBS += -L../Logic/release/ -lLogic \
+            -L../Ui/release/ -lUi \
+            -L../Logger/release/ -lLogger \
+            -L../Settings/release/ -lSettings
+}
+
+unix {
+    LIBS += -L../Logic/ -lLogic \
+            -L../Ui/ -lUi \
+            -L../Logger/ -lLogger \
+            -L../Settings/ -lSettings
+}
+

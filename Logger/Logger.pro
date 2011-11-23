@@ -1,4 +1,5 @@
-include(../Common.pri)
+QT       += core gui
+TEMPLATE  = lib
 
 HEADERS += logger.h
 
