@@ -7,3 +7,8 @@
 include(../Common.pri)
 include(Root_window/Root-window.pri)
 include(QSSEngine/QSSEngine.pri)
+
+RESOURCES += \
+    Graphics/graphics.qrc
+
+

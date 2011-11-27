@@ -17,8 +17,6 @@ public:
 
 private:
     Ui::RootWindow *ui;
-
-    void initGraphicsView();
 };
 
 #endif // ROOTWINDOW_H

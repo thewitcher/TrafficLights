@@ -15,6 +15,7 @@ private:
     QGraphicsScene *m_scene;
 
     void initScene();
+    void initGraphicsView();
 };
 
 #endif // GRAPHICSVIEW_H
