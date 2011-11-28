@@ -11,11 +11,14 @@ class GraphicsView: public QGraphicsView
 public:
     explicit GraphicsView( QWidget *parent = 0 );
 
+    void addToScene( QGraphicsItem *item, qreal x, qreal y );
+
 private:
     QGraphicsScene *m_scene;
 
     void initScene();
     void initGraphicsView();
+    void createItems();
 };
 
 #endif // GRAPHICSVIEW_H

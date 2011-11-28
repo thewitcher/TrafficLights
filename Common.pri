@@ -1,4 +1,4 @@
-QT       += core gui
+QT       += core gui declarative
 TEMPLATE  = lib
 
 win32:debug {

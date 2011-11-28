@@ -1,5 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file alias="viewport_background">cross_big_png.png</file>
-    </qresource>
-</RCC>
