@@ -7,12 +7,12 @@
  * This is helper class for creating various type object from qml. Just use apprioriate function to create what you want.
  * Remember that you have to free space if you dont't need created object. It creates object but doesn't take ownership.
  */
-class QGraphicsWidget;
+class Vehicle;
 
 class QmlHelper
 {
 public:
-    static QGraphicsWidget* createGraphicsWidgetFromQml( const QString& qmlName );
+    static Vehicle* createVehicleFromQml( const QString& qmlName );
 
 private:
     QmlHelper();

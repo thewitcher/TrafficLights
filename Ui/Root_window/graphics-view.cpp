@@ -1,8 +1,9 @@
 #include "graphics-view.h"
 #include "../Logger/logger.h"
 #include "qml-helper.h"
+#include "../Cars/vehicle.h"
+#include "../Checkpoints_manager/checkpoint-manager.h"
 #include <QGraphicsItem>
-#include <QGraphicsWidget>
 
 GraphicsView::GraphicsView( QWidget *parent ):
     QGraphicsView( parent )
@@ -58,12 +59,13 @@ void GraphicsView::addToScene( QGraphicsItem *item, qreal x, qreal y )
 
 void GraphicsView::createItems()
 {
-    QGraphicsWidget *graphicsWidget = QmlHelper::createGraphicsWidgetFromQml( "CarDesign" );
+    Vehicle *newVehicle = QmlHelper::createVehicleFromQml( "CarDesign" );
 
-    if( graphicsWidget != NULL )
+    if( newVehicle != NULL )
     {
-        addToScene( graphicsWidget, 30, 100 );
+        addToScene( newVehicle, 30, 100 );
+        newVehicle->init( CheckpointManager::checkpointManagerInstance().checkpointById( 0 ) );
 
-        LOG_INFO( "%s was created and added to scene", graphicsWidget->objectName().toLatin1().data() )
+        LOG_INFO( "%s was created and added to scene", newVehicle->objectName().toLatin1().data() )
     }
 }
