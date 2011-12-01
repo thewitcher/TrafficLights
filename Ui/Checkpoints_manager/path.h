@@ -4,11 +4,11 @@
 #include "checkpoint.h"
 #include <QVariant>
 
-class QObject;
+class Vehicle;
 
 /*!
  * Path contains target checkpoint and fucntion, which can create property animation. This animation is set to target object and will
- * be deleted by this object (this object is now parent of this animation)
+ * be deleted by this object (this object is now parent of this animation).
  */
 class Path
 {
@@ -16,7 +16,7 @@ public:
     Path( Checkpoint *targetCheckpoint, int duration, const QByteArray property, const QVariant& startValue, const QVariant& endValue );
     ~Path();
 
-    void animation( QObject *target, QObject *parent ) const;
+    void animation( Vehicle *target, QObject *parent ) const;
     const Checkpoint* targetCheckpoint() const;
 
 private:

@@ -28,6 +28,13 @@ const Path* Checkpoint::randomPath() const
 {
     LOG_INFO( "Random path was returned for checkpoint with %i id", m_id );
 
+    if( m_paths.isEmpty() == true )
+    {
+        LOG_WARNING( "m_path is empty: %s", __FUNCTION__ );
+
+        return NULL;
+    }
+
     return m_paths.at( randomNumber( m_paths.count() - 1 ) );
 }
 
@@ -39,5 +46,22 @@ void Checkpoint::setId( unsigned char id )
 void Checkpoint::addPath( Checkpoint *targetCheckpoint, int duration, const QByteArray property,
                           const QVariant &startValue, const QVariant &endValue )
 {
-    m_paths << new Path( targetCheckpoint, duration, property, startValue, endValue );
+    if( targetCheckpoint != NULL )
+    {
+        m_paths << new Path( targetCheckpoint, duration, property, startValue, endValue );
+    }
+    else
+    {
+        LOG_WARNING( "Target checkpoint is NULL: %s", __FUNCTION__ );
+    }
+}
+
+qreal Checkpoint::posX() const
+{
+    return m_x;
+}
+
+qreal Checkpoint::posY() const
+{
+    return m_y;
 }

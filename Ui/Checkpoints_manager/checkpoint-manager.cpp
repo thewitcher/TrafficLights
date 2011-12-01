@@ -6,6 +6,8 @@
 CheckpointManager::CheckpointManager()
 {
     srand( time( NULL ) );
+
+    createCheckpoints();
 }
 
 CheckpointManager::~CheckpointManager()
@@ -20,7 +22,7 @@ CheckpointManager& CheckpointManager::checkpointManagerInstance()
     return m_checkpointManager;
 }
 
-void CheckpointManager::addCheckpoint( qreal x, qreal y )
+Checkpoint* CheckpointManager::addCheckpoint( qreal x, qreal y )
 {
     static unsigned id = 0;
 
@@ -30,11 +32,25 @@ void CheckpointManager::addCheckpoint( qreal x, qreal y )
     m_checkpointVector << checkpoint;
 
     LOG_INFO( "Added new checkpoint with %i id", id - 1 );
+
+    return checkpoint;
 }
 
 const Checkpoint* CheckpointManager::checkpointById( unsigned int id ) const
 {
-    Q_ASSERT( id < m_checkpointVector.count() );
+    Q_ASSERT( int( id ) < m_checkpointVector.count() );
 
     return m_checkpointVector.at( id );
+}
+
+void CheckpointManager::createCheckpoints()
+{
+    Checkpoint* checkpoint = addCheckpoint( 400, 513 );
+    checkpoint->addPath( NULL, 10000, "y", 400, 900 );
+
+    Checkpoint* checkpoint1 = addCheckpoint( 35, 513 );
+    checkpoint1->addPath( checkpoint, 10000, "x", 35, 400 );
+
+    Checkpoint* checkpoint2 = addCheckpoint( 35, 35 );
+    checkpoint2->addPath( checkpoint1, 10000, "y", 35, 513 );
 }

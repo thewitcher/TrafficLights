@@ -3,6 +3,9 @@
 
 #include <QGraphicsView>
 
+class Checkpoint;
+class Vehicle;
+
 class GraphicsView: public QGraphicsView
 {
 
@@ -11,7 +14,7 @@ class GraphicsView: public QGraphicsView
 public:
     explicit GraphicsView( QWidget *parent = 0 );
 
-    void addToScene( QGraphicsItem *item, qreal x, qreal y );
+    void addToScene( Vehicle *item, const Checkpoint* initCheckpoint );
 
 private:
     QGraphicsScene *m_scene;

@@ -1,5 +1,6 @@
 #include "path.h"
 #include "../../Logger/logger.h"
+#include "../Cars/vehicle.h"
 #include <QPropertyAnimation>
 
 Path::Path( Checkpoint *targetCheckpoint, int duration, const QByteArray property, const QVariant &startValue, const QVariant &endValue ):
@@ -15,7 +16,7 @@ Path::~Path()
 {
 }
 
-void Path::animation( QObject *target, QObject *parent ) const
+void Path::animation( Vehicle *target, QObject *parent ) const
 {
     QPropertyAnimation *propertyAnimation = new QPropertyAnimation( target, m_property, parent );
 
@@ -23,6 +24,9 @@ void Path::animation( QObject *target, QObject *parent ) const
     propertyAnimation->setStartValue( m_startValue );
     propertyAnimation->setEndValue( m_endValue );
     propertyAnimation->start();
+    propertyAnimation->setObjectName( "propertyAnimation" );
+
+    QObject::connect( propertyAnimation, SIGNAL(finished()), target, SLOT(onAnimationFinish()) );
 
     LOG_INFO( "New animation was created for %s", target->objectName().toLatin1().data() );
 }

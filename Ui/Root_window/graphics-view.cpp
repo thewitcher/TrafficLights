@@ -47,14 +47,16 @@ void GraphicsView::initGraphicsView()
     LOG_INFO( "End: %s", __FUNCTION__ );
 }
 
-void GraphicsView::addToScene( QGraphicsItem *item, qreal x, qreal y )
+void GraphicsView::addToScene( Vehicle *item, const Checkpoint *initCheckpoint )
 {
     LOG_INFO( "Start: %s", __FUNCTION__ );
 
     scene()->addItem( item );
-    item->setPos( x, y );
+    item->setPos( initCheckpoint->posX(), initCheckpoint->posY() );
 
-    LOG_INFO( "Add item on position: (%f, %f)", x, y );
+    item->init( initCheckpoint );
+
+    LOG_INFO( "Add item on position: (%f, %f)", initCheckpoint->posX(), initCheckpoint->posY() );
 }
 
 void GraphicsView::createItems()
@@ -63,8 +65,7 @@ void GraphicsView::createItems()
 
     if( newVehicle != NULL )
     {
-        addToScene( newVehicle, 30, 100 );
-        newVehicle->init( CheckpointManager::checkpointManagerInstance().checkpointById( 0 ) );
+        addToScene( newVehicle, CheckpointManager::checkpointManagerInstance().checkpointById( 2 ) );
 
         LOG_INFO( "%s was created and added to scene", newVehicle->objectName().toLatin1().data() )
     }
