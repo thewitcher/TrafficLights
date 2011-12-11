@@ -14,6 +14,8 @@ class Path;
 class Checkpoint
 {
 public:
+    enum PathType { TURN_LEFT, TURN_RIGHT, AHEAD };
+
     Checkpoint( qreal x, qreal y );
     ~Checkpoint();
     const Path* randomPath() const;
@@ -30,7 +32,7 @@ private:
     unsigned char randomNumber( unsigned char max ) const;
     void setId( unsigned char id );
     void addPath( Checkpoint *targetCheckpoint, int duration, const QByteArray property,
-                  const QVariant& startValue, const QVariant& endValue );
+                  const QVariant& startValue, const QVariant& endValue, const PathType pathType );
 
     friend class CheckpointManager;
 };

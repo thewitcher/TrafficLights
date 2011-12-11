@@ -19,7 +19,7 @@ unsigned char Checkpoint::randomNumber( unsigned char max ) const
 {
     unsigned char random = ( rand() % ( max + 1 ) );
 
-    LOG_INFO( "Random number: %i ,from: %s", random, __FUNCTION__ );
+    LOG_INFO( "Random number: %i(%i) ,from: %s", random, max, __FUNCTION__ );
 
     return random;
 }
@@ -44,11 +44,11 @@ void Checkpoint::setId( unsigned char id )
 }
 
 void Checkpoint::addPath( Checkpoint *targetCheckpoint, int duration, const QByteArray property,
-                          const QVariant &startValue, const QVariant &endValue )
+                          const QVariant &startValue, const QVariant &endValue, const PathType pathType )
 {
     if( targetCheckpoint != NULL )
     {
-        m_paths << new Path( targetCheckpoint, duration, property, startValue, endValue );
+        m_paths << new Path( targetCheckpoint, duration, property, startValue, endValue, pathType );
     }
     else
     {

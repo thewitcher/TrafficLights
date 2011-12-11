@@ -7,6 +7,8 @@ Vehicle::Vehicle( QGraphicsItem *parent ):
     QGraphicsWidget( parent ),
     m_currentPath( NULL )
 {
+    // Sets transformation point to center
+    setTransformOriginPoint( 9, 9 );
 }
 
 void Vehicle::init( const Checkpoint *initCheckpoint )
@@ -39,10 +41,4 @@ void Vehicle::onAnimationFinish()
     }
 
     init( m_currentPath->targetCheckpoint() );
-
-    QObject *senderObject = sender();
-
-    LOG_INFO( "Sender: %s", senderObject->objectName().toLatin1().data() );
-
-    delete senderObject;
 }

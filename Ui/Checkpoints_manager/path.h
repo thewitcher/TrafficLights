@@ -13,7 +13,8 @@ class Vehicle;
 class Path
 {
 public:
-    Path( Checkpoint *targetCheckpoint, int duration, const QByteArray property, const QVariant& startValue, const QVariant& endValue );
+    Path( Checkpoint *targetCheckpoint, int duration, const QByteArray property,
+          const QVariant& startValue, const QVariant& endValue, const Checkpoint::PathType pathType );
     ~Path();
 
     void animation( Vehicle *target, QObject *parent ) const;
@@ -25,6 +26,10 @@ private:
     QByteArray m_property;
     const QVariant m_startValue;
     const QVariant m_endValue;
+    const Checkpoint::PathType m_pathType;
+
+    void animationWithTurn( Vehicle *target, QObject *parent, Checkpoint::PathType pathType ) const;
+    void animationAhead( Vehicle *target, QObject *parent ) const;
 };
 
 #endif // PATH_H
