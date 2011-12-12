@@ -31,4 +31,3 @@ unix {
             -L../Logger/ -lLogger \
             -L../Settings/ -lSettings
 }
-

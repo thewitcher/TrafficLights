@@ -50,9 +50,10 @@ void CheckpointManager::createCheckpoints()
 {
     Checkpoint* checkpoint0 = addCheckpoint( 26, 26 );
     Checkpoint* checkpoint1 = addCheckpoint( 26, 506 );
-    Checkpoint* checkpoint2 = addCheckpoint( 26, 538 );
-    Checkpoint* checkpoint3 = addCheckpoint( 26, 570 );
-    Checkpoint* checkpoint4 = addCheckpoint( 26, 1024 );
+    Checkpoint* checkpoint2 = addCheckpoint( 26, 454 );
+    Checkpoint* checkpoint3 = addCheckpoint( 26, 538 );
+    Checkpoint* checkpoint4 = addCheckpoint( 26, 570 );
+    Checkpoint* checkpoint5 = addCheckpoint( 26, 1024 );
 //    Checkpoint* checkpoint = addCheckpoint( 400, 506 );
 //    checkpoint->addPath( NULL, 10000, "y", 400, 900, Checkpoint::AHEAD );
 
@@ -66,7 +67,7 @@ void CheckpointManager::createCheckpoints()
 
     // Adds paths to checkpoint0
     checkpoint0->addPath( checkpoint1, 10000, "y", 26, 506, Checkpoint::AHEAD );
-    checkpoint0->addPath( checkpoint2, 10000, "y", 26, 538, Checkpoint::AHEAD );
-    checkpoint0->addPath( checkpoint3, 10000, "y", 26, 570, Checkpoint::AHEAD );
-    checkpoint0->addPath( checkpoint4, 10000, "y", 26, 1024, Checkpoint::AHEAD );
+    checkpoint0->addPath( checkpoint3, 10000, "y", 26, 538, Checkpoint::AHEAD );
+    checkpoint0->addPath( checkpoint4, 10000, "y", 26, 570, Checkpoint::AHEAD );
+    checkpoint0->addPath( checkpoint5, 10000, "y", 26, 1024, Checkpoint::AHEAD );
 }
