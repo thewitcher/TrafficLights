@@ -43,6 +43,7 @@ void GraphicsView::initGraphicsView()
     setCacheMode( QGraphicsView::CacheBackground );
     setDragMode( QGraphicsView::ScrollHandDrag );
     resize( 1326, 1070 );
+    setMaximumSize( 1340, 1084 );
 
     LOG_INFO( "End: %s", __FUNCTION__ );
 }
