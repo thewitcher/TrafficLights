@@ -2,6 +2,7 @@
 #define CHECKPOINT_H
 
 #include <QVariant>
+#include <QEasingCurve>
 
 class Path;
 
@@ -14,7 +15,7 @@ class Path;
 class Checkpoint
 {
 public:
-    enum PathType { TURN_LEFT, TURN_RIGHT, AHEAD };
+    enum TurnType { TURN_LEFT = -90, TURN_RIGHT = 90, NOT_DEFINED = 0 };
 
     Checkpoint( qreal x, qreal y );
     ~Checkpoint();
@@ -31,8 +32,20 @@ private:
 
     unsigned char randomNumber( unsigned char max ) const;
     void setId( unsigned char id );
-    void addPath( Checkpoint *targetCheckpoint, int duration, const QByteArray property,
-                  const QVariant& startValue, const QVariant& endValue, const PathType pathType );
+
+    void addMovingByXToTargetCheckpointPath( Checkpoint *targetCheckpoint, int duration, QEasingCurve::Type easingCurve = QEasingCurve::Linear );
+    void addMovingByYToTargetCheckpointPath( Checkpoint *targetCheckpoint, int duration, QEasingCurve::Type easingCurve = QEasingCurve::Linear );
+    void addMovingByXYToTargetCheckpointPath( Checkpoint *targetCheckpoint, int duration,
+                                              QEasingCurve::Type easingCurveX = QEasingCurve::Linear,
+                                              QEasingCurve::Type easingCurveY = QEasingCurve::Linear );
+
+    void addTurnAndMovingByXToTargetCheckpointPath( Checkpoint *targetCheckpoint, int turnDuration, int moveDuration, const TurnType turnType,
+                                                    QEasingCurve::Type easingCurveX = QEasingCurve::Linear );
+    void addTurnAndMovingByYToTargetCheckpointPath( Checkpoint *targetCheckpoint, int turnDuration, int moveDuration, const TurnType turnType,
+                                                    QEasingCurve::Type easingCurveY = QEasingCurve::Linear );
+    void addTurnAndMovingByXYToTargetCheckpointPath( Checkpoint *targetCheckpoint, int turnDuration, int moveDuration, const TurnType turnType,
+                                                     QEasingCurve::Type easingCurveX = QEasingCurve::Linear,
+                                                     QEasingCurve::Type easingCurveY = QEasingCurve::Linear );
 
     friend class CheckpointManager;
 };

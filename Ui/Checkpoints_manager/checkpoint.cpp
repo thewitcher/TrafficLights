@@ -43,12 +43,75 @@ void Checkpoint::setId( unsigned char id )
     m_id = id;
 }
 
-void Checkpoint::addPath( Checkpoint *targetCheckpoint, int duration, const QByteArray property,
-                          const QVariant &startValue, const QVariant &endValue, const PathType pathType )
+void Checkpoint::addMovingByXToTargetCheckpointPath( Checkpoint *targetCheckpoint, int duration, QEasingCurve::Type easingCurve )
 {
     if( targetCheckpoint != NULL )
     {
-        m_paths << new Path( targetCheckpoint, duration, property, startValue, endValue, pathType );
+        m_paths << new Path( targetCheckpoint, duration, "x", easingCurve );
+    }
+    else
+    {
+        LOG_WARNING( "Target checkpoint is NULL: %s", __FUNCTION__ );
+    }
+}
+
+void Checkpoint::addMovingByYToTargetCheckpointPath( Checkpoint *targetCheckpoint, int duration, QEasingCurve::Type easingCurve )
+{
+    if( targetCheckpoint != NULL )
+    {
+        m_paths << new Path( targetCheckpoint, duration, "y", easingCurve );
+    }
+    else
+    {
+        LOG_WARNING( "Target checkpoint is NULL: %s", __FUNCTION__ );
+    }
+}
+
+void Checkpoint::addMovingByXYToTargetCheckpointPath( Checkpoint *targetCheckpoint, int duration,
+                                                      QEasingCurve::Type easingCurveX, QEasingCurve::Type easingCurveY )
+{
+    if( targetCheckpoint != NULL )
+    {
+        m_paths << new Path( targetCheckpoint, duration, easingCurveX, easingCurveY );
+    }
+    else
+    {
+        LOG_WARNING( "Target checkpoint is NULL: %s", __FUNCTION__ );
+    }
+}
+
+void Checkpoint::addTurnAndMovingByXToTargetCheckpointPath( Checkpoint *targetCheckpoint, int turnDuration, int moveDuration, const TurnType turnType,
+                                                            QEasingCurve::Type easingCurveX )
+{
+    if( targetCheckpoint != NULL )
+    {
+        m_paths << new Path( targetCheckpoint, turnDuration, moveDuration, "x", turnType, easingCurveX );
+    }
+    else
+    {
+        LOG_WARNING( "Target checkpoint is NULL: %s", __FUNCTION__ );
+    }
+}
+
+void Checkpoint::addTurnAndMovingByXYToTargetCheckpointPath( Checkpoint *targetCheckpoint, int turnDuration, int moveDuration, const TurnType turnType,
+                                                             QEasingCurve::Type easingCurveX, QEasingCurve::Type easingCurveY )
+{
+    if( targetCheckpoint != NULL )
+    {
+        m_paths << new Path( targetCheckpoint, turnDuration, moveDuration, turnType, easingCurveX, easingCurveY );
+    }
+    else
+    {
+        LOG_WARNING( "Target checkpoint is NULL: %s", __FUNCTION__ );
+    }
+}
+
+void Checkpoint::addTurnAndMovingByYToTargetCheckpointPath( Checkpoint *targetCheckpoint, int turnDuration, int moveDuration,
+                                                            const TurnType turnType, QEasingCurve::Type easingCurveY )
+{
+    if( targetCheckpoint != NULL )
+    {
+        m_paths << new Path( targetCheckpoint, turnDuration, moveDuration, "y", turnType, easingCurveY );
     }
     else
     {

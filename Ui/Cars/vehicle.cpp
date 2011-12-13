@@ -13,7 +13,7 @@ Vehicle::Vehicle( QGraphicsItem *parent ):
 
 void Vehicle::init( const Checkpoint *initCheckpoint )
 {
-    LOG_INFO( "Creating new path for checkpint: (%f, %f) position", initCheckpoint->posX(), initCheckpoint->posY() );
+    LOG_INFO( "Creating new path for checkpoint: (%f, %f) position", initCheckpoint->posX(), initCheckpoint->posY() );
 
     m_currentPath = initCheckpoint->randomPath();
 

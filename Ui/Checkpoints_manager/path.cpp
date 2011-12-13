@@ -2,49 +2,180 @@
 #include "../../Logger/logger.h"
 #include "../Cars/vehicle.h"
 #include <QPropertyAnimation>
+#include <QParallelAnimationGroup>
 #include <QSequentialAnimationGroup>
 
-Path::Path( Checkpoint *targetCheckpoint, int duration, const QByteArray property,
-            const QVariant &startValue, const QVariant &endValue, const Checkpoint::PathType pathType ):
+Path::Path( Checkpoint *targetCheckpoint, int duration, const QByteArray &moveCoordinateProperty,
+            QEasingCurve::Type easingCurve ):
     m_targetCheckpoint( targetCheckpoint ),
-    m_duration( duration ),
-    m_property( property ),
-    m_startValue( startValue ),
-    m_endValue( endValue ),
-    m_pathType( pathType )
+    m_turnDuration( -1 ),
+    m_moveDuration( duration ),
+    m_moveCoordinateProperty( moveCoordinateProperty ),
+    m_easingCurveX( QEasingCurve::Linear ),
+    m_easingCurveY( QEasingCurve::Linear ),
+    m_easingCurve( easingCurve ),
+    m_pathType( MOVE ),
+    m_turnType( Checkpoint::NOT_DEFINED )
 {
+}
+
+Path::Path( Checkpoint *targetCheckpoint, int duration,
+            QEasingCurve::Type easingCurveX,
+            QEasingCurve::Type easingCurveY ):
+    m_targetCheckpoint( targetCheckpoint ),
+    m_turnDuration( -1 ),
+    m_moveDuration( duration ),
+    m_moveCoordinateProperty( QByteArray() ),
+    m_easingCurveX( easingCurveX ),
+    m_easingCurveY( easingCurveY ),
+    m_easingCurve( QEasingCurve::Linear ),
+    m_pathType( MOVE_XY ),
+    m_turnType( Checkpoint::NOT_DEFINED )
+{
+
+}
+
+Path::Path( Checkpoint *targetCheckpoint, int turnDuration, int moveDuration,
+            const Checkpoint::TurnType turnType,
+            QEasingCurve::Type easingCurveX,
+            QEasingCurve::Type easingCurveY ):
+    m_targetCheckpoint( targetCheckpoint ),
+    m_turnDuration( turnDuration ),
+    m_moveDuration( moveDuration ),
+    m_moveCoordinateProperty( QByteArray() ),
+    m_easingCurveX( easingCurveX ),
+    m_easingCurveY( easingCurveY ),
+    m_easingCurve( QEasingCurve::Linear ),
+    m_pathType( TURN_AND_MOVE_XY ),
+    m_turnType( turnType )
+{
+
+}
+
+Path::Path( Checkpoint *targetCheckpoint, int turnDuration, int moveDuration,
+            const QByteArray &moveCoordinateProperty,
+            const Checkpoint::TurnType turnType,
+            QEasingCurve::Type easingCurve ):
+    m_targetCheckpoint( targetCheckpoint ),
+    m_turnDuration( turnDuration ),
+    m_moveDuration( moveDuration ),
+    m_moveCoordinateProperty( moveCoordinateProperty ),
+    m_easingCurveX( QEasingCurve::Linear ),
+    m_easingCurveY( QEasingCurve::Linear ),
+    m_easingCurve( easingCurve ),
+    m_pathType( TURN_AND_MOVE ),
+    m_turnType( turnType )
+{
+
 }
 
 Path::~Path()
 {
 }
 
-void Path::animation( Vehicle *target, QObject *parent ) const
+const Checkpoint* Path::targetCheckpoint() const
 {
-    switch( m_pathType )
-    {
-    case Checkpoint::TURN_LEFT:
-        animationWithTurn( target, parent, m_pathType );
-        break;
-    case Checkpoint::TURN_RIGHT:
-        animationWithTurn( target, parent, m_pathType );
-        break;
-    case Checkpoint::AHEAD:
-        animationAhead( target, parent );
-        break;
-    default:
-        LOG_INFO( "Default option was choosen in switch mode (%s)", __FUNCTION__ );
-        break;
-    }
-
-    LOG_INFO( "End animation function for %s", target->objectName().toLatin1().data() );
+    return m_targetCheckpoint;
 }
 
-void Path::animationWithTurn( Vehicle *target, QObject *parent, Checkpoint::PathType pathType ) const
+void Path::animation( Vehicle *target, QObject *parent ) const
 {
-    LOG_INFO( "Start %s", __FUNCTION__ );
-
     Q_UNUSED( parent );
+
+    LOG_INFO( "Start switching by path type in: %s", __FUNCTION__ );
+
+    switch( m_pathType )
+    {
+    case MOVE:
+        movingToTargetCheckpointAnimation( target );
+        break;
+    case MOVE_XY:
+        movingByXYToTargetCheckpointAnimation( target );
+        break;
+    case TURN_AND_MOVE:
+        turnAndMovingToTargetCheckpointAnimation( target );
+        break;
+    case TURN_AND_MOVE_XY:
+        turnAndMovingByXYToTargetCheckpointAnimation( target );
+        break;
+    }
+}
+
+QPropertyAnimation* Path::movingToTargetCheckpointAnimation( Vehicle *target, bool start, QObject* parent ) const
+{
+    Q_UNUSED( parent );
+
+    LOG_INFO( "Moving animation by one coordinate (%s)", __FUNCTION__ );
+
+    QPropertyAnimation *propertyAnimation = new QPropertyAnimation( target, m_moveCoordinateProperty, target );
+
+    propertyAnimation->setDuration( m_moveDuration );
+
+    if( m_moveCoordinateProperty == "x" )
+    {
+        propertyAnimation->setStartValue( target->x() );
+        propertyAnimation->setEndValue( m_targetCheckpoint->posX() );
+    }
+    else if( m_moveCoordinateProperty == "y" )
+    {
+        propertyAnimation->setStartValue( target->y() );
+        propertyAnimation->setEndValue( m_targetCheckpoint->posY() );
+    }
+    else
+    {
+        LOG_WARNING( "Animation didn't start. Property is invalid: %s", __FUNCTION__ );
+
+        return NULL;
+    }
+
+    propertyAnimation->setEasingCurve( m_easingCurve );
+
+    propertyAnimation->setObjectName( "propertyAnimation" );
+
+    if( start )
+    {
+        propertyAnimation->start( QPropertyAnimation::DeleteWhenStopped );
+    }
+
+    return propertyAnimation;
+}
+
+QParallelAnimationGroup* Path::movingByXYToTargetCheckpointAnimation( Vehicle *target, bool start, QObject *parent ) const
+{
+    LOG_INFO( "Moving animation by x and y coordinate (%s)", __FUNCTION__ );
+
+    QParallelAnimationGroup *parallelAnimationGroup = new QParallelAnimationGroup( parent );
+
+    parallelAnimationGroup->setObjectName( "parallelAniamtion" );
+
+    QPropertyAnimation *propertyAnimationX = new QPropertyAnimation( target, "x", parallelAnimationGroup );
+    propertyAnimationX->setDuration( m_moveDuration );
+    propertyAnimationX->setStartValue( target->x() );
+    propertyAnimationX->setEndValue( m_targetCheckpoint->posX() );
+    propertyAnimationX->setEasingCurve( m_easingCurveX );
+    propertyAnimationX->setObjectName( "propertyAnimation" );
+
+    QPropertyAnimation *propertyAnimationY = new QPropertyAnimation( target, "y", parallelAnimationGroup );
+    propertyAnimationY->setDuration( m_moveDuration );
+    propertyAnimationY->setStartValue( target->y() );
+    propertyAnimationY->setEndValue( m_targetCheckpoint->posY() );
+    propertyAnimationX->setEasingCurve( m_easingCurveY );
+    propertyAnimationY->setObjectName( "propertyAnimation" );
+
+    parallelAnimationGroup->addAnimation(propertyAnimationX);
+    parallelAnimationGroup->addAnimation(propertyAnimationY);
+
+    if( start )
+    {
+        parallelAnimationGroup->start( QPropertyAnimation::DeleteWhenStopped );
+    }
+
+    return parallelAnimationGroup;
+}
+
+void Path::turnAndMovingByXYToTargetCheckpointAnimation( Vehicle *target ) const
+{
+    LOG_INFO( "Turn and move animation by x and y coordinate (%s)", __FUNCTION__ );
 
     QSequentialAnimationGroup *sequentialAnimation = new QSequentialAnimationGroup;
     sequentialAnimation->setObjectName( "sequentialAnimation" );
@@ -52,58 +183,38 @@ void Path::animationWithTurn( Vehicle *target, QObject *parent, Checkpoint::Path
     // Rotating animation
     QPropertyAnimation *propertyAnimationRotate = new QPropertyAnimation( target, "rotation", sequentialAnimation );
 
-    propertyAnimationRotate->setDuration( 1000 );
+    propertyAnimationRotate->setDuration( m_turnDuration );
     propertyAnimationRotate->setStartValue( 0 );
+    propertyAnimationRotate->setEndValue( m_turnType );
 
-    char angle = 1;
-
-    switch( pathType )
-    {
-    case Checkpoint::TURN_RIGHT:
-        angle = 1;
-        break;
-    case Checkpoint::TURN_LEFT:
-        angle = -1;
-        break;
-    default:
-        break;
-    }
-
-    propertyAnimationRotate->setEndValue( angle * 90 );
     propertyAnimationRotate->setObjectName( "propertyAnimation" );
-
-    // Just moving
-    QPropertyAnimation *propertyAnimationNormalMove = new QPropertyAnimation( target, m_property, sequentialAnimation );
-
-    propertyAnimationNormalMove->setDuration( m_duration );
-    propertyAnimationNormalMove->setStartValue( m_startValue );
-    propertyAnimationNormalMove->setEndValue( m_endValue.toInt() );
-    propertyAnimationNormalMove->setObjectName( "propertyAnimation" );
 
     // Adding every animations to sequential group and start the animation
     sequentialAnimation->addAnimation( propertyAnimationRotate );
-    sequentialAnimation->addAnimation( propertyAnimationNormalMove );
+    sequentialAnimation->addAnimation( movingByXYToTargetCheckpointAnimation( target, false, sequentialAnimation ) );
+
     sequentialAnimation->start( QAbstractAnimation::DeleteWhenStopped );
-
-    QObject::connect( sequentialAnimation, SIGNAL(finished()), target, SLOT(onAnimationFinish()) );
 }
 
-void Path::animationAhead( Vehicle *target, QObject *parent ) const
+void Path::turnAndMovingToTargetCheckpointAnimation( Vehicle *target ) const
 {
-    LOG_INFO( "Start %s", __FUNCTION__ );
+    LOG_INFO( "Turn and move animation by one coordinate (%s)", __FUNCTION__ );
 
-    QPropertyAnimation *propertyAnimation = new QPropertyAnimation( target, m_property, parent );
+    QSequentialAnimationGroup *sequentialAnimation = new QSequentialAnimationGroup;
+    sequentialAnimation->setObjectName( "sequentialAnimation" );
 
-    propertyAnimation->setDuration( m_duration );
-    propertyAnimation->setStartValue( m_startValue );
-    propertyAnimation->setEndValue( m_endValue );
-    propertyAnimation->setObjectName( "propertyAnimation" );
-    propertyAnimation->start( QPropertyAnimation::DeleteWhenStopped );
+    // Rotating animation
+    QPropertyAnimation *propertyAnimationRotate = new QPropertyAnimation( target, "rotation", sequentialAnimation );
 
-    QObject::connect( propertyAnimation, SIGNAL(finished()), target, SLOT(onAnimationFinish()) );
-}
+    propertyAnimationRotate->setDuration( m_turnDuration );
+    propertyAnimationRotate->setStartValue( 0 );
+    propertyAnimationRotate->setEndValue( m_turnType );
 
-const Checkpoint* Path::targetCheckpoint() const
-{
-    return m_targetCheckpoint;
+    propertyAnimationRotate->setObjectName( "propertyAnimation" );
+
+    // Adding every animations to sequential group and start the animation
+    sequentialAnimation->addAnimation( propertyAnimationRotate );
+    sequentialAnimation->addAnimation( movingToTargetCheckpointAnimation( target, false, sequentialAnimation ) );
+
+    sequentialAnimation->start( QAbstractAnimation::DeleteWhenStopped );
 }
