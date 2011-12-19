@@ -21,10 +21,12 @@ public:
           QEasingCurve::Type easingCurveY = QEasingCurve::Linear );
 
     Path( Checkpoint *targetCheckpoint, int turnDuration, int moveDuration, const QByteArray& moveCoordinateProperty, const Checkpoint::TurnType turnType,
-          QEasingCurve::Type easingCurve = QEasingCurve::Linear );
+          QEasingCurve::Type easingCurve = QEasingCurve::Linear,
+          bool sequential = true );
     Path( Checkpoint *targetCheckpoint, int turnDuration, int moveDuration, const Checkpoint::TurnType turnType,
-                                                     QEasingCurve::Type easingCurveX = QEasingCurve::Linear,
-                                                     QEasingCurve::Type easingCurveY = QEasingCurve::Linear );
+          QEasingCurve::Type easingCurveX,
+          QEasingCurve::Type easingCurveY,
+          bool sequential );
     ~Path();
 
     void animation( Vehicle *target, QObject *parent ) const;
@@ -42,6 +44,7 @@ private:
     const QEasingCurve::Type m_easingCurve;
     const PathType m_pathType;
     const Checkpoint::TurnType m_turnType;
+    const bool m_sequential;
 
     QPropertyAnimation* movingToTargetCheckpointAnimation( Vehicle *target, bool start = true, QObject* parent = 0 ) const;
     QParallelAnimationGroup* movingByXYToTargetCheckpointAnimation( Vehicle *target, bool start = true, QObject* parent = 0 ) const;

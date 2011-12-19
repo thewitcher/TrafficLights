@@ -38,6 +38,8 @@ void Vehicle::onAnimationFinish()
     if( m_currentPath->targetCheckpoint() == NULL )
     {
         LOG_WARNING( "Target checkpoint is NULL in: %s", __FUNCTION__ );
+
+        return;
     }
 
     init( m_currentPath->targetCheckpoint() );

@@ -16,13 +16,14 @@ class CheckpointManager
 public:
     static CheckpointManager& checkpointManagerInstance();
 
-    Checkpoint* addCheckpoint( qreal x, qreal y );
-    virtual const Checkpoint* checkpointById( unsigned int id ) const;
+    Checkpoint* addCheckpoint( qreal x, qreal y, unsigned int id );
+    virtual const Checkpoint* checkpointByIdConst( unsigned int id ) const;
+    virtual Checkpoint* checkpointById( unsigned int id ) const;
+    unsigned int checkpointsCount() const;
 
 protected:
     CheckpointManager();
     ~CheckpointManager();
-    virtual void createCheckpoints();
 
     QVector<Checkpoint*> m_checkpointVector;
 };

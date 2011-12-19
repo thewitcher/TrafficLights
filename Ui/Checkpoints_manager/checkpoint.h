@@ -15,7 +15,7 @@ class Path;
 class Checkpoint
 {
 public:
-    enum TurnType { TURN_LEFT = -90, TURN_RIGHT = 90, NOT_DEFINED = 0 };
+    enum TurnType { TURN_90_LEFT = -90, TURN_90_RIGHT = 90, NOT_DEFINED = 0 };
 
     Checkpoint( qreal x, qreal y );
     ~Checkpoint();
@@ -40,14 +40,20 @@ private:
                                               QEasingCurve::Type easingCurveY = QEasingCurve::Linear );
 
     void addTurnAndMovingByXToTargetCheckpointPath( Checkpoint *targetCheckpoint, int turnDuration, int moveDuration, const TurnType turnType,
-                                                    QEasingCurve::Type easingCurveX = QEasingCurve::Linear );
+                                                    QEasingCurve::Type easingCurveX = QEasingCurve::Linear,
+                                                    bool sequenatial = true );
     void addTurnAndMovingByYToTargetCheckpointPath( Checkpoint *targetCheckpoint, int turnDuration, int moveDuration, const TurnType turnType,
-                                                    QEasingCurve::Type easingCurveY = QEasingCurve::Linear );
+                                                    QEasingCurve::Type easingCurveY = QEasingCurve::Linear,
+                                                    bool sequenatial = true );
     void addTurnAndMovingByXYToTargetCheckpointPath( Checkpoint *targetCheckpoint, int turnDuration, int moveDuration, const TurnType turnType,
                                                      QEasingCurve::Type easingCurveX = QEasingCurve::Linear,
-                                                     QEasingCurve::Type easingCurveY = QEasingCurve::Linear );
+                                                     QEasingCurve::Type easingCurveY = QEasingCurve::Linear,
+                                                     bool sequenatial = true );
+
+    void addMove( QVector< Checkpoint* > checkpointsVector, const QString& parameters );
 
     friend class CheckpointManager;
+    friend class CheckpointCreator;
 };
 
 #endif // CHECKPOINT_H

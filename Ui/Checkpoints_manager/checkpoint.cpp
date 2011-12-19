@@ -2,6 +2,7 @@
 #include "../../Logger/logger.h"
 #include "path.h"
 #include <cstdlib>
+#include <QVector>
 
 Checkpoint::Checkpoint(qreal x, qreal y):
     m_x( x ),
@@ -81,11 +82,11 @@ void Checkpoint::addMovingByXYToTargetCheckpointPath( Checkpoint *targetCheckpoi
 }
 
 void Checkpoint::addTurnAndMovingByXToTargetCheckpointPath( Checkpoint *targetCheckpoint, int turnDuration, int moveDuration, const TurnType turnType,
-                                                            QEasingCurve::Type easingCurveX )
+                                                            QEasingCurve::Type easingCurveX, bool sequential )
 {
     if( targetCheckpoint != NULL )
     {
-        m_paths << new Path( targetCheckpoint, turnDuration, moveDuration, "x", turnType, easingCurveX );
+        m_paths << new Path( targetCheckpoint, turnDuration, moveDuration, "x", turnType, easingCurveX, sequential );
     }
     else
     {
@@ -94,11 +95,11 @@ void Checkpoint::addTurnAndMovingByXToTargetCheckpointPath( Checkpoint *targetCh
 }
 
 void Checkpoint::addTurnAndMovingByXYToTargetCheckpointPath( Checkpoint *targetCheckpoint, int turnDuration, int moveDuration, const TurnType turnType,
-                                                             QEasingCurve::Type easingCurveX, QEasingCurve::Type easingCurveY )
+                                                             QEasingCurve::Type easingCurveX, QEasingCurve::Type easingCurveY, bool sequential )
 {
     if( targetCheckpoint != NULL )
     {
-        m_paths << new Path( targetCheckpoint, turnDuration, moveDuration, turnType, easingCurveX, easingCurveY );
+        m_paths << new Path( targetCheckpoint, turnDuration, moveDuration, turnType, easingCurveX, easingCurveY, sequential );
     }
     else
     {
@@ -107,15 +108,77 @@ void Checkpoint::addTurnAndMovingByXYToTargetCheckpointPath( Checkpoint *targetC
 }
 
 void Checkpoint::addTurnAndMovingByYToTargetCheckpointPath( Checkpoint *targetCheckpoint, int turnDuration, int moveDuration,
-                                                            const TurnType turnType, QEasingCurve::Type easingCurveY )
+                                                            const TurnType turnType, QEasingCurve::Type easingCurveY, bool sequential )
 {
     if( targetCheckpoint != NULL )
     {
-        m_paths << new Path( targetCheckpoint, turnDuration, moveDuration, "y", turnType, easingCurveY );
+        m_paths << new Path( targetCheckpoint, turnDuration, moveDuration, "y", turnType, easingCurveY, sequential );
     }
     else
     {
         LOG_WARNING( "Target checkpoint is NULL: %s", __FUNCTION__ );
+    }
+}
+
+void Checkpoint::addMove( QVector<Checkpoint *> checkpointsVector, const QString &parameters )
+{
+    LOG_INFO( "Add move path with parameters: %s", parameters.toLatin1().data() );
+
+    if( parameters == "ay" ) // Ahead with y
+    {
+        for( int i = 0 ; i < checkpointsVector.count() ; i++ )
+        {
+            addMovingByYToTargetCheckpointPath( checkpointsVector.at( i ), 10000 );
+        }
+    }
+    else if( parameters == "ax" ) // Ahead with x
+    {
+        for( int i = 0 ; i < checkpointsVector.count() ; i++ )
+        {
+            addMovingByXToTargetCheckpointPath( checkpointsVector.at( i ), 10000 );
+        }
+    }
+    else if( parameters == "lx" ) // Left with x
+    {
+        for( int i = 0 ; i < checkpointsVector.count() ; i++ )
+        {
+            addTurnAndMovingByXToTargetCheckpointPath( checkpointsVector.at( i ), 1000, 10000, TURN_90_LEFT );
+        }
+    }
+    else if( parameters == "ly" ) // Left with y
+    {
+        for( int i = 0 ; i < checkpointsVector.count() ; i++ )
+        {
+            addTurnAndMovingByYToTargetCheckpointPath( checkpointsVector.at( i ), 1000, 10000, TURN_90_LEFT );
+        }
+    }
+    else if( parameters == "rx" ) // Right with x
+    {
+        for( int i = 0 ; i < checkpointsVector.count() ; i++ )
+        {
+            addTurnAndMovingByXToTargetCheckpointPath( checkpointsVector.at( i ), 1000, 10000, TURN_90_RIGHT );
+        }
+    }
+    else if( parameters == "ry" ) // Right with y
+    {
+        for( int i = 0 ; i < checkpointsVector.count() ; i++ )
+        {
+            addTurnAndMovingByYToTargetCheckpointPath( checkpointsVector.at( i ), 1000, 10000, TURN_90_RIGHT );
+        }
+    }
+    else if( parameters == "rxy" ) // Right with x and y
+    {
+        for( int i = 0 ; i < checkpointsVector.count() ; i++ )
+        {
+            addTurnAndMovingByXYToTargetCheckpointPath( checkpointsVector.at( i ), 1000, 10000, TURN_90_RIGHT, QEasingCurve::Linear, QEasingCurve::OutQuad, false );
+        }
+    }
+    else if( parameters == "lxy" ) // Left with x and y
+    {
+        for( int i = 0 ; i < checkpointsVector.count() ; i++ )
+        {
+            addTurnAndMovingByXYToTargetCheckpointPath( checkpointsVector.at( i ), 1000, 10000, TURN_90_LEFT, QEasingCurve::Linear, QEasingCurve::OutQuad, false );
+        }
     }
 }
 

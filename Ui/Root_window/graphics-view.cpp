@@ -62,12 +62,15 @@ void GraphicsView::addToScene( Vehicle *item, const Checkpoint *initCheckpoint )
 
 void GraphicsView::createItems()
 {
-    Vehicle *newVehicle = QmlHelper::createVehicleFromQml( "CarDesign" );
-
-    if( newVehicle != NULL )
+    for( int i = 0 ; i < 5 ; i++ )
     {
-        addToScene( newVehicle, CheckpointManager::checkpointManagerInstance().checkpointById( 0 ) );
+        Vehicle *newVehicle = QmlHelper::createVehicleFromQml( "CarDesign" );
 
-        LOG_INFO( "%s was created and added to scene", newVehicle->objectName().toLatin1().data() )
+        if( newVehicle != NULL )
+        {
+            addToScene( newVehicle, CheckpointManager::checkpointManagerInstance().checkpointById( 0 ) );
+
+            LOG_INFO( "%s was created and added to scene", newVehicle->objectName().toLatin1().data() )
+        }
     }
 }
