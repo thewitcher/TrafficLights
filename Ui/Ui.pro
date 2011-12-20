@@ -14,22 +14,21 @@ include(Checkpoints_manager/Checkpoints_manager.pri)
 RESOURCES += \
     graphics.qrc
 
-# If You want to do something on the beginning just add some code to init.sh script
-callScript.target = all
+# Calls init script
 
-# Not checked (remember to edit init_windows.sh file)
-win32:debug {
-    callScript.commands = $${PWD}/Data/init_windows.sh $${PWD}/Data $${OUT_PWD}/../Build/Data
-}
+win32 {
+    SOURCE_FILE=$${IN_PWD}/Data/init_windows.bat
+    SOURCE_PATH=$${IN_PWD}/Data
+    TARGET_PATH=$${OUT_PWD}/../Build/Data
 
-# Not checked (remember to edit init_windows.sh file)
-win32:release {
-    callScript.commands = $${PWD}/Data/init_windows.sh $${PWD}/Data $${OUT_PWD}/../Build/Data
+    system($${replace(SOURCE_FILE,/,\\)} $${replace(SOURCE_PATH,/,\\)} $${replace(TARGET_PATH,/,\\)})
 }
 
 unix {
-    callScript.commands = $${PWD}/Data/init_linux.sh $${PWD}/Data $${OUT_PWD}/../Build/Data
-}
+    SOURCE_FILE=$${IN_PWD}/Data/init_linux.sh
+    SOURCE_PATH=$${IN_PWD}/Data
+    TARGET_PATH=$${OUT_PWD}/../Build/Data
 
-QMAKE_EXTRA_TARGETS += callScript
+    system($${SOURCE_FILE} $${SOURCE_PATH} $${TARGET_PATH})
+}
 
