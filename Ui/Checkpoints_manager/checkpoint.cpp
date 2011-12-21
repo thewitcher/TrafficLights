@@ -122,7 +122,7 @@ void Checkpoint::addTurnAndMovingByYToTargetCheckpointPath( Checkpoint *targetCh
 
 void Checkpoint::addMove( QVector<Checkpoint *> checkpointsVector, const QString &parameters )
 {
-    LOG_INFO( "Add move path with parameters: %s", parameters.toLatin1().data() );
+    LOG_INFO( "Add move path with parameters: %s to checkpoint with id: %i", parameters.toLatin1().data(), m_id );
 
     if( parameters == "ay" ) // Ahead with y
     {
@@ -170,14 +170,14 @@ void Checkpoint::addMove( QVector<Checkpoint *> checkpointsVector, const QString
     {
         for( int i = 0 ; i < checkpointsVector.count() ; i++ )
         {
-            addTurnAndMovingByXYToTargetCheckpointPath( checkpointsVector.at( i ), 1000, 10000, TURN_90_RIGHT, QEasingCurve::Linear, QEasingCurve::OutQuad, false );
+            addTurnAndMovingByXYToTargetCheckpointPath( checkpointsVector.at( i ), 10000, 10000, TURN_90_RIGHT, QEasingCurve::Linear, QEasingCurve::OutQuad, false );
         }
     }
     else if( parameters == "lxy" ) // Left with x and y
     {
         for( int i = 0 ; i < checkpointsVector.count() ; i++ )
         {
-            addTurnAndMovingByXYToTargetCheckpointPath( checkpointsVector.at( i ), 1000, 10000, TURN_90_LEFT, QEasingCurve::Linear, QEasingCurve::OutQuad, false );
+            addTurnAndMovingByXYToTargetCheckpointPath( checkpointsVector.at( i ), 10000, 10000, TURN_90_LEFT, QEasingCurve::Linear, QEasingCurve::OutQuad, false );
         }
     }
 }

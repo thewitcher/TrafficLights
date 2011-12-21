@@ -44,6 +44,7 @@ void GraphicsView::initGraphicsView()
     setDragMode( QGraphicsView::ScrollHandDrag );
     resize( 1326, 1070 );
     setMaximumSize( 1340, 1084 );
+    //scale( 2, 2 );
 
     LOG_INFO( "End: %s", __FUNCTION__ );
 }
@@ -62,7 +63,7 @@ void GraphicsView::addToScene( Vehicle *item, const Checkpoint *initCheckpoint )
 
 void GraphicsView::createItems()
 {
-    for( int i = 0 ; i < 5 ; i++ )
+    for( int i = 0 ; i < 9 ; i++ )
     {
         Vehicle *newVehicle = QmlHelper::createVehicleFromQml( "CarDesign" );
 

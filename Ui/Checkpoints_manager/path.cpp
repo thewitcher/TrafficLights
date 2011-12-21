@@ -185,7 +185,7 @@ QParallelAnimationGroup* Path::movingByXYToTargetCheckpointAnimation( Vehicle *t
 
 void Path::turnAndMovingByXYToTargetCheckpointAnimation( Vehicle *target ) const
 {
-    LOG_INFO( "Turn and move animation by x and y coordinate (%s)", __FUNCTION__ );
+    LOG_INFO( "Turn and move animation by x and y coordinate (%s) (is sequential: %i)", __FUNCTION__, m_sequential );
 
     QAnimationGroup *animationGroup = NULL;
 

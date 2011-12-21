@@ -1,6 +1,7 @@
 #include "logger.h"
 #include <QDir>
 #include <QTextStream>
+#include <QTime>
 
 QString Logger::m_loggerPath = QDir::currentPath() + "/Data/user_logger.txt";
 QFile Logger::m_logger( Logger::m_loggerPath );
@@ -31,7 +32,7 @@ void Logger::writeInfo( const QString &info )
 {
 #ifdef LOGGER
     QTextStream writer( &m_logger );
-    writer << "[INFO] " << info << "\n";
+    writer << "[INFO: time( " + QTime::currentTime().toString( "hh:mm" ) + " )] " << info << "\n";
 #else
     Q_UNUSED(info);
 #endif
@@ -41,7 +42,7 @@ void Logger::writeCritical( const QString &info )
 {
 #ifdef LOGGER
     QTextStream writer( &m_logger );
-    writer << "[CRITICAL] " << info << "\n";
+    writer << "[CRITICAL: time( " + QTime::currentTime().toString( "hh:mm" ) + " )] " << info << "\n";
 #else
     Q_UNUSED(info);
 #endif
@@ -51,7 +52,7 @@ void Logger::writeWarning( const QString &info )
 {
 #ifdef LOGGER
     QTextStream writer( &m_logger );
-    writer << "[WARNING] " << info << "\n";
+    writer << "[WARNING: time( " + QTime::currentTime().toString( "hh:mm" ) + " )] " << info << "\n";
 #else
     Q_UNUSED(info);
 #endif
