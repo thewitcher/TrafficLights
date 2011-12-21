@@ -1,0 +1,95 @@
+format 74
+
+classinstancecanvas 128130 classinstance_ref 128130 // GraphicsView
+  xyz 157 6 2005 life_line_z 2000
+end
+classinstancecanvas 128258 classinstance_ref 128258 // QmlHelper
+  xyz 6 4 2010 life_line_z 2000
+end
+classinstancecanvas 129282 classinstance_ref 128386 // CheckpointManager
+  xyz 343 4 2005 life_line_z 2000
+end
+classinstancecanvas 130562 classinstance_ref 128514 // CheckpointCreator
+  xyz 598 4 2015 life_line_z 2000
+end
+classinstancecanvas 131842 classinstance_ref 128642 // Checkpoint
+  xyz 908 5 2005 life_line_z 2000
+end
+durationcanvas 128386 classinstance_ref 128130 // GraphicsView:GraphicsView
+  xyzwh 235 71 2010 11 40
+end
+durationcanvas 128514 classinstance_ref 128258 // QmlHelper:QmlHelper
+  xyzwh 67 71 2010 11 25
+end
+durationcanvas 128770 classinstance_ref 128258 // QmlHelper:QmlHelper
+  xyzwh 67 132 2010 11 40
+end
+durationcanvas 128898 classinstance_ref 128130 // GraphicsView:GraphicsView
+  xyzwh 235 132 2010 11 25
+end
+durationcanvas 129410 classinstance_ref 128130 // GraphicsView:GraphicsView
+  xyzwh 235 188 2010 11 40
+end
+durationcanvas 129538 classinstance_ref 129282 // CheckpointManager:CheckpointManager
+  xyzwh 456 192 2010 11 231
+  overlappingdurationcanvas 130690
+    xyzwh 462 214 2020 11 192
+    overlappingdurationcanvas 131458
+      xyzwh 468 275 2030 11 25
+    end
+  end
+end
+durationcanvas 131074 classinstance_ref 130562 // CheckpointCreator:CheckpointCreator
+  xyzwh 703 237 2010 11 25
+end
+durationcanvas 131330 classinstance_ref 130562 // CheckpointCreator:CheckpointCreator
+  xyzwh 703 275 2010 11 41
+end
+durationcanvas 131970 classinstance_ref 131842 // Checkpoint:Checkpoint
+  xyzwh 972 305 2010 11 25
+end
+msg 128642 synchronous
+  from durationcanvas_ref 128386
+  to durationcanvas_ref 128514
+  yz 71 2015 explicitmsg "createVehicleFromQml()"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  args "const QString& qmlName"
+  label_xy 24 54
+msg 129026 synchronous
+  from durationcanvas_ref 128770
+  to durationcanvas_ref 128898
+  yz 132 2015 explicitmsg "new vehicle is created from qml file"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 62 117
+msg 129666 synchronous
+  from durationcanvas_ref 129410
+  to durationcanvas_ref 129538
+  yz 192 2015 explicitmsg "addToScene()"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  args "Vehicle *item, const Checkpoint *initCheckpoint"
+  label_xy 256 176
+reflexivemsg 130818 synchronous
+  to durationcanvas_ref 130690
+  yz 214 2025 explicitmsg "checkpointManagerInstance()"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 400 198
+msg 131202 synchronous
+  from durationcanvas_ref 130690
+  to durationcanvas_ref 131074
+  yz 237 2030 explicitmsg "CheckpointCreator()"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  args "const QString& fileName, CheckpointManager *manager"
+  label_xy 474 223
+msg 131586 synchronous
+  from durationcanvas_ref 131330
+  to durationcanvas_ref 131458
+  yz 275 2035 explicitmsg "createCheckpoints()"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 535 259
+msg 132098 synchronous
+  from durationcanvas_ref 131330
+  to durationcanvas_ref 131970
+  yz 305 2015 explicitmsg "createPaths()"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 805 289
+end

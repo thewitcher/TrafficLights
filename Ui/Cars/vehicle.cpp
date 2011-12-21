@@ -3,8 +3,8 @@
 #include "../Checkpoints_manager/path.h"
 #include "../../Logger/logger.h"
 
-Vehicle::Vehicle( QGraphicsItem *parent ):
-    QGraphicsWidget( parent ),
+Vehicle::Vehicle( QDeclarativeItem *parent ):
+    QDeclarativeItem( parent ),
     m_currentPath( NULL )
 {
     // Sets transformation point to center

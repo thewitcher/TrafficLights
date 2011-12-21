@@ -91,7 +91,6 @@ void CheckpointCreator::createCheckpoints()
     }
 }
 
-#include <QDebug>
 void CheckpointCreator::createPaths()
 {
     if( m_valid )

@@ -1,0 +1,11 @@
+window_sizes 1366 691 320 1040 497 120
+diagrams
+  active  sequencediagram_ref 128130 // Creating checkpoints
+    1010 497 100 3 0 0
+end
+show_stereotypes
+selected sequencediagram_ref 128130 // Creating checkpoints
+open
+  classview_ref 128002 // Car travelling
+end
+end

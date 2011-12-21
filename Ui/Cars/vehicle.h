@@ -1,7 +1,7 @@
 #ifndef VEHICLE_H
 #define VEHICLE_H
 
-#include <QGraphicsWidget>
+#include <QDeclarativeItem>
 
 class Checkpoint;
 class Path;
@@ -11,13 +11,13 @@ class Path;
  * create new vehicle object and then call init with checkpoint which will be the first on vehicle path. Vehicles are created
  * in GraphicsView.
  */
-class Vehicle: public QGraphicsWidget
+class Vehicle: public QDeclarativeItem
 {
 
     Q_OBJECT
 
 public:
-    explicit Vehicle( QGraphicsItem *parent = 0 );
+    explicit Vehicle( QDeclarativeItem *parent = 0 );
 
     void init( const Checkpoint* initCheckpoint );
 
