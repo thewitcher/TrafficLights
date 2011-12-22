@@ -22,6 +22,7 @@ public:
     const Path* randomPath() const;
     qreal posX() const;
     qreal posY() const;
+    void setTimeVariable( int timeVariable );
 
 private:
     qreal m_x;
@@ -32,6 +33,7 @@ private:
 
     unsigned char randomNumber( unsigned char max ) const;
     void setId( unsigned char id );
+    int estimatedMovingTimeToTargetCheckpoint( const Checkpoint* targetCheckpoint ) const;
 
     void addMovingByXToTargetCheckpointPath( Checkpoint *targetCheckpoint, int duration, QEasingCurve::Type easingCurve = QEasingCurve::Linear );
     void addMovingByYToTargetCheckpointPath( Checkpoint *targetCheckpoint, int duration, QEasingCurve::Type easingCurve = QEasingCurve::Linear );

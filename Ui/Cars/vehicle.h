@@ -20,9 +20,11 @@ public:
     explicit Vehicle( QDeclarativeItem *parent = 0 );
 
     void init( const Checkpoint* initCheckpoint );
+    void setSpeed( double speed );
 
 private:
     const Path *m_currentPath;
+    double m_speed;
 
 private slots:
     void onAnimationFinish();

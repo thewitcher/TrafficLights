@@ -29,15 +29,18 @@ public:
           bool sequential );
     ~Path();
 
-    void animation( Vehicle *target, QObject *parent ) const;
+    /*!
+     * Parameter increaseSpeed is added to duration. After finish this method, duration variable goes back to default value.
+     */
+    void animation( Vehicle *target, QObject *parent, double speedMultiplier ) const;
     const Checkpoint* targetCheckpoint() const;
 
 private:
     enum PathType{ MOVE, TURN_AND_MOVE, MOVE_XY, TURN_AND_MOVE_XY };
 
     const Checkpoint *m_targetCheckpoint; // This will be deleted by checkpoint manager
-    int m_turnDuration;
-    int m_moveDuration;
+    mutable int m_turnDuration;
+    mutable int m_moveDuration;
     const QByteArray m_moveCoordinateProperty;
     const QEasingCurve::Type m_easingCurveX;
     const QEasingCurve::Type m_easingCurveY;

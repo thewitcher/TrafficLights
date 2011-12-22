@@ -5,7 +5,8 @@
 
 Vehicle::Vehicle( QDeclarativeItem *parent ):
     QDeclarativeItem( parent ),
-    m_currentPath( NULL )
+    m_currentPath( NULL ),
+    m_speed( 1 )
 {
     // Sets transformation point to center
     setTransformOriginPoint( 9, 9 );
@@ -13,13 +14,14 @@ Vehicle::Vehicle( QDeclarativeItem *parent ):
 
 void Vehicle::init( const Checkpoint *initCheckpoint )
 {
-    LOG_INFO( "Creating new path for checkpoint: (%f, %f) position", initCheckpoint->posX(), initCheckpoint->posY() );
+    LOG_INFO( "Sets new speed to checkpoint: %f", m_speed );
+    LOG_INFO( "Creates new path for checkpoint: (%f, %f) position", initCheckpoint->posX(), initCheckpoint->posY() );
 
     m_currentPath = initCheckpoint->randomPath();
 
     if( m_currentPath != NULL )
     {
-        m_currentPath->animation( this, this );
+        m_currentPath->animation( this, this, m_speed );
 
         LOG_INFO( "Target of this animation is on pos: (%f, %f) position", m_currentPath->targetCheckpoint()->posX(),
                   m_currentPath->targetCheckpoint()->posY() );
@@ -43,4 +45,9 @@ void Vehicle::onAnimationFinish()
     }
 
     init( m_currentPath->targetCheckpoint() );
+}
+
+void Vehicle::setSpeed( double speed )
+{
+    m_speed = speed;
 }

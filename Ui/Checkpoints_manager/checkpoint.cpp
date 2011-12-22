@@ -2,6 +2,7 @@
 #include "../../Logger/logger.h"
 #include "path.h"
 #include <cstdlib>
+#include <math.h>
 #include <QVector>
 
 Checkpoint::Checkpoint(qreal x, qreal y):
@@ -124,60 +125,80 @@ void Checkpoint::addMove( QVector<Checkpoint *> checkpointsVector, const QString
 {
     LOG_INFO( "Try to add move path with parameters: %s to checkpoint with id: %i", parameters.toLatin1().data(), m_id );
 
+    int duration = 10000;
+
     if( parameters == "ay" ) // Ahead with y
-    {
+    {  
         for( int i = 0 ; i < checkpointsVector.count() ; i++ )
         {
-            addMovingByYToTargetCheckpointPath( checkpointsVector.at( i ), 10000 );
+            duration = estimatedMovingTimeToTargetCheckpoint( checkpointsVector.at( i ) );
+
+            addMovingByYToTargetCheckpointPath( checkpointsVector.at( i ), duration );
         }
     }
     else if( parameters == "ax" ) // Ahead with x
     {
         for( int i = 0 ; i < checkpointsVector.count() ; i++ )
         {
-            addMovingByXToTargetCheckpointPath( checkpointsVector.at( i ), 10000 );
+            duration = estimatedMovingTimeToTargetCheckpoint( checkpointsVector.at( i ) );
+
+            addMovingByXToTargetCheckpointPath( checkpointsVector.at( i ), duration );
         }
     }
     else if( parameters == "lx" ) // Left with x
     {
         for( int i = 0 ; i < checkpointsVector.count() ; i++ )
         {
-            addTurnAndMovingByXToTargetCheckpointPath( checkpointsVector.at( i ), 1000, 10000, TURN_90_LEFT );
+            duration = estimatedMovingTimeToTargetCheckpoint( checkpointsVector.at( i ) );
+
+            addTurnAndMovingByXToTargetCheckpointPath( checkpointsVector.at( i ), 1000, duration, TURN_90_LEFT );
         }
     }
     else if( parameters == "ly" ) // Left with y
     {
         for( int i = 0 ; i < checkpointsVector.count() ; i++ )
         {
-            addTurnAndMovingByYToTargetCheckpointPath( checkpointsVector.at( i ), 1000, 10000, TURN_90_LEFT );
+            duration = estimatedMovingTimeToTargetCheckpoint( checkpointsVector.at( i ) );
+
+            addTurnAndMovingByYToTargetCheckpointPath( checkpointsVector.at( i ), 1000, duration, TURN_90_LEFT );
         }
     }
     else if( parameters == "rx" ) // Right with x
     {
         for( int i = 0 ; i < checkpointsVector.count() ; i++ )
         {
-            addTurnAndMovingByXToTargetCheckpointPath( checkpointsVector.at( i ), 1000, 10000, TURN_90_RIGHT );
+            duration = estimatedMovingTimeToTargetCheckpoint( checkpointsVector.at( i ) );
+
+            addTurnAndMovingByXToTargetCheckpointPath( checkpointsVector.at( i ), 1000, duration, TURN_90_RIGHT );
         }
     }
     else if( parameters == "ry" ) // Right with y
     {
         for( int i = 0 ; i < checkpointsVector.count() ; i++ )
         {
-            addTurnAndMovingByYToTargetCheckpointPath( checkpointsVector.at( i ), 1000, 10000, TURN_90_RIGHT );
+            duration = estimatedMovingTimeToTargetCheckpoint( checkpointsVector.at( i ) );
+
+            addTurnAndMovingByYToTargetCheckpointPath( checkpointsVector.at( i ), 1000, duration, TURN_90_RIGHT );
         }
     }
-    else if( parameters == "vxy" ) // Right with x and y
+    else if( parameters == "hxy" ) // Horizontal with x and y
     {
         for( int i = 0 ; i < checkpointsVector.count() ; i++ )
         {
-            addTurnAndMovingByXYToTargetCheckpointPath( checkpointsVector.at( i ), 10000, 10000, TURN_90_RIGHT, QEasingCurve::Linear, QEasingCurve::OutQuad, false );
+            duration = estimatedMovingTimeToTargetCheckpoint( checkpointsVector.at( i ) );
+
+            addTurnAndMovingByXYToTargetCheckpointPath( checkpointsVector.at( i ), duration, duration, TURN_90_LEFT, QEasingCurve::InCirc, QEasingCurve::OutCirc,
+                                                        false );
         }
     }
-    else if( parameters == "hxy" ) // Left with x and y
-    {
+    else if( parameters == "vxy" ) // Vertical with x and y
+    {     
         for( int i = 0 ; i < checkpointsVector.count() ; i++ )
         {
-            addTurnAndMovingByXYToTargetCheckpointPath( checkpointsVector.at( i ), 10000, 10000, TURN_90_LEFT, QEasingCurve::OutQuad, QEasingCurve::Linear, false );
+            duration = estimatedMovingTimeToTargetCheckpoint( checkpointsVector.at( i ) );
+
+            addTurnAndMovingByXYToTargetCheckpointPath( checkpointsVector.at( i ), duration, duration, TURN_90_RIGHT, QEasingCurve::OutCirc, QEasingCurve::InCirc,
+                                                        false );
         }
     }
     else
@@ -194,4 +215,17 @@ qreal Checkpoint::posX() const
 qreal Checkpoint::posY() const
 {
     return m_y;
+}
+
+int Checkpoint::estimatedMovingTimeToTargetCheckpoint( const Checkpoint *targetCheckpoint ) const
+{
+    LOG_INFO( "Start %s", __FUNCTION__ );
+
+    int distance = sqrt( pow( posX() - targetCheckpoint->posX(), 2) + pow( posY() - targetCheckpoint->posY(), 2) );
+    int time = 10 * distance;
+
+    LOG_INFO( "Distance between: (%f,%f) and (%f,%f) = %i", posX(), posY(), targetCheckpoint->posX(), targetCheckpoint->posY(), distance );
+    LOG_INFO( "Estimated moving time: %i", time );
+
+    return time;
 }

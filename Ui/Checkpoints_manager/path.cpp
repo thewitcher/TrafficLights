@@ -84,11 +84,19 @@ const Checkpoint* Path::targetCheckpoint() const
     return m_targetCheckpoint;
 }
 
-void Path::animation( Vehicle *target, QObject *parent ) const
+void Path::animation( Vehicle *target, QObject *parent, double speedMultiplier ) const
 {
     Q_UNUSED( parent );
 
-    LOG_INFO( "Start switching by path type in: %s", __FUNCTION__ );
+    LOG_INFO( "Times duration by %f", speedMultiplier );
+
+    int originalMoveDuration = m_moveDuration;
+    int originalTurnDuration = m_turnDuration;
+
+    m_moveDuration *= speedMultiplier;
+    m_turnDuration *= speedMultiplier;
+
+    LOG_INFO( "Starts switching by path type in: %s", __FUNCTION__ );
 
     switch( m_pathType )
     {
@@ -105,6 +113,11 @@ void Path::animation( Vehicle *target, QObject *parent ) const
         turnAndMovingByXYToTargetCheckpointAnimation( target );
         break;
     }
+
+    LOG_INFO( "Set original value %i", originalMoveDuration );
+
+    m_moveDuration = originalMoveDuration;
+    m_turnDuration = originalTurnDuration;
 }
 
 QPropertyAnimation* Path::movingToTargetCheckpointAnimation( Vehicle *target, bool start, QObject* parent ) const
