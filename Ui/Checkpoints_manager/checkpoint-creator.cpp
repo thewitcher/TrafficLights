@@ -20,8 +20,8 @@
  * ly - left with y
  * rx - right with x
  * ry - right with y
- * rxy - right wit x and y
- * lxy - left with x and y
+ * vxy - vertical with x and y
+ * hxy - horizontal with x and y
  *
  * EXAMPLE:
  *

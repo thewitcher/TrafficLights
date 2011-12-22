@@ -63,7 +63,7 @@ void GraphicsView::addToScene( Vehicle *item, const Checkpoint *initCheckpoint )
 
 void GraphicsView::createItems()
 {
-    for( int i = 0 ; i < 9 ; i++ )
+    for( int i = 0 ; i < 1 ; i++ )
     {
         Vehicle *newVehicle = QmlHelper::createVehicleFromQml( "CarDesign" );
 

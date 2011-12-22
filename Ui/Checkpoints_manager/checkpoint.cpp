@@ -122,7 +122,7 @@ void Checkpoint::addTurnAndMovingByYToTargetCheckpointPath( Checkpoint *targetCh
 
 void Checkpoint::addMove( QVector<Checkpoint *> checkpointsVector, const QString &parameters )
 {
-    LOG_INFO( "Add move path with parameters: %s to checkpoint with id: %i", parameters.toLatin1().data(), m_id );
+    LOG_INFO( "Try to add move path with parameters: %s to checkpoint with id: %i", parameters.toLatin1().data(), m_id );
 
     if( parameters == "ay" ) // Ahead with y
     {
@@ -166,19 +166,23 @@ void Checkpoint::addMove( QVector<Checkpoint *> checkpointsVector, const QString
             addTurnAndMovingByYToTargetCheckpointPath( checkpointsVector.at( i ), 1000, 10000, TURN_90_RIGHT );
         }
     }
-    else if( parameters == "rxy" ) // Right with x and y
+    else if( parameters == "vxy" ) // Right with x and y
     {
         for( int i = 0 ; i < checkpointsVector.count() ; i++ )
         {
             addTurnAndMovingByXYToTargetCheckpointPath( checkpointsVector.at( i ), 10000, 10000, TURN_90_RIGHT, QEasingCurve::Linear, QEasingCurve::OutQuad, false );
         }
     }
-    else if( parameters == "lxy" ) // Left with x and y
+    else if( parameters == "hxy" ) // Left with x and y
     {
         for( int i = 0 ; i < checkpointsVector.count() ; i++ )
         {
-            addTurnAndMovingByXYToTargetCheckpointPath( checkpointsVector.at( i ), 10000, 10000, TURN_90_LEFT, QEasingCurve::Linear, QEasingCurve::OutQuad, false );
+            addTurnAndMovingByXYToTargetCheckpointPath( checkpointsVector.at( i ), 10000, 10000, TURN_90_LEFT, QEasingCurve::OutQuad, QEasingCurve::Linear, false );
         }
+    }
+    else
+    {
+        LOG_WARNING( "Parameter is unknown: %s", __FUNCTION__ );
     }
 }
 
