@@ -201,7 +201,7 @@ void Path::turnAndMovingByXYToTargetCheckpointAnimation( Vehicle *target ) const
     LOG_INFO( "Turn and move animation by x and y coordinate (%s) (is sequential: %i)", __FUNCTION__, m_sequential );
 
     LOG_INFO( "Switching on blinkers in: %s", target->objectName().toLatin1().data() );
-    target->setBlinkers( true );
+    target->switchOnOffBlinkers();
 
     QAnimationGroup *animationGroup = NULL;
 
@@ -231,7 +231,7 @@ void Path::turnAndMovingByXYToTargetCheckpointAnimation( Vehicle *target ) const
     animationGroup->addAnimation( propertyAnimationRotate );
     animationGroup->addAnimation( movingByXYToTargetCheckpointAnimation( target, false, animationGroup ) );
 
-    QObject::connect( propertyAnimationRotate, SIGNAL(finished()), target, SLOT(setBlinkers()) );
+    QObject::connect( propertyAnimationRotate, SIGNAL(finished()), target, SLOT(switchOnOffBlinkers()) );
     QObject::connect( animationGroup, SIGNAL(finished()), target, SLOT(onAnimationFinish()) );
 
     animationGroup->start( QAbstractAnimation::DeleteWhenStopped );
@@ -242,7 +242,7 @@ void Path::turnAndMovingToTargetCheckpointAnimation( Vehicle *target ) const
     LOG_INFO( "Turn and move animation by one coordinate (%s)", __FUNCTION__ );
 
     LOG_INFO( "Switching on blinkers in: %s", target->objectName().toLatin1().data() );
-    target->setBlinkers( true );
+    target->switchOnOffBlinkers();
 
     QAnimationGroup *animationGroup = NULL;
 
@@ -272,7 +272,7 @@ void Path::turnAndMovingToTargetCheckpointAnimation( Vehicle *target ) const
     animationGroup->addAnimation( propertyAnimationRotate );
     animationGroup->addAnimation( movingToTargetCheckpointAnimation( target, false, animationGroup ) );
 
-    QObject::connect( propertyAnimationRotate, SIGNAL(finished()), target, SLOT(setBlinkers()) );
+    QObject::connect( propertyAnimationRotate, SIGNAL(finished()), target, SLOT(switchOnOffBlinkers()) );
     QObject::connect( animationGroup, SIGNAL(finished()), target, SLOT(onAnimationFinish()) );
 
     animationGroup->start( QAbstractAnimation::DeleteWhenStopped );

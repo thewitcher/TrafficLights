@@ -53,8 +53,12 @@ void Vehicle::setSpeed( double speed )
     m_speed = speed;
 }
 
-void Vehicle::setBlinkers( bool blinkers )
+void Vehicle::switchOnOffBlinkers( bool blinkers )
 {
+    Q_UNUSED( blinkers )
+
+    m_blinkers = !m_blinkers;
+
     emit blinkersChanged();
 }
 

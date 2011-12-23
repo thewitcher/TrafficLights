@@ -10,6 +10,8 @@ QmlHelper::QmlHelper()
 
 Vehicle* QmlHelper::createVehicleFromQml( const QString &qmlName )
 {
+    static QDeclarativeEngine *engine = new QDeclarativeEngine();
+
     LOG_INFO( "Qml with name %s will be created", qmlName.toLatin1().data() );
 
     if( qmlName.endsWith( ".qml" ) == true )
@@ -17,8 +19,7 @@ Vehicle* QmlHelper::createVehicleFromQml( const QString &qmlName )
         LOG_WARNING( "Your file name contains .qml, please give name without extension (you used: %s)", qmlName.toLatin1().data() );
     }
 
-    QDeclarativeEngine engine;
-    QDeclarativeComponent component( &engine, QUrl( "qrc:/qml/Qml/CarDesign.qml" ) );
+    QDeclarativeComponent component( engine, QUrl( "qrc:/qml/Qml/CarDesign.qml" ) );
 
     Vehicle *vehicle = qobject_cast<Vehicle*>( component.create() );
     if( vehicle == NULL )

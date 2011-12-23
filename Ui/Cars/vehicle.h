@@ -15,7 +15,7 @@ class Vehicle: public QDeclarativeItem
 {
 
     Q_OBJECT
-    Q_PROPERTY( bool blinkers READ blinkers WRITE setBlinkers NOTIFY blinkersChanged )
+    Q_PROPERTY( bool blinkers READ blinkers WRITE switchOnOffBlinkers NOTIFY blinkersChanged )
 
 public:
     explicit Vehicle( QDeclarativeItem *parent = 0 );
@@ -31,7 +31,7 @@ private:
 
 public slots:
     void onAnimationFinish();
-    void setBlinkers( bool blinkers = false );
+    void switchOnOffBlinkers( bool blinkers = false ); // Don't use argument. It's not used.
 
 signals:
     void blinkersChanged();

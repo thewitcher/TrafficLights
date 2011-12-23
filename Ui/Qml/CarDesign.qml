@@ -5,10 +5,6 @@ Vehicles {
     width: 18
     height: 18
 
-    onBlinkersChanged: {
-        console.log("sdfsfgs")
-    }
-
     Rectangle {
         anchors.centerIn: parent
         color: ( blinkers ? "green" : "black")
