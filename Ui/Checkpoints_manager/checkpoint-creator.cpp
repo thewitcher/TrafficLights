@@ -20,8 +20,10 @@
  * ly - left with y
  * rx - right with x
  * ry - right with y
- * vxy - vertical with x and y
- * hxy - horizontal with x and y
+ * wxy - west with x and y
+ * exy - east with x and y
+ * sxy - south with x and y
+ * nxy - north with x and y
  *
  * EXAMPLE:
  *

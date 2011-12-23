@@ -157,7 +157,7 @@ void GraphicsView::createItems()
 
     if( newVehicle != NULL )
     {
-        addToScene( newVehicle, CheckpointManager::checkpointManagerInstance().checkpointById( 85 ) );
+        addToScene( newVehicle, CheckpointManager::checkpointManagerInstance().checkpointById( 0 ) );
 
         LOG_INFO( "%s was created and added to scene", newVehicle->objectName().toLatin1().data() )
     }
