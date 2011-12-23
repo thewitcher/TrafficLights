@@ -15,19 +15,26 @@ class Vehicle: public QDeclarativeItem
 {
 
     Q_OBJECT
+    Q_PROPERTY( bool blinkers READ blinkers WRITE setBlinkers NOTIFY blinkersChanged )
 
 public:
     explicit Vehicle( QDeclarativeItem *parent = 0 );
 
     void init( const Checkpoint* initCheckpoint );
     void setSpeed( double speed );
+    bool blinkers();
 
 private:
     const Path *m_currentPath;
     double m_speed;
+    bool m_blinkers;
 
-private slots:
+public slots:
     void onAnimationFinish();
+    void setBlinkers( bool blinkers = false );
+
+signals:
+    void blinkersChanged();
 };
 
 #endif // VEHICLE_H

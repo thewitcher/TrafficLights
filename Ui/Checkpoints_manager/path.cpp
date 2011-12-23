@@ -200,6 +200,9 @@ void Path::turnAndMovingByXYToTargetCheckpointAnimation( Vehicle *target ) const
 {
     LOG_INFO( "Turn and move animation by x and y coordinate (%s) (is sequential: %i)", __FUNCTION__, m_sequential );
 
+    LOG_INFO( "Switching on blinkers in: %s", target->objectName().toLatin1().data() );
+    target->setBlinkers( true );
+
     QAnimationGroup *animationGroup = NULL;
 
     if( m_sequential )
@@ -216,9 +219,11 @@ void Path::turnAndMovingByXYToTargetCheckpointAnimation( Vehicle *target ) const
     // Rotating animation
     QPropertyAnimation *propertyAnimationRotate = new QPropertyAnimation( target, "rotation", animationGroup );
 
+    int startRotationValue = target->property( "rotation" ).toInt();
+
     propertyAnimationRotate->setDuration( m_turnDuration );
-    propertyAnimationRotate->setStartValue( 0 );
-    propertyAnimationRotate->setEndValue( m_turnType );
+    propertyAnimationRotate->setStartValue( startRotationValue );
+    propertyAnimationRotate->setEndValue( startRotationValue + m_turnType );
 
     propertyAnimationRotate->setObjectName( "propertyRotateAnimation" );
 
@@ -226,6 +231,7 @@ void Path::turnAndMovingByXYToTargetCheckpointAnimation( Vehicle *target ) const
     animationGroup->addAnimation( propertyAnimationRotate );
     animationGroup->addAnimation( movingByXYToTargetCheckpointAnimation( target, false, animationGroup ) );
 
+    QObject::connect( propertyAnimationRotate, SIGNAL(finished()), target, SLOT(setBlinkers()) );
     QObject::connect( animationGroup, SIGNAL(finished()), target, SLOT(onAnimationFinish()) );
 
     animationGroup->start( QAbstractAnimation::DeleteWhenStopped );
@@ -235,6 +241,9 @@ void Path::turnAndMovingToTargetCheckpointAnimation( Vehicle *target ) const
 {
     LOG_INFO( "Turn and move animation by one coordinate (%s)", __FUNCTION__ );
 
+    LOG_INFO( "Switching on blinkers in: %s", target->objectName().toLatin1().data() );
+    target->setBlinkers( true );
+
     QAnimationGroup *animationGroup = NULL;
 
     if( m_sequential )
@@ -248,13 +257,14 @@ void Path::turnAndMovingToTargetCheckpointAnimation( Vehicle *target ) const
         animationGroup->setObjectName( "parallelAnimation" );
     }
 
-
     // Rotating animation
     QPropertyAnimation *propertyAnimationRotate = new QPropertyAnimation( target, "rotation", animationGroup );
 
+    int startRotationValue = target->property( "rotation" ).toInt();
+
     propertyAnimationRotate->setDuration( m_turnDuration );
-    propertyAnimationRotate->setStartValue( 0 );
-    propertyAnimationRotate->setEndValue( m_turnType );
+    propertyAnimationRotate->setStartValue( startRotationValue );
+    propertyAnimationRotate->setEndValue( startRotationValue + m_turnType );
 
     propertyAnimationRotate->setObjectName( "propertyRotateAnimation" );
 
@@ -262,6 +272,7 @@ void Path::turnAndMovingToTargetCheckpointAnimation( Vehicle *target ) const
     animationGroup->addAnimation( propertyAnimationRotate );
     animationGroup->addAnimation( movingToTargetCheckpointAnimation( target, false, animationGroup ) );
 
+    QObject::connect( propertyAnimationRotate, SIGNAL(finished()), target, SLOT(setBlinkers()) );
     QObject::connect( animationGroup, SIGNAL(finished()), target, SLOT(onAnimationFinish()) );
 
     animationGroup->start( QAbstractAnimation::DeleteWhenStopped );

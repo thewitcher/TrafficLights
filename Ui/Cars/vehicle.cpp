@@ -6,7 +6,8 @@
 Vehicle::Vehicle( QDeclarativeItem *parent ):
     QDeclarativeItem( parent ),
     m_currentPath( NULL ),
-    m_speed( 1 )
+    m_speed( 1 ),
+    m_blinkers( false )
 {
     // Sets transformation point to center
     setTransformOriginPoint( 9, 9 );
@@ -50,4 +51,14 @@ void Vehicle::onAnimationFinish()
 void Vehicle::setSpeed( double speed )
 {
     m_speed = speed;
+}
+
+void Vehicle::setBlinkers( bool blinkers )
+{
+    emit blinkersChanged();
+}
+
+bool Vehicle::blinkers()
+{
+    return m_blinkers;
 }
