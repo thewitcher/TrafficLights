@@ -1,6 +1,6 @@
 #include "vehicle-manager.h"
 
-QVector<Vehicle*> VehicleManager::m_vehicles;
+QList<Vehicle*> VehicleManager::m_vehicles;
 
 VehicleManager::VehicleManager()
 {
@@ -15,7 +15,7 @@ void VehicleManager::addVehicle( Vehicle *vehicle )
     m_vehicles.append( vehicle );
 }
 
-const QVector<Vehicle*> VehicleManager::vehicles()
+const QList<Vehicle*> VehicleManager::vehicles()
 {
     return m_vehicles;
 }

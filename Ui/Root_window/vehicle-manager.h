@@ -1,7 +1,7 @@
 #ifndef VEHICLEMANAGER_H
 #define VEHICLEMANAGER_H
 
-#include <QVector>
+#include <QList>
 
 class Vehicle;
 
@@ -9,13 +9,13 @@ class VehicleManager
 {
 public:
     static void addVehicle( Vehicle *vehicle );
-    static const QVector<Vehicle*> vehicles();
+    static const QList<Vehicle*> vehicles();
 
 private:
     VehicleManager();
     ~VehicleManager();
 
-    static QVector<Vehicle*> m_vehicles;
+    static QList<Vehicle*> m_vehicles;
 };
 
 #endif // VEHICLEMANAGER_H
