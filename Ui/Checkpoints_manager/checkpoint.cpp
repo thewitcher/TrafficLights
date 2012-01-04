@@ -8,7 +8,8 @@
 Checkpoint::Checkpoint(qreal x, qreal y):
     m_x( x ),
     m_y( y ),
-    m_id( 0 )
+    m_id( 0 ),
+    m_movePermission( true )
 {
 }
 
@@ -248,4 +249,9 @@ int Checkpoint::estimatedMovingTimeToTargetCheckpoint( const Checkpoint *targetC
     LOG_INFO( "Estimated moving time: %i", time );
 
     return time;
+}
+
+bool Checkpoint::movePermission() const
+{
+    return m_movePermission;
 }

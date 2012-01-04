@@ -8,10 +8,9 @@ class CheckpointManager;
 
 class CheckpointCreator
 {
-public:
+private:
     CheckpointCreator( const QString& fileName, CheckpointManager *manager );
 
-private:
     const QString m_fileName;
     QStringList m_checkpointsList;
     bool m_valid;

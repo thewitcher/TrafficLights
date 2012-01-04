@@ -1,11 +1,17 @@
 window_sizes 1366 691 320 1040 497 120
 diagrams
-  active  sequencediagram_ref 128130 // Creating checkpoints
-    1010 497 100 3 0 0
+  sequencediagram_ref 128130 // Creating checkpoints
+    832 397 100 3 0 0
+  sequencediagram_ref 141314 // Program start
+    1050 495 78 3 20 0
+  active  classdiagram_ref 147842 // CheckpointManager
+    1040 497 100 4 0 0
 end
 show_stereotypes
-selected sequencediagram_ref 128130 // Creating checkpoints
+selected operation_ref 135426 // checkpointsCount
 open
-  classview_ref 128002 // Car travelling
+  class_ref 128258 // GraphicsView
+  class_ref 128514 // CheckpointManager
+  class_ref 135298 // RootWindow
 end
 end

@@ -23,11 +23,13 @@ public:
     qreal posX() const;
     qreal posY() const;
     void setTimeVariable( int timeVariable );
+    bool movePermission() const;
 
 private:
     qreal m_x;
     qreal m_y;
     unsigned char m_id;
+    bool m_movePermission; // It allows vehicle to move or not.
 
     QList<Path*> m_paths;
 

@@ -1,0 +1,103 @@
+format 74
+
+classinstancecanvas 128514 classinstance_ref 135298 // m_graphicsView
+  xyz 558.208 3.52 2005 life_line_z 2000
+end
+classinstancecanvas 129410 classinstance_ref 135426 // m_scene
+  xyz 840.453 4.12 2010 life_line_z 2000
+end
+classinstancecanvas 129922 classinstance_ref 135554 // m_checkpointsManager
+  xyz 221.482 4.22 2005 life_line_z 2000
+end
+classinstancecanvas 130434 classinstance_ref 135682 // checkpointCreator
+  xyz 2.74936 4.22 2010 life_line_z 2000
+end
+note 131714 "Loads checkpoints parameters from file checkpoints.pos and creates all checkpoints. After this it creates paths for all checkpoints and insert it to vector in checkpoints manager."
+  xyzwh 18.2109 61.639 2000 233 103
+classinstancecanvas 131842 classinstance_ref 135810 // 
+  xyz 1027.22 4.12 2015 life_line_z 2000
+end
+note 134402 "Creates new CheckpointManager."
+  xyzwh 427 118 3010 145 53
+durationcanvas 128898 classinstance_ref 128514 // m_graphicsView:GraphicsView
+  xyzwh 655 117.2 2010 11 40
+end
+durationcanvas 132866 classinstance_ref 128514 // m_graphicsView:GraphicsView
+  xyzwh 655 56.5 2010 11 45
+end
+durationcanvas 133122 classinstance_ref 128514 // m_graphicsView:GraphicsView
+  xyzwh 655 172 2010 11 63
+  overlappingdurationcanvas 134146
+    xyzwh 661 185 2020 11 32
+  end
+end
+durationcanvas 133378 classinstance_ref 128514 // m_graphicsView:GraphicsView
+  xyzwh 655 382 2010 11 49
+end
+durationcanvas 134018 classinstance_ref 129922 // m_checkpointsManager:CheckpointManager
+  xyzwh 344 182 2010 11 174
+  overlappingdurationcanvas 134658
+    xyzwh 350 183 2020 11 26
+  end
+end
+durationcanvas 134530 classinstance_ref 130434 // checkpointCreator:CheckpointCreator
+  xyzwh 105 182 2010 11 168
+  overlappingdurationcanvas 134914
+    xyzwh 111 211 2020 11 24
+  end
+  overlappingdurationcanvas 135170
+    xyzwh 111 251 2020 11 24
+  end
+  overlappingdurationcanvas 135426
+    xyzwh 111 289 2020 11 25
+  end
+end
+reflexivemsg 129026 synchronous
+  to durationcanvas_ref 128898
+  yz 118 2015 msg operation_ref 128258 // "initGraphicsView()"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 625 105
+reflexivemsg 132994 synchronous
+  to durationcanvas_ref 132866
+  yz 58 3005 msg operation_ref 128130 // "initScene()"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 646 42
+reflexivemsg 133250 synchronous
+  to durationcanvas_ref 133122
+  yz 173 2015 msg operation_ref 128514 // "createCheckpointsManager()"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 597 156
+reflexivemsg 133506 synchronous
+  to durationcanvas_ref 133378
+  yz 385 2015 msg operation_ref 128386 // "createItems()"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 641 367
+msg 134274 synchronous
+  from durationcanvas_ref 134018
+  to durationcanvas_ref 134146
+  yz 191 3005 explicitmsg "CheckpointManager()"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 426 174
+msg 134786 synchronous
+  from durationcanvas_ref 134530
+  to durationcanvas_ref 134658
+  yz 185 3010 explicitmsg "CheckpointCreator()"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  args "const QString& fileName, CheckpointManager *manager"
+  label_xy -1 170
+reflexivemsg 135042 synchronous
+  to durationcanvas_ref 134914
+  yz 212 3015 explicitmsg "readAllLines()"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 93 194
+reflexivemsg 135298 synchronous
+  to durationcanvas_ref 135170
+  yz 252 3020 explicitmsg "createCheckpoints()"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 77 234
+reflexivemsg 135554 synchronous
+  to durationcanvas_ref 135426
+  yz 291 3025 explicitmsg "createPaths()"
+  show_full_operations_definition default drawing_language default show_context_mode default
+  label_xy 95 274
+end

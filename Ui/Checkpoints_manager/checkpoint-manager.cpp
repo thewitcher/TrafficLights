@@ -8,19 +8,14 @@ CheckpointManager::CheckpointManager()
 {
     srand( time( NULL ) );
 
-    CheckpointCreator checkpointCreator( "Checkpoints_positions.pos", this );
+    CheckpointCreator checkpointCreator( "Checkpoints_positions.pos", this ); // It creates checkpoints from file and save all in vector.
+
+    Q_UNUSED( checkpointCreator );
 }
 
 CheckpointManager::~CheckpointManager()
 {
     qDeleteAll( m_checkpointVector );
-}
-
-CheckpointManager& CheckpointManager::checkpointManagerInstance()
-{
-    static CheckpointManager m_checkpointManager;
-
-    return m_checkpointManager;
 }
 
 Checkpoint* CheckpointManager::addCheckpoint( qreal x, qreal y, unsigned int id )

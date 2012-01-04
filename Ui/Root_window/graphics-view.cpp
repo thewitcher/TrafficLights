@@ -7,14 +7,32 @@
 #include <QGraphicsItem>
 #include <QTimer>
 
+/*!
+ * GraphicsView is a subclass of QGraphicsView. It was created for convenience. In constructor there are already four method, which
+ * initialize scene and graphics view. For more info see appriopriate method description.
+ */
 GraphicsView::GraphicsView( QWidget *parent ):
-    QGraphicsView( parent )
+    QGraphicsView( parent ),
+    m_scene( NULL ),
+    m_checkpointManager( NULL )
 {
     initScene();
     initGraphicsView();
+    createCheckpointsManager();
     createItems();
 }
 
+GraphicsView::~GraphicsView()
+{
+    if( m_checkpointManager != NULL )
+    {
+        delete m_checkpointManager;
+    }
+}
+
+/*!
+ * Creates new scene and adds it to view. It also sets some properties such size and item index method.
+ */
 void GraphicsView::initScene()
 {
     LOG_INFO( "Start: %s", __FUNCTION__ );
@@ -34,6 +52,9 @@ void GraphicsView::initScene()
     LOG_INFO( "End: %s", __FUNCTION__ );
 }
 
+/*!
+ * Sets some view properties.
+ */
 void GraphicsView::initGraphicsView()
 {
     LOG_INFO( "Start: %s", __FUNCTION__ );
@@ -51,6 +72,10 @@ void GraphicsView::initGraphicsView()
     LOG_INFO( "End: %s", __FUNCTION__ );
 }
 
+/*!
+ * You can add new vehicle to the scene in initCheckpoint. This function is used in createItems method
+ * and You don't need to use it manually.
+ */
 void GraphicsView::addToScene( Vehicle *item, const Checkpoint *initCheckpoint )
 {
     LOG_INFO( "Start: %s", __FUNCTION__ );
@@ -63,6 +88,14 @@ void GraphicsView::addToScene( Vehicle *item, const Checkpoint *initCheckpoint )
     LOG_INFO( "Add item on position: (%f, %f)", initCheckpoint->posX(), initCheckpoint->posY() );
 }
 
+void GraphicsView::createCheckpointsManager()
+{
+    m_checkpointManager = new CheckpointManager;
+}
+
+/*!
+ * It creates new vehicle from qml file and adds it to the scene.
+ */
 void GraphicsView::addVehicle( double speed )
 {
     Vehicle *newVehicle = QmlHelper::createVehicleFromQml( "CarDesign" );
@@ -70,7 +103,7 @@ void GraphicsView::addVehicle( double speed )
 
     if( newVehicle != NULL )
     {
-        addToScene( newVehicle, CheckpointManager::checkpointManagerInstance().checkpointById( 0 ) );
+        addToScene( newVehicle, m_checkpointManager->checkpointById( 0 ) );
 
         LOG_INFO( "%s was created and added to scene", newVehicle->objectName().toLatin1().data() )
     }
@@ -82,11 +115,12 @@ void GraphicsView::createItems()
 {
     static double speed = 5;
 
-    addVehicle( speed );
-    speed -= 0.5;
-
     if( speed >= 1 )
     {
+        addVehicle( speed );
+
         QTimer::singleShot( 7000, this, SLOT(createItems()) );
     }
+
+    speed -= 0.5;
 }

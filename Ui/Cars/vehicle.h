@@ -20,8 +20,8 @@ class Vehicle: public QDeclarativeItem
 
 public:
     explicit Vehicle( QDeclarativeItem *parent = 0 );
+    ~Vehicle();
 
-    void init( const Checkpoint* initCheckpoint );
     void setSpeed( double speed );
     bool blinkers();
 
@@ -30,8 +30,13 @@ private:
     double m_speed;
     bool m_blinkers;
     QAbstractAnimation* m_currentAnimation;
+    const Checkpoint* m_currentCheckpoint;
+
+    static const int WAIT_ON_PERMISSION;
 
 public slots:
+    void init( const Checkpoint* initCheckpoint );
+    void init();
     void onAnimationFinish();
     void switchOnOffBlinkers( bool blinkers = false ); // Don't use argument. It's not used.
 
