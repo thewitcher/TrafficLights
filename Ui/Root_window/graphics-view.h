@@ -28,6 +28,7 @@ private slots:
     void createItems();
     void addVehicle( double speed );
     void createCheckpointsManager();
+    void addVehicle( double speed );
 };
 
 #endif // GRAPHICSVIEW_H

@@ -31,6 +31,7 @@ private:
     bool m_blinkers;
     QAbstractAnimation* m_currentAnimation;
     const Checkpoint* m_currentCheckpoint;
+    QAbstractAnimation* m_currentAnimation;
 
     static const int WAIT_ON_PERMISSION;
 
