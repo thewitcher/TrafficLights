@@ -24,12 +24,15 @@ public:
 
     void setSpeed( double speed );
     bool blinkers();
+    QAbstractAnimation* currentAnimation();
+    void setCheckState( bool state );
+    bool checkState() const;
 
 private:
     const Path *m_currentPath;
     double m_speed;
     bool m_blinkers;
-    QAbstractAnimation* m_currentAnimation;
+    bool m_checkState;
     const Checkpoint* m_currentCheckpoint;
     QAbstractAnimation* m_currentAnimation;
 
@@ -40,6 +43,8 @@ public slots:
     void init();
     void onAnimationFinish();
     void switchOnOffBlinkers( bool blinkers = false ); // Don't use argument. It's not used.
+    void startMove();
+    void changeCheckState();
 
 signals:
     void blinkersChanged();

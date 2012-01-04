@@ -12,8 +12,8 @@ Vehicle::Vehicle( QDeclarativeItem *parent ):
     m_currentPath( NULL ),
     m_speed( 1 ),
     m_blinkers( false ),
-    m_currentAnimation( NULL )
-    m_currentCheckpoint( NULL )
+    m_checkState( true ),
+    m_currentCheckpoint( NULL ),
     m_currentAnimation( NULL )
 {
     // Sets transformation point to center
@@ -22,6 +22,21 @@ Vehicle::Vehicle( QDeclarativeItem *parent ):
 
 Vehicle::~Vehicle()
 {
+}
+
+void Vehicle::setCheckState( bool state )
+{
+    m_checkState = state;
+}
+
+bool Vehicle::checkState() const
+{
+    return m_checkState;
+}
+
+QAbstractAnimation* Vehicle::currentAnimation()
+{
+    return m_currentAnimation;
 }
 
 void Vehicle::init( const Checkpoint *initCheckpoint )
@@ -64,6 +79,11 @@ void Vehicle::init( const Checkpoint *initCheckpoint )
     }
 }
 
+void Vehicle::changeCheckState()
+{
+    m_checkState != m_checkState;
+}
+
 void Vehicle::init()
 {
     init( m_currentCheckpoint );
@@ -101,4 +121,9 @@ void Vehicle::switchOnOffBlinkers( bool blinkers )
 bool Vehicle::blinkers()
 {
     return m_blinkers;
+}
+
+void Vehicle::startMove()
+{
+    m_currentAnimation->resume();
 }
