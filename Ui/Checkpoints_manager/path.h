@@ -5,8 +5,7 @@
 #include <QEasingCurve>
 
 class Vehicle;
-class QPropertyAnimation;
-class QParallelAnimationGroup;
+class QAbstractAnimation;
 
 /*!
  * Path contains target checkpoint and fucntion, which can create property animation. This animation is set to target object and will
@@ -32,7 +31,7 @@ public:
     /*!
      * Parameter increaseSpeed is added to duration. After finish this method, duration variable goes back to default value.
      */
-    void animation( Vehicle *target, QObject *parent, double speedMultiplier ) const;
+    QAbstractAnimation* animation( Vehicle *target, QObject *parent, double speedMultiplier ) const;
     const Checkpoint* targetCheckpoint() const;
 
 private:
@@ -41,6 +40,8 @@ private:
     const Checkpoint *m_targetCheckpoint; // This will be deleted by checkpoint manager
     mutable int m_turnDuration;
     mutable int m_moveDuration;
+    int m_originalTurnDuration;
+    int m_originalMoveDuration;
     const QByteArray m_moveCoordinateProperty;
     const QEasingCurve::Type m_easingCurveX;
     const QEasingCurve::Type m_easingCurveY;
@@ -49,11 +50,11 @@ private:
     const Checkpoint::TurnType m_turnType;
     const bool m_sequential;
 
-    QPropertyAnimation* movingToTargetCheckpointAnimation( Vehicle *target, bool start = true, QObject* parent = 0 ) const;
-    QParallelAnimationGroup* movingByXYToTargetCheckpointAnimation( Vehicle *target, bool start = true, QObject* parent = 0 ) const;
+    QAbstractAnimation* movingToTargetCheckpointAnimation( Vehicle *target, bool start = true, QObject* parent = 0 ) const;
+    QAbstractAnimation* movingByXYToTargetCheckpointAnimation( Vehicle *target, bool start = true, QObject* parent = 0 ) const;
 
-    void turnAndMovingToTargetCheckpointAnimation( Vehicle *target ) const;
-    void turnAndMovingByXYToTargetCheckpointAnimation( Vehicle *target ) const;
+    QAbstractAnimation* turnAndMovingToTargetCheckpointAnimation( Vehicle *target ) const;
+    QAbstractAnimation* turnAndMovingByXYToTargetCheckpointAnimation( Vehicle *target ) const;
 };
 
 #endif // PATH_H

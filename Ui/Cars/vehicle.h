@@ -5,6 +5,7 @@
 
 class Checkpoint;
 class Path;
+class QAbstractAnimation;
 
 /*!
  * Vehicle is a graphics object which can move form one to another checkpoint. To set new vehicles on the scene You need to
@@ -28,6 +29,7 @@ private:
     const Path *m_currentPath;
     double m_speed;
     bool m_blinkers;
+    QAbstractAnimation* m_currentAnimation;
 
 public slots:
     void onAnimationFinish();

@@ -2,12 +2,14 @@
 #include "../Checkpoints_manager/checkpoint.h"
 #include "../Checkpoints_manager/path.h"
 #include "../../Logger/logger.h"
+#include <QAbstractAnimation>
 
 Vehicle::Vehicle( QDeclarativeItem *parent ):
     QDeclarativeItem( parent ),
     m_currentPath( NULL ),
     m_speed( 1 ),
-    m_blinkers( false )
+    m_blinkers( false ),
+    m_currentAnimation( NULL )
 {
     // Sets transformation point to center
     setTransformOriginPoint( 9, 9 );
@@ -22,7 +24,7 @@ void Vehicle::init( const Checkpoint *initCheckpoint )
 
     if( m_currentPath != NULL )
     {
-        m_currentPath->animation( this, this, m_speed );
+        m_currentAnimation = m_currentPath->animation( this, this, m_speed );
 
         LOG_INFO( "Target of this animation is on pos: (%f, %f) position", m_currentPath->targetCheckpoint()->posX(),
                   m_currentPath->targetCheckpoint()->posY() );

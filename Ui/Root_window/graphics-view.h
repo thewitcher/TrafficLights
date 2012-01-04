@@ -19,9 +19,11 @@ public:
 private:
     QGraphicsScene *m_scene;
 
+private slots:
     void initScene();
     void initGraphicsView();
     void createItems();
+    void addVehicle( double speed );
 };
 
 #endif // GRAPHICSVIEW_H

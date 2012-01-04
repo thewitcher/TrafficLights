@@ -3,7 +3,9 @@
 #include "qml-helper.h"
 #include "../Cars/vehicle.h"
 #include "../Checkpoints_manager/checkpoint-manager.h"
+#include "vehicle-manager.h"
 #include <QGraphicsItem>
+#include <QTimer>
 
 GraphicsView::GraphicsView( QWidget *parent ):
     QGraphicsView( parent )
@@ -61,104 +63,30 @@ void GraphicsView::addToScene( Vehicle *item, const Checkpoint *initCheckpoint )
     LOG_INFO( "Add item on position: (%f, %f)", initCheckpoint->posX(), initCheckpoint->posY() );
 }
 
+void GraphicsView::addVehicle( double speed )
+{
+    Vehicle *newVehicle = QmlHelper::createVehicleFromQml( "CarDesign" );
+    newVehicle->setSpeed( speed );
+
+    if( newVehicle != NULL )
+    {
+        addToScene( newVehicle, CheckpointManager::checkpointManagerInstance().checkpointById( 0 ) );
+
+        LOG_INFO( "%s was created and added to scene", newVehicle->objectName().toLatin1().data() )
+    }
+
+    VehicleManager::addVehicle( newVehicle );
+}
+
 void GraphicsView::createItems()
 {
-    // Car with normal speed (1)
-    Vehicle *newVehicle = QmlHelper::createVehicleFromQml( "CarDesign" );
-    newVehicle->setSpeed( 1 );
+    static double speed = 5;
 
-    if( newVehicle != NULL )
+    addVehicle( speed );
+    speed -= 0.5;
+
+    if( speed >= 1 )
     {
-        addToScene( newVehicle, CheckpointManager::checkpointManagerInstance().checkpointById( 0 ) );
-
-        LOG_INFO( "%s was created and added to scene", newVehicle->objectName().toLatin1().data() )
-    }
-
-    // Car with normal speed (1.5)
-    newVehicle = QmlHelper::createVehicleFromQml( "CarDesign" );
-    newVehicle->setSpeed( 1.5 );
-
-    if( newVehicle != NULL )
-    {
-        addToScene( newVehicle, CheckpointManager::checkpointManagerInstance().checkpointById( 0 ) );
-
-        LOG_INFO( "%s was created and added to scene", newVehicle->objectName().toLatin1().data() )
-    }
-
-    // Car with normal speed (2)
-    newVehicle = QmlHelper::createVehicleFromQml( "CarDesign" );
-    newVehicle->setSpeed( 2 );
-
-    if( newVehicle != NULL )
-    {
-        addToScene( newVehicle, CheckpointManager::checkpointManagerInstance().checkpointById( 0 ) );
-
-        LOG_INFO( "%s was created and added to scene", newVehicle->objectName().toLatin1().data() )
-    }
-
-    // Car with normal speed (2.5)
-    newVehicle = QmlHelper::createVehicleFromQml( "CarDesign" );
-    newVehicle->setSpeed( 2.5 );
-
-    if( newVehicle != NULL )
-    {
-        addToScene( newVehicle, CheckpointManager::checkpointManagerInstance().checkpointById( 0 ) );
-
-        LOG_INFO( "%s was created and added to scene", newVehicle->objectName().toLatin1().data() )
-    }
-
-    // Car with normal speed (3)
-    newVehicle = QmlHelper::createVehicleFromQml( "CarDesign" );
-    newVehicle->setSpeed( 3 );
-
-    if( newVehicle != NULL )
-    {
-        addToScene( newVehicle, CheckpointManager::checkpointManagerInstance().checkpointById( 0 ) );
-
-        LOG_INFO( "%s was created and added to scene", newVehicle->objectName().toLatin1().data() )
-    }
-
-    // Car with normal speed (3.5)
-    newVehicle = QmlHelper::createVehicleFromQml( "CarDesign" );
-    newVehicle->setSpeed( 3.5 );
-
-    if( newVehicle != NULL )
-    {
-        addToScene( newVehicle, CheckpointManager::checkpointManagerInstance().checkpointById( 0 ) );
-
-        LOG_INFO( "%s was created and added to scene", newVehicle->objectName().toLatin1().data() )
-    }
-
-    // Car with normal speed (4)
-    newVehicle = QmlHelper::createVehicleFromQml( "CarDesign" );
-    newVehicle->setSpeed( 4 );
-
-    if( newVehicle != NULL )
-    {
-        addToScene( newVehicle, CheckpointManager::checkpointManagerInstance().checkpointById( 0 ) );
-
-        LOG_INFO( "%s was created and added to scene", newVehicle->objectName().toLatin1().data() )
-    }
-
-    // Car with normal speed (4.5)
-    newVehicle = QmlHelper::createVehicleFromQml( "CarDesign" );
-    newVehicle->setSpeed( 4.5 );
-
-    if( newVehicle != NULL )
-    {
-        addToScene( newVehicle, CheckpointManager::checkpointManagerInstance().checkpointById( 0 ) );
-
-        LOG_INFO( "%s was created and added to scene", newVehicle->objectName().toLatin1().data() )
-    }
-
-    // Car with normal speed (5)
-    newVehicle = QmlHelper::createVehicleFromQml( "CarDesign" );
-    newVehicle->setSpeed( 5 );
-
-    if( newVehicle != NULL )
-    {
-        addToScene( newVehicle, CheckpointManager::checkpointManagerInstance().checkpointById( 0 ) );
-
-        LOG_INFO( "%s was created and added to scene", newVehicle->objectName().toLatin1().data() )
+        QTimer::singleShot( 7000, this, SLOT(createItems()) );
     }
 }
