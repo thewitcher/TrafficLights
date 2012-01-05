@@ -9,7 +9,7 @@ public:
     explicit SimpleMove( Vehicle *currentVehicle );
 
 protected:
-    void doItWhileMoving();
+    void collisionDetection();
 
     Vehicle *m_currentVehicle;
 };

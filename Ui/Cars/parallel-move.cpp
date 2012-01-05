@@ -8,7 +8,7 @@ ParallelMove::ParallelMove( Vehicle *vehicle, QObject *parent ):
 
 void ParallelMove::updateCurrentTime( int currentTime )
 {
-    doItWhileMoving();
+    collisionDetection();
 
     QParallelAnimationGroup::updateCurrentTime( currentTime );
 }

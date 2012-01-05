@@ -8,7 +8,7 @@ SequentialMove::SequentialMove( Vehicle *vehicle, QObject *parent ):
 
 void SequentialMove::updateCurrentTime( int currentTime )
 {
-    doItWhileMoving();
+    collisionDetection();
 
     QSequentialAnimationGroup::updateCurrentTime( currentTime );
 }

@@ -8,7 +8,7 @@ PropertyMove::PropertyMove( QObject *target, const QByteArray &propertyName, QOb
 
 void PropertyMove::updateCurrentTime( int currentTime )
 {
-    doItWhileMoving();
+    collisionDetection();
 
     QPropertyAnimation::updateCurrentTime( currentTime );
 }
