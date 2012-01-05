@@ -3,8 +3,10 @@
 #include "../Checkpoints_manager/path.h"
 #include "../../Logger/logger.h"
 #include <QAbstractAnimation>
-#include "QTimer"
+#include <QTimer>
+#include <math.h>
 
+#include <QDebug>
 const int Vehicle::WAIT_ON_PERMISSION = 1000;
 
 Vehicle::Vehicle( QDeclarativeItem *parent ):
@@ -12,9 +14,10 @@ Vehicle::Vehicle( QDeclarativeItem *parent ):
     m_currentPath( NULL ),
     m_speed( 1 ),
     m_blinkers( false ),
-    m_checkState( true ),
     m_currentCheckpoint( NULL ),
-    m_currentAnimation( NULL )
+    m_currentAnimation( NULL ),
+    m_consequent( NULL ),
+    m_predecessor( NULL )
 {
     // Sets transformation point to center
     setTransformOriginPoint( 9, 9 );
@@ -24,43 +27,58 @@ Vehicle::~Vehicle()
 {
 }
 
-void Vehicle::setCheckState( bool state )
-{
-    m_checkState = state;
-}
-
-bool Vehicle::checkState() const
-{
-    return m_checkState;
-}
-
 QAbstractAnimation* Vehicle::currentAnimation()
 {
     return m_currentAnimation;
 }
 
-void Vehicle::init( const Checkpoint *initCheckpoint )
+void Vehicle::init( Checkpoint *initCheckpoint )
 {
-    LOG_INFO( "Sets new speed to checkpoint: %f", m_speed );
+    Q_ASSERT( initCheckpoint != NULL );
+
+    LOG_INFO( "Sets new speed to checkpoint: %i", m_speed );
     LOG_INFO( "Creates new path for checkpoint: (%f, %f) position", initCheckpoint->posX(), initCheckpoint->posY() );
 
     static bool first = true;
 
     if( first )
     {
-        m_currentPath = initCheckpoint->randomPath();
+        // Part for collision detection
+        if( m_currentCheckpoint != NULL )
+        {
+            if( m_currentCheckpoint->lastArrived() == this )
+            {
+                qDebug() << "Jestem jedynym pojazdem na trasie i usuwam sie z listy ( " << m_speed << " )";
+                m_currentCheckpoint->setLastArrived( NULL );
+            }
+        }
+
+        m_currentCheckpoint = initCheckpoint;
+
+        Vehicle *lastArrived = m_currentCheckpoint->lastArrived();
+        setConsquent( lastArrived );
+
+        if( lastArrived != NULL )
+        {
+            lastArrived->setPredecessor( this );
+        }
+
+        m_currentCheckpoint->setLastArrived( this );
+        // ############################
+
+        m_currentPath = m_currentCheckpoint->randomPath();
+
+        m_currentAnimation = m_currentPath->animation( this, this, m_speed );
 
         first = false;
     }
 
     if( m_currentPath != NULL )
     {
-        m_currentAnimation = m_currentPath->animation( this, this, m_speed );
+        checkConsequence();
 
         if( ( m_currentPath->doTurn() == true ) && ( initCheckpoint->movePermission() == false ) )
         {
-            m_currentCheckpoint = initCheckpoint;
-
             QTimer::singleShot( WAIT_ON_PERMISSION, this, SLOT(init()) );
 
             LOG_INFO( "Permission denied. Wait time: %i", WAIT_ON_PERMISSION );
@@ -79,14 +97,114 @@ void Vehicle::init( const Checkpoint *initCheckpoint )
     }
 }
 
-void Vehicle::changeCheckState()
-{
-    m_checkState != m_checkState;
-}
-
 void Vehicle::init()
 {
     init( m_currentCheckpoint );
+}
+
+void Vehicle::checkConsequence()
+{
+    qDebug() << "Sprawdzanie czy nastepnik jest nullem ( " << m_speed << " )";
+    if( consequent() == NULL )
+    {
+        qDebug() << "Jest ( " << m_speed << " )";
+        if( isVehicleInNextCheckpoint() == true )
+        {
+            int time = timeToCollision();
+            if( time > 0 )
+            {
+                resumeMove();
+                QTimer::singleShot( time, this, SLOT(moveAndStop()) );
+            }
+            if( time == 0 )
+            {
+                qDebug() << "Stoje bo mam czas równy zero ( " << m_speed << " )";
+                pauseMove();
+                QTimer::singleShot( 1000, this, SLOT(checkConsequence()) );
+            }
+        }
+
+        // Else - just go to the next checkpoint and inform previous vehicle about this.
+        resumeMove();
+    }
+    else
+    {
+        qDebug() << "Nie jest";
+        int time = timeToCollision();
+
+        if( time > 0 )
+        {
+            resumeMove();
+            QTimer::singleShot( time, this, SLOT(moveAndStop()) );
+        }
+        if( time == 0 )
+        {
+            qDebug() << "Stoje bo mam czas równy zero ( " << m_speed << " )";
+            pauseMove();
+            QTimer::singleShot( 1000, this, SLOT(checkConsequence()) );
+        }
+    }
+}
+
+void Vehicle::moveAndStop()
+{
+    qDebug() << "Start: moveAndStop()";
+    Q_ASSERT( m_currentAnimation != NULL );
+
+    // If vehicle is paused then we resume animation. In other cases we pause the animation.
+    if( m_currentAnimation->state() != QAbstractAnimation::Paused )
+    {
+        qDebug() << "Zatrzymanie ( " << m_speed << " )";;
+        m_currentAnimation->pause();
+    }
+
+    qDebug() << "(Koniec: moveAndStop) Stoje bo ruszylem sie tyle ile trzeba ( " << m_speed << " )";
+    checkConsequence();
+}
+
+void Vehicle::resumeMove()
+{
+    Q_ASSERT( m_currentAnimation != NULL );
+
+    if( m_currentAnimation->state() != QAbstractAnimation::Running )
+    {
+        qDebug() << "Resume moving";
+        m_currentAnimation->resume();
+    }
+}
+
+void Vehicle::pauseMove()
+{
+    Q_ASSERT( m_currentAnimation != NULL );
+
+    if( m_currentAnimation->state() != QAbstractAnimation::Paused )
+    {
+        qDebug() << "Pause moving";
+        m_currentAnimation->pause();
+    }
+}
+
+bool Vehicle::isVehicleInNextCheckpoint()
+{
+    return true;
+}
+
+int Vehicle::timeToCollision()
+{
+    if( consequent() == NULL )
+    {
+        return 0;
+    }
+
+    int distance = sqrt( pow( x() - consequent()->x(), 2) + pow( y() - consequent()->y(), 2) );
+    qDebug() << "Distance: " << distance;
+
+    if( distance < 30 )
+    {
+        return 0;
+    }
+
+    return ( distance / ( 10 * m_speed ) );
 }
 
 void Vehicle::onAnimationFinish()
@@ -101,10 +219,15 @@ void Vehicle::onAnimationFinish()
         return;
     }
 
+    if( m_predecessor != NULL )
+    {
+        m_predecessor->setConsquent( NULL );
+    }
+
     init( m_currentPath->targetCheckpoint() );
 }
 
-void Vehicle::setSpeed( double speed )
+void Vehicle::setSpeed( int speed )
 {
     m_speed = speed;
 }
@@ -123,7 +246,22 @@ bool Vehicle::blinkers()
     return m_blinkers;
 }
 
-void Vehicle::startMove()
+const Vehicle* Vehicle::consequent() const
 {
-    m_currentAnimation->resume();
+    return m_consequent;
+}
+
+void Vehicle::setConsquent( Vehicle *consequent )
+{
+    m_consequent = consequent;
+}
+
+const Vehicle* Vehicle::predecessor() const
+{
+    return m_predecessor;
+}
+
+void Vehicle::setPredecessor( Vehicle *predecessor )
+{
+    m_predecessor = predecessor;
 }

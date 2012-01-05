@@ -22,29 +22,36 @@ public:
     explicit Vehicle( QDeclarativeItem *parent = 0 );
     ~Vehicle();
 
-    void setSpeed( double speed );
+    void setSpeed( int speed );
     bool blinkers();
     QAbstractAnimation* currentAnimation();
-    void setCheckState( bool state );
-    bool checkState() const;
+    void setPredecessor( Vehicle* predecessor );
+    const Vehicle* predecessor() const;
+    void setConsquent( Vehicle* consequent );
+    const Vehicle* consequent() const;
+    bool isVehicleInNextCheckpoint();
+    int timeToCollision();
 
 private:
     const Path *m_currentPath;
-    double m_speed;
+    int m_speed;
     bool m_blinkers;
-    bool m_checkState;
-    const Checkpoint* m_currentCheckpoint;
+    Checkpoint* m_currentCheckpoint;
     QAbstractAnimation* m_currentAnimation;
+    Vehicle *m_consequent; // Vehicle in front of this vehicle
+    Vehicle *m_predecessor;
 
     static const int WAIT_ON_PERMISSION;
 
 public slots:
-    void init( const Checkpoint* initCheckpoint );
+    void init( Checkpoint* initCheckpoint );
     void init();
     void onAnimationFinish();
     void switchOnOffBlinkers( bool blinkers = false ); // Don't use argument. It's not used.
-    void startMove();
-    void changeCheckState();
+    void checkConsequence();
+    void moveAndStop();
+    void resumeMove();
+    void pauseMove();
 
 signals:
     void blinkersChanged();

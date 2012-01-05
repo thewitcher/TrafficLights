@@ -1,8 +1,7 @@
 #include "sequential-move.h"
 
-SequentialMove::SequentialMove( Vehicle *vehicle, QObject *parent ):
-    QSequentialAnimationGroup( parent ),
-    SimpleMove( vehicle )
+SequentialMove::SequentialMove( QObject *parent ):
+    QSequentialAnimationGroup( parent )
 {
 }
 

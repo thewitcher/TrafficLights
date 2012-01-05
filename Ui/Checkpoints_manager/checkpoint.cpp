@@ -9,7 +9,8 @@ Checkpoint::Checkpoint(qreal x, qreal y):
     m_x( x ),
     m_y( y ),
     m_id( 0 ),
-    m_movePermission( true )
+    m_movePermission( true ),
+    m_lastArrived( NULL )
 {
 }
 
@@ -254,4 +255,14 @@ int Checkpoint::estimatedMovingTimeToTargetCheckpoint( const Checkpoint *targetC
 bool Checkpoint::movePermission() const
 {
     return m_movePermission;
+}
+
+void Checkpoint::setLastArrived( Vehicle *lastArrived )
+{
+    m_lastArrived = lastArrived;
+}
+
+Vehicle* Checkpoint::lastArrived() const
+{
+    return m_lastArrived;
 }

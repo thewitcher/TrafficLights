@@ -10,8 +10,6 @@ Path::Path( Checkpoint *targetCheckpoint, int duration, const QByteArray &moveCo
     m_targetCheckpoint( targetCheckpoint ),
     m_turnDuration( -1 ),
     m_moveDuration( duration ),
-    m_originalTurnDuration( -1 ),
-    m_originalMoveDuration( duration ),
     m_moveCoordinateProperty( moveCoordinateProperty ),
     m_easingCurveX( QEasingCurve::Linear ),
     m_easingCurveY( QEasingCurve::Linear ),
@@ -28,8 +26,6 @@ Path::Path( Checkpoint *targetCheckpoint, int duration,
     m_targetCheckpoint( targetCheckpoint ),
     m_turnDuration( -1 ),
     m_moveDuration( duration ),
-    m_originalTurnDuration( -1 ),
-    m_originalMoveDuration( duration ),
     m_moveCoordinateProperty( QByteArray() ),
     m_easingCurveX( easingCurveX ),
     m_easingCurveY( easingCurveY ),
@@ -49,8 +45,6 @@ Path::Path( Checkpoint *targetCheckpoint, int turnDuration, int moveDuration,
     m_targetCheckpoint( targetCheckpoint ),
     m_turnDuration( turnDuration ),
     m_moveDuration( moveDuration ),
-    m_originalTurnDuration( turnDuration ),
-    m_originalMoveDuration( moveDuration ),
     m_moveCoordinateProperty( QByteArray() ),
     m_easingCurveX( easingCurveX ),
     m_easingCurveY( easingCurveY ),
@@ -70,8 +64,6 @@ Path::Path( Checkpoint *targetCheckpoint, int turnDuration, int moveDuration,
     m_targetCheckpoint( targetCheckpoint ),
     m_turnDuration( turnDuration ),
     m_moveDuration( moveDuration ),
-    m_originalTurnDuration( turnDuration ),
-    m_originalMoveDuration( moveDuration ),
     m_moveCoordinateProperty( moveCoordinateProperty ),
     m_easingCurveX( QEasingCurve::Linear ),
     m_easingCurveY( QEasingCurve::Linear ),
@@ -87,7 +79,7 @@ Path::~Path()
 {
 }
 
-const Checkpoint* Path::targetCheckpoint() const
+Checkpoint* Path::targetCheckpoint() const
 {
     return m_targetCheckpoint;
 }
@@ -97,28 +89,24 @@ QAbstractAnimation* Path::animation( Vehicle *target, QObject *parent, double sp
     Q_UNUSED( parent );
 
     LOG_INFO( "Times duration by %f", speedMultiplier );
-
-    m_moveDuration = m_originalMoveDuration * speedMultiplier;
-    m_turnDuration = m_originalTurnDuration * speedMultiplier;
-
     LOG_INFO( "Starts switching by path type in: %s", __FUNCTION__ );
 
     switch( m_pathType )
     {
     case MOVE:
-        return movingToTargetCheckpointAnimation( target, true );
+        return movingToTargetCheckpointAnimation( target, true, speedMultiplier );
     case MOVE_XY:
-        return movingByXYToTargetCheckpointAnimation( target, true );
+        return movingByXYToTargetCheckpointAnimation( target, true, speedMultiplier );
     case TURN_AND_MOVE:
-        return turnAndMovingToTargetCheckpointAnimation( target );
+        return turnAndMovingToTargetCheckpointAnimation( target, speedMultiplier );
     case TURN_AND_MOVE_XY:
-        return turnAndMovingByXYToTargetCheckpointAnimation( target );
+        return turnAndMovingByXYToTargetCheckpointAnimation( target, speedMultiplier );
     }
 
     return NULL;
 }
 
-QAbstractAnimation* Path::movingToTargetCheckpointAnimation( Vehicle *target, bool start, QObject* parent ) const
+QAbstractAnimation* Path::movingToTargetCheckpointAnimation( Vehicle *target, bool start, int speedMiltiplier, QObject* parent ) const
 {
     Q_UNUSED( parent );
 
@@ -126,7 +114,7 @@ QAbstractAnimation* Path::movingToTargetCheckpointAnimation( Vehicle *target, bo
 
     PropertyMove *propertyMove = new PropertyMove( target, m_moveCoordinateProperty, target );
 
-    propertyMove->setDuration( m_moveDuration );
+    propertyMove->setDuration( m_moveDuration * speedMiltiplier );
 
     if( m_moveCoordinateProperty == "x" )
     {
@@ -159,23 +147,23 @@ QAbstractAnimation* Path::movingToTargetCheckpointAnimation( Vehicle *target, bo
     return propertyMove;
 }
 
-QAbstractAnimation* Path::movingByXYToTargetCheckpointAnimation( Vehicle *target, bool start, QObject *parent ) const
+QAbstractAnimation* Path::movingByXYToTargetCheckpointAnimation( Vehicle *target, bool start, int speedMiltiplier, QObject *parent ) const
 {
     LOG_INFO( "Moving animation by x and y coordinate (%s)", __FUNCTION__ );
 
-    ParallelMove *parallelMove = new ParallelMove( target, parent );
+    ParallelMove *parallelMove = new ParallelMove( parent );
 
     parallelMove->setObjectName( "parallelAniamtion" );
 
     QPropertyAnimation *propertyAnimationX = new QPropertyAnimation( target, "x", parallelMove );
-    propertyAnimationX->setDuration( m_moveDuration );
+    propertyAnimationX->setDuration( m_moveDuration * speedMiltiplier );
     propertyAnimationX->setStartValue( target->x() );
     propertyAnimationX->setEndValue( m_targetCheckpoint->posX() );
     propertyAnimationX->setEasingCurve( m_easingCurveX );
     propertyAnimationX->setObjectName( "propertyMoveAnimation" );
 
     QPropertyAnimation *propertyAnimationY = new QPropertyAnimation( target, "y", parallelMove );
-    propertyAnimationY->setDuration( m_moveDuration );
+    propertyAnimationY->setDuration( m_moveDuration * speedMiltiplier );
     propertyAnimationY->setStartValue( target->y() );
     propertyAnimationY->setEndValue( m_targetCheckpoint->posY() );
     propertyAnimationX->setEasingCurve( m_easingCurveY );
@@ -194,7 +182,7 @@ QAbstractAnimation* Path::movingByXYToTargetCheckpointAnimation( Vehicle *target
     return parallelMove;
 }
 
-QAbstractAnimation* Path::turnAndMovingByXYToTargetCheckpointAnimation( Vehicle *target ) const
+QAbstractAnimation* Path::turnAndMovingByXYToTargetCheckpointAnimation( Vehicle *target, int speedMiltiplier ) const
 {
     LOG_INFO( "Turn and move animation by x and y coordinate (%s) (is sequential: %i)", __FUNCTION__, m_sequential );
 
@@ -227,7 +215,7 @@ QAbstractAnimation* Path::turnAndMovingByXYToTargetCheckpointAnimation( Vehicle 
 
     // Adding every animations to sequential group and start the animation
     animationGroup->addAnimation( propertyAnimationRotate );
-    animationGroup->addAnimation( movingByXYToTargetCheckpointAnimation( target, false, animationGroup ) );
+    animationGroup->addAnimation( movingByXYToTargetCheckpointAnimation( target, false, speedMiltiplier, animationGroup ) );
 
     QObject::connect( propertyAnimationRotate, SIGNAL(finished()), target, SLOT(switchOnOffBlinkers()) );
     QObject::connect( animationGroup, SIGNAL(finished()), target, SLOT(onAnimationFinish()) );
@@ -237,7 +225,7 @@ QAbstractAnimation* Path::turnAndMovingByXYToTargetCheckpointAnimation( Vehicle 
     return animationGroup;
 }
 
-QAbstractAnimation* Path::turnAndMovingToTargetCheckpointAnimation( Vehicle *target ) const
+QAbstractAnimation* Path::turnAndMovingToTargetCheckpointAnimation( Vehicle *target, int speedMiltiplier ) const
 {
     LOG_INFO( "Turn and move animation by one coordinate (%s)", __FUNCTION__ );
 
@@ -270,7 +258,7 @@ QAbstractAnimation* Path::turnAndMovingToTargetCheckpointAnimation( Vehicle *tar
 
     // Adding every animations to sequential group and start the animation
     animationGroup->addAnimation( propertyAnimationRotate );
-    animationGroup->addAnimation( movingToTargetCheckpointAnimation( target, false, animationGroup ) );
+    animationGroup->addAnimation( movingToTargetCheckpointAnimation( target, false, speedMiltiplier, animationGroup ) );
 
     QObject::connect( propertyAnimationRotate, SIGNAL(finished()), target, SLOT(switchOnOffBlinkers()) );
     QObject::connect( animationGroup, SIGNAL(finished()), target, SLOT(onAnimationFinish()) );
