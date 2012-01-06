@@ -5,6 +5,7 @@
 #include <QEasingCurve>
 
 class Path;
+class Vehicle;
 
 /*!
  * This is point where vehicles get new animations. It gives permission to cars to go from this point. Checkpoints are deploy on the scene
@@ -22,7 +23,6 @@ public:
     const Path* randomPath() const;
     qreal posX() const;
     qreal posY() const;
-    void setTimeVariable( int timeVariable );
     bool movePermission() const;
 
 private:

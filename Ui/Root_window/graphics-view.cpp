@@ -3,8 +3,7 @@
 #include "qml-helper.h"
 #include "../Cars/vehicle.h"
 #include "../Checkpoints_manager/checkpoint-manager.h"
-#include "vehicle-manager.h"
-#include <QGraphicsItem>
+#include "vehicle-static-container.h"
 #include <QTimer>
 
 /*!
@@ -76,7 +75,7 @@ void GraphicsView::initGraphicsView()
  * You can add new vehicle to the scene in initCheckpoint. This function is used in createItems method
  * and You don't need to use it manually.
  */
-void GraphicsView::addToScene( Vehicle *item, const Checkpoint *initCheckpoint )
+void GraphicsView::addToScene( Vehicle *item, Checkpoint *initCheckpoint )
 {
     LOG_INFO( "Start: %s", __FUNCTION__ );
 
@@ -96,7 +95,7 @@ void GraphicsView::createCheckpointsManager()
 /*!
  * It creates new vehicle from qml file and adds it to the scene.
  */
-void GraphicsView::addVehicle( double speed )
+void GraphicsView::addVehicle( int speed )
 {
     Vehicle *newVehicle = QmlHelper::createVehicleFromQml( "CarDesign" );
     newVehicle->setSpeed( speed );
@@ -105,22 +104,23 @@ void GraphicsView::addVehicle( double speed )
     {
         addToScene( newVehicle, m_checkpointManager->checkpointById( 0 ) );
 
+        VehicleStaticContainer::VEHICLES.append( newVehicle );
+
         LOG_INFO( "%s was created and added to scene", newVehicle->objectName().toLatin1().data() )
     }
-
-    VehicleManager::addVehicle( newVehicle );
 }
 
 void GraphicsView::createItems()
 {
-    static double speed = 5;
+    static int speed = 0;
 
-    if( speed >= 1 )
+    if( speed <= 15 )
     {
-        addVehicle( speed );
+        int currentSpeed = ( speed % 3 ) + 2;
+        addVehicle( currentSpeed );
 
-        QTimer::singleShot( 7000, this, SLOT(createItems()) );
+        QTimer::singleShot( 5000, this, SLOT(createItems()) );
     }
 
-    speed -= 0.5;
+    speed += 1;
 }

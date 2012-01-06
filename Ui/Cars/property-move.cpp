@@ -1,8 +1,9 @@
 #include "property-move.h"
+#include "vehicle.h"
 
-PropertyMove::PropertyMove( QObject *target, const QByteArray &propertyName, QObject *parent ):
+PropertyMove::PropertyMove( Vehicle *target, const QByteArray &propertyName, QObject *parent ):
     QPropertyAnimation( target, propertyName, parent ),
-    SimpleMove( NULL )
+    SimpleMove( target )
 {
 }
 

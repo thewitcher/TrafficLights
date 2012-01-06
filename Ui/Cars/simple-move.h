@@ -6,12 +6,12 @@ class Vehicle;
 class SimpleMove
 {
 public:
-    explicit SimpleMove( Vehicle *currentVehicle );
+    explicit SimpleMove( Vehicle *target );
 
 protected:
-    void collisionDetection();
-
     Vehicle *m_currentVehicle;
+
+    void collisionDetection();
 };
 
 #endif // SIMPLEMOVE_H

@@ -1,8 +1,8 @@
 #include "parallel-move.h"
 
-ParallelMove::ParallelMove( Vehicle *vehicle, QObject *parent ):
+ParallelMove::ParallelMove( Vehicle *target, QObject *parent ):
     QParallelAnimationGroup( parent ),
-    SimpleMove( vehicle )
+    SimpleMove( target )
 {
 }
 

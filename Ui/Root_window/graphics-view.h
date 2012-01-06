@@ -16,7 +16,7 @@ public:
     explicit GraphicsView( QWidget *parent = 0 );
     ~GraphicsView();
 
-    void addToScene( Vehicle *item, const Checkpoint* initCheckpoint );
+    void addToScene( Vehicle *item, Checkpoint* initCheckpoint );
 
 private:
     QGraphicsScene *m_scene;
@@ -26,7 +26,7 @@ private slots:
     void initScene();
     void initGraphicsView();
     void createItems();
-    void addVehicle( double speed );
+    void addVehicle( int speed );
     void createCheckpointsManager();
 };
 

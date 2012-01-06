@@ -32,17 +32,15 @@ public:
      * Parameter increaseSpeed is added to duration. After finish this method, duration variable goes back to default value.
      */
     QAbstractAnimation* animation( Vehicle *target, QObject *parent, double speedMultiplier ) const;
-    const Checkpoint* targetCheckpoint() const;
+    Checkpoint* targetCheckpoint() const;
     bool doTurn() const; // Returns true if movement will start with turn.
 
 private:
     enum PathType{ MOVE, TURN_AND_MOVE, MOVE_XY, TURN_AND_MOVE_XY };
 
-    const Checkpoint *m_targetCheckpoint; // This will be deleted by checkpoint manager
+    Checkpoint *m_targetCheckpoint; // This will be deleted by checkpoint manager
     mutable int m_turnDuration;
     mutable int m_moveDuration;
-    int m_originalTurnDuration;
-    int m_originalMoveDuration;
     const QByteArray m_moveCoordinateProperty;
     const QEasingCurve::Type m_easingCurveX;
     const QEasingCurve::Type m_easingCurveY;
@@ -51,11 +49,11 @@ private:
     const Checkpoint::TurnType m_turnType;
     const bool m_sequential;
 
-    QAbstractAnimation* movingToTargetCheckpointAnimation( Vehicle *target, bool start = true, QObject* parent = 0 ) const;
-    QAbstractAnimation* movingByXYToTargetCheckpointAnimation( Vehicle *target, bool start = true, QObject* parent = 0 ) const;
+    QAbstractAnimation* movingToTargetCheckpointAnimation( Vehicle *target, bool start, int speedMiltiplier, QObject* parent = 0 ) const;
+    QAbstractAnimation* movingByXYToTargetCheckpointAnimation( Vehicle *target, bool start, int speedMiltiplier, QObject* parent = 0 ) const;
 
-    QAbstractAnimation* turnAndMovingToTargetCheckpointAnimation( Vehicle *target ) const;
-    QAbstractAnimation* turnAndMovingByXYToTargetCheckpointAnimation( Vehicle *target ) const;
+    QAbstractAnimation* turnAndMovingToTargetCheckpointAnimation( Vehicle *target, int speedMiltiplier ) const;
+    QAbstractAnimation* turnAndMovingByXYToTargetCheckpointAnimation( Vehicle *target, int speedMiltiplier ) const;
 };
 
 #endif // PATH_H

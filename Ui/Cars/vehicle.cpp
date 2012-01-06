@@ -3,7 +3,7 @@
 #include "../Checkpoints_manager/path.h"
 #include "../../Logger/logger.h"
 #include <QAbstractAnimation>
-#include "QTimer"
+#include <QTimer>
 
 const int Vehicle::WAIT_ON_PERMISSION = 1000;
 
@@ -12,7 +12,6 @@ Vehicle::Vehicle( QDeclarativeItem *parent ):
     m_currentPath( NULL ),
     m_speed( 1 ),
     m_blinkers( false ),
-    m_checkState( true ),
     m_currentCheckpoint( NULL ),
     m_currentAnimation( NULL )
 {
@@ -24,43 +23,35 @@ Vehicle::~Vehicle()
 {
 }
 
-void Vehicle::setCheckState( bool state )
-{
-    m_checkState = state;
-}
-
-bool Vehicle::checkState() const
-{
-    return m_checkState;
-}
-
 QAbstractAnimation* Vehicle::currentAnimation()
 {
     return m_currentAnimation;
 }
 
-void Vehicle::init( const Checkpoint *initCheckpoint )
+void Vehicle::init( Checkpoint *initCheckpoint )
 {
-    LOG_INFO( "Sets new speed to checkpoint: %f", m_speed );
+    Q_ASSERT( initCheckpoint != NULL );
+
+    LOG_INFO( "Sets new speed to checkpoint: %i", m_speed );
     LOG_INFO( "Creates new path for checkpoint: (%f, %f) position", initCheckpoint->posX(), initCheckpoint->posY() );
 
     static bool first = true;
 
     if( first )
     {
-        m_currentPath = initCheckpoint->randomPath();
+        m_currentCheckpoint = initCheckpoint;
+
+        m_currentPath = m_currentCheckpoint->randomPath();
+
+        m_currentAnimation = m_currentPath->animation( this, this, m_speed );
 
         first = false;
     }
 
     if( m_currentPath != NULL )
     {
-        m_currentAnimation = m_currentPath->animation( this, this, m_speed );
-
         if( ( m_currentPath->doTurn() == true ) && ( initCheckpoint->movePermission() == false ) )
         {
-            m_currentCheckpoint = initCheckpoint;
-
             QTimer::singleShot( WAIT_ON_PERMISSION, this, SLOT(init()) );
 
             LOG_INFO( "Permission denied. Wait time: %i", WAIT_ON_PERMISSION );
@@ -79,14 +70,29 @@ void Vehicle::init( const Checkpoint *initCheckpoint )
     }
 }
 
-void Vehicle::changeCheckState()
-{
-    m_checkState != m_checkState;
-}
-
 void Vehicle::init()
 {
     init( m_currentCheckpoint );
+}
+
+void Vehicle::resumeMove()
+{
+    Q_ASSERT( m_currentAnimation != NULL );
+
+    if( m_currentAnimation->state() != QAbstractAnimation::Running )
+    {
+        m_currentAnimation->resume();
+    }
+}
+
+void Vehicle::pauseMove()
+{
+    Q_ASSERT( m_currentAnimation != NULL );
+
+    if( m_currentAnimation->state() != QAbstractAnimation::Paused )
+    {
+        m_currentAnimation->pause();
+    }
 }
 
 void Vehicle::onAnimationFinish()
@@ -104,7 +110,7 @@ void Vehicle::onAnimationFinish()
     init( m_currentPath->targetCheckpoint() );
 }
 
-void Vehicle::setSpeed( double speed )
+void Vehicle::setSpeed( int speed )
 {
     m_speed = speed;
 }
@@ -121,9 +127,4 @@ void Vehicle::switchOnOffBlinkers( bool blinkers )
 bool Vehicle::blinkers()
 {
     return m_blinkers;
-}
-
-void Vehicle::startMove()
-{
-    m_currentAnimation->resume();
 }
