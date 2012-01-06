@@ -16,8 +16,6 @@ class Vehicle: public QDeclarativeItem
 {
 
     Q_OBJECT
-    Q_PROPERTY( Blinkers blinkers READ blinkers WRITE setBlinkers )
-    Q_PROPERTY( bool longLigths READ longLigths WRITE setLongLights )
     Q_ENUMS( Blinkers )
 
 public:
@@ -27,18 +25,13 @@ public:
     enum Blinkers { RIGHT_BLINKERS, LEFT_BLINKERS, NO_BLINKERS };
 
     void setSpeed( int speed );
-    Blinkers blinkers();
-    bool longLigths();
-    void setLongLights( bool light );
     QAbstractAnimation* currentAnimation();
 
 private:
     const Path *m_currentPath;
     int m_speed;
-    Blinkers m_blinkers;
     Checkpoint* m_currentCheckpoint;
     QAbstractAnimation* m_currentAnimation;
-    bool m_longLights;
 
     static const int WAIT_ON_PERMISSION;
 
@@ -47,6 +40,8 @@ public slots:
     void init();
     void onAnimationFinish();
     virtual void setBlinkers( Blinkers blinkers = NO_BLINKERS );
+    virtual void setLongLights( bool longLight = false );
+    virtual void setBackLights( bool backLight = false );
     void resumeMove();
     void pauseMove();
 };
