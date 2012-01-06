@@ -3,7 +3,7 @@
 #include "../Ui/Root_window/root-window.h"
 #include "../Logger/logger.h"
 #include "../Settings/settings.h"
-#include "../Ui/Cars/vehicle.h"
+#include "../Ui/Cars/motor-car.h"
 
 int main(int argc, char *argv[])
 {
@@ -13,7 +13,7 @@ int main(int argc, char *argv[])
     Logger::init();
 
     //Register type
-    qmlRegisterType<Vehicle>( "Vehicles", 1, 0, "Vehicles" );
+    qmlRegisterType<MotorCar> ("Cars", 1, 0, "MotorCar");
 
     RootWindow w;
     w.show();

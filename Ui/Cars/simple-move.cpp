@@ -12,12 +12,12 @@ SimpleMove::SimpleMove( Vehicle *target ):
 void SimpleMove::collisionDetection()
 {
     // Checking collisions
-    QList<Vehicle*> vehicles = VehicleStaticContainer::VEHICLES;
-    vehicles.removeOne( m_currentVehicle );
+//    QList<Vehicle*> vehicles = VehicleStaticContainer::VEHICLES;
+//    vehicles.removeOne( m_currentVehicle );
 
-    QListIterator<Vehicle*> iterator( vehicles );
+//    QListIterator<Vehicle*> iterator( vehicles );
 
-    while( iterator.hasNext() )
-    {
-    }
+//    while( iterator.hasNext() )
+//    {
+//    }
 }

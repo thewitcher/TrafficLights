@@ -1,2 +1,12 @@
 OTHER_FILES += \
-    Qml/CarDesign.qml
+    Qml/BackLight.qml \
+    Qml/LongLight.qml \
+    Qml/Blinkers.qml \
+    Qml/MotorCar.qml
+
+
+
+
+
+
+

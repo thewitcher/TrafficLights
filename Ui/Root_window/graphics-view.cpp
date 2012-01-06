@@ -97,7 +97,7 @@ void GraphicsView::createCheckpointsManager()
  */
 void GraphicsView::addVehicle( int speed )
 {
-    Vehicle *newVehicle = QmlHelper::createVehicleFromQml( "CarDesign" );
+    Vehicle *newVehicle = QmlHelper::createVehicleFromQml( "MotorCar" );
     newVehicle->setSpeed( speed );
 
     if( newVehicle != NULL )
@@ -105,7 +105,7 @@ void GraphicsView::addVehicle( int speed )
         addToScene( newVehicle, m_checkpointManager->checkpointById( 0 ) );
 
         VehicleStaticContainer::VEHICLES.append( newVehicle );
-
+          
         LOG_INFO( "%s was created and added to scene", newVehicle->objectName().toLatin1().data() )
     }
 }
