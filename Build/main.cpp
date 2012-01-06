@@ -4,6 +4,7 @@
 #include "../Logger/logger.h"
 #include "../Settings/settings.h"
 #include "../Ui/Cars/vehicle.h"
+#include "../Ui/Cars/mycars.h"
 
 int main(int argc, char *argv[])
 {
@@ -14,6 +15,7 @@ int main(int argc, char *argv[])
 
     //Register type
     qmlRegisterType<Vehicle>( "Vehicles", 1, 0, "Vehicles" );
+    qmlRegisterType<MyCars> ("Cars", 1, 0, "MyCars");
 
     RootWindow w;
     w.show();

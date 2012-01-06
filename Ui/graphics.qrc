@@ -1,8 +1,13 @@
 <RCC>
     <qresource prefix="/graphics">
         <file alias="viewport_background">Graphics/cross_big_square_png.png</file>
+        <file>Graphics/osobowe2.png</file>
     </qresource>
     <qresource prefix="/qml">
         <file>Qml/CarDesign.qml</file>
+        <file>Qml/Auto.qml</file>
+        <file>Qml/BackLight.qml</file>
+        <file>Qml/LongLight.qml</file>
+        <file>Qml/TurnSignal.qml</file>
     </qresource>
 </RCC>

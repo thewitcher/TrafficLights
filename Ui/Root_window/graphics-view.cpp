@@ -64,7 +64,8 @@ void GraphicsView::addToScene( Vehicle *item, const Checkpoint *initCheckpoint )
 void GraphicsView::createItems()
 {
     // Car with normal speed (1)
-    Vehicle *newVehicle = QmlHelper::createVehicleFromQml( "CarDesign" );
+//    Vehicle *newVehicle = QmlHelper::createVehicleFromQml( "CarDesign" );
+      Vehicle *newVehicle = QmlHelper::createVehicleFromQml( "Auto" );
     newVehicle->setSpeed( 1 );
 
     if( newVehicle != NULL )
@@ -74,8 +75,12 @@ void GraphicsView::createItems()
         LOG_INFO( "%s was created and added to scene", newVehicle->objectName().toLatin1().data() )
     }
 
+    QMetaObject::invokeMethod(newVehicle, "turnOnLongLight");
+    QMetaObject::invokeMethod(newVehicle, "turnOnSignal");
+
     // Car with normal speed (1.5)
-    newVehicle = QmlHelper::createVehicleFromQml( "CarDesign" );
+//    newVehicle = QmlHelper::createVehicleFromQml( "CarDesign" );
+      newVehicle = QmlHelper::createVehicleFromQml( "Auto" );
     newVehicle->setSpeed( 1.5 );
 
     if( newVehicle != NULL )
@@ -86,7 +91,8 @@ void GraphicsView::createItems()
     }
 
     // Car with normal speed (2)
-    newVehicle = QmlHelper::createVehicleFromQml( "CarDesign" );
+//    newVehicle = QmlHelper::createVehicleFromQml( "CarDesign" );
+    newVehicle = QmlHelper::createVehicleFromQml( "Auto" );
     newVehicle->setSpeed( 2 );
 
     if( newVehicle != NULL )
@@ -97,7 +103,8 @@ void GraphicsView::createItems()
     }
 
     // Car with normal speed (2.5)
-    newVehicle = QmlHelper::createVehicleFromQml( "CarDesign" );
+//    newVehicle = QmlHelper::createVehicleFromQml( "CarDesign" );
+    newVehicle = QmlHelper::createVehicleFromQml( "Auto" );
     newVehicle->setSpeed( 2.5 );
 
     if( newVehicle != NULL )
@@ -108,7 +115,8 @@ void GraphicsView::createItems()
     }
 
     // Car with normal speed (3)
-    newVehicle = QmlHelper::createVehicleFromQml( "CarDesign" );
+//    newVehicle = QmlHelper::createVehicleFromQml( "CarDesign" );
+    newVehicle = QmlHelper::createVehicleFromQml( "Auto" );
     newVehicle->setSpeed( 3 );
 
     if( newVehicle != NULL )
@@ -119,7 +127,8 @@ void GraphicsView::createItems()
     }
 
     // Car with normal speed (3.5)
-    newVehicle = QmlHelper::createVehicleFromQml( "CarDesign" );
+//    newVehicle = QmlHelper::createVehicleFromQml( "CarDesign" );
+    newVehicle = QmlHelper::createVehicleFromQml( "Auto" );
     newVehicle->setSpeed( 3.5 );
 
     if( newVehicle != NULL )
@@ -130,7 +139,8 @@ void GraphicsView::createItems()
     }
 
     // Car with normal speed (4)
-    newVehicle = QmlHelper::createVehicleFromQml( "CarDesign" );
+//    newVehicle = QmlHelper::createVehicleFromQml( "CarDesign" );
+    newVehicle = QmlHelper::createVehicleFromQml( "Auto" );
     newVehicle->setSpeed( 4 );
 
     if( newVehicle != NULL )
@@ -141,7 +151,8 @@ void GraphicsView::createItems()
     }
 
     // Car with normal speed (4.5)
-    newVehicle = QmlHelper::createVehicleFromQml( "CarDesign" );
+//    newVehicle = QmlHelper::createVehicleFromQml( "CarDesign" );
+    newVehicle = QmlHelper::createVehicleFromQml( "Auto" );
     newVehicle->setSpeed( 4.5 );
 
     if( newVehicle != NULL )
@@ -152,7 +163,8 @@ void GraphicsView::createItems()
     }
 
     // Car with normal speed (5)
-    newVehicle = QmlHelper::createVehicleFromQml( "CarDesign" );
+//    newVehicle = QmlHelper::createVehicleFromQml( "CarDesign" );
+    newVehicle = QmlHelper::createVehicleFromQml( "Auto" );
     newVehicle->setSpeed( 5 );
 
     if( newVehicle != NULL )
