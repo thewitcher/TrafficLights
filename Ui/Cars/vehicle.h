@@ -46,7 +46,7 @@ public slots:
     void init( Checkpoint* initCheckpoint );
     void init();
     void onAnimationFinish();
-    void setBlinkers( Blinkers blinkers = NO_BLINKERS );
+    virtual void setBlinkers( Blinkers blinkers = NO_BLINKERS );
     void resumeMove();
     void pauseMove();
 };

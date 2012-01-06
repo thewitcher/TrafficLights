@@ -6,6 +6,7 @@ MotorCar {
 
     width: 18
     height: 18
+    scale:3
 
 signal turnOnLongLights
 
@@ -19,6 +20,25 @@ function turnOnSignal()
     timer.running = true
 }
 
+function turnOnLeftBlinkers()
+{
+    console.log("zmieniam lewe")
+        leftBlinkers.running = true
+}
+
+function turnOnRightBlinkers()
+{
+     console.log("zmieniam prawe")
+     rightBlinkers.running = true
+}
+
+function stopBlinkers()
+{
+     console.log("Przerwa")
+        rightBlinkers.running = false
+        leftBlinkers.running = false
+}
+
 function turnOnLongLight()
 {
     longLeftLight.state = "night"
@@ -30,57 +50,29 @@ function turnOnLongLight()
         width: 18
         height: 18
         rotation: -90
-//        color: "blue"
 
         property int insideTime: 0
 
-        Timer{
-            id:timer
-            interval: 500
-            repeat: true
+        SequentialAnimation {
+            id: leftBlinkers
             running: false
-            onTriggered: {
-                rootRect.insideTime = rootRect.insideTime + 1
-                if(root.m_turnSignal == MotorCar.TurnRight)
-                {
-                    if(rootRect.insideTime % 2)
-                    {
-                        leftTurnSignal.color = "#be6e13"
-                        rightTurnSignal.color = "#ff750b"
-                        rightTurnSignal.scale = 2.5
-                    }
-                    else
-                    {
-                        rightTurnSignal.color = "#be6e13"
-                        rightTurnSignal.scale = 1
-                    }
-                }
-                else if(root.m_turnSignal == MotorCar.TurnLeft){
-                    if(rootRect.insideTime % 2)
-                    {
-                        rightTurnSignal.color = "#be6e13"
-                        rightTurnSignal.scale = 1
-                        leftTurnSignal.color = "#ff750b"
-                        leftTurnSignal.scale = 2.5
-                    }
-                    else
-                    {
-                        leftTurnSignal.color = "#be6e13"
-                        leftTurnSignal.scale = 1
-                    }
-                }
-                else
-                {
-                    timer.running = false
-                    rightTurnSignal.color = "#be6e13"
-                    leftTurnSignal.color = "#be6e13"
-                    rightTurnSignal.scale = 1
-                    leftTurnSignal.scale = 1
-                }
+            loops: Animation.Infinite
+            PropertyAnimation { target: leftTurnSignal; property: "scale";
+                                to:3 ; duration: 250 }
+            PropertyAnimation { target: leftTurnSignal; property: "scale";
+                                to: 1 ; duration: 250 }
 
-                if(rootRect.insideTime == 10)
-                    rootRect.insideTime = 0
-            }
+
+        }
+        SequentialAnimation {
+            id: rightBlinkers
+            running: false
+            loops: Animation.Infinite
+            PropertyAnimation { target: rightTurnSignal; property: "scale";
+                                to:3 ; duration: 250 }
+
+            PropertyAnimation { target: rightTurnSignal; property: "scale";
+                                to: 1 ; duration: 250 }
         }
 
         states:[
@@ -163,18 +155,6 @@ function turnOnLongLight()
         LongLight{
             id:longRightLight
             x:2.1; y:-12.5
-        }
-        MouseArea{
-            anchors.fill: auto
-            onClicked: {
-                if(parent.state == "go")
-                    parent.state = "stop"
-                else
-                    parent.state = "go"
-
-                rootRect.turnOnSignal();
-                root.turnOnLongLights();
-            }
         }
     }
 }
