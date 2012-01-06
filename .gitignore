@@ -1,6 +1,3 @@
 *.pro.user
-/Ui/Root_window/graphics-view.h.orig
-/Ui/Root_window/graphics-view.cpp.orig
-/Ui/Cars/vehicle.h.orig
-/Ui/Cars/vehicle.cpp.orig
-/Ui/Cars/simple-move.cpp.autosave
+*.orig
+*.autosave
