@@ -7,9 +7,8 @@ MotorCar {
     width: 18
     height: 18
 
-    scale: 3
-
 signal turnOnLongLights
+
     onTurnOnLongLights: {
     longLeftLight.state = "night"
     longRightLight.state = "night"
@@ -177,7 +176,5 @@ function turnOnLongLight()
                 root.turnOnLongLights();
             }
         }
-
     }
-
 }

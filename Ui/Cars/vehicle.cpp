@@ -11,7 +11,7 @@ Vehicle::Vehicle( QDeclarativeItem *parent ):
     QDeclarativeItem( parent ),
     m_currentPath( NULL ),
     m_speed( 1 ),
-    m_blinkers( false ),
+    m_blinkers( NO_BLINKERS ),
     m_currentCheckpoint( NULL ),
     m_currentAnimation( NULL )
 {
@@ -115,16 +115,22 @@ void Vehicle::setSpeed( int speed )
     m_speed = speed;
 }
 
-void Vehicle::switchOnOffBlinkers( bool blinkers )
+void Vehicle::setBlinkers( Blinkers blinkers )
 {
-    Q_UNUSED( blinkers )
-
-    m_blinkers = !m_blinkers;
-
-    emit blinkersChanged();
+    m_blinkers = blinkers;
 }
 
-bool Vehicle::blinkers()
+Vehicle::Blinkers Vehicle::blinkers()
 {
     return m_blinkers;
+}
+
+void Vehicle::setLongLights( bool light )
+{
+    m_longLights = light;
+}
+
+bool Vehicle::longLigths()
+{
+    return m_longLights;
 }

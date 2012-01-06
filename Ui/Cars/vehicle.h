@@ -16,22 +16,29 @@ class Vehicle: public QDeclarativeItem
 {
 
     Q_OBJECT
-    Q_PROPERTY( bool blinkers READ blinkers WRITE switchOnOffBlinkers NOTIFY blinkersChanged )
+    Q_PROPERTY( Blinkers blinkers READ blinkers WRITE setBlinkers )
+    Q_PROPERTY( bool longLigths READ longLigths WRITE setLongLights )
+    Q_ENUMS( Blinkers )
 
 public:
     explicit Vehicle( QDeclarativeItem *parent = 0 );
     ~Vehicle();
 
+    enum Blinkers { RIGHT_BLINKERS, LEFT_BLINKERS, NO_BLINKERS };
+
     void setSpeed( int speed );
-    bool blinkers();
+    Blinkers blinkers();
+    bool longLigths();
+    void setLongLights( bool light );
     QAbstractAnimation* currentAnimation();
 
 private:
     const Path *m_currentPath;
     int m_speed;
-    bool m_blinkers;
+    Blinkers m_blinkers;
     Checkpoint* m_currentCheckpoint;
     QAbstractAnimation* m_currentAnimation;
+    bool m_longLights;
 
     static const int WAIT_ON_PERMISSION;
 
@@ -39,12 +46,9 @@ public slots:
     void init( Checkpoint* initCheckpoint );
     void init();
     void onAnimationFinish();
-    void switchOnOffBlinkers( bool blinkers = false ); // Don't use argument. It's not used.
+    void setBlinkers( Blinkers blinkers = NO_BLINKERS );
     void resumeMove();
     void pauseMove();
-
-signals:
-    void blinkersChanged();
 };
 
 #endif // VEHICLE_H
