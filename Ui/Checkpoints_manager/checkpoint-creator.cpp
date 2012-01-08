@@ -10,16 +10,16 @@
  * ## WARNING!!!! Every checkpoints have to be in correct order: from 0 to n.  ##
  * ##############################################################################
  *
- * File .pos shoud be in this format:
+ * File .pos should be in this format:
  * <checkpoint id>;<x coordinate>,<y coordinate>;<targets checkpoint list>;<move type>;
  *
  * Move types:
- * ay - ahead with y
- * ax - ahead with x
- * lx - left with x
- * ly - left with y
- * rx - right with x
- * ry - right with y
+ * ya - ahead with y
+ * xa - ahead with x
+ * xl - left with x
+ * yl - left with y
+ * xr - right with x
+ * yr - right with y
  * wxy - west with x and y
  * exy - east with x and y
  * sxy - south with x and y

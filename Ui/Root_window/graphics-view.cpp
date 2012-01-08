@@ -102,7 +102,7 @@ void GraphicsView::addVehicle( int speed )
 
     if( newVehicle != NULL )
     {
-        addToScene( newVehicle, m_checkpointManager->checkpointById( 0 ) );
+        addToScene( newVehicle, m_checkpointManager->checkpointById( 36 ) );
 
         VehicleStaticContainer::VEHICLES.append( newVehicle );
           

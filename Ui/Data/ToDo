@@ -1,0 +1,7 @@
+1. Sprawdzenie, czy wszystkie checkpointy działają poprawnie.
+2. Animacja migaczy nie dziala jak należy. Zdarza się, że animacja zatrzymuje się, gdy migacz się powiększony.
+3. Prawdopodobnie skrypt, który ma się wywoływać na początku programu nie robi tego.
+4. Poprawienie skręcania na dużym skrzyżowaniu (sprawdzić jeszcze, gdy pojazd jedzie od wschodu).
+5. Prze wielokrotnym skręcie w tą samą stronę może nastąpić wyjście poza zakres (sumowanie się obrotów) ----> do testów
+6. Migacze czasami włączają się za szybko.
+7. Implementacja systemu kolizji.

@@ -12,6 +12,10 @@ protected:
     Vehicle *m_currentVehicle;
 
     void collisionDetection();
+    /*!
+     * Return true if the car cause collision with other.
+     */
+    bool isGuiltyOfACollision( const Vehicle* target ) const;
 };
 
 #endif // SIMPLEMOVE_H

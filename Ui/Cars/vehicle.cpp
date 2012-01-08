@@ -76,21 +76,23 @@ void Vehicle::init()
 
 void Vehicle::resumeMove()
 {
-    Q_ASSERT( m_currentAnimation != NULL );
-
-    if( m_currentAnimation->state() != QAbstractAnimation::Running )
+    if( m_currentAnimation != NULL )
     {
-        m_currentAnimation->resume();
+        if( m_currentAnimation->state() == QAbstractAnimation::Paused )
+        {
+            m_currentAnimation->resume();
+        }
     }
 }
 
 void Vehicle::pauseMove()
 {
-    Q_ASSERT( m_currentAnimation != NULL );
-
-    if( m_currentAnimation->state() != QAbstractAnimation::Paused )
+    if( m_currentAnimation != NULL )
     {
-        m_currentAnimation->pause();
+        if( m_currentAnimation->state() == QAbstractAnimation::Running )
+        {
+            m_currentAnimation->pause();
+        }
     }
 }
 
@@ -127,4 +129,34 @@ void Vehicle::setLongLights( bool longLight )
 void Vehicle::setBackLights( bool backLight )
 {
     Q_UNUSED( backLight );
+}
+
+Vehicle::Direction Vehicle::direction() const
+{
+    int rotation = abs( property( "rotation" ).toInt() );
+
+    LOG_INFO( "Current rotation: %i (%s)", rotation, __FUNCTION__ );
+
+    if( rotation <= 90 )
+    {
+        rotation = 90;
+    }
+    else if( rotation <= 180 )
+    {
+        rotation = 180;
+    }
+    else if( rotation <= 270 )
+    {
+        rotation = 270;
+    }
+    else if( rotation <= 360 )
+    {
+        rotation = 0;
+    }
+    else
+    {
+        LOG_INFO( "Bad rotation value: %s", __FUNCTION__  );
+    }
+
+    return Direction( rotation );
 }

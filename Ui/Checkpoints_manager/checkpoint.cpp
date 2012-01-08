@@ -128,7 +128,7 @@ void Checkpoint::addMove( QVector<Checkpoint *> checkpointsVector, const QString
 
     int duration = 10000;
 
-    if( parameters == "ay" ) // Ahead with y
+    if( parameters == "ya" ) // Ahead with y
     {  
         for( int i = 0 ; i < checkpointsVector.count() ; i++ )
         {
@@ -137,7 +137,7 @@ void Checkpoint::addMove( QVector<Checkpoint *> checkpointsVector, const QString
             addMovingByYToTargetCheckpointPath( checkpointsVector.at( i ), duration );
         }
     }
-    else if( parameters == "ax" ) // Ahead with x
+    else if( parameters == "xa" ) // Ahead with x
     {
         for( int i = 0 ; i < checkpointsVector.count() ; i++ )
         {
@@ -146,7 +146,7 @@ void Checkpoint::addMove( QVector<Checkpoint *> checkpointsVector, const QString
             addMovingByXToTargetCheckpointPath( checkpointsVector.at( i ), duration );
         }
     }
-    else if( parameters == "lx" ) // Left with x
+    else if( parameters == "xl" ) // Left with x
     {
         for( int i = 0 ; i < checkpointsVector.count() ; i++ )
         {
@@ -155,7 +155,7 @@ void Checkpoint::addMove( QVector<Checkpoint *> checkpointsVector, const QString
             addTurnAndMovingByXToTargetCheckpointPath( checkpointsVector.at( i ), 1000, duration, TURN_90_LEFT );
         }
     }
-    else if( parameters == "ly" ) // Left with y
+    else if( parameters == "yl" ) // Left with y
     {
         for( int i = 0 ; i < checkpointsVector.count() ; i++ )
         {
@@ -164,7 +164,7 @@ void Checkpoint::addMove( QVector<Checkpoint *> checkpointsVector, const QString
             addTurnAndMovingByYToTargetCheckpointPath( checkpointsVector.at( i ), 1000, duration, TURN_90_LEFT );
         }
     }
-    else if( parameters == "rx" ) // Right with x
+    else if( parameters == "xr" ) // Right with x
     {
         for( int i = 0 ; i < checkpointsVector.count() ; i++ )
         {
@@ -173,7 +173,7 @@ void Checkpoint::addMove( QVector<Checkpoint *> checkpointsVector, const QString
             addTurnAndMovingByXToTargetCheckpointPath( checkpointsVector.at( i ), 1000, duration, TURN_90_RIGHT );
         }
     }
-    else if( parameters == "ry" ) // Right with y
+    else if( parameters == "yr" ) // Right with y
     {
         for( int i = 0 ; i < checkpointsVector.count() ; i++ )
         {

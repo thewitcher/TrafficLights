@@ -22,10 +22,15 @@ public:
     explicit Vehicle( QDeclarativeItem *parent = 0 );
     ~Vehicle();
 
-    enum Blinkers { RIGHT_BLINKERS, LEFT_BLINKERS, NO_BLINKERS };
+    enum Blinkers { RIGHT_BLINKERS = 90, LEFT_BLINKERS = -90, NO_BLINKERS = 0 };
+    /*!
+     * Direction - moving direction
+     */
+    enum Direction { WEST = 0, EAST = 180, SOUTH = 90, NORTH = 270 };
 
     void setSpeed( int speed );
     QAbstractAnimation* currentAnimation();
+    Direction direction() const;
 
 private:
     const Path *m_currentPath;

@@ -36,7 +36,7 @@ public:
     bool doTurn() const; // Returns true if movement will start with turn.
 
 private:
-    enum PathType{ MOVE, TURN_AND_MOVE, MOVE_XY, TURN_AND_MOVE_XY };
+    enum PathType{ MOVE, MOVE_AND_TURN, MOVE_XY, MOVE_AND_TURN_XY };
 
     Checkpoint *m_targetCheckpoint; // This will be deleted by checkpoint manager
     mutable int m_turnDuration;
@@ -49,11 +49,11 @@ private:
     const Checkpoint::TurnType m_turnType;
     const bool m_sequential;
 
-    QAbstractAnimation* movingToTargetCheckpointAnimation( Vehicle *target, bool start, int speedMiltiplier, QObject* parent = 0 ) const;
-    QAbstractAnimation* movingByXYToTargetCheckpointAnimation( Vehicle *target, bool start, int speedMiltiplier, QObject* parent = 0 ) const;
+    QAbstractAnimation* movingToTargetCheckpointAnimation( Vehicle *target, bool start, int speedMultiplier, QObject* parent = 0 ) const;
+    QAbstractAnimation* movingByXYToTargetCheckpointAnimation( Vehicle *target, bool start, int speedMultiplier, QObject* parent = 0 ) const;
 
-    QAbstractAnimation* turnAndMovingToTargetCheckpointAnimation( Vehicle *target, int speedMiltiplier ) const;
-    QAbstractAnimation* turnAndMovingByXYToTargetCheckpointAnimation( Vehicle *target, int speedMiltiplier ) const;
+    QAbstractAnimation* moveAndTurningToTargetCheckpointAnimation( Vehicle *target, int speedMultiplier ) const;
+    QAbstractAnimation* moveAndTurningByXYToTargetCheckpointAnimation( Vehicle *target, int speedMultiplier ) const;
 };
 
 #endif // PATH_H
