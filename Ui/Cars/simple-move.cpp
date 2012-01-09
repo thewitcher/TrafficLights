@@ -5,7 +5,7 @@
 #include <QAbstractAnimation>
 #include <QTimer>
 
-int SimpleMove::WAIT_FOR_MOVE_TIME = 1000;
+int SimpleMove::WAIT_FOR_MOVE_TIME = 3000;
 
 SimpleMove::SimpleMove( Vehicle *target ):
     m_currentVehicle( target ),
@@ -46,13 +46,9 @@ void SimpleMove::collisionDetection()
                 m_currentVehicle->pauseMove();
 
                 m_delayCaller->callAfterDelay( WAIT_FOR_MOVE_TIME );
-            }
-            else
-            {
-                m_currentVehicle->resumeMove();
-            }
 
-            return;
+                return;
+            }
         }
     }
 
@@ -61,209 +57,143 @@ void SimpleMove::collisionDetection()
 
 bool SimpleMove::isGuiltyOfACollision( const Vehicle *target ) const
 {
-//    /*!
-//     * This function works like this:
-//     *
-//     * If m_currentVehicle moves to the west, then we check x coordinates of target and m_currentVehicle:
-//     * m_currentVehicle->x() - target->x()
-//     * If above value is greater than zero then m_currentVehicle is behind target (in back of it)
-//     * In other case m_currentVehicle is in front of target and it is not guilty of this collision.
-//     *
-//     * Similar situation is for rest directions.
-//     */
-//    switch( m_currentVehicle->direction() )
-//    {
-//    case Vehicle::WEST:
-//        LOG_INFO( "Car direction: WEST (%s)", __FUNCTION__ );
-//        if( m_currentVehicle->y() == target->y() )
-//        {
-//            if( m_currentVehicle->x() - target->x() > 0 )
-//            {
-//                return true;
-//            }
-//            else
-//            {
-//                return false;
-//            }
-//        }
-//        else
-//        {
-//            if( m_currentVehicle->y() - target->y() > 0 )
-//            {
-//                return true;
-//            }
-//            else
-//            {
-//                return false;
-//            }
-//        }
-//        break;
-//    case Vehicle::EAST:
-//        LOG_INFO( "Car direction: EAST (%s)", __FUNCTION__ );
-//        if( m_currentVehicle->y() == target->y() )
-//        {
-//            if( m_currentVehicle->x() - target->x() > 0 )
-//            {
-//                return false;
-//            }
-//            else
-//            {
-//                return true;
-//            }
-//        }
-//        else
-//        {
-//            if( m_currentVehicle->y() - target->y() > 0 )
-//            {
-//                return false;
-//            }
-//            else
-//            {
-//                return true;
-//            }
-//        }
-//        break;
-//    case Vehicle::NORTH:
-//        LOG_INFO( "Car direction: NORTH (%s)", __FUNCTION__ );
-//        if( m_currentVehicle->x() == target->x() )
-//        {
-//            if( m_currentVehicle->y() - target->y() > 0 )
-//            {
-//                return true;
-//            }
-//            else
-//            {
-//                return false;
-//            }
-//        }
-//        else
-//        {
-//            if( m_currentVehicle->x() - target->x() > 0 )
-//            {
-//                return false;
-//            }
-//            else
-//            {
-//                return true;
-//            }
-//        }
-//        break;
-//    case Vehicle::SOUTH:
-//        LOG_INFO( "Car direction: SOUTH (%s)", __FUNCTION__ );
-//        if( m_currentVehicle->x() == target->x() )
-//        {
-//            if( m_currentVehicle->y() - target->y() > 0 )
-//            {
-//                return false;
-//            }
-//            else
-//            {
-//                return true;
-//            }
-//        }
-//        else
-//        {
-//            if( m_currentVehicle->x() - target->x() > 0 )
-//            {
-//                return true;
-//            }
-//            else
-//            {
-//                return false;
-//            }
-//        }
-//        break;
-//    }
-
-//    LOG_WARNING( "Probably invalid value in return statement (%s)", __FUNCTION__ );
-
-//    return false;
-
     Vehicle::Direction currentVehicleDirection = m_currentVehicle->direction();
     Vehicle::Direction targetVehicleDirection = target->direction();
 
     /*!
-     * One
+     * Horizontal line
      */
-    if( ( currentVehicleDirection == Vehicle::WEST ) && ( targetVehicleDirection == Vehicle::NORTH ) )
+    if( identifyCase( m_currentVehicle, target ) )
     {
-        if( !identifyCase( m_currentVehicle, target ) )
+        // *******************************************
+        if( ( currentVehicleDirection == Vehicle::WEST ) && ( targetVehicleDirection == Vehicle::NORTH ) )
         {
             return true;
         }
-    }
-    else if( ( currentVehicleDirection == Vehicle::NORTH ) && ( targetVehicleDirection == Vehicle::WEST ) )
-    {
-
-    }
-
-    /*!
-     * Two
-     */
-    else if( ( currentVehicleDirection == Vehicle::SOUTH ) && ( targetVehicleDirection == Vehicle::WEST ) )
-    {
-        if( identifyCase( m_currentVehicle, target ) == true )
-        {
-            return true;
-        }
-        else
+        else if( ( currentVehicleDirection == Vehicle::NORTH ) && ( targetVehicleDirection == Vehicle::WEST ) )
         {
             return false;
         }
-    }
-    else if( ( currentVehicleDirection == Vehicle::WEST ) && ( targetVehicleDirection == Vehicle::SOUTH ) )
-    {
-        if( identifyCase( m_currentVehicle, target ) == false )
+        // *******************************************
+        else if( ( currentVehicleDirection == Vehicle::SOUTH ) && ( targetVehicleDirection == Vehicle::WEST ) )
         {
             return true;
         }
-        else
+        else if( ( currentVehicleDirection == Vehicle::WEST ) && ( targetVehicleDirection == Vehicle::SOUTH ) )
         {
             return false;
         }
+        // *******************************************
+        else if( ( currentVehicleDirection == Vehicle::EAST ) && ( targetVehicleDirection == Vehicle::NORTH ) )
+        {
+            return true;
+        }
+        else if( ( currentVehicleDirection == Vehicle::NORTH ) && ( targetVehicleDirection == Vehicle::EAST ) )
+        {
+            return false;
+        }
+        // *******************************************
+        else if( ( currentVehicleDirection == Vehicle::EAST ) && ( targetVehicleDirection == Vehicle::SOUTH ) )
+        {
+            return true;
+        }
+        else if( ( currentVehicleDirection == Vehicle::SOUTH ) && ( targetVehicleDirection == Vehicle::EAST ) )
+        {
+            return false;
+        }
+        // *******************************************
     }
-
     /*!
-     * Three
+     * Vertical line
      */
-    else if( ( currentVehicleDirection == Vehicle::EAST ) && ( targetVehicleDirection == Vehicle::NORTH ) )
+    else
     {
-
-    }
-    else if( ( currentVehicleDirection == Vehicle::NORTH ) && ( targetVehicleDirection == Vehicle::EAST ) )
-    {
-
-    }
-
-    /*!
-     * Four
-     */
-    else if( ( currentVehicleDirection == Vehicle::EAST ) && ( targetVehicleDirection == Vehicle::SOUTH ) )
-    {
-
-    }
-    else if( ( currentVehicleDirection == Vehicle::SOUTH ) && ( targetVehicleDirection == Vehicle::EAST ) )
-    {
-
+        // *******************************************
+        if( ( currentVehicleDirection == Vehicle::WEST ) && ( targetVehicleDirection == Vehicle::NORTH ) )
+        {
+            return false;
+        }
+        else if( ( currentVehicleDirection == Vehicle::NORTH ) && ( targetVehicleDirection == Vehicle::WEST ) )
+        {
+            return true;
+        }
+        // *******************************************
+        else if( ( currentVehicleDirection == Vehicle::SOUTH ) && ( targetVehicleDirection == Vehicle::WEST ) )
+        {
+            return false;
+        }
+        else if( ( currentVehicleDirection == Vehicle::WEST ) && ( targetVehicleDirection == Vehicle::SOUTH ) )
+        {
+            return true;
+        }
+        // *******************************************
+        else if( ( currentVehicleDirection == Vehicle::EAST ) && ( targetVehicleDirection == Vehicle::NORTH ) )
+        {
+            return false;
+        }
+        else if( ( currentVehicleDirection == Vehicle::NORTH ) && ( targetVehicleDirection == Vehicle::EAST ) )
+        {
+            return true;
+        }
+        // *******************************************
+        else if( ( currentVehicleDirection == Vehicle::EAST ) && ( targetVehicleDirection == Vehicle::SOUTH ) )
+        {
+            return false;
+        }
+        else if( ( currentVehicleDirection == Vehicle::SOUTH ) && ( targetVehicleDirection == Vehicle::EAST ) )
+        {
+            return true;
+        }
+        // *******************************************
     }
 
     // We compare only approriate coordinates
-    else if( ( currentVehicleDirection == Vehicle::EAST ) && ( targetVehicleDirection == Vehicle::EAST ) )
+    if( ( currentVehicleDirection == Vehicle::EAST ) && ( targetVehicleDirection == Vehicle::EAST ) )
     {
-
+        if( m_currentVehicle->x() - target->x() > 0 )
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
     }
     else if( ( currentVehicleDirection == Vehicle::WEST ) && ( targetVehicleDirection == Vehicle::WEST ) )
     {
-
+        if( m_currentVehicle->x() - target->x() > 0 )
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
     else if( ( currentVehicleDirection == Vehicle::NORTH ) && ( targetVehicleDirection == Vehicle::SOUTH ) )
     {
-
+        if( m_currentVehicle->y() - target->y() > 0 )
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
     else if( ( currentVehicleDirection == Vehicle::SOUTH ) && ( targetVehicleDirection == Vehicle::SOUTH ) )
     {
-
+        if( m_currentVehicle->y() - target->y() > 0 )
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
     }
+
+    LOG_INFO( "Return statement is probalby invalid (%s)", __FUNCTION__ );
 
     return false;
 }

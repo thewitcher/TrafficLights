@@ -137,7 +137,11 @@ Vehicle::Direction Vehicle::direction() const
 
     LOG_INFO( "Current rotation: %i (%s)", rotation, __FUNCTION__ );
 
-    if( rotation <= 90 )
+    if( rotation == 0 )
+    {
+        // It't ok.
+    }
+    else if( rotation <= 90 )
     {
         rotation = 90;
     }
