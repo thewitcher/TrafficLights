@@ -6,7 +6,7 @@ MotorCar {
 
     width: 18
     height: 18
-    scale:3
+    //scale:3
 
 signal turnOnLongLights
 
