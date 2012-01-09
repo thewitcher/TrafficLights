@@ -229,6 +229,4 @@ void DelayCaller::invoke()
     LOG_INFO( "Start %s", __FUNCTION__ );
 
     m_mainObject->collisionDetection();
-
-    qDebug() << "Invoke";
 }
