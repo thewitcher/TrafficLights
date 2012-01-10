@@ -68,7 +68,7 @@ void GraphicsView::initGraphicsView()
     setDragMode( QGraphicsView::ScrollHandDrag );
     resize( 1326, 1070 );
     setMaximumSize( 1340, 1084 );
-    scale( 2, 2 );
+    //scale( 2, 2 );
 
     LOG_INFO( "End: %s", __FUNCTION__ );
 }
@@ -126,7 +126,7 @@ void GraphicsView::addVehicle( int speed )
         addToScene( newVehicle, m_checkpointManager->checkpointById( 36 ) );
 
         VehicleStaticContainer::VEHICLES.append( newVehicle );
-          
+
         LOG_INFO( "%s was created and added to scene", newVehicle->objectName().toLatin1().data() )
     }
 }

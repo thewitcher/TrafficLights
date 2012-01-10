@@ -187,3 +187,8 @@ QGraphicsRectItem* Vehicle::updateCollisionPoint()
 
     return m_collisionRect;
 }
+
+CollisionPoint Vehicle::collisionPoint() const
+{
+    return mapToScene( property( "bumperX" ).toReal(), property( "bumperY" ).toReal() );
+}
