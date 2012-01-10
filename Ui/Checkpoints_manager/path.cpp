@@ -281,17 +281,3 @@ QAbstractAnimation* Path::moveAndTurningToTargetCheckpointAnimation( Vehicle *ta
 
     return animationGroup;
 }
-
-bool Path::doTurn() const
-{
-    switch( m_pathType )
-    {
-        case MOVE_AND_TURN:
-        case MOVE_AND_TURN_XY:
-        return true;
-    default:
-        return false;
-    }
-
-    return false;
-}

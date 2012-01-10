@@ -5,7 +5,7 @@
 #include <QAbstractAnimation>
 #include <QTimer>
 
-int SimpleMove::WAIT_FOR_MOVE_TIME = 3000;
+int SimpleMove::WAIT_FOR_MOVE_TIME = 1000;
 
 SimpleMove::SimpleMove( Vehicle *target ):
     m_currentVehicle( target ),

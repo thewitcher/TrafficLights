@@ -51,7 +51,7 @@ void Vehicle::init( Checkpoint *initCheckpoint )
 
     if( m_currentPath != NULL )
     {
-        if( ( m_currentPath->doTurn() == true ) && ( initCheckpoint->movePermission() == false ) )
+        if( initCheckpoint->movePermission() == false )
         {
             QTimer::singleShot( WAIT_ON_PERMISSION, this, SLOT(init()) );
 
@@ -172,11 +172,9 @@ QGraphicsRectItem* Vehicle::updateCollisionPoint()
     switch( direction() )
     {
         case WEST:
-        qDebug() << "WEST: " << pos() << "   Collision point: " << x() - 11 << ", " << y();
         m_collisionRect->setPos( x() - 2, y() + 9 );
     break;
         case SOUTH:
-        qDebug() << "SOUTH: " << pos() << "   Collision point: " << x() << ", " << y() + 20;
         m_collisionRect->setPos( x() + 9, y() + 22 );
     break;
         case EAST:

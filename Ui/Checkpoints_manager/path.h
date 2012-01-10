@@ -33,7 +33,6 @@ public:
      */
     QAbstractAnimation* animation( Vehicle *target, QObject *parent, double speedMultiplier ) const;
     Checkpoint* targetCheckpoint() const;
-    bool doTurn() const; // Returns true if movement will start with turn.
 
 private:
     enum PathType{ MOVE, MOVE_AND_TURN, MOVE_XY, MOVE_AND_TURN_XY };
