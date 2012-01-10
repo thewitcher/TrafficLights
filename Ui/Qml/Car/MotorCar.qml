@@ -22,19 +22,16 @@ function turnOnSignal()
 
 function turnOnLeftBlinkers()
 {
-    console.log("zmieniam lewe")
         leftBlinkers.running = true
 }
 
 function turnOnRightBlinkers()
 {
-     console.log("zmieniam prawe")
      rightBlinkers.running = true
 }
 
 function stopBlinkers()
 {
-     console.log("Przerwa")
         rightBlinkers.running = false
         leftBlinkers.running = false
 }

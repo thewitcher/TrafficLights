@@ -8,11 +8,13 @@
  * Remember that you have to free space if you dont't need created object. It creates object but doesn't take ownership.
  */
 class Vehicle;
+class TrafficLight;
 
 class QmlHelper
 {
 public:
     static Vehicle* createVehicleFromQml( const QString& qmlName );
+    static TrafficLight* createLightsFromQml( const QString& qmlName );
 
 private:
     QmlHelper();

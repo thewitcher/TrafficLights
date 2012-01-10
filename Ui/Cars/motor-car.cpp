@@ -13,11 +13,9 @@ void MotorCar::setBlinkers( Blinkers blinkers )
         QMetaObject::invokeMethod( this, "turnOnLeftBlinkers" );
         break;
     case RIGHT_BLINKERS:
-        qDebug() << "pr: " << blinkers;
         QMetaObject::invokeMethod( this, "turnOnRightBlinkers" );
         break;
     case NO_BLINKERS:
-        qDebug() << "not: " << blinkers;
         QMetaObject::invokeMethod( this, "stopBlinkers" );
         break;
     }
