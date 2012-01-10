@@ -68,7 +68,7 @@ void GraphicsView::initGraphicsView()
     setDragMode( QGraphicsView::ScrollHandDrag );
     resize( 1326, 1070 );
     setMaximumSize( 1340, 1084 );
-    //scale( 2, 2 );
+    scale( 2, 2 );
 
     LOG_INFO( "End: %s", __FUNCTION__ );
 }
