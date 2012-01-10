@@ -8,5 +8,11 @@
         <file>Qml/Car/Blinkers.qml</file>
         <file>Qml/Car/LongLight.qml</file>
         <file>Qml/Car/MotorCar.qml</file>
+        <file>Qml/Lights/Lights.qml</file>
+        <file>Qml/Lights/ArrowStraight.qml</file>
+        <file>Qml/Lights/ArrowInRight.qml</file>
+        <file>Qml/Lights/ArrowInLeft.qml</file>
+        <file>Qml/Lights/ArrowStraightAndLeft.qml</file>
+        <file>Qml/Lights/ArrowStraightAndRight.qml</file>
     </qresource>
 </RCC>

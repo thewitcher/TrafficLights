@@ -4,6 +4,7 @@
 #include "../Logger/logger.h"
 #include "../Settings/settings.h"
 #include "../Ui/Cars/motor-car.h"
+#include "../Ui/Lights/trafficlight.h"
 
 int main(int argc, char *argv[])
 {
@@ -13,7 +14,8 @@ int main(int argc, char *argv[])
     Logger::init();
 
     //Register type
-    qmlRegisterType<MotorCar> ("Cars", 1, 0, "MotorCar");
+    qmlRegisterType<MotorCar> ( "Cars", 1, 0, "MotorCar" );
+    qmlRegisterType<TrafficLight> ( "LightsPacket", 1, 0, "Light" );
 
     RootWindow w;
     w.show();
