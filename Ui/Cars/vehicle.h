@@ -32,6 +32,7 @@ public:
     QAbstractAnimation* currentAnimation();
     Direction direction() const;
     QGraphicsRectItem* updateCollisionPoint();
+    QPointF collisionPoint() const;
 
 private:
     const Path *m_currentPath;
