@@ -116,7 +116,7 @@ void GraphicsView::createItems()
 
     if( speed <= 15 )
     {
-        int currentSpeed = ( speed % 3 ) + 2;
+        int currentSpeed = ( speed % 5 ) + 1;
         addVehicle( currentSpeed );
 
         QTimer::singleShot( 5000, this, SLOT(createItems()) );

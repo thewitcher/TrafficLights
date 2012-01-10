@@ -17,12 +17,7 @@ protected:
     static int WAIT_FOR_MOVE_TIME;
     DelayCaller* m_delayCaller;
 
-    /*!
-     * Return true if the car cause collision with other.
-     */
-    bool isGuiltyOfACollision( const Vehicle* target ) const;
     void collisionDetection();
-    bool identifyCase( const Vehicle* current, const Vehicle* target ) const;
 
     friend class DelayCaller;
 };

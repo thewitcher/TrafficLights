@@ -31,12 +31,14 @@ public:
     void setSpeed( int speed );
     QAbstractAnimation* currentAnimation();
     Direction direction() const;
+    QGraphicsRectItem* updateCollisionPoint();
 
 private:
     const Path *m_currentPath;
     int m_speed;
     Checkpoint* m_currentCheckpoint;
     QAbstractAnimation* m_currentAnimation;
+    QGraphicsRectItem* m_collisionRect;
 
     static const int WAIT_ON_PERMISSION;
 

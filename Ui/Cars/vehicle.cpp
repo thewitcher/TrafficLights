@@ -12,7 +12,8 @@ Vehicle::Vehicle( QDeclarativeItem *parent ):
     m_currentPath( NULL ),
     m_speed( 1 ),
     m_currentCheckpoint( NULL ),
-    m_currentAnimation( NULL )
+    m_currentAnimation( NULL ),
+    m_collisionRect( new QGraphicsRectItem( 0, 0, 1, 1 ) )
 {
     // Sets transformation point to center
     setTransformOriginPoint( 9, 9 );
@@ -20,6 +21,7 @@ Vehicle::Vehicle( QDeclarativeItem *parent ):
 
 Vehicle::~Vehicle()
 {
+    delete m_collisionRect;
 }
 
 QAbstractAnimation* Vehicle::currentAnimation()
@@ -163,4 +165,27 @@ Vehicle::Direction Vehicle::direction() const
     }
 
     return Direction( rotation );
+}
+
+QGraphicsRectItem* Vehicle::updateCollisionPoint()
+{
+    switch( direction() )
+    {
+        case WEST:
+        qDebug() << "WEST: " << pos() << "   Collision point: " << x() - 11 << ", " << y();
+        m_collisionRect->setPos( x() - 2, y() + 9 );
+    break;
+        case SOUTH:
+        qDebug() << "SOUTH: " << pos() << "   Collision point: " << x() << ", " << y() + 20;
+        m_collisionRect->setPos( x() + 9, y() + 22 );
+    break;
+        case EAST:
+        m_collisionRect->setPos( x() + 22, y() + 9 );
+    break;
+        case NORTH:
+        m_collisionRect->setPos( x() + 9, y() + 2 );
+    break;
+    }
+
+    return m_collisionRect;
 }
