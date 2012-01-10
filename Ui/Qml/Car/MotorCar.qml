@@ -8,6 +8,9 @@ MotorCar {
     height: 18
     //scale:3
 
+    property alias bumperX: collisionPoint.x
+    property alias bumperY: collisionPoint.y
+
 signal turnOnLongLights
 
     onTurnOnLongLights: {
@@ -22,18 +25,18 @@ function turnOnSignal()
 
 function turnOnLeftBlinkers()
 {
-        leftBlinkers.running = true
+    leftBlinkers.running = true
 }
 
 function turnOnRightBlinkers()
 {
-     rightBlinkers.running = true
+    rightBlinkers.running = true
 }
 
 function stopBlinkers()
 {
-        rightBlinkers.running = false
-        leftBlinkers.running = false
+    rightBlinkers.running = false
+    leftBlinkers.running = false
 }
 
 function turnOnLongLight()
@@ -152,6 +155,13 @@ function turnOnLongLight()
         LongLight{
             id:longRightLight
             x:2.1; y:-12.5
+        }
+
+        Rectangle{
+            id: collisionPoint
+            width: 1; height: 1
+            color: "yellow"
+            x:8.5; y:-11
         }
     }
 }
