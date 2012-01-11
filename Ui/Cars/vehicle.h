@@ -24,15 +24,9 @@ public:
     ~Vehicle();
 
     enum Blinkers { RIGHT_BLINKERS = 90, LEFT_BLINKERS = -90, NO_BLINKERS = 0 };
-    /*!
-     * Direction - moving direction
-     */
-    enum Direction { WEST = 0, EAST = 180, SOUTH = 90, NORTH = 270 };
 
     void setSpeed( int speed );
     QAbstractAnimation* currentAnimation();
-    Direction direction() const;
-    QGraphicsRectItem* updateCollisionPoint();
     CollisionPoint collisionPoint() const;
 
 private:
@@ -40,7 +34,6 @@ private:
     int m_speed;
     Checkpoint* m_currentCheckpoint;
     QAbstractAnimation* m_currentAnimation;
-    QGraphicsRectItem* m_collisionRect;
 
     static const int WAIT_ON_PERMISSION;
 

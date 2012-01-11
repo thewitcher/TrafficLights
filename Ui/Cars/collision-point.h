@@ -5,10 +5,16 @@
 
 class Vehicle;
 
+/*!
+ * This class allows to check point collisions with target. It is very fast way to find out if there is collision or not.
+ */
 class CollisionPoint: public QPointF
 {
 public:
     explicit CollisionPoint( qreal x, qreal y );
+    /*!
+     * Convert constructor.
+     */
     CollisionPoint( QPointF point );
 
     QPointF toPointF();

@@ -6,10 +6,16 @@ MotorCar {
 
     width: 18
     height: 18
-    //scale:3
+    //scale: 3
 
     property alias bumperX: collisionPoint.x
     property alias bumperY: collisionPoint.y
+
+    Item {
+        id: collisionPoint
+        width: 1; height: 1
+        x:0; y:9
+    }
 
 signal turnOnLongLights
 
@@ -155,13 +161,6 @@ function turnOnLongLight()
         LongLight{
             id:longRightLight
             x:2.1; y:-12.5
-        }
-
-        Rectangle{
-            id: collisionPoint
-            width: 1; height: 1
-            color: "yellow"
-            x:8.5; y:-11
         }
     }
 }

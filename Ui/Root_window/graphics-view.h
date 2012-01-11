@@ -24,6 +24,9 @@ private:
     QGraphicsScene *m_scene;
     CheckpointManager *m_checkpointManager;
 
+    static int S_NEW_CAR_FREQUENCY;
+    static int S_CAR_COUNT;
+
 private slots:
     void initScene();
     void initGraphicsView();

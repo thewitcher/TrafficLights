@@ -36,7 +36,7 @@ void SimpleMove::collisionDetection()
     {
         target = iterator.next();
 
-        if( m_currentVehicle->updateCollisionPoint()->collidesWithItem( target ) == true )
+        if( m_currentVehicle->collisionPoint().collideWithItem( target ) )
         {
             m_currentVehicle->pauseMove();
 

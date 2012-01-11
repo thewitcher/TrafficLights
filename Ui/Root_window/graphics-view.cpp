@@ -7,6 +7,9 @@
 #include "vehicle-static-container.h"
 #include <QTimer>
 
+int GraphicsView::S_NEW_CAR_FREQUENCY = 5000;
+int GraphicsView::S_CAR_COUNT = 15;
+
 /*!
  * GraphicsView is a subclass of QGraphicsView. It was created for convenience. In constructor there are already four method, which
  * initialize scene and graphics view. For more info see appriopriate method description.
@@ -150,17 +153,17 @@ TrafficLight* GraphicsView::addTrafficLight( qreal x, qreal y, qreal angle )
 
 void GraphicsView::createItems()
 {
-    static int speed = 0;
+    static int count = 0;
 
-    if( speed <= 15 )
+    if( count <= S_CAR_COUNT )
     {
-        int currentSpeed = ( speed % 5 ) + 1;
+        int currentSpeed = ( count % 5 ) + 1;
         addVehicle( currentSpeed );
 
-        QTimer::singleShot( 5000, this, SLOT(createItems()) );
+        QTimer::singleShot( S_NEW_CAR_FREQUENCY, this, SLOT(createItems()) );
     }
 
-    speed += 1;
+    count += 1;
 }
 
 /*!
