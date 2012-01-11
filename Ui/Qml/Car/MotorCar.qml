@@ -6,7 +6,7 @@ MotorCar {
 
     width: 18
     height: 18
-    //scale: 3
+    scale: 3
 
     property alias bumperX: collisionPoint.x
     property alias bumperY: collisionPoint.y
@@ -14,7 +14,7 @@ MotorCar {
     Item {
         id: collisionPoint
         width: 1; height: 1
-        x:0; y:9
+        x:-2; y:9 // If You want to increase space between vehicles, just set x less value.
     }
 
 signal turnOnLongLights

@@ -188,7 +188,7 @@ void Checkpoint::addMove( QVector<Checkpoint *> checkpointsVector, const QString
         {
             duration = estimatedMovingTimeToTargetCheckpoint( checkpointsVector.at( i ) );
 
-            addTurnAndMovingByXYToTargetCheckpointPath( checkpointsVector.at( i ), duration, duration, TURN_90_LEFT, QEasingCurve::InCirc, QEasingCurve::OutCirc,
+            addTurnAndMovingByXYToTargetCheckpointPath( checkpointsVector.at( i ), duration, duration, TURN_90_LEFT, QEasingCurve::InCirc, QEasingCurve::InCirc,
                                                         false );
         }
     }
@@ -198,7 +198,7 @@ void Checkpoint::addMove( QVector<Checkpoint *> checkpointsVector, const QString
         {
             duration = estimatedMovingTimeToTargetCheckpoint( checkpointsVector.at( i ) );
 
-            addTurnAndMovingByXYToTargetCheckpointPath( checkpointsVector.at( i ), duration, duration, TURN_90_LEFT, QEasingCurve::InCirc, QEasingCurve::OutCirc,
+            addTurnAndMovingByXYToTargetCheckpointPath( checkpointsVector.at( i ), duration, duration, TURN_90_LEFT, QEasingCurve::InCirc, QEasingCurve::InCirc,
                                                         false );
         }
     }
@@ -208,7 +208,7 @@ void Checkpoint::addMove( QVector<Checkpoint *> checkpointsVector, const QString
         {
             duration = estimatedMovingTimeToTargetCheckpoint( checkpointsVector.at( i ) );
 
-            addTurnAndMovingByXYToTargetCheckpointPath( checkpointsVector.at( i ), duration, duration, TURN_90_LEFT, QEasingCurve::OutCirc, QEasingCurve::InCirc,
+            addTurnAndMovingByXYToTargetCheckpointPath( checkpointsVector.at( i ), duration, duration, TURN_90_LEFT, QEasingCurve::InCirc, QEasingCurve::InCirc,
                                                         false );
         }
     }
@@ -218,7 +218,7 @@ void Checkpoint::addMove( QVector<Checkpoint *> checkpointsVector, const QString
         {
             duration = estimatedMovingTimeToTargetCheckpoint( checkpointsVector.at( i ) );
 
-            addTurnAndMovingByXYToTargetCheckpointPath( checkpointsVector.at( i ), duration, duration, TURN_90_LEFT, QEasingCurve::OutCirc, QEasingCurve::InCirc,
+            addTurnAndMovingByXYToTargetCheckpointPath( checkpointsVector.at( i ), duration, duration, TURN_90_LEFT, QEasingCurve::InCirc, QEasingCurve::InCirc,
                                                         false );
         }
     }

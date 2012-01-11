@@ -7,6 +7,7 @@ class Checkpoint;
 class Vehicle;
 class CheckpointManager;
 class TrafficLight;
+class GraphicsScene;
 
 class GraphicsView: public QGraphicsView
 {
@@ -21,7 +22,7 @@ public:
     void addToScene( TrafficLight* item, qreal x, qreal y, qreal angle );
 
 private:
-    QGraphicsScene *m_scene;
+    GraphicsScene *m_scene;
     CheckpointManager *m_checkpointManager;
 
     static int S_NEW_CAR_FREQUENCY;

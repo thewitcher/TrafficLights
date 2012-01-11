@@ -4,11 +4,12 @@
 #include "../Cars/vehicle.h"
 #include "../Lights/trafficlight.h"
 #include "../Checkpoints_manager/checkpoint-manager.h"
+#include "graphics-scene.h"
 #include "vehicle-static-container.h"
 #include <QTimer>
 
 int GraphicsView::S_NEW_CAR_FREQUENCY = 5000;
-int GraphicsView::S_CAR_COUNT = 15;
+int GraphicsView::S_CAR_COUNT = 30;
 
 /*!
  * GraphicsView is a subclass of QGraphicsView. It was created for convenience. In constructor there are already four method, which
@@ -41,7 +42,7 @@ void GraphicsView::initScene()
 {
     LOG_INFO( "Start: %s", __FUNCTION__ );
 
-    m_scene = new QGraphicsScene( this );
+    m_scene = new GraphicsScene( this );
     /*!
      * This is set to NoIndex becouse of many animations on the scene.
      */
@@ -50,6 +51,7 @@ void GraphicsView::initScene()
      * Size of main png file.
      */
     m_scene->setSceneRect( 0, 0, 1326, 1070 );
+    m_scene->setObjectName( "graphicsScene" );
 
     setScene(m_scene);
 
@@ -84,7 +86,8 @@ void GraphicsView::addToScene( Vehicle *item, Checkpoint *initCheckpoint )
 {
     LOG_INFO( "Start: %s", __FUNCTION__ );
 
-    scene()->addItem( item );
+    m_scene->addVehicle( item );
+
     item->setPos( initCheckpoint->posX(), initCheckpoint->posY() );
 
     item->init( initCheckpoint );
@@ -99,7 +102,7 @@ void GraphicsView::addToScene( TrafficLight *item, qreal x, qreal y, qreal angle
 {
     LOG_INFO( "Start: %s", __FUNCTION__ );
 
-    scene()->addItem( item );
+    m_scene->addItem( item );
 
     if( angle != 0 )
     {
@@ -127,8 +130,6 @@ void GraphicsView::addVehicle( int speed )
     if( newVehicle != NULL )
     {
         addToScene( newVehicle, m_checkpointManager->checkpointById( 36 ) );
-
-        VehicleStaticContainer::VEHICLES.append( newVehicle );
 
         LOG_INFO( "%s was created and added to scene", newVehicle->objectName().toLatin1().data() )
     }

@@ -2,6 +2,7 @@
 #include "../Logger/logger.h"
 #include "../Root_window/vehicle-static-container.h"
 #include "vehicle.h"
+#include "../Root_window/graphics-scene.h"
 #include <QAbstractAnimation>
 #include <QTimer>
 
@@ -24,17 +25,20 @@ SimpleMove::~SimpleMove()
 void SimpleMove::collisionDetection()
 {
     // Checking collisions
-    QList<Vehicle*> vehicles = VehicleStaticContainer::VEHICLES;
 
-    vehicles.removeOne( m_currentVehicle );
-
-    QListIterator<Vehicle*> iterator( vehicles );
+    QListIterator<Vehicle*> iterator( m_currentVehicle->parentScene()->allVehicles() );
 
     Vehicle *target;
 
     while( iterator.hasNext() )
     {
         target = iterator.next();
+
+        // We don't compare vehicle to the same vehicle.
+        if( m_currentVehicle == target )
+        {
+            continue;
+        }
 
         if( m_currentVehicle->collisionPoint().collideWithItem( target ) )
         {

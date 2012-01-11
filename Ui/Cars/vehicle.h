@@ -7,6 +7,7 @@
 class Checkpoint;
 class Path;
 class QAbstractAnimation;
+class GraphicsScene;
 
 /*!
  * Vehicle is a graphics object which can move form one to another checkpoint. To set new vehicles on the scene You need to
@@ -28,12 +29,15 @@ public:
     void setSpeed( int speed );
     QAbstractAnimation* currentAnimation();
     CollisionPoint collisionPoint() const;
+    void setParentScene( GraphicsScene* scene );
+    GraphicsScene* parentScene() const;
 
 private:
     const Path *m_currentPath;
     int m_speed;
     Checkpoint* m_currentCheckpoint;
     QAbstractAnimation* m_currentAnimation;
+    GraphicsScene *m_parentScene;
 
     static const int WAIT_ON_PERMISSION;
 

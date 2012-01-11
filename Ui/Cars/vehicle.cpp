@@ -135,3 +135,13 @@ CollisionPoint Vehicle::collisionPoint() const
 {
     return mapToScene( property( "bumperX" ).toInt(), property( "bumperY" ).toInt() );
 }
+
+void Vehicle::setParentScene( GraphicsScene *scene )
+{
+    m_parentScene = scene;
+}
+
+GraphicsScene* Vehicle::parentScene() const
+{
+    return m_parentScene;
+}
