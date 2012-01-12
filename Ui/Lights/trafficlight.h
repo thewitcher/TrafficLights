@@ -14,11 +14,6 @@ public:
 
     void setDirection( const Direction& direct );
     void changeState();
-    unsigned char cycleNumber() const;
-    void setCycleNumber( unsigned char cycleNumber );
-
-private:
-    unsigned char m_cycleNumber;
 
 public slots:
     void letGoVehicles();

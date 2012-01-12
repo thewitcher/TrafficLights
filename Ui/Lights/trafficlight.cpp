@@ -2,8 +2,7 @@
 #include <QTimer>
 
 TrafficLight::TrafficLight( QDeclarativeItem *parent ) :
-    QDeclarativeItem( parent ),
-    m_cycleNumber( 0 )
+    QDeclarativeItem( parent )
 {
 }
 
@@ -43,14 +42,4 @@ void TrafficLight::letGoVehicles()
 void TrafficLight::holdVehicles()
 {
     QMetaObject::invokeMethod( this, "hold" );
-}
-
-unsigned char TrafficLight::cycleNumber() const
-{
-    return m_cycleNumber;
-}
-
-void TrafficLight::setCycleNumber( unsigned char cycleNumber )
-{
-    m_cycleNumber = cycleNumber;
 }
