@@ -20,3 +20,19 @@ void MotorCar::setBlinkers( Blinkers blinkers )
         break;
     }
 }
+
+void MotorCar::setBackLights( bool backLight )
+{
+    if( backLight )
+        QMetaObject::invokeMethod( this, "onBackLights" );
+    else
+        QMetaObject::invokeMethod( this, "offBackLights" );
+}
+
+void MotorCar::setLongLights( bool longLight )
+{
+    if( longLight )
+        QMetaObject::invokeMethod( this, "turnOnLongLights" );
+    else
+        QMetaObject::invokeMethod( this, "turnOffLongLights" );
+}

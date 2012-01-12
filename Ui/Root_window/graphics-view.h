@@ -19,7 +19,6 @@ public:
     ~GraphicsView();
 
     void addToScene( Vehicle *item, Checkpoint* initCheckpoint );
-    void addToScene( TrafficLight* item, qreal x, qreal y, qreal angle );
 
 private:
     GraphicsScene *m_scene;
@@ -30,14 +29,11 @@ private:
 
 private slots:
     void initScene();
+    void createDeployTrafficLights();
     void initGraphicsView();
     void createItems();
-    void setLights();
-    void templateSimpleCross( QVector<qreal> vector, unsigned int id );
-    void templatecomplexCross( QVector<qreal> vector, unsigned int id );
-    void addVehicle( int speed );
-    TrafficLight* addTrafficLight( qreal x = 0, qreal y = 0, qreal angle = 0 );
     void createCheckpointsManager();
+    void addVehicle( int speed );
 };
 
 #endif // GRAPHICSVIEW_H
