@@ -2,8 +2,10 @@
 #define GRAPHICSSCENE_H
 
 #include <QGraphicsScene>
+#include <QMap>
 
 class Vehicle;
+class TrafficLight;
 
 class GraphicsScene: public QGraphicsScene
 {
@@ -16,7 +18,11 @@ public:
     void addVehicle( Vehicle *newVehicle );
     QList<Vehicle*>& allVehicles();
 
+    void addTrafficLightsToScene( int crossID, QVector<TrafficLight*> vector );
+    QMap< int, QVector<TrafficLight*> >& allTrafficLights();
+
 protected:
+    QMap< int, QVector<TrafficLight*> > m_trafficLights;
     QList<Vehicle*> m_vehicles;
 };
 

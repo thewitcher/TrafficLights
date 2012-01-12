@@ -9,6 +9,7 @@ include(Root_window/Root-window.pri)
 include(QSSEngine/QSSEngine.pri)
 include(Cars/Cars.pri)
 include(Qml/Qml.pri)
+include(TrafficLights_manager/TrafficLights_manager.pri)
 include(Lights/Lights.pri)
 include(Checkpoints_manager/Checkpoints_manager.pri)
 
