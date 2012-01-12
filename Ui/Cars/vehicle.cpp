@@ -80,6 +80,8 @@ void Vehicle::resumeMove()
     {
         if( m_currentAnimation->state() == QAbstractAnimation::Paused )
         {
+            setLongLights( false );
+            setBackLights( false );
             m_currentAnimation->resume();
         }
     }
@@ -91,6 +93,8 @@ void Vehicle::pauseMove()
     {
         if( m_currentAnimation->state() == QAbstractAnimation::Running )
         {
+            setLongLights( true );
+            setBackLights( true );
             m_currentAnimation->pause();
         }
     }
