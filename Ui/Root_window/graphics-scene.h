@@ -18,7 +18,7 @@ public:
     void addVehicle( Vehicle *newVehicle );
     QList<Vehicle*>& allVehicles();
 
-    void addTrafficLightsToScene( int crossID, QVector<TrafficLight*> vector );
+    void addTrafficLightsToScene( QMap< int, QVector<TrafficLight*> >& junctionsMap );
     QMap< int, QVector<TrafficLight*> >& allTrafficLights();
 
 protected:

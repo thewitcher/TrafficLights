@@ -24,13 +24,20 @@ QList<Vehicle*>& GraphicsScene::allVehicles()
 /*!
  * It adds crossId and vector with TrafficLight pointers to m_trafficLights map. Also adds to scene new TrafficLight items.
  */
-void GraphicsScene::addTrafficLightsToScene( int crossID, QVector<TrafficLight*> vector )
+void GraphicsScene::addTrafficLightsToScene( QMap<int, QVector<TrafficLight *> > &junctionsMap )
 {
-    m_trafficLights.insert( crossID, vector );
+    m_trafficLights = junctionsMap;
 
-    for( int vectorCount = 0; vectorCount < vector.count(); vectorCount++ )
+    QVector<TrafficLight *> junction;
+
+    for( int map = 0; map < junctionsMap.count(); map++ )
     {
-        addItem( vector.at( vectorCount ) );
+        junction = junctionsMap.value( map );
+
+        for( int traffic = 0 ; traffic < junction.count() ; traffic++ )
+        {
+            addItem( junction.at( traffic ) );
+        }
     }
 }
 

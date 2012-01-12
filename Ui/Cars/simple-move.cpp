@@ -1,6 +1,5 @@
 #include "simple-move.h"
 #include "../Logger/logger.h"
-#include "../Root_window/vehicle-static-container.h"
 #include "vehicle.h"
 #include "../Root_window/graphics-scene.h"
 #include <QAbstractAnimation>

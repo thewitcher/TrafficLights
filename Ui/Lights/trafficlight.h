@@ -9,15 +9,20 @@ class TrafficLight : public QDeclarativeItem
 
 public:
     explicit TrafficLight( QDeclarativeItem *parent = 0 );
+
     enum Direction { STRAIGHT, LEFT, RIGHT, STRAIGHT_AND_LEFT, STRAIGHT_AND_RIGHT };
 
-    void setDirection( TrafficLight* light, const Direction& direct );
+    void setDirection( const Direction& direct );
     void changeState();
+    unsigned char cycleNumber() const;
+    void setCycleNumber( unsigned char cycleNumber );
 
-private slots:
+private:
+    unsigned char m_cycleNumber;
+
+public slots:
     void letGoVehicles();
     void holdVehicles();
-
 };
 
 #endif // TRAFFICLIGHT_H

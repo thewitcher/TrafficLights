@@ -5,6 +5,7 @@
 #include "../Checkpoints_manager/checkpoint-manager.h"
 #include "../Ui/TrafficLights_manager/deploy-trafficlights.h"
 #include "graphics-scene.h"
+#include "../TrafficLights_manager/junction-manager.h"
 #include <QTimer>
 
 int GraphicsView::S_NEW_CAR_FREQUENCY = 5000;
@@ -17,12 +18,14 @@ int GraphicsView::S_CAR_COUNT = 30;
 GraphicsView::GraphicsView( QWidget *parent ):
     QGraphicsView( parent ),
     m_scene( NULL ),
-    m_checkpointManager( NULL )
+    m_checkpointManager( NULL ),
+    m_junctionManager( NULL )
 {
     initScene();
     initGraphicsView();
     createCheckpointsManager();
     createDeployTrafficLights();
+    createJunctionManager();
     createItems();
 }
 
@@ -31,6 +34,11 @@ GraphicsView::~GraphicsView()
     if( m_checkpointManager != NULL )
     {
         delete m_checkpointManager;
+    }
+
+    if( m_junctionManager != NULL )
+    {
+        delete m_junctionManager;
     }
 }
 
@@ -107,11 +115,7 @@ void GraphicsView::createDeployTrafficLights()
     DeployTrafficLights deploy;
     QMap< int, QVector<TrafficLight*> > map = deploy.trafficLightsMap();
 
-    for( int id = 1; id <= 7; id++ )
-    {
-        QVector<TrafficLight*> lights = map.value( id );
-        m_scene->addTrafficLightsToScene( id, lights );
-    }
+    m_scene->addTrafficLightsToScene( map );
 }
 
 /*!
@@ -143,4 +147,9 @@ void GraphicsView::createItems()
     }
 
     count += 1;
+}
+
+void GraphicsView::createJunctionManager()
+{
+    m_junctionManager = new JunctionManager( m_scene->allTrafficLights() );
 }
