@@ -17,16 +17,14 @@ MotorCar {
         x:-2; y:9 // If You want to increase space between vehicles, just set x less value.
     }
 
-signal turnOnLongLights
-
-    onTurnOnLongLights: {
-    longLeftLight.state = "night"
-    longRightLight.state = "night"
+function onBackLights()
+{
+    rootRect.state = "go"
 }
 
-function turnOnSignal()
+function offBackLights()
 {
-    timer.running = true
+    rootRect.state = "stop"
 }
 
 function turnOnLeftBlinkers()
@@ -42,13 +40,21 @@ function turnOnRightBlinkers()
 function stopBlinkers()
 {
     rightBlinkers.running = false
+    rightTurnSignal.scale = 1
     leftBlinkers.running = false
+    leftTurnSignal.scale = 1
 }
 
-function turnOnLongLight()
+function turnOnLongLights()
 {
     longLeftLight.state = "night"
     longRightLight.state = "night"
+}
+
+function turnOffLongLights()
+{
+    longLeftLight.state = "day"
+    longRightLight.state = "day"
 }
 
     Item {

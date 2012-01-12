@@ -11,7 +11,9 @@ class MotorCar: public Vehicle
 public:
     explicit MotorCar( QDeclarativeItem *parent = 0 );
 
-    void setBlinkers( Blinkers blinkers );
+    void setBlinkers( Blinkers blinkers = NO_BLINKERS );
+    void setBackLights( bool backLight = false );
+    void setLongLights( bool longLight = false );
 };
 
 #endif // MOTOR_CAR_H
