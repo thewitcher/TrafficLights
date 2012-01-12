@@ -1,5 +1,6 @@
 #include "simple-junction.h"
 
-SimpleJunction::SimpleJunction()
+SimpleJunction::SimpleJunction(const QVector<TrafficLight *> &junction):
+    Junction( junction )
 {
 }

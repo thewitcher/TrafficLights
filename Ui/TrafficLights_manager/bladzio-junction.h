@@ -1,10 +1,12 @@
 #ifndef BLADZIOJUNCTION_H
 #define BLADZIOJUNCTION_H
 
-class BladzioJunction : public Junction
+#include "junction.h"
+
+class BladzioJunction: public Junction
 {
 public:
-    BladzioJunction();
+    BladzioJunction( const QVector<TrafficLight*>& junction );
 };
 
 #endif // BLADZIOJUNCTION_H

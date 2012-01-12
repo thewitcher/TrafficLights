@@ -1,5 +1,6 @@
 #include "bladzio-junction.h"
 
-BladzioJunction::BladzioJunction()
+BladzioJunction::BladzioJunction( const QVector<TrafficLight *> &junction ):
+    Junction( junction )
 {
 }
