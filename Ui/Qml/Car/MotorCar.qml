@@ -19,12 +19,12 @@ MotorCar {
 
 function onBackLights()
 {
-    rootRect.state = "go"
+    rootRect.state = "stop"
 }
 
 function offBackLights()
 {
-    rootRect.state = "stop"
+    rootRect.state = "go"
 }
 
 function turnOnLeftBlinkers()
@@ -94,31 +94,12 @@ function turnOffLongLights()
             PropertyChanges { target: backRightLight; color: "#a80707"; scale: 2 }
             PropertyChanges { target: stopLight; opacity:1}
         },
-            State {
-                name: "go"
-                PropertyChanges { target: backLeftLight; color: "yellow"; scale:1 }
-                PropertyChanges { target: backRightLight; color: "yellow"; scale:1 }
-                PropertyChanges { target: stopLight; opacity:0 }
-            }]
-
-        transitions: [
-            Transition {
-                from: "go"
-                to: "stop"
-                PropertyAnimation{
-                    targets:[ backLeftLight, backRightLight, stopLight ]
-                    properties: "color,scale,opacity"; duration: 1200
-                }
-            },
-            Transition {
-                from: "stop"
-                to: "go"
-                PropertyAnimation{
-                    targets:[ backLeftLight, backRightLight, stopLight ]
-                    properties: "color,scale"
-                }
-            }
-        ]
+        State {
+            name: "go"
+            PropertyChanges { target: backLeftLight; color: "yellow"; scale:1 }
+            PropertyChanges { target: backRightLight; color: "yellow"; scale:1 }
+            PropertyChanges { target: stopLight; opacity:0 }
+        }]
 
         state: "go"
 
