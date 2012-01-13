@@ -6,6 +6,14 @@
 JunctionManager::JunctionManager( QMap<int, QVector<TrafficLight *> >& junctionsMap )
 {
     createJunctions( junctionsMap );
+    QVector<int> vector;
+    vector << 5000 << 5000 << 5000 << 5000;
+    sendTimeVector( 0, vector );
+    m_junctionsVector.at(0)->run();
+
+    vector << 6000 << 6000;
+    sendTimeVector( 2, vector );
+    m_junctionsVector.at(2)->run();
 }
 
 JunctionManager::~JunctionManager()

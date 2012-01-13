@@ -12,7 +12,8 @@ Vehicle::Vehicle( QDeclarativeItem *parent ):
     m_currentPath( NULL ),
     m_speed( 1 ),
     m_currentCheckpoint( NULL ),
-    m_currentAnimation( NULL )
+    m_currentAnimation( NULL ),
+    m_first( true )
 {
     // Sets transformation point to center
     setTransformOriginPoint( 9, 9 );
@@ -34,9 +35,7 @@ void Vehicle::init( Checkpoint *initCheckpoint )
     LOG_INFO( "Sets new speed to checkpoint: %i", m_speed );
     LOG_INFO( "Creates new path for checkpoint: (%f, %f) position", initCheckpoint->posX(), initCheckpoint->posY() );
 
-    static bool first = true;
-
-    if( first )
+    if( m_first )
     {
         m_currentCheckpoint = initCheckpoint;
 
@@ -44,7 +43,7 @@ void Vehicle::init( Checkpoint *initCheckpoint )
 
         m_currentAnimation = m_currentPath->animation( this, this, m_speed );
 
-        first = false;
+        m_first = false;
     }
 
     if( m_currentPath != NULL )
@@ -61,7 +60,7 @@ void Vehicle::init( Checkpoint *initCheckpoint )
         LOG_INFO( "Target of this animation is on pos: (%f, %f) position", m_currentPath->targetCheckpoint()->posX(),
                   m_currentPath->targetCheckpoint()->posY() );
 
-        first = true;
+        m_first = true;
     }
     else
     {
@@ -80,6 +79,7 @@ void Vehicle::resumeMove()
     {
         if( m_currentAnimation->state() == QAbstractAnimation::Paused )
         {
+
             setLongLights( false );
             setBackLights( false );
             m_currentAnimation->resume();

@@ -1,6 +1,6 @@
 #include "graphics-scene.h"
 #include "../Cars/vehicle.h"
-#include "../Ui/Lights/trafficlight.h"
+#include "../Lights/trafficlight.h"
 
 GraphicsScene::GraphicsScene( QObject *parent ):
     QGraphicsScene( parent )
@@ -24,19 +24,25 @@ QList<Vehicle*>& GraphicsScene::allVehicles()
 /*!
  * It adds crossId and vector with TrafficLight pointers to m_trafficLights map. Also adds to scene new TrafficLight items.
  */
-void GraphicsScene::addTrafficLightsToScene( QMap<int, QVector<TrafficLight *> > &junctionsMap )
+void GraphicsScene::addTrafficLightsToScene( QMap<int, QVector<TrafficLight *> > &junctionsMap,
+                                             QVector<Checkpoint*> checkpoinVector )
 {
     m_trafficLights = junctionsMap;
 
     QVector<TrafficLight *> junction;
 
-    for( int map = 0; map < junctionsMap.count(); map++ )
-    {
-        junction = junctionsMap.value( map );
+    unsigned int checkPoint = 0;
 
-        for( int traffic = 0 ; traffic < junction.count() ; traffic++ )
+    for( int id = 0; id < junctionsMap.count(); id++ )
+    {
+        junction = junctionsMap.value( id );
+
+        for( int light = 0 ; light < junction.count() ; light++ )
         {
-            addItem( junction.at( traffic ) );
+            TrafficLight *item = junction.at( light );
+            addItem( item );
+            item->createCheckpoint( checkpoinVector.at( checkPoint ) );
+            checkPoint++;
         }
     }
 }

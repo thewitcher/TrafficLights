@@ -38,6 +38,7 @@ private:
     Checkpoint* m_currentCheckpoint;
     QAbstractAnimation* m_currentAnimation;
     GraphicsScene *m_parentScene;
+    bool m_first;
 
     static const int WAIT_ON_PERMISSION;
 

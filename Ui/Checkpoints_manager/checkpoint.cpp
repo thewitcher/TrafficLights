@@ -41,6 +41,11 @@ const Path* Checkpoint::randomPath() const
     return m_paths.at( randomNumber( m_paths.count() - 1 ) );
 }
 
+void Checkpoint::setMovePermission( bool permission )
+{
+    m_movePermission = permission;
+}
+
 void Checkpoint::setId( unsigned char id )
 {
     m_id = id;

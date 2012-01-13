@@ -6,6 +6,7 @@
 
 class Vehicle;
 class TrafficLight;
+class Checkpoint;
 
 class GraphicsScene: public QGraphicsScene
 {
@@ -18,7 +19,7 @@ public:
     void addVehicle( Vehicle *newVehicle );
     QList<Vehicle*>& allVehicles();
 
-    void addTrafficLightsToScene( QMap< int, QVector<TrafficLight*> >& junctionsMap );
+    void addTrafficLightsToScene( QMap< int, QVector<TrafficLight*> >& junctionsMap, QVector<Checkpoint*> );
     QMap< int, QVector<TrafficLight*> >& allTrafficLights();
 
 protected:
