@@ -6,7 +6,6 @@ MotorCar {
 
     width: 18
     height: 18
-    scale: 3
 
     property alias bumperX: collisionPoint.x
     property alias bumperY: collisionPoint.y
