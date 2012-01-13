@@ -14,7 +14,7 @@ Vehicle::Vehicle( QDeclarativeItem *parent ):
     m_currentCheckpoint( NULL ),
     m_currentAnimation( NULL )
 {
-    // Sets transformation point to center
+    /// Sets transformation point to center
     setTransformOriginPoint( 9, 9 );
 }
 

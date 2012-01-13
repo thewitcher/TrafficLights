@@ -79,13 +79,47 @@ private:
     static const int WAIT_ON_PERMISSION;
 
 public slots:
+    /*!
+     * Initialises vehicle on approriate position and chose random path for it.
+     *
+     * @param initCheckpoint From this point vehicle gets new path. Vehicle also get position from this checkpoint.
+     */
     void init( Checkpoint* initCheckpoint );
+    /*!
+     * This is reimplementaion of init() function:
+     *
+     * init() = init( m_currentCheckpoint )
+     */
     void init();
+    /*!
+     * When animation is finished this slot is called. It initialises vehicle with new checkpoint.
+     */
     void onAnimationFinish();
+    /*!
+     * In this implementation this method does nothing.
+     *
+     * @param blinkers Left, right or no blinkers.
+     */
     virtual void setBlinkers( Blinkers blinkers = NO_BLINKERS );
+    /*!
+     * In this implementation this method does nothing.
+     *
+     * @param longLight Switch on or off
+     */
     virtual void setLongLights( bool longLight = false );
+    /*!
+     * In this implementation this method does nothing.
+     *
+     * @param backLight Switch on or off
+     */
     virtual void setBackLights( bool backLight = false );
+    /*!
+     * If animation is paused the resumes animation.
+     */
     void resumeMove();
+    /*!
+     * If animation is running the pauses animation.
+     */
     void pauseMove();
 };
 
