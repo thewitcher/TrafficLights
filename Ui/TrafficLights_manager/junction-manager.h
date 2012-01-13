@@ -17,6 +17,8 @@ public:
 
 private:
     QVector<Junction*> m_junctionsVector;
+
+    void createJunctions( QMap<int, QVector<TrafficLight *> >& junctionsMap );
 };
 
 #endif // JUNCTIONMANAGER_H

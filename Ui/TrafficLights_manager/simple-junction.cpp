@@ -4,3 +4,8 @@ SimpleJunction::SimpleJunction(const QVector<TrafficLight *> &junction):
     Junction( junction )
 {
 }
+
+void SimpleJunction::run()
+{
+
+}
