@@ -15,11 +15,11 @@ public:
 
     void setTimeVector( QVector<int>& time );
 
-private:
+protected:
     const QVector<TrafficLight*> m_trafficLightVector;
     QVector<int> m_timeVector;
 
-    virtual void run() = 0;
+    virtual void run();
 };
 
 #endif // JUNCTION_H
