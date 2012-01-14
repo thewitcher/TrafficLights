@@ -37,11 +37,13 @@ void Vehicle::init( Checkpoint *initCheckpoint )
 
     if( m_first )
     {
+        LOG_INFO( "First time: %s. Inits new checkpint and drawing new path", __FUNCTION__ )
+
         m_currentCheckpoint = initCheckpoint;
 
         m_currentPath = m_currentCheckpoint->randomPath();
 
-        m_currentAnimation = m_currentPath->animation( this, this, m_speed );
+        m_currentAnimation = NULL;
 
         m_first = false;
     }
@@ -60,6 +62,8 @@ void Vehicle::init( Checkpoint *initCheckpoint )
         LOG_INFO( "Target of this animation is on pos: (%f, %f) position", m_currentPath->targetCheckpoint()->posX(),
                   m_currentPath->targetCheckpoint()->posY() );
 
+        m_currentAnimation = m_currentPath->animation( this, this, m_speed );
+
         m_first = true;
     }
     else
@@ -75,28 +79,43 @@ void Vehicle::init()
 
 void Vehicle::resumeMove()
 {
+    LOG_INFO( "Try to resume vehicle move: start %s", __FUNCTION__  );
+
     if( m_currentAnimation != NULL )
     {
         if( m_currentAnimation->state() == QAbstractAnimation::Paused )
         {
-
             setLongLights( false );
             setBackLights( false );
             m_currentAnimation->resume();
         }
     }
+    else
+    {
+        LOG_WARNING( "Current animation is NULL (%s)", __FUNCTION__ );
+    }
 }
 
 void Vehicle::pauseMove()
 {
+    LOG_INFO( "Try to pause vehicle: start %s", __FUNCTION__  );
+
     if( m_currentAnimation != NULL )
     {
         if( m_currentAnimation->state() == QAbstractAnimation::Running )
         {
+            LOG_INFO( "Animation has state: %i", m_currentAnimation->state() );
+
             setLongLights( true );
             setBackLights( true );
             m_currentAnimation->pause();
         }
+
+        LOG_INFO( "Animation didn't pause, becouse it has no RUNNING state. Current state: %i", m_currentAnimation->state() );
+    }
+    else
+    {
+        LOG_WARNING( "Current animation is NULL (%s)", __FUNCTION__ );
     }
 }
 
@@ -112,11 +131,15 @@ void Vehicle::onAnimationFinish()
         return;
     }
 
+    LOG_INFO( "Inits with new checkpoint in %s", __FUNCTION__ );
+
     init( m_currentPath->targetCheckpoint() );
 }
 
 void Vehicle::setSpeed( int speed )
 {
+    LOG_INFO( "Set vehicle speed to: %i", speed );
+
     m_speed = speed;
 }
 
@@ -137,11 +160,15 @@ void Vehicle::setBackLights( bool backLight )
 
 CollisionPoint Vehicle::collisionPoint() const
 {
+    LOG_INFO( "Return bumper with position mapped to the scene (%s)", __FUNCTION__ );
+
     return mapToScene( property( "bumperX" ).toInt(), property( "bumperY" ).toInt() );
 }
 
 void Vehicle::setParentScene( GraphicsScene *scene )
 {
+    LOG_INFO( "Add scene which contains this vehicle (%s)", __FUNCTION__ );
+
     m_parentScene = scene;
 }
 

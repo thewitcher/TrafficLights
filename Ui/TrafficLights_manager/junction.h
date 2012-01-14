@@ -9,8 +9,9 @@ class TrafficLight;
 /*!
  * This is abstract base class for all junctions in our program.
  */
-class Junction : public QObject
+class Junction: public QObject
 {
+
     Q_OBJECT
 
 public:
@@ -19,7 +20,7 @@ public:
 
     void setTimeVector( QVector<int>& time );
 
-    virtual void run();
+    virtual void run() = 0;
 protected:
     const QVector<TrafficLight*> m_trafficLightVector;
     QVector<int> m_timeVector;

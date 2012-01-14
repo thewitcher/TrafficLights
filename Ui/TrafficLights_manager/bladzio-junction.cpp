@@ -158,5 +158,5 @@ void BladzioJunction::turnOffSecondHorizontalSeties()
     straightLight2d->holdVehicles();
     rightLight2b->holdVehicles();
     rightLight2d->holdVehicles();
-//    run();
+    run();
 }

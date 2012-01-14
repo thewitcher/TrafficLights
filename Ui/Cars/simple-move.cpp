@@ -15,6 +15,8 @@ SimpleMove::SimpleMove( Vehicle *target ):
 
 SimpleMove::~SimpleMove()
 {
+    LOG_INFO( "Destructor: %s", __FUNCTION__ );
+
     if( m_delayCaller != NULL )
     {
         delete m_delayCaller;
@@ -48,6 +50,8 @@ void SimpleMove::collisionDetection()
             return;
         }
     }
+
+    LOG_INFO( "There is no collision. Try to resume move: %s", __FUNCTION__ );
     m_currentVehicle->resumeMove();
 }
 

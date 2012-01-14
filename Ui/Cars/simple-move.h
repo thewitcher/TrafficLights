@@ -10,7 +10,7 @@ class SimpleMove
 {
 public:
     explicit SimpleMove( Vehicle *target );
-    ~SimpleMove();
+    virtual ~SimpleMove();
 
 protected:
     Vehicle *m_currentVehicle;

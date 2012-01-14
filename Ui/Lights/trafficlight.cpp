@@ -42,14 +42,13 @@ void TrafficLight::createCheckpoint( Checkpoint *checkpoint )
 void TrafficLight::letGoVehicles()
 {
     QMetaObject::invokeMethod( this, "letGo" );
-//    m_checkpoint->setMovePermission( true );
+    m_checkpoint->setMovePermission( true );
 }
 
 void TrafficLight::holdVehicles()
 {
     QMetaObject::invokeMethod( this, "hold" );
-//        m_checkpoint->setMovePermission( false );
-
+    m_checkpoint->setMovePermission( false );
 }
 
 
