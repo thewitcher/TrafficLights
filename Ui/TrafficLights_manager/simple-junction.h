@@ -29,7 +29,6 @@ public slots:
     void fourthSeries();
     void holdLightsFromFirstSeries();
     void holdLightsFromSecondSeries();
-
 };
 
 #endif // SIMPLEJUNCTION_H

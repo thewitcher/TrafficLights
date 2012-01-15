@@ -144,6 +144,8 @@ QAbstractAnimation* Path::movingToTargetCheckpointAnimation( Vehicle *target, bo
         propertyMove->start( QPropertyAnimation::DeleteWhenStopped );
     }
 
+    LOG_INFO( "End of %s", __FUNCTION__ );
+
     return propertyMove;
 }
 

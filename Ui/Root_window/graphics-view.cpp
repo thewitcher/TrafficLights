@@ -9,7 +9,7 @@
 #include <QTimer>
 
 int GraphicsView::S_NEW_CAR_FREQUENCY = 5000;
-int GraphicsView::S_CAR_COUNT = 30;
+int GraphicsView::S_CAR_COUNT = 1;
 
 /*!
  * GraphicsView is a subclass of QGraphicsView. It was created for convenience. In constructor there are already four method, which
@@ -138,7 +138,7 @@ void GraphicsView::createItems()
 {
     static int count = 0;
 
-    if( count <= S_CAR_COUNT )
+    if( count < S_CAR_COUNT )
     {
         int currentSpeed = ( count % 5 ) + 1;
         addVehicle( currentSpeed );

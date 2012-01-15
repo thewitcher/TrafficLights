@@ -111,5 +111,5 @@ void SimpleJunction::holdLightsFromSecondSeries()
 {
     rightLight->holdVehicles();
     leftAndStraightLight->holdVehicles();
-//    run();
+    run();
 }

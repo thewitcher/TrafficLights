@@ -5,7 +5,9 @@
 
 class BladzioJunction: public Junction
 {
+
     Q_OBJECT
+
 public:
     BladzioJunction( const QVector<TrafficLight*>& junction );
     ~BladzioJunction();

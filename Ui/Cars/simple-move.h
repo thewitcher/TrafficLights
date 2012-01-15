@@ -24,7 +24,7 @@ public:
      * @param target Animated object.
      */
     explicit SimpleMove( Vehicle *target );
-    ~SimpleMove();
+    virtual ~SimpleMove();
 
 protected:
     /// Vehicle which is animated by this animation.
