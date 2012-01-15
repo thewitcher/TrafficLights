@@ -48,7 +48,6 @@ void SimpleMove::collisionDetection()
             return;
         }
     }
-
     m_currentVehicle->resumeMove();
 }
 

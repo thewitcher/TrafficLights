@@ -3,7 +3,7 @@
 #include "qml-helper.h"
 #include "../Cars/vehicle.h"
 #include "../Checkpoints_manager/checkpoint-manager.h"
-#include "../Ui/TrafficLights_manager/deploy-trafficlights.h"
+#include "../TrafficLights_manager/deploy-trafficlights.h"
 #include "graphics-scene.h"
 #include "../TrafficLights_manager/junction-manager.h"
 #include <QTimer>
@@ -112,10 +112,10 @@ void GraphicsView::createCheckpointsManager()
  */
 void GraphicsView::createDeployTrafficLights()
 {
-    DeployTrafficLights deploy;
+    DeployTrafficLights deploy( m_checkpointManager );
     QMap< int, QVector<TrafficLight*> > map = deploy.trafficLightsMap();
 
-    m_scene->addTrafficLightsToScene( map );
+    m_scene->addTrafficLightsToScene( map, deploy.allCheckpointForLights() );
 }
 
 /*!
@@ -128,7 +128,7 @@ void GraphicsView::addVehicle( int speed )
 
     if( newVehicle != NULL )
     {
-        addToScene( newVehicle, m_checkpointManager->checkpointById( 36 ) );
+        addToScene( newVehicle, m_checkpointManager->checkpointById( 82 ) );
 
         LOG_INFO( "%s was created and added to scene", newVehicle->objectName().toLatin1().data() )
     }

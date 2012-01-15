@@ -109,7 +109,7 @@ function turnOffLongLights()
 
         Blinkers{
             id:rightTurnSignal
-            x:11.1; y:6
+            x:11; y:6
         }
 
         Image {

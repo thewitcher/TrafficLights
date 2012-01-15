@@ -24,6 +24,7 @@ public:
     qreal posX() const;
     qreal posY() const;
     bool movePermission() const;
+    void setMovePermission( bool permission );
 
 private:
     qreal m_x;

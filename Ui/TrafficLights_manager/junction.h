@@ -1,6 +1,7 @@
 #ifndef JUNCTION_H
 #define JUNCTION_H
 
+#include <QObject>
 #include <QVector>
 
 class TrafficLight;
@@ -8,18 +9,22 @@ class TrafficLight;
 /*!
  * This is abstract base class for all junctions in our program.
  */
-class Junction
+class Junction : public QObject
 {
+    Q_OBJECT
+
 public:
     Junction( const QVector<TrafficLight*>& junction );
+    virtual ~Junction();
 
     void setTimeVector( QVector<int>& time );
 
+    virtual void run();
 protected:
     const QVector<TrafficLight*> m_trafficLightVector;
     QVector<int> m_timeVector;
+    const int m_interval;
 
-    virtual void run();
 };
 
 #endif // JUNCTION_H

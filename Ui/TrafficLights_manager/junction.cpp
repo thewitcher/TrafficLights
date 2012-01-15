@@ -2,16 +2,21 @@
 #include "../Lights/trafficlight.h"
 
 Junction::Junction( const QVector<TrafficLight *>& junction ):
-    m_trafficLightVector( junction )
+    QObject( NULL ),
+    m_trafficLightVector( junction ),
+    m_interval( 3000 )
 {
-    run();
+}
+
+Junction::~Junction()
+{
 }
 
 void Junction::setTimeVector( QVector<int> &time )
 {
     m_timeVector = time;
 }
-
 void Junction::run()
 {
 }
+

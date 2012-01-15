@@ -74,6 +74,7 @@ private:
     QAbstractAnimation* m_currentAnimation;
     /// Pointer to scene the vehicle has added to.
     GraphicsScene *m_parentScene;
+    bool m_first;
 
     /// After this time vehicle will ask for permission to move again.
     static const int WAIT_ON_PERMISSION;
