@@ -6,7 +6,6 @@ MotorCar {
 
     width: 18
     height: 18
-    scale: 3
 
     property alias bumperX: collisionPoint.x
     property alias bumperY: collisionPoint.y
@@ -94,12 +93,14 @@ function turnOffLongLights()
             PropertyChanges { target: backRightLight; color: "#a80707"; scale: 2 }
             PropertyChanges { target: stopLight; opacity:1}
         },
-            State {
-                name: "go"
-                PropertyChanges { target: backLeftLight; color: "yellow"; scale:1 }
-                PropertyChanges { target: backRightLight; color: "yellow"; scale:1 }
-                PropertyChanges { target: stopLight; opacity:0 }
-            }]
+        State {
+            name: "go"
+            PropertyChanges { target: backLeftLight; color: "yellow"; scale:1 }
+            PropertyChanges { target: backRightLight; color: "yellow"; scale:1 }
+            PropertyChanges { target: stopLight; opacity:0 }
+        }]
+
+        state: "go"
 
         Blinkers{
             id:leftTurnSignal

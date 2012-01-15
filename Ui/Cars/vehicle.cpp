@@ -15,7 +15,7 @@ Vehicle::Vehicle( QDeclarativeItem *parent ):
     m_currentAnimation( NULL ),
     m_first( true )
 {
-    // Sets transformation point to center
+    /// Sets transformation point to center
     setTransformOriginPoint( 9, 9 );
 }
 
@@ -104,7 +104,6 @@ void Vehicle::pauseMove()
         if( m_currentAnimation->state() == QAbstractAnimation::Running )
         {
             LOG_INFO( "Animation has state: %i", m_currentAnimation->state() );
-
             setBackLights( true );
             m_currentAnimation->pause();
         }
