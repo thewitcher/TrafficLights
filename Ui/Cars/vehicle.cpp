@@ -104,6 +104,7 @@ void Vehicle::pauseMove()
         if( m_currentAnimation->state() == QAbstractAnimation::Running )
         {
             LOG_INFO( "Animation has state: %i", m_currentAnimation->state() );
+
             setBackLights( true );
             m_currentAnimation->pause();
         }
