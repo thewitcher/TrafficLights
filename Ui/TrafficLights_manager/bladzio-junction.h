@@ -31,12 +31,17 @@ private:
 private slots:
     void firstVertivalSeries();
     void secondVerticalSeries();
-    void turnOffFirstVerticalSeries();
-    void turnOffSecondVerticalSeries();
+
+    void holdFirstVerticalSeries();
+    void holdPartialSecondVerticalSeries();
+    void holdAllSecondVerticalSeries();
+
     void firstHorizontalSeries();
     void secondHorizontalSeries();
-    void turnOffFirstHorizontalSeries();
-    void turnOffSecondHorizontalSeties();
+
+    void holdFirstHorizontalSeries();
+    void holdSecondHorizontalSeries();
+
 };
 
 #endif // BLADZIOJUNCTION_H

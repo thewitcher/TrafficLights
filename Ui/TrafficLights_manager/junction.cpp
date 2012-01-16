@@ -4,7 +4,7 @@
 Junction::Junction( const QVector<TrafficLight *>& junction ):
     QObject( NULL ),
     m_trafficLightVector( junction ),
-    m_interval( 3000 )
+    m_interval( 500 )
 {
 }
 

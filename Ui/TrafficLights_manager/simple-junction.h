@@ -26,9 +26,10 @@ public slots:
     void firstSeries();
     void secondSeries();
     void thirdSeries();
-    void fourthSeries();
-    void holdLightsFromFirstSeries();
-    void holdLightsFromSecondSeries();
+    void holdFirst();
+    void holdFirstTwoCondition();
+    void holdSecond();
+    void holdThird();
 
 };
 

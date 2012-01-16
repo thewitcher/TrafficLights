@@ -56,13 +56,13 @@ Light {
         id:readyToStart
         running: false
         ParallelAnimation{
-            PropertyAnimation{ target:red; property: "color"; to: "red"; duration: 1500 }
-            PropertyAnimation{ target:yellow; property: "color"; to: "yellow"; duration: 1500 }
+            PropertyAnimation{ target:red; property: "color"; to: "red"; duration: 500 }
+            PropertyAnimation{ target:yellow; property: "color"; to: "yellow"; duration: 500 }
         }
         ParallelAnimation{
-            PropertyAnimation{ target:green; property: "color"; to: "#5ff155"; duration: 1500 }
-            PropertyAnimation{ target:red; property: "color"; to: "darkred"; duration: 1500 }
-            PropertyAnimation{ target:yellow; property: "color"; to: "#808000"; duration: 1500 }
+            PropertyAnimation{ target:green; property: "color"; to: "#5ff155"; duration: 500 }
+            PropertyAnimation{ target:red; property: "color"; to: "darkred"; duration: 500 }
+            PropertyAnimation{ target:yellow; property: "color"; to: "#808000"; duration: 500 }
         }
     }
 
@@ -70,12 +70,12 @@ Light {
         id:readyToStop
         running: false
         ParallelAnimation{
-            PropertyAnimation{ target:green; property: "color"; to: "darkgreen"; duration: 1500 }
-            PropertyAnimation{ target:yellow; property: "color"; to: "yellow"; duration: 1500 }
+            PropertyAnimation{ target:green; property: "color"; to: "darkgreen"; duration: 500 }
+            PropertyAnimation{ target:yellow; property: "color"; to: "yellow"; duration: 500 }
         }
         ParallelAnimation{
-            PropertyAnimation{ target:red; property: "color"; to: "red"; duration: 1500 }
-            PropertyAnimation{ target:yellow; property: "color"; to: "#808000"; duration: 1500 }
+            PropertyAnimation{ target:red; property: "color"; to: "red"; duration: 500 }
+            PropertyAnimation{ target:yellow; property: "color"; to: "#808000"; duration: 500 }
         }
     }
 

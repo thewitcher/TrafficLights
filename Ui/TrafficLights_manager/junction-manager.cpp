@@ -10,8 +10,18 @@ JunctionManager::JunctionManager( QMap<int, QVector<TrafficLight *> >& junctions
     vector << 5000 << 5000 << 5000 << 5000;
     sendTimeVector( 0, vector );
     m_junctionsVector.at(0)->run();
+    sendTimeVector( 1, vector );
+    m_junctionsVector.at(1)->run();
+    sendTimeVector( 3, vector );
+    m_junctionsVector.at(3)->run();
+    sendTimeVector( 4, vector );
+    m_junctionsVector.at(4)->run();
+    sendTimeVector( 5, vector );
+    m_junctionsVector.at(5)->run();
+    sendTimeVector( 6, vector );
+    m_junctionsVector.at(6)->run();
 
-    vector << 6000 << 6000;
+    vector << 6000 << 5000;
     sendTimeVector( 2, vector );
     m_junctionsVector.at(2)->run();
 }
