@@ -32,6 +32,7 @@ void BladzioJunction::run()
     t2h = m_timeVector.at( 4 );
     t3h = m_timeVector.at( 5 );
 
+    int time = 0;
 
     if( t3h > t1v )
     {
@@ -50,24 +51,46 @@ void BladzioJunction::run()
     {
         t2v = t3v;
     }
+
     if( t2v > 0 )
     {
-        QTimer::singleShot( (t1v + m_interval) , this, SLOT(secondVerticalSeries()));   /* Series 2 */
-        QTimer::singleShot( ( t2v + t1v + m_interval), this, SLOT(turnOffSecondVerticalSeries()));
+        if( t1v > 0 ){
+            time = t1v + m_interval;
+            QTimer::singleShot( time, this, SLOT( holdFirstVerticalSeries() ) )
+                    ;
+            time = time + m_interval;
+            QTimer::singleShot( time , this, SLOT( secondVerticalSeries() ) );
+        }
+        else{
+        QTimer::singleShot( time , this, SLOT( secondVerticalSeries() ) );   /* Series 2 */
+        }
     }
     else
     {
-        QTimer::singleShot( t1v + m_interval, this, SLOT(turnOffFirstVerticalSeries()));
+        if ( t1v > 0 ){
+            time = t1v + 500;
+            QTimer::singleShot( time, this, SLOT( holdFirstVerticalSeries() ) );
+        }
     }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    if( t3v > t1h)
-    {
-        t3v -= t1h;
-    }
+
     if( t1h > 0 )
     {
-        QTimer::singleShot( ( t2v + t1v + (m_interval*2) ), this, SLOT(firstHorizontalSeries()));        /* Series 3 */
-        QTimer::singleShot( (t2v + t1v + t1h + (m_interval*2) ), this, SLOT(turnOffFirstHorizontalSeries()));
+        time = time + t2v;
+        if( t2v > 0 ){
+            QTimer::singleShot(time,this,SLOT( holdPartialSecondVerticalSeries()));
+        }
+            time = time + 500;
+            QTimer::singleShot( time, this, SLOT(firstHorizontalSeries()));        /* Series 3 */
+            time = time + t1h;
+            QTimer::singleShot( time , this, SLOT(holdFirstHorizontalSeries()));
+
+    }
+    else
+    {
+        time = time + t2v;
+        if ( t2v > 0 )
+            QTimer::singleShot(time,this,SLOT( holdAllSecondVerticalSeries()));
     }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     if( t2h > t3h )
@@ -80,8 +103,10 @@ void BladzioJunction::run()
     }
     if( t2h > 0 )
     {
-        QTimer::singleShot( ( t2v + t1v + t1h + (m_interval*3) ), this, SLOT(secondHorizontalSeries()) );
-        QTimer::singleShot( ( t2v + t1v + t1h + t2h + (m_interval*3) ), this, SLOT(turnOffSecondHorizontalSeties()) );
+        time = time + 500;
+        QTimer::singleShot( time, this, SLOT(secondHorizontalSeries()) );
+        time = time + t2h;
+        QTimer::singleShot( time, this, SLOT(holdSecondHorizontalSeries()) );
     }
 }
 
@@ -95,43 +120,43 @@ void BladzioJunction::firstVertivalSeries()
 
 void BladzioJunction::secondVerticalSeries()
 {
-    turnOffFirstVerticalSeries();
+//    turnOffFirstVerticalSeries();
     straightLight2a->letGoVehicles();
     rightLight2a->letGoVehicles();
     straightLight2c->letGoVehicles();
     rightLight2c->letGoVehicles();
 }
 
-void BladzioJunction::turnOffFirstVerticalSeries()
+void BladzioJunction::holdFirstVerticalSeries()
 {
     leftLight2a->holdVehicles();
     leftLight2c->holdVehicles();
-    if( t1h > 0 )
-    {
-        rightLight2b->holdVehicles();
-        rightLight2d->holdVehicles();
-    }
+    rightLight2b->holdVehicles();
+    rightLight2d->holdVehicles();
 }
 
-void BladzioJunction::turnOffSecondVerticalSeries()
+void BladzioJunction::holdPartialSecondVerticalSeries()  //ok
 {
     straightLight2a->holdVehicles();
     straightLight2c->holdVehicles();
-    if( t1h == 0 )
-    {
-        rightLight2a->holdVehicles();
-        rightLight2c->holdVehicles();
-    }
 }
 
-void BladzioJunction::firstHorizontalSeries()
+void BladzioJunction::holdAllSecondVerticalSeries()
+{
+    straightLight2a->holdVehicles();
+    straightLight2c->holdVehicles();
+    rightLight2a->holdVehicles();
+    rightLight2c->holdVehicles();
+}
+
+void BladzioJunction::firstHorizontalSeries()   //ok
 {
     leftLight2b->letGoVehicles();
     leftLight2d->letGoVehicles();
-    if( t1h == 0 )
+    if( t2v == 0 )
     {
-        rightLight2a->holdVehicles();
-        rightLight2c->holdVehicles();
+        rightLight2a->letGoVehicles();
+        rightLight2c->letGoVehicles();
     }
 }
 
@@ -143,16 +168,15 @@ void BladzioJunction::secondHorizontalSeries()
     rightLight2d->letGoVehicles();
 }
 
-void BladzioJunction::turnOffFirstHorizontalSeries()
+void BladzioJunction::holdFirstHorizontalSeries()
 {
     leftLight2b->holdVehicles();
     leftLight2d->holdVehicles();
     rightLight2a->holdVehicles();
     rightLight2c->holdVehicles();
-
 }
 
-void BladzioJunction::turnOffSecondHorizontalSeties()
+void BladzioJunction::holdSecondHorizontalSeries()
 {
     straightLight2b->holdVehicles();
     straightLight2d->holdVehicles();

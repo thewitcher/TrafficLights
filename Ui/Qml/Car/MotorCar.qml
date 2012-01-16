@@ -121,12 +121,12 @@ function turnOffLongLights()
 
         BackLight{
             id: backLeftLight
-            x:6; y:14
+            x:5.5; y:14
         }
 
         BackLight{
             id: backRightLight
-            x:11; y:14
+            x:11.5; y:14
         }
 
         Rectangle{
