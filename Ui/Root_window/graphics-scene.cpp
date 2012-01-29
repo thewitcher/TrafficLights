@@ -31,7 +31,7 @@ void GraphicsScene::addTrafficLightsToScene( QMap<int, QVector<TrafficLight *> >
 
     QVector<TrafficLight *> junction;
 
-    unsigned int checkPoint = 0;
+    uint checkPoint = 0;
 
     for( int id = 0; id < junctionsMap.count(); id++ )
     {

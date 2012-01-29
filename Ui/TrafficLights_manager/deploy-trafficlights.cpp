@@ -78,7 +78,7 @@ void DeployTrafficLights::setLights()
  * It's simple template for creates TrafficLight item for simple cross.
  */
 
-void DeployTrafficLights::templateSimpleCross( QVector<double> vector, unsigned int id )
+void DeployTrafficLights::templateSimpleCross( QVector<double> vector, uint id )
 {
     QVector<TrafficLight*> container;
 
@@ -113,16 +113,16 @@ void DeployTrafficLights::templateSimpleCross( QVector<double> vector, unsigned 
 /*!
  * It's complex template for creates TrafficLight item for Bladzio cross.
  */
-void DeployTrafficLights::templatecomplexCross( QVector<qreal> vector, unsigned int id )
+void DeployTrafficLights::templatecomplexCross( QVector<qreal> vector, uint id )
 {
     if( vector.count() == 36 ){
 
-        unsigned int x = 0;
-        unsigned int y = 1;
-        unsigned int angle = 2;
+        uint x = 0;
+        uint y = 1;
+        uint angle = 2;
         QVector<TrafficLight*> container;
 
-        for( unsigned int i = 0; i < 4; i++ )
+        for( uint i = 0; i < 4; i++ )
         {
             TrafficLight * light1 = QmlHelper::createLightsFromQml( "Lights" );
             light1->setPos( vector.at( x ), vector.at( y ) );

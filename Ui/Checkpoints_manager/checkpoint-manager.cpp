@@ -4,7 +4,8 @@
 #include "../Logger/logger.h"
 #include "checkpoint-creator.h"
 
-CheckpointManager::CheckpointManager()
+CheckpointManager::CheckpointManager():
+    QObject( NULL )
 {
     srand( time( NULL ) );
 
@@ -18,26 +19,29 @@ CheckpointManager::~CheckpointManager()
     qDeleteAll( m_checkpointVector );
 }
 
-Checkpoint* CheckpointManager::addCheckpoint( qreal x, qreal y, unsigned int id )
+Checkpoint* CheckpointManager::addCheckpoint( qreal x, qreal y, uint id, uint flags )
 {
     Checkpoint *checkpoint = new Checkpoint( x, y );
     checkpoint->setId( id );
+    checkpoint->setFlags( flags );
 
     m_checkpointVector << checkpoint;
 
     LOG_INFO( "Added new checkpoint with %i id", id );
 
+    connect( checkpoint, SIGNAL(checkpointReached(uint)), this, SIGNAL(checkpointReached(uint)) );
+
     return checkpoint;
 }
 
-const Checkpoint* CheckpointManager::checkpointByIdConst( unsigned int id ) const
+const Checkpoint* CheckpointManager::checkpointByIdConst( uint id ) const
 {
     Q_ASSERT( int( id ) < m_checkpointVector.count() );
 
     return m_checkpointVector.at( id );
 }
 
-Checkpoint* CheckpointManager::checkpointById( unsigned int id ) const
+Checkpoint* CheckpointManager::checkpointById( uint id ) const
 {
     Q_ASSERT( int( id ) < m_checkpointVector.count() );
 
@@ -45,7 +49,7 @@ Checkpoint* CheckpointManager::checkpointById( unsigned int id ) const
 }
 
 
-unsigned int CheckpointManager::checkpointsCount() const
+uint CheckpointManager::checkpointsCount() const
 {
     return m_checkpointVector.count();
 }

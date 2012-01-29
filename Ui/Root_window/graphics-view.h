@@ -36,6 +36,7 @@ private slots:
     void createCheckpointsManager();
     void addVehicle( int speed );
     void createJunctionManager();
+    void createConnections();
 };
 
 #endif // GRAPHICSVIEW_H

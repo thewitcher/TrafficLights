@@ -4,7 +4,8 @@
 Junction::Junction( const QVector<TrafficLight *>& junction ):
     QObject( NULL ),
     m_trafficLightVector( junction ),
-    m_interval( 500 )
+    m_interval( 500 ),
+    m_currentNumberOfVehicles( 0 )
 {
 }
 
@@ -20,3 +21,19 @@ void Junction::run()
 {
 }
 
+int Junction::currentNumberOfVehicles() const
+{
+    return m_currentNumberOfVehicles;
+}
+
+void Junction::manageVehicle( uint flags )
+{
+    if( flags & 128 )
+    {
+        m_currentNumberOfVehicles++;
+    }
+    else
+    {
+        m_currentNumberOfVehicles--;
+    }
+}

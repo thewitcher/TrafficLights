@@ -3,6 +3,7 @@
 
 #include "checkpoint.h"
 #include <QVector>
+#include <QObject>
 
 /*!
  * It's a kind of layout. Creates and manages all checkpoint. You can create new checkpoint by invoke addCheckpoint()
@@ -11,13 +12,16 @@
  * and can be retreive by calling checkpointById. You can create new checkpoints in function createCheckpoints(). After destroy
  * checkpoint manager object every checkpoits will be deleted.
  */
-class CheckpointManager
+class CheckpointManager: public QObject
 {
+
+    Q_OBJECT
+
 public:
-    Checkpoint* addCheckpoint( qreal x, qreal y, unsigned int id );
-    virtual const Checkpoint* checkpointByIdConst( unsigned int id ) const;
-    virtual Checkpoint* checkpointById( unsigned int id ) const;
-    unsigned int checkpointsCount() const;
+    Checkpoint* addCheckpoint( qreal x, qreal y, uint id , uint flags );
+    virtual const Checkpoint* checkpointByIdConst( uint id ) const;
+    virtual Checkpoint* checkpointById( uint id ) const;
+    uint checkpointsCount() const;
 
 protected:
     CheckpointManager();
@@ -26,6 +30,9 @@ protected:
     QVector<Checkpoint*> m_checkpointVector;
 
     friend class GraphicsView;
+
+signals:
+    void checkpointReached( uint flags );
 };
 
 #endif // CHECKPOINTMANAGER_H

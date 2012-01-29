@@ -17,8 +17,8 @@ public:
     QVector<Checkpoint*> allCheckpointForLights();
 
 private:
-    void templateSimpleCross( QVector<qreal> vector, unsigned int id );
-    void templatecomplexCross( QVector<qreal> vector, unsigned int id );
+    void templateSimpleCross( QVector<qreal> vector, uint id );
+    void templatecomplexCross( QVector<qreal> vector, uint id );
     void setLights();
     void setCheckpointForLights( CheckpointManager * checkPoint );
     QMap< int, QVector<TrafficLight*> > m_lights;

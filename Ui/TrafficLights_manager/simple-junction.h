@@ -20,7 +20,7 @@ private:
     TrafficLight* rightLight;
     TrafficLight* leftAndStraightLight;
     TrafficLight* rightAndStraightLight;
-    unsigned int m_leftTime, m_leftAndStraightTime;
+    uint m_leftTime, m_leftAndStraightTime;
 
 public slots:
     void firstSeries();

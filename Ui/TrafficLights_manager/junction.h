@@ -19,13 +19,15 @@ public:
     virtual ~Junction();
 
     void setTimeVector( QVector<int>& time );
+    void manageVehicle( uint flags );
+    int currentNumberOfVehicles() const;
 
     virtual void run() = 0;
 protected:
     const QVector<TrafficLight*> m_trafficLightVector;
     QVector<int> m_timeVector;
     const int m_interval;
-
+    int m_currentNumberOfVehicles;
 };
 
 #endif // JUNCTION_H

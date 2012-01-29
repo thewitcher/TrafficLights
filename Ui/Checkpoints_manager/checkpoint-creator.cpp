@@ -82,9 +82,10 @@ void CheckpointCreator::createCheckpoints()
         for( int i = 0 ; i < m_checkpointsList.count() ; i++)
         {
             splitedLine = m_checkpointsList.at( i ).split( ";" );
-            coordinates = splitedLine.at( 1 ).split( "," );
+            coordinates = splitedLine.at( 2 ).split( "," );
 
-            m_manager->addCheckpoint( coordinates.at(0).toDouble(), coordinates.at(1).toDouble(), splitedLine.at( 0 ).toUInt() );
+            m_manager->addCheckpoint( coordinates.at( 0 ).toDouble(), coordinates.at( 1 ).toDouble(),
+                                      splitedLine.at( 1 ).toUInt(), splitedLine.at( 0 ).toUInt() );
         }
     }
     else
@@ -104,7 +105,7 @@ void CheckpointCreator::createPaths()
         QStringList secondTargets;
         QVector< Checkpoint* > secondTargetsVector;
 
-        for( unsigned int i = 0 ; i < m_manager->checkpointsCount() ; i++ )
+        for( uint i = 0 ; i < m_manager->checkpointsCount() ; i++ )
         {
             // Clear
             firstTargets.clear();
@@ -116,24 +117,24 @@ void CheckpointCreator::createPaths()
             splitedLine = m_checkpointsList.at( i ).split( ";" );
 
             // Checks ids
-            Q_ASSERT( i == splitedLine.at( 0 ).toUInt() );
+            Q_ASSERT( i == splitedLine.at( 1 ).toUInt() );
 
             // Creates targets checkpoints list
-            if( splitedLine.count() == 4 )
+            if( splitedLine.count() == 5 )
             {
-                firstTargets = splitedLine.at( 2 ).split( "," );
+                firstTargets = splitedLine.at( 3 ).split( "," );
 
                 for( unsigned char k = 0 ; k < firstTargets.count() ; k++ )
                 {
                     firstTargetsVector << m_manager->checkpointById( firstTargets.at( k ).toUInt() );
                 }
 
-                checkpoint->addMove( firstTargetsVector, splitedLine.at( 3 ) );
+                checkpoint->addMove( firstTargetsVector, splitedLine.at( 4 ) );
             }
-            else if( splitedLine.count() == 6 )
+            else if( splitedLine.count() == 7 )
             {
-                firstTargets = splitedLine.at( 2 ).split( "," );
-                secondTargets = splitedLine.at( 4 ).split( "," );
+                firstTargets = splitedLine.at( 3 ).split( "," );
+                secondTargets = splitedLine.at( 5 ).split( "," );
 
                 for( unsigned char k = 0 ; k < firstTargets.count() ; k++ )
                 {
@@ -144,8 +145,8 @@ void CheckpointCreator::createPaths()
                     secondTargetsVector << m_manager->checkpointById( secondTargets.at( k ).toUInt() );
                 }
 
-                checkpoint->addMove( firstTargetsVector, splitedLine.at( 3 ) );
-                checkpoint->addMove( secondTargetsVector, splitedLine.at( 5 ) );
+                checkpoint->addMove( firstTargetsVector, splitedLine.at( 4 ) );
+                checkpoint->addMove( secondTargetsVector, splitedLine.at( 6 ) );
             }
             else
             {

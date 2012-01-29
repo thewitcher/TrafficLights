@@ -20,8 +20,8 @@ void SimpleJunction::run()
 {
     if( m_timeVector.count() != 0 ){
 
-    unsigned int rightTime = m_timeVector.at( 1 );
-    unsigned int rightAndStraightTime = m_timeVector.at( 3 );
+    uint rightTime = m_timeVector.at( 1 );
+    uint rightAndStraightTime = m_timeVector.at( 3 );
     m_leftTime = m_timeVector.at( 0 );
     m_leftAndStraightTime = m_timeVector.at( 2 );
 

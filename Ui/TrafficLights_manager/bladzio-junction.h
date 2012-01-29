@@ -28,7 +28,7 @@ private:
     TrafficLight* leftLight2d;
     TrafficLight* straightLight2d;
     TrafficLight* rightLight2d;
-    unsigned int t1v,t2v,t3v,t1h,t2h,t3h;
+    uint t1v,t2v,t3v,t1h,t2h,t3h;
 
 private slots:
     void firstVertivalSeries();

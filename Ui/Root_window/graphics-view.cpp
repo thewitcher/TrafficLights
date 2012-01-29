@@ -27,6 +27,7 @@ GraphicsView::GraphicsView( QWidget *parent ):
     createDeployTrafficLights();
     createJunctionManager();
     createItems();
+    createConnections();
 }
 
 GraphicsView::~GraphicsView()
@@ -40,6 +41,12 @@ GraphicsView::~GraphicsView()
     {
         delete m_junctionManager;
     }
+}
+
+void GraphicsView::createConnections()
+{
+    connect( m_checkpointManager, SIGNAL(checkpointReached(uint)),
+             m_junctionManager, SLOT(routeToAppropriateJunction(uint)) );
 }
 
 /*!

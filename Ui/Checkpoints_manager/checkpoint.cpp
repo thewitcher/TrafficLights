@@ -6,10 +6,12 @@
 #include <QVector>
 
 Checkpoint::Checkpoint(qreal x, qreal y):
+    QObject( NULL ),
     m_x( x ),
     m_y( y ),
     m_id( 0 ),
-    m_movePermission( true )
+    m_movePermission( true ),
+    m_flags( 0 )
 {
 }
 
@@ -263,4 +265,19 @@ int Checkpoint::estimatedMovingTimeToTargetCheckpoint( const Checkpoint *targetC
 bool Checkpoint::movePermission() const
 {
     return m_movePermission;
+}
+
+void Checkpoint::reached()
+{
+    LOG_INFO( "Checkpoint with id: %i was reached", m_id );
+
+    if( m_flags & 1 )
+    {
+        emit checkpointReached( m_flags );
+    }
+}
+
+void Checkpoint::setFlags( uint flags )
+{
+    m_flags = flags;
 }

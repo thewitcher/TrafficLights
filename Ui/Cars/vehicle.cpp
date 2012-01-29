@@ -40,6 +40,7 @@ void Vehicle::init( Checkpoint *initCheckpoint )
         LOG_INFO( "First time: %s. Inits new checkpint and drawing new path", __FUNCTION__ )
 
         m_currentCheckpoint = initCheckpoint;
+        m_currentCheckpoint->reached();
 
         m_currentPath = m_currentCheckpoint->randomPath();
 
