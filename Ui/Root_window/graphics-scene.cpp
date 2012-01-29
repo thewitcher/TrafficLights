@@ -41,6 +41,7 @@ void GraphicsScene::addTrafficLightsToScene( QMap<int, QVector<TrafficLight *> >
         {
             TrafficLight *item = junction.at( light );
             addItem( item );
+            item->setParent( this );
             item->createCheckpoint( checkpoinVector.at( checkPoint ) );
             checkPoint++;
         }

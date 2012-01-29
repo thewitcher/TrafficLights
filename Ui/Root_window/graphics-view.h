@@ -27,6 +27,7 @@ private:
 
     static int S_NEW_CAR_FREQUENCY;
     static int S_CAR_COUNT;
+    const int C_BUS_COUNT;
 
 private slots:
     void initScene();
@@ -35,6 +36,7 @@ private slots:
     void createItems();
     void createCheckpointsManager();
     void addVehicle( int speed );
+    void addBus( int speed );
     void createJunctionManager();
 };
 

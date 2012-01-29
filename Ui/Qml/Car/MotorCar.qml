@@ -4,8 +4,9 @@ import Cars 1.0
 MotorCar {
     id:root
 
-    width: 18
-    height: 18
+    width: 20
+    height: 20
+    scale: 2
 
     property alias bumperX: collisionPoint.x
     property alias bumperY: collisionPoint.y
@@ -58,8 +59,8 @@ function turnOffLongLights()
 
     Item {
         id:rootRect
-        width: 18
-        height: 18
+        width: 20
+        height: 20
         rotation: -90
 
         property int insideTime: 0

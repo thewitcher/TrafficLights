@@ -2,6 +2,7 @@
     <qresource prefix="/graphics">
         <file alias="viewport_background">Graphics/cross_big_square_png.png</file>
         <file>Graphics/motor_car.png</file>
+        <file>Graphics/bus4.png</file>
     </qresource>
     <qresource prefix="/qml">
         <file>Qml/Car/BackLight.qml</file>
@@ -14,5 +15,6 @@
         <file>Qml/Lights/ArrowInLeft.qml</file>
         <file>Qml/Lights/ArrowStraightAndLeft.qml</file>
         <file>Qml/Lights/ArrowStraightAndRight.qml</file>
+        <file>Qml/Car/Bus.qml</file>
     </qresource>
 </RCC>

@@ -16,21 +16,21 @@ DeployTrafficLights::DeployTrafficLights( CheckpointManager * checkpoint )
 void DeployTrafficLights::setLights()
 {
 
-    QVector<qreal> cross1;           /* Cross 1 */
+    QVector<qreal> cross1;           /* Cross 0 */
     cross1 << 286 << 90 << 0
               << 372 << 90 << 0
                  << 380 << -8.5 << -90
                     << 160 << 72 << 90;
     templateSimpleCross( cross1, 0 );
 
-    QVector<qreal> cross2;           /* Cross 2 */
+    QVector<qreal> cross2;           /* Cross 1 */
     cross2 << 101 << 471 << -90
               << 101 << 386 << -90
                  << 3.5 << 376 << 180
                     << 88 << 600 << 0;
     templateSimpleCross( cross2, 1 );
 
-    QVector<qreal> cross3;           /* Cross 3 */
+    QVector<qreal> cross3;           /* Cross 2 */
     cross3 << 286.5 << 372 << 180                   /* 3 a */
               << 170 << 372 << 180
                  << 150 << 372 << 180
@@ -45,28 +45,28 @@ void DeployTrafficLights::setLights()
                  << 381 << 366 << -90;
     templatecomplexCross( cross3, 2 );
 
-    QVector<qreal> cross4;           /* Cross 4 */
+    QVector<qreal> cross4;           /* Cross 3 */
     cross4 << 255 << 940 << 180
               << 171 << 940 << 180
                  << 160 << 1038 << 90
                     << 385 << 955 << -90;
     templateSimpleCross( cross4, 3 );
 
-    QVector<qreal> cross5;           /* Cross 5 */
+    QVector<qreal> cross5;           /* Cross 4 */
     cross5 << 751 << 940 << 180
               << 666 << 940 << 180
                  << 652 << 1038 << 90
                     << 880 << 955 << -90;
     templateSimpleCross( cross5, 4 );
 
-    QVector<qreal> cross6;           /* Cross 6 */
+    QVector<qreal> cross6;           /* Cross 5 */
     cross6 << 1212 << 500 << 90
               << 1212 << 585 << 90
                  << 1307 << 596 << 0
                     << 1227 << 370 << 180;
     templateSimpleCross( cross6, 5 );
 
-    QVector<qreal> cross7;           /* Cross 7 */
+    QVector<qreal> cross7;           /* Cross 6 */
     cross7 << 780 << 90 << 0
               << 865 << 90 << 0
                  << 883 << -8.5 << -90
@@ -167,11 +167,11 @@ void DeployTrafficLights::setCheckpointForLights( CheckpointManager *checkPoint 
 {
     /* Cross 0 */
     m_checkpointsVectorToLights << checkPoint->checkpointById( 37 ) << checkPoint->checkpointById( 47 )
-                                << checkPoint->checkpointById( 36 ) << checkPoint->checkpointById( 18 );
+                                << checkPoint->checkpointById( 128 ) << checkPoint->checkpointById( 127 );
 
     /* Cross 1 */
     m_checkpointsVectorToLights << checkPoint->checkpointById( 13 ) << checkPoint->checkpointById( 12 )
-                                << checkPoint->checkpointById( 1 ) << checkPoint->checkpointById( 10 );
+                                << checkPoint->checkpointById( 138 ) << checkPoint->checkpointById( 137 );
 
     /* Cross 2 */
     m_checkpointsVectorToLights << checkPoint->checkpointById( 34 ) << checkPoint->checkpointById( 28 )
@@ -185,19 +185,19 @@ void DeployTrafficLights::setCheckpointForLights( CheckpointManager *checkPoint 
 
     /* Cross 3 */
     m_checkpointsVectorToLights << checkPoint->checkpointById( 30 ) << checkPoint->checkpointById( 24 )
-                                << checkPoint->checkpointById( 31 ) << checkPoint->checkpointById( 53 );
+                                << checkPoint->checkpointById( 136 ) << checkPoint->checkpointById( 135 );
 
     /* Cross 4 */
     m_checkpointsVectorToLights << checkPoint->checkpointById( 58 ) << checkPoint->checkpointById( 57 )
-                                << checkPoint->checkpointById( 55 ) << checkPoint->checkpointById( 70 );
+                                << checkPoint->checkpointById( 134 ) << checkPoint->checkpointById( 133 );
 
     /* Cross 5 */
     m_checkpointsVectorToLights << checkPoint->checkpointById( 75 ) << checkPoint->checkpointById( 76 )
-                                << checkPoint->checkpointById( 73 ) << checkPoint->checkpointById( 79 );
+                                << checkPoint->checkpointById( 132 ) << checkPoint->checkpointById( 131 );
 
     /* Cross 6 */
     m_checkpointsVectorToLights << checkPoint->checkpointById( 65 ) << checkPoint->checkpointById( 66 )
-                                << checkPoint->checkpointById( 63 ) << checkPoint->checkpointById( 59 );
+                                << checkPoint->checkpointById( 130 ) << checkPoint->checkpointById( 129 );
 }
 
 QVector<Checkpoint*> DeployTrafficLights::allCheckpointForLights()
