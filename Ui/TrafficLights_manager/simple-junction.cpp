@@ -14,6 +14,7 @@ SimpleJunction::SimpleJunction( const QVector<TrafficLight *> &junction ):
 
 SimpleJunction::~SimpleJunction()
 {
+//    delete leftLight;
 }
 
 void SimpleJunction::run()
@@ -70,8 +71,8 @@ void SimpleJunction::run()
     else{
         if( m_leftAndStraightTime > 0 )
         {
-            int timeThirdSeries = m_leftTime + (m_interval*2) + m_leftAndStraightTime;
-            QTimer::singleShot(timeThirdSeries, this, SLOT(holdSecond()));
+            int timeThirdSeries = m_leftTime + ( m_interval*2 ) + m_leftAndStraightTime;
+            QTimer::singleShot( timeThirdSeries, this, SLOT( holdSecond() ) );
         }
     }
     }
@@ -85,7 +86,7 @@ void SimpleJunction::firstSeries()
 
 void SimpleJunction::secondSeries()
 {
-    if( m_leftTime == 0)
+    if( m_leftTime == 0 )
         rightLight->letGoVehicles();
 
     leftAndStraightLight->letGoVehicles();
@@ -93,7 +94,7 @@ void SimpleJunction::secondSeries()
 
 void SimpleJunction::thirdSeries()
 {
-    if( m_leftAndStraightTime > 0)
+    if( m_leftAndStraightTime > 0 )
     {
         rightLight->holdVehicles();
         leftAndStraightLight->holdVehicles();
@@ -103,7 +104,7 @@ void SimpleJunction::thirdSeries()
 
 void SimpleJunction::holdFirst()
 {
-     leftLight->holdVehicles();
+    leftLight->holdVehicles();
 }
 
 void SimpleJunction::holdFirstTwoCondition()
@@ -116,7 +117,6 @@ void SimpleJunction::holdSecond()
 {
     rightLight->holdVehicles();
     leftAndStraightLight->holdVehicles();
-    run();
 }
 
 void SimpleJunction::holdThird()

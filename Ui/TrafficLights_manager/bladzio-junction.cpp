@@ -68,7 +68,7 @@ void BladzioJunction::run()
     else
     {
         if ( t1v > 0 ){
-            time = t1v + 500;
+            time = t1v + m_interval;
             QTimer::singleShot( time, this, SLOT( holdFirstVerticalSeries() ) );
         }
     }
@@ -80,7 +80,7 @@ void BladzioJunction::run()
         if( t2v > 0 ){
             QTimer::singleShot(time,this,SLOT( holdPartialSecondVerticalSeries()));
         }
-            time = time + 500;
+            time = time + m_interval;
             QTimer::singleShot( time, this, SLOT(firstHorizontalSeries()));        /* Series 3 */
             time = time + t1h;
             QTimer::singleShot( time , this, SLOT(holdFirstHorizontalSeries()));
@@ -103,10 +103,10 @@ void BladzioJunction::run()
     }
     if( t2h > 0 )
     {
-        time = time + 500;
-        QTimer::singleShot( time, this, SLOT(secondHorizontalSeries()) );
+        time = time + m_interval;
+        QTimer::singleShot( time, this, SLOT( secondHorizontalSeries() ) );
         time = time + t2h;
-        QTimer::singleShot( time, this, SLOT(holdSecondHorizontalSeries()) );
+        QTimer::singleShot( time, this, SLOT( holdSecondHorizontalSeries() ) );
     }
 }
 
@@ -120,7 +120,6 @@ void BladzioJunction::firstVertivalSeries()
 
 void BladzioJunction::secondVerticalSeries()
 {
-//    turnOffFirstVerticalSeries();
     straightLight2a->letGoVehicles();
     rightLight2a->letGoVehicles();
     straightLight2c->letGoVehicles();
@@ -135,7 +134,7 @@ void BladzioJunction::holdFirstVerticalSeries()
     rightLight2d->holdVehicles();
 }
 
-void BladzioJunction::holdPartialSecondVerticalSeries()  //ok
+void BladzioJunction::holdPartialSecondVerticalSeries()
 {
     straightLight2a->holdVehicles();
     straightLight2c->holdVehicles();
@@ -149,7 +148,7 @@ void BladzioJunction::holdAllSecondVerticalSeries()
     rightLight2c->holdVehicles();
 }
 
-void BladzioJunction::firstHorizontalSeries()   //ok
+void BladzioJunction::firstHorizontalSeries()
 {
     leftLight2b->letGoVehicles();
     leftLight2d->letGoVehicles();

@@ -8,7 +8,11 @@ OTHER_FILES += \
     Qml/Lights/ArrowInRight.qml \
     Qml/Lights/ArrowStraight.qml \
     Qml/Lights/ArrowStraightAndLeft.qml \
-    Qml/Lights/ArrowStraightAndRight.qml
+    Qml/Lights/ArrowStraightAndRight.qml \
+    Qml/Car/Bus.qml
+
+
+
 
 
 

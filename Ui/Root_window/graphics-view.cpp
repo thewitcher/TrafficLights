@@ -9,7 +9,7 @@
 #include <QTimer>
 
 int GraphicsView::S_NEW_CAR_FREQUENCY = 5000;
-int GraphicsView::S_CAR_COUNT = 1;
+int GraphicsView::S_CAR_COUNT = 20;
 
 /*!
  * GraphicsView is a subclass of QGraphicsView. It was created for convenience. In constructor there are already four method, which
@@ -19,7 +19,8 @@ GraphicsView::GraphicsView( QWidget *parent ):
     QGraphicsView( parent ),
     m_scene( NULL ),
     m_checkpointManager( NULL ),
-    m_junctionManager( NULL )
+    m_junctionManager( NULL ),
+    C_BUS_COUNT( 4 )
 {
     initScene();
     initGraphicsView();
@@ -138,6 +139,19 @@ void GraphicsView::addVehicle( int speed )
         addToScene( newVehicle, m_checkpointManager->checkpointById( 82 ) );
 
         LOG_INFO( "%s was created and added to scene", newVehicle->objectName().toLatin1().data() )
+    }
+}
+
+void GraphicsView::addBus( int speed )
+{
+    Vehicle* newVehicle = QmlHelper::createVehicleFromQml( "Bus" );
+    newVehicle->setSpeed( speed );
+
+    if( newVehicle != NULL )
+    {
+        addToScene( newVehicle, m_checkpointManager->checkpointById( 82 ));
+
+        LOG_INFO( "%s was created and added to scene", newVehicle->objectName().toLatin1().data() );
     }
 }
 
