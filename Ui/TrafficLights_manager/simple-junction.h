@@ -9,18 +9,19 @@ class SimpleJunction: public Junction
     Q_OBJECT
 
 public:
-    SimpleJunction( const QVector<TrafficLight*>& junction );
+    SimpleJunction( const QVector<TrafficLight*>& junction, QLCDNumber* vehicleCounter );
     ~SimpleJunction();
 
 protected:
     void run();
 
 private:
-    TrafficLight* leftLight;
-    TrafficLight* rightLight;
-    TrafficLight* leftAndStraightLight;
-    TrafficLight* rightAndStraightLight;
-    uint m_leftTime, m_leftAndStraightTime;
+    TrafficLight* m_leftLight;
+    TrafficLight* m_rightLight;
+    TrafficLight* m_leftAndStraightLight;
+    TrafficLight* m_rightAndStraightLight;
+    uint m_leftTime;
+    uint m_leftAndStraightTime;
 
 public slots:
     void firstSeries();

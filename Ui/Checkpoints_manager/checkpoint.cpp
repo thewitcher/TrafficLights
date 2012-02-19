@@ -29,6 +29,16 @@ unsigned char Checkpoint::randomNumber( unsigned char max ) const
     return random;
 }
 
+uchar Checkpoint::id() const
+{
+    return m_id;
+}
+
+QList<Path*> Checkpoint::allPaths() const
+{
+    return m_paths;
+}
+
 const Path* Checkpoint::randomPath() const
 {
     LOG_INFO( "Random path was returned for checkpoint with %i id", m_id );
@@ -159,7 +169,7 @@ void Checkpoint::addMove( QVector<Checkpoint *> checkpointsVector, const QString
         {
             duration = estimatedMovingTimeToTargetCheckpoint( checkpointsVector.at( i ) );
 
-            addTurnAndMovingByXToTargetCheckpointPath( checkpointsVector.at( i ), 1000, duration, TURN_90_LEFT );
+            addTurnAndMovingByXToTargetCheckpointPath( checkpointsVector.at( i ), 300, duration, TURN_90_LEFT );
         }
     }
     else if( parameters == "yl" ) // Left with y
@@ -168,7 +178,7 @@ void Checkpoint::addMove( QVector<Checkpoint *> checkpointsVector, const QString
         {
             duration = estimatedMovingTimeToTargetCheckpoint( checkpointsVector.at( i ) );
 
-            addTurnAndMovingByYToTargetCheckpointPath( checkpointsVector.at( i ), 1000, duration, TURN_90_LEFT );
+            addTurnAndMovingByYToTargetCheckpointPath( checkpointsVector.at( i ), 300, duration, TURN_90_LEFT );
         }
     }
     else if( parameters == "xr" ) // Right with x
@@ -177,7 +187,7 @@ void Checkpoint::addMove( QVector<Checkpoint *> checkpointsVector, const QString
         {
             duration = estimatedMovingTimeToTargetCheckpoint( checkpointsVector.at( i ) );
 
-            addTurnAndMovingByXToTargetCheckpointPath( checkpointsVector.at( i ), 1000, duration, TURN_90_RIGHT );
+            addTurnAndMovingByXToTargetCheckpointPath( checkpointsVector.at( i ), 300, duration, TURN_90_RIGHT );
         }
     }
     else if( parameters == "yr" ) // Right with y
@@ -186,7 +196,7 @@ void Checkpoint::addMove( QVector<Checkpoint *> checkpointsVector, const QString
         {
             duration = estimatedMovingTimeToTargetCheckpoint( checkpointsVector.at( i ) );
 
-            addTurnAndMovingByYToTargetCheckpointPath( checkpointsVector.at( i ), 1000, duration, TURN_90_RIGHT );
+            addTurnAndMovingByYToTargetCheckpointPath( checkpointsVector.at( i ), 300, duration, TURN_90_RIGHT );
         }
     }
     else if( parameters == "wxy" ) // West with x and y

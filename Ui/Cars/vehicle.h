@@ -37,6 +37,7 @@ public:
 
     /// Enum describing blinkers.
     enum Blinkers { RIGHT_BLINKERS = 90, LEFT_BLINKERS = -90, NO_BLINKERS = 0 };
+    enum VehicleDirection { Unknown = 0, Horizontal = 1, Vertical = 2 };
 
     /*!
      * Sets vehicle speed. For bigger value of speed car move slower.
@@ -62,6 +63,17 @@ public:
      * Returns scene which contains vehicle.
      */
     GraphicsScene* parentScene() const;
+    QSize size() const;
+    /*!
+     * Base for every vehicle is square 20x20. Normal position is a top right point of this square. But sometimes
+     * there is need to have modified position becouse of other size of vehicle. For example bus is bigger than
+     * this square, so his position is move to right top side. This new position is counted from simply formula.
+     */
+    QPoint topLeftPoint() const;
+    QPoint bottomRightPoint() const;
+    void setCheckCollisions( bool check = true );
+    bool checkCollisions() const;
+    VehicleDirection direction() const;
 
 private:
     /// It is a description of current path to new checkpoint.
@@ -75,6 +87,7 @@ private:
     /// Pointer to scene the vehicle has added to.
     GraphicsScene *m_parentScene;
     bool m_first;
+    bool m_checkCollisions;
 
     /// After this time vehicle will ask for permission to move again.
     static const int WAIT_ON_PERMISSION;

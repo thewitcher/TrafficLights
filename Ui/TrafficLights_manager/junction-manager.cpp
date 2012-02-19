@@ -3,10 +3,10 @@
 #include "bladzio-junction.h"
 #include "../Logger/logger.h"
 
-JunctionManager::JunctionManager( QMap<int, QVector<TrafficLight *> >& junctionsMap ):
+JunctionManager::JunctionManager( QMap<int, QVector<TrafficLight *> > &junctionsMap, QVector<QLCDNumber *> &vehicleCounters ):
     QObject( NULL )
 {
-    createJunctions( junctionsMap );
+    createJunctions( junctionsMap, vehicleCounters );
     QVector<int> vector;
     vector << 5000 << 5000 << 5000 << 5000;
     sendTimeVector( 0, vector );
@@ -48,38 +48,38 @@ void JunctionManager::sendTimeVector( const uint id, QVector<int> time )
  * Creates 7 objects with responsibility for manage signallers on each junction. 6 of them is SimpleJunction type and one BladzioJunction type.
  * BladzioJunction is the largest cross in the map.
  */
-void JunctionManager::createJunctions( QMap<int, QVector<TrafficLight *> > &junctionsMap )
+void JunctionManager::createJunctions( QMap<int, QVector<TrafficLight *> > &junctionsMap, QVector<QLCDNumber *> &vehicleCounters )
 {
     LOG_INFO( "Creating 7 junctions in %s", __FUNCTION__ );
 
     Junction *junction = NULL;
 
     // SimpleJunction
-    junction = new SimpleJunction( junctionsMap.value( 0 ) );
+    junction = new SimpleJunction( junctionsMap.value( 0 ), vehicleCounters.at( 0 ) );
     m_junctionsVector.append( junction );
 
     // SimpleJunction
-    junction = new SimpleJunction( junctionsMap.value( 1 ) );
+    junction = new SimpleJunction( junctionsMap.value( 1 ), vehicleCounters.at( 1 ) );
     m_junctionsVector.append( junction );
 
     // BladzioJunction
-    junction = new BladzioJunction( junctionsMap.value( 2 ) );
+    junction = new BladzioJunction( junctionsMap.value( 2 ), vehicleCounters.at( 2 ) );
     m_junctionsVector.append( junction );
 
     // SimpleJunction
-    junction = new SimpleJunction( junctionsMap.value( 3 ) );
+    junction = new SimpleJunction( junctionsMap.value( 3 ), vehicleCounters.at( 3 ) );
     m_junctionsVector.append( junction );
 
     // SimpleJunction
-    junction = new SimpleJunction( junctionsMap.value( 4 ) );
+    junction = new SimpleJunction( junctionsMap.value( 4 ), vehicleCounters.at( 4 ) );
     m_junctionsVector.append( junction );
 
     // SimpleJunction
-    junction = new SimpleJunction( junctionsMap.value( 5 ) );
+    junction = new SimpleJunction( junctionsMap.value( 5 ), vehicleCounters.at( 5 ) );
     m_junctionsVector.append( junction );
 
     // SimpleJunction
-    junction = new SimpleJunction( junctionsMap.value( 6 ) );
+    junction = new SimpleJunction( junctionsMap.value( 6 ), vehicleCounters.at( 6 ) );
     m_junctionsVector.append( junction );
 }
 
@@ -90,10 +90,10 @@ void JunctionManager::routeToAppropriateJunction( uint flags )
 
     while( ( flags & pow2 ) == false )
     {
+        Q_ASSERT( junction < 7 );
+
         junction++;
         pow2 *= 2;
-
-        Q_ASSERT( junction > 6 );
     }
 
     m_junctionsVector.at( junction )->manageVehicle( flags );

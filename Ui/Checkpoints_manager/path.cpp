@@ -266,7 +266,16 @@ QAbstractAnimation* Path::moveAndTurningToTargetCheckpointAnimation( Vehicle *ta
         startRotationValue = 0;
     }
 
-    propertyAnimationRotate->setDuration( m_turnDuration * speedMultiplier );
+    // Change turning speed which depends on animation type
+    if( m_sequential )
+    {
+        propertyAnimationRotate->setDuration( m_turnDuration * speedMultiplier );
+    }
+    else
+    {
+        propertyAnimationRotate->setDuration( m_turnDuration );
+    }
+
     propertyAnimationRotate->setStartValue( startRotationValue );
     propertyAnimationRotate->setEndValue( startRotationValue + m_turnType );
 

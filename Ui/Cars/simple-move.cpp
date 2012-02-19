@@ -15,8 +15,6 @@ SimpleMove::SimpleMove( Vehicle *target ):
 
 SimpleMove::~SimpleMove()
 {
-    LOG_INFO( "Destructor: %s", __FUNCTION__ );
-
     if( m_delayCaller != NULL )
     {
         delete m_delayCaller;
@@ -25,8 +23,14 @@ SimpleMove::~SimpleMove()
 
 void SimpleMove::collisionDetection()
 {
-    // Checking collisions
+    // We switch off collision detection when vehicle arrives to big junction and tries to turn left.
+    // It works in this way in order to avoid collisions which shouldn't happend (but they happend becouse of junction architecture).
+    if( m_currentVehicle->checkCollisions() == false )
+    {
+        return;
+    }
 
+    // Checking collisions
     QListIterator<Vehicle*> iterator( m_currentVehicle->parentScene()->allVehicles() );
 
     Vehicle *target;
@@ -51,7 +55,6 @@ void SimpleMove::collisionDetection()
         }
     }
 
-    LOG_INFO( "There is no collision. Try to resume move: %s", __FUNCTION__ );
     m_currentVehicle->resumeMove();
 }
 

@@ -2,8 +2,8 @@
 #include "../Lights/trafficlight.h"
 #include <QTimer>
 
-BladzioJunction::BladzioJunction( const QVector<TrafficLight *> &junction ):
-    Junction( junction ),
+BladzioJunction::BladzioJunction( const QVector<TrafficLight *> &junction, QLCDNumber* vehicleCounter ):
+    Junction( junction, vehicleCounter ),
     leftLight2a( junction.at( 0 ) ),
     straightLight2a( junction.at( 1 ) ),
     rightLight2a( junction.at( 2 ) ),

@@ -27,7 +27,9 @@ private:
 
     static int S_NEW_CAR_FREQUENCY;
     static int S_CAR_COUNT;
-    const int C_BUS_COUNT;
+    static int S_BUS_COUNT;
+    static int S_CAR_SPEED;
+    static int S_BUS_SPEED;
 
 private slots:
     void initScene();

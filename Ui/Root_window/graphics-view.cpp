@@ -9,7 +9,10 @@
 #include <QTimer>
 
 int GraphicsView::S_NEW_CAR_FREQUENCY = 5000;
-int GraphicsView::S_CAR_COUNT = 20;
+int GraphicsView::S_CAR_COUNT = 5;
+int GraphicsView::S_CAR_SPEED = 3;
+int GraphicsView::S_BUS_SPEED = 5;
+int GraphicsView::S_BUS_COUNT = 4;
 
 /*!
  * GraphicsView is a subclass of QGraphicsView. It was created for convenience. In constructor there are already four method, which
@@ -19,16 +22,15 @@ GraphicsView::GraphicsView( QWidget *parent ):
     QGraphicsView( parent ),
     m_scene( NULL ),
     m_checkpointManager( NULL ),
-    m_junctionManager( NULL ),
-    C_BUS_COUNT( 4 )
+    m_junctionManager( NULL )
 {
     initScene();
     initGraphicsView();
     createCheckpointsManager();
     createDeployTrafficLights();
     createJunctionManager();
-    createItems();
     createConnections();
+    createItems();
 }
 
 GraphicsView::~GraphicsView()
@@ -157,20 +159,38 @@ void GraphicsView::addBus( int speed )
 
 void GraphicsView::createItems()
 {
-    static int count = 0;
+    static int carCount = 0;
+    static int busCount = 0;
 
-    if( count < S_CAR_COUNT )
+    bool createBus = false;
+
+
+    if( carCount < S_CAR_COUNT )
     {
-        int currentSpeed = ( count % 5 ) + 1;
-        addVehicle( currentSpeed );
+        addVehicle( S_CAR_SPEED );
+
+        carCount++;
 
         QTimer::singleShot( S_NEW_CAR_FREQUENCY, this, SLOT(createItems()) );
     }
+    else
+    {
+        createBus = true;
+    }
 
-    count += 1;
+    if( ( createBus == true ) && ( busCount < S_BUS_COUNT ) )
+    {
+        addBus( S_BUS_SPEED );
+
+        busCount++;
+
+        QTimer::singleShot( S_NEW_CAR_FREQUENCY, this, SLOT(createItems()) );
+    }
 }
 
 void GraphicsView::createJunctionManager()
-{
-    m_junctionManager = new JunctionManager( m_scene->allTrafficLights() );
+{   
+    m_scene->addVehicleCounter();
+
+    m_junctionManager = new JunctionManager( m_scene->allTrafficLights(), m_scene->allVehicleCounters() );
 }

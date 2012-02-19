@@ -12,11 +12,13 @@ CollisionPoint::CollisionPoint( QPointF point ):
 }
 
 bool CollisionPoint::collideWithItem( const Vehicle *target )
-{
-    if( ( target->x() <= x() )
-            &&  ( x() <= target->x() + 20 )
-            &&  ( target->y() <= y() )
-            &&  ( y() <= target->y() + 20) )
+{   
+    QPoint topLeft = target->topLeftPoint();
+    QPoint bottomRight = target->bottomRightPoint();
+
+    if( ( topLeft.x() <= x() ) &&  ( x() <= bottomRight.x() )
+            &&
+        ( topLeft.y() <= y() ) &&  ( y() <= bottomRight.y() ) )
     {
         return true;
     }

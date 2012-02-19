@@ -7,6 +7,7 @@
 
 class Junction;
 class TrafficLight;
+class QLCDNumber;
 
 class JunctionManager: public QObject
 {
@@ -14,7 +15,7 @@ class JunctionManager: public QObject
     Q_OBJECT
 
 public:
-    JunctionManager( QMap< int, QVector<TrafficLight*> >& junctionsMap );
+    JunctionManager( QMap< int, QVector<TrafficLight*> >& junctionsMap, QVector<QLCDNumber*>& vehicleCounters );
     ~JunctionManager();
 
     void sendTimeVector( const uint id, QVector<int> time );
@@ -22,7 +23,7 @@ public:
 private:
     QVector<Junction*> m_junctionsVector;
 
-    void createJunctions( QMap<int, QVector<TrafficLight *> >& junctionsMap );
+    void createJunctions( QMap<int, QVector<TrafficLight *> >& junctionsMap, QVector<QLCDNumber*>& vehicleCounters );
 
 public slots:
     void routeToAppropriateJunction( uint flags );

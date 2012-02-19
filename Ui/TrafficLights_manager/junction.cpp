@@ -1,11 +1,13 @@
 #include "junction.h"
 #include "../Lights/trafficlight.h"
+#include <QLCDNumber>
 
-Junction::Junction( const QVector<TrafficLight *>& junction ):
+Junction::Junction( const QVector<TrafficLight *> &junction, QLCDNumber *m_vehicleCounter ):
     QObject( NULL ),
     m_trafficLightVector( junction ),
     m_interval( 500 ),
-    m_currentNumberOfVehicles( 0 )
+    m_currentNumberOfVehicles( 0 ),
+    m_vehicleCounter( m_vehicleCounter )
 {
 }
 
@@ -28,7 +30,7 @@ int Junction::currentNumberOfVehicles() const
 
 void Junction::manageVehicle( uint flags )
 {
-    if( flags & 128 )
+    if( flags & 256 )
     {
         m_currentNumberOfVehicles++;
     }
@@ -36,4 +38,6 @@ void Junction::manageVehicle( uint flags )
     {
         m_currentNumberOfVehicles--;
     }
+
+    m_vehicleCounter->display( m_currentNumberOfVehicles );
 }

@@ -2,12 +2,12 @@
 #include "../Lights/trafficlight.h"
 #include <QTimer>
 
-SimpleJunction::SimpleJunction( const QVector<TrafficLight *> &junction ):
-    Junction( junction ),
-    leftLight( m_trafficLightVector.at( 0 ) ),
-    rightLight( m_trafficLightVector.at( 1 ) ),
-    leftAndStraightLight( m_trafficLightVector.at( 2 ) ),
-    rightAndStraightLight( m_trafficLightVector.at( 3 ) )
+SimpleJunction::SimpleJunction( const QVector<TrafficLight *> &junction, QLCDNumber* vehicleCounter ):
+    Junction( junction, vehicleCounter ),
+    m_leftLight( m_trafficLightVector.at( 0 ) ),
+    m_rightLight( m_trafficLightVector.at( 1 ) ),
+    m_leftAndStraightLight( m_trafficLightVector.at( 2 ) ),
+    m_rightAndStraightLight( m_trafficLightVector.at( 3 ) )
 {
     run();
 }
@@ -80,48 +80,48 @@ void SimpleJunction::run()
 
 void SimpleJunction::firstSeries()
 {
-    leftLight->letGoVehicles();
-    rightLight->letGoVehicles();
+    m_leftLight->letGoVehicles();
+    m_rightLight->letGoVehicles();
 }
 
 void SimpleJunction::secondSeries()
 {
     if( m_leftTime == 0 )
-        rightLight->letGoVehicles();
+        m_rightLight->letGoVehicles();
 
-    leftAndStraightLight->letGoVehicles();
+    m_leftAndStraightLight->letGoVehicles();
 }
 
 void SimpleJunction::thirdSeries()
 {
     if( m_leftAndStraightTime > 0 )
     {
-        rightLight->holdVehicles();
-        leftAndStraightLight->holdVehicles();
+        m_rightLight->holdVehicles();
+        m_leftAndStraightLight->holdVehicles();
     }
-    rightAndStraightLight->letGoVehicles();
+    m_rightAndStraightLight->letGoVehicles();
 }
 
 void SimpleJunction::holdFirst()
 {
-    leftLight->holdVehicles();
+    m_leftLight->holdVehicles();
 }
 
 void SimpleJunction::holdFirstTwoCondition()
 {
-    leftLight->holdVehicles();
-    rightLight->holdVehicles();
+    m_leftLight->holdVehicles();
+    m_rightLight->holdVehicles();
 }
 
 void SimpleJunction::holdSecond()
 {
-    rightLight->holdVehicles();
-    leftAndStraightLight->holdVehicles();
+    m_rightLight->holdVehicles();
+    m_leftAndStraightLight->holdVehicles();
 }
 
 void SimpleJunction::holdThird()
 {
-    rightAndStraightLight->holdVehicles();
+    m_rightAndStraightLight->holdVehicles();
     run();
 }
 

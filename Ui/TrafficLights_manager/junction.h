@@ -4,6 +4,8 @@
 #include <QObject>
 #include <QVector>
 
+
+class QLCDNumber;
 class TrafficLight;
 
 /*!
@@ -15,7 +17,7 @@ class Junction: public QObject
     Q_OBJECT
 
 public:
-    Junction( const QVector<TrafficLight*>& junction );
+    Junction( const QVector<TrafficLight*>& junction, QLCDNumber* m_vehicleCounter );
     virtual ~Junction();
 
     void setTimeVector( QVector<int>& time );
@@ -28,6 +30,7 @@ protected:
     QVector<int> m_timeVector;
     const int m_interval;
     int m_currentNumberOfVehicles;
+    QLCDNumber* m_vehicleCounter;
 };
 
 #endif // JUNCTION_H

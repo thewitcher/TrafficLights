@@ -13,7 +13,8 @@ Vehicle::Vehicle( QDeclarativeItem *parent ):
     m_speed( 1 ),
     m_currentCheckpoint( NULL ),
     m_currentAnimation( NULL ),
-    m_first( true )
+    m_first( true ),
+    m_checkCollisions( true )
 {
     /// Sets transformation point to center
     setTransformOriginPoint( 9, 9 );
@@ -39,8 +40,21 @@ void Vehicle::init( Checkpoint *initCheckpoint )
     {
         LOG_INFO( "First time: %s. Inits new checkpint and drawing new path", __FUNCTION__ )
 
+        // False means that recent checkpoint turn off checking collisions, so we turn it on again.
+        if( m_checkCollisions == false )
+        {
+            m_checkCollisions = true;
+        }
+
+        if( ( initCheckpoint->id() == 35 )
+            || ( initCheckpoint->id() == 39 )
+            || ( initCheckpoint->id() == 22 )
+            || ( initCheckpoint->id() == 49 ) )
+        {
+            m_checkCollisions = false;
+        }
+
         m_currentCheckpoint = initCheckpoint;
-        m_currentCheckpoint->reached();
 
         m_currentPath = m_currentCheckpoint->randomPath();
 
@@ -64,6 +78,8 @@ void Vehicle::init( Checkpoint *initCheckpoint )
                   m_currentPath->targetCheckpoint()->posY() );
 
         m_currentAnimation = m_currentPath->animation( this, this, m_speed );
+
+        m_currentCheckpoint->reached();
 
         m_first = true;
     }
@@ -159,8 +175,6 @@ void Vehicle::setBackLights( bool backLight )
 
 CollisionPoint Vehicle::collisionPoint() const
 {
-    LOG_INFO( "Return bumper with position mapped to the scene (%s)", __FUNCTION__ );
-
     return mapToScene( property( "bumperX" ).toInt(), property( "bumperY" ).toInt() );
 }
 
@@ -174,4 +188,58 @@ void Vehicle::setParentScene( GraphicsScene *scene )
 GraphicsScene* Vehicle::parentScene() const
 {
     return m_parentScene;
+}
+
+QSize Vehicle::size() const
+{
+    QSize size( 20, 20 );
+
+    if( direction() == Horizontal )
+    {
+        size.setWidth( property( "realHeight" ).toInt() );
+        size.setHeight( property( "realWidth" ).toInt() );
+    }
+    else if( direction() == Vertical )
+    {
+        size.setWidth( property( "realWidth" ).toInt() );
+        size.setHeight( property( "realHeight" ).toInt() );
+    }
+
+    LOG_CRITICAL( "Unknown vehicle direction %s", __FUNCTION__ );
+
+    return size;
+}
+
+QPoint Vehicle::topLeftPoint() const
+{
+    return QPoint( x() - 0.5 * size().width() + 10, y() - 0.5 * size().height() + 10  );
+}
+
+QPoint Vehicle::bottomRightPoint() const
+{
+    return QPoint( x() + 0.5 * size().width() + 10, y() + 0.5 * size().height() + 10  );
+}
+
+void Vehicle::setCheckCollisions( bool check )
+{
+    m_checkCollisions = check;
+}
+
+bool Vehicle::checkCollisions() const
+{
+    return m_checkCollisions;
+}
+
+Vehicle::VehicleDirection Vehicle::direction() const
+{
+    if( ( abs( rotation() ) == 0 ) || ( abs( rotation() ) == 180 ) )
+    {
+        return Horizontal;
+    }
+    else if( ( abs( rotation() ) == 90 ) || ( abs( rotation() ) == 270 ) )
+    {
+        return Vertical;
+    }
+
+    return Unknown;
 }

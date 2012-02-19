@@ -6,7 +6,9 @@ MotorCar {
 
     width: 20
     height: 20
-    scale: 0.15
+
+    property alias realWidth: rootRect.realWidth
+    property alias realHeight: rootRect.realHeight
 
     property alias bumperX: collisionPoint.x
     property alias bumperY: collisionPoint.y
@@ -14,9 +16,7 @@ MotorCar {
     Item {
         id: collisionPoint
         width: 1; height: 1
-        anchors.verticalCenter: rootRect.verticalCenter
-        anchors.horizontalCenter: rootRect.horizontalCenter
-        anchors.horizontalCenterOffset: -290
+        x:-25; y:9 // If You want to increase space between vehicles, just set x less value.
     }
 
 function onBackLights()
@@ -64,6 +64,10 @@ function turnOffLongLights()
         width: 20
         height: 20
         anchors.centerIn: root
+        rotation: -90
+
+        property int realWidth: auto.width
+        property int realHeight: auto.height
 
         SequentialAnimation {
             id: leftBlinkers
@@ -125,7 +129,7 @@ function turnOffLongLights()
         Image {
             id: auto
             anchors.centerIn: rootRect
-            source: "qrc:/graphics/Graphics/bus4.png"
+            source: "qrc:/graphics/Graphics/bus4_small.png"
         }
 
         BackLight{
