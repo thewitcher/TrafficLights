@@ -72,6 +72,8 @@ void GraphicsView::initScene()
 
     setScene(m_scene);
 
+    QTimer::singleShot(5000, m_scene, SLOT(setDark()));
+
     LOG_INFO( "End: %s", __FUNCTION__ );
 }
 
@@ -85,7 +87,7 @@ void GraphicsView::initGraphicsView()
     viewport()->setObjectName( "viewPortWidget" );
 
     setRenderHint( QPainter::Antialiasing );
-    setBackgroundBrush( QPixmap( ":/graphics/viewport_background" ) );
+    setBackgroundBrush( QPixmap( ":/graphics/brightBackground" ) );
     setCacheMode( QGraphicsView::CacheBackground );
     setDragMode( QGraphicsView::ScrollHandDrag );
     resize( 1326, 1070 );

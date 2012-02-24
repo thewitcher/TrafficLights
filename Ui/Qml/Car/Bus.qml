@@ -1,7 +1,7 @@
 import QtQuick 1.0
 import Cars 1.0
 
-MotorCar {
+BusCar {
     id:root
 
     width: 20
@@ -12,6 +12,8 @@ MotorCar {
 
     property alias bumperX: collisionPoint.x
     property alias bumperY: collisionPoint.y
+
+    property string imageSource: "qrc:/graphics/Graphics/bus4_small_bright.png"
 
     Item {
         id: collisionPoint
@@ -129,7 +131,7 @@ function turnOffLongLights()
         Image {
             id: auto
             anchors.centerIn: rootRect
-            source: "qrc:/graphics/Graphics/bus4_small.png"
+            source: imageSource
         }
 
         BackLight{

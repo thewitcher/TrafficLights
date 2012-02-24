@@ -5,34 +5,14 @@ MotorCar::MotorCar( QDeclarativeItem *parent ):
 {
 }
 
-void MotorCar::setBlinkers( Blinkers blinkers )
+void MotorCar::setDarkDesign( bool dark )
 {
-    switch( blinkers )
+    if( dark )
     {
-    case LEFT_BLINKERS:
-        QMetaObject::invokeMethod( this, "turnOnLeftBlinkers" );
-        break;
-    case RIGHT_BLINKERS:
-        QMetaObject::invokeMethod( this, "turnOnRightBlinkers" );
-        break;
-    case NO_BLINKERS:
-        QMetaObject::invokeMethod( this, "stopBlinkers" );
-        break;
+        setProperty( "imageSource", "qrc:/graphics/Graphics/motor_car_small_dark.png" );
     }
-}
-
-void MotorCar::setBackLights( bool backLight )
-{
-    if( backLight )
-        QMetaObject::invokeMethod( this, "onBackLights" );
     else
-        QMetaObject::invokeMethod( this, "offBackLights" );
-}
-
-void MotorCar::setLongLights( bool longLight )
-{
-    if( longLight )
-        QMetaObject::invokeMethod( this, "turnOnLongLights" );
-    else
-        QMetaObject::invokeMethod( this, "turnOffLongLights" );
+    {
+        setProperty( "imageSource", "qrc:/graphics/Graphics/motor_car_small_bright.png" );
+    }
 }

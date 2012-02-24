@@ -5,7 +5,8 @@ SOURCES += \
     Cars/property-move.cpp \
     Cars/simple-move.cpp \
     Cars/motor-car.cpp \
-    Cars/collision-point.cpp
+    Cars/collision-point.cpp \
+    Cars/bus-car.cpp
 
 HEADERS += \
     Cars/vehicle.h \
@@ -14,7 +15,10 @@ HEADERS += \
     Cars/property-move.h \
     Cars/simple-move.h \
     Cars/motor-car.h \
-    Cars/collision-point.h
+    Cars/collision-point.h \
+    Cars/bus-car.h
+
+
 
 
 

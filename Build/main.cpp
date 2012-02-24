@@ -5,6 +5,7 @@
 #include "../Settings/settings.h"
 #include "../Ui/Cars/motor-car.h"
 #include "../Ui/Lights/trafficlight.h"
+#include "../Ui/Cars/bus-car.h"
 
 int main(int argc, char *argv[])
 {
@@ -15,6 +16,7 @@ int main(int argc, char *argv[])
 
     //Register type
     qmlRegisterType<MotorCar> ( "Cars", 1, 0, "MotorCar" );
+    qmlRegisterType<BusCar> ( "Cars", 1, 0, "BusCar" );
     qmlRegisterType<TrafficLight> ( "LightsPacket", 1, 0, "Light" );
 
     RootWindow w;

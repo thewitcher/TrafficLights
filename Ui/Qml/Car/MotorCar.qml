@@ -13,6 +13,8 @@ MotorCar {
     property alias bumperX: collisionPoint.x
     property alias bumperY: collisionPoint.y
 
+    property string imageSource: "qrc:/graphics/Graphics/motor_car_small_bright.png"
+
     Item {
         id: collisionPoint
         width: 1; height: 1
@@ -120,7 +122,7 @@ function turnOffLongLights()
         Image {
             id: auto
             anchors.centerIn: rootRect
-            source: "qrc:/graphics/Graphics/motor_car_small.png"
+            source: imageSource
         }
 
         BackLight{

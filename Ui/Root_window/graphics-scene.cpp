@@ -125,3 +125,17 @@ QMap< int, QVector<TrafficLight*> >& GraphicsScene::allTrafficLights()
 {
     return m_trafficLights;
 }
+
+void GraphicsScene::setDark( bool dark )
+{
+    QListIterator<Vehicle*> iterator( m_vehicles );
+
+    Vehicle* vehicle;
+
+    while( iterator.hasNext() )
+    {
+        vehicle = iterator.next();
+
+        vehicle->setDarkDesign( dark );
+    }
+}

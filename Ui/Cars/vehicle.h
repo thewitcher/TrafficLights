@@ -74,6 +74,7 @@ public:
     void setCheckCollisions( bool check = true );
     bool checkCollisions() const;
     VehicleDirection direction() const;
+    virtual void setDarkDesign( bool dark = false );
 
 private:
     /// It is a description of current path to new checkpoint.

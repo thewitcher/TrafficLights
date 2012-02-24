@@ -158,21 +158,6 @@ void Vehicle::setSpeed( int speed )
     m_speed = speed;
 }
 
-void Vehicle::setBlinkers( Blinkers blinkers )
-{
-    Q_UNUSED( blinkers );
-}
-
-void Vehicle::setLongLights( bool longLight )
-{
-    Q_UNUSED( longLight );
-}
-
-void Vehicle::setBackLights( bool backLight )
-{
-    Q_UNUSED( backLight );
-}
-
 CollisionPoint Vehicle::collisionPoint() const
 {
     return mapToScene( property( "bumperX" ).toInt(), property( "bumperY" ).toInt() );
@@ -242,4 +227,41 @@ Vehicle::VehicleDirection Vehicle::direction() const
     }
 
     return Unknown;
+}
+
+void Vehicle::setDarkDesign( bool dark )
+{
+    Q_UNUSED( dark );
+}
+
+void Vehicle::setBlinkers( Blinkers blinkers )
+{
+    switch( blinkers )
+    {
+    case LEFT_BLINKERS:
+        QMetaObject::invokeMethod( this, "turnOnLeftBlinkers" );
+        break;
+    case RIGHT_BLINKERS:
+        QMetaObject::invokeMethod( this, "turnOnRightBlinkers" );
+        break;
+    case NO_BLINKERS:
+        QMetaObject::invokeMethod( this, "stopBlinkers" );
+        break;
+    }
+}
+
+void Vehicle::setBackLights( bool backLight )
+{
+    if( backLight )
+        QMetaObject::invokeMethod( this, "onBackLights" );
+    else
+        QMetaObject::invokeMethod( this, "offBackLights" );
+}
+
+void Vehicle::setLongLights( bool longLight )
+{
+    if( longLight )
+        QMetaObject::invokeMethod( this, "turnOnLongLights" );
+    else
+        QMetaObject::invokeMethod( this, "turnOffLongLights" );
 }

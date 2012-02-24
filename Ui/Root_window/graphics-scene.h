@@ -26,6 +26,9 @@ public:
     void addTrafficLightsToScene( QMap< int, QVector<TrafficLight*> >& junctionsMap, QVector<Checkpoint*> );
     QMap< int, QVector<TrafficLight*> >& allTrafficLights();
 
+public slots:
+    void setDark( bool dark = false );
+
 protected:
     QMap< int, QVector<TrafficLight*> > m_trafficLights;
     QList<Vehicle*> m_vehicles;
