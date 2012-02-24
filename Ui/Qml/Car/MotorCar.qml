@@ -74,7 +74,7 @@ function turnOffLongLights()
             running: false
             loops: Animation.Infinite
             PropertyAnimation { target: leftTurnSignal; property: "scale";
-                                to:3 ; duration: 250 }
+                                to: 5 ; duration: 250 }
             PropertyAnimation { target: leftTurnSignal; property: "scale";
                                 to: 1 ; duration: 250 }
 
@@ -85,7 +85,7 @@ function turnOffLongLights()
             running: false
             loops: Animation.Infinite
             PropertyAnimation { target: rightTurnSignal; property: "scale";
-                                to:3 ; duration: 250 }
+                                to: 5 ; duration: 250 }
 
             PropertyAnimation { target: rightTurnSignal; property: "scale";
                                 to: 1 ; duration: 250 }
@@ -94,27 +94,31 @@ function turnOffLongLights()
         states:[
         State {
             name: "stop"
-            PropertyChanges { target: backLeftLight; color: "#a80707"; scale: 2 }
-            PropertyChanges { target: backRightLight; color: "#a80707"; scale: 2 }
-            PropertyChanges { target: stopLight; opacity:1}
+            PropertyChanges { target: backLeftLight; color: "#a80707"; scale: 1.5 }
+            PropertyChanges { target: backRightLight; color: "#a80707"; scale: 1.5 }
         },
         State {
             name: "go"
-            PropertyChanges { target: backLeftLight; color: "yellow"; scale:1 }
-            PropertyChanges { target: backRightLight; color: "yellow"; scale:1 }
-            PropertyChanges { target: stopLight; opacity:0 }
+            PropertyChanges { target: backLeftLight; color: "yellow"; scale: 1 }
+            PropertyChanges { target: backRightLight; color: "yellow"; scale: 1 }
         }]
 
         state: "go"
 
         Blinkers{
             id:leftTurnSignal
-            x:5.6 ; y: 6
+            anchors.verticalCenter: auto.verticalCenter
+            anchors.verticalCenterOffset: -7
+            anchors.horizontalCenter: auto.horizontalCenter
+            anchors.horizontalCenterOffset: -7
         }
 
         Blinkers{
             id:rightTurnSignal
-            x:11; y:6
+            anchors.verticalCenter: auto.verticalCenter
+            anchors.verticalCenterOffset: -7
+            anchors.horizontalCenter: auto.horizontalCenter
+            anchors.horizontalCenterOffset: 8.5
         }
 
         Image {
@@ -125,32 +129,34 @@ function turnOffLongLights()
 
         BackLight{
             id: backLeftLight
-            x:5.5; y:14
+            anchors.verticalCenter: auto.verticalCenter
+            anchors.verticalCenterOffset: 12
+            anchors.horizontalCenter: auto.horizontalCenter
+            anchors.horizontalCenterOffset: -5.5
         }
 
         BackLight{
             id: backRightLight
-            x:11.5; y:14
-        }
-
-        Rectangle{
-            id: stopLight
-            x:8.85; y:13
-            width: 0.3; height: 2
-            radius: 6
-            rotation: 90
-            color: "#a80707"
-            opacity: 0
+            anchors.verticalCenter: auto.verticalCenter
+            anchors.verticalCenterOffset: 12
+            anchors.horizontalCenter: auto.horizontalCenter
+            anchors.horizontalCenterOffset: 6.5
         }
 
         LongLight{
             id: longLeftLight
-            x:-3.1; y:-12.5
+            anchors.verticalCenter: auto.verticalCenter
+            anchors.verticalCenterOffset: -26
+            anchors.horizontalCenter: auto.horizontalCenter
+            anchors.horizontalCenterOffset: -5
         }
 
         LongLight{
             id:longRightLight
-            x:2.1; y:-12.5
+            anchors.verticalCenter: auto.verticalCenter
+            anchors.verticalCenterOffset: -26
+            anchors.horizontalCenter: auto.horizontalCenter
+            anchors.horizontalCenterOffset: 6
         }
     }
 }

@@ -7,7 +7,7 @@ Rectangle{
     radius: 19.5
     color: "#c4c43b"
     opacity: 0
-    scale: 0.15
+    scale: 0.4
     rotation: -90
 
     states: [

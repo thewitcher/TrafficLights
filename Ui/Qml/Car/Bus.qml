@@ -74,7 +74,7 @@ function turnOffLongLights()
             running: false
             loops: Animation.Infinite
             PropertyAnimation { target: leftTurnSignal; property: "scale";
-                                to:3 ; duration: 250 }
+                                to: 5 ; duration: 250 }
             PropertyAnimation { target: leftTurnSignal; property: "scale";
                                 to: 1 ; duration: 250 }
         }
@@ -83,7 +83,7 @@ function turnOffLongLights()
             running: false
             loops: Animation.Infinite
             PropertyAnimation { target: rightTurnSignal; property: "scale";
-                                to:3 ; duration: 250 }
+                                to: 5 ; duration: 250 }
             PropertyAnimation { target: rightTurnSignal; property: "scale";
                                 to: 1 ; duration: 250 }
         }
@@ -93,8 +93,8 @@ function turnOffLongLights()
             name: "stop"
             PropertyChanges { target: backLeftLight; opacity: 1 }
             PropertyChanges { target: backRightLight; opacity: 1 }
-            PropertyChanges { target: secondBackLeftLight; opacity: 0 }
-            PropertyChanges { target: secondBackRightLight; opacity: 0 }
+            PropertyChanges { target: secondBackLeftLight; opacity: 1 }
+            PropertyChanges { target: secondBackRightLight; opacity: 1 }
         },
         State {
             name: "go"
@@ -108,22 +108,20 @@ function turnOffLongLights()
 
         Blinkers{
             id:leftTurnSignal
-            scale: 10
             color: "red"
             anchors.verticalCenter: auto.verticalCenter
-            anchors.verticalCenterOffset: -51
+            anchors.verticalCenterOffset: -15
             anchors.horizontalCenter: auto.horizontalCenter
-            anchors.horizontalCenterOffset: -100
+            anchors.horizontalCenterOffset: -7
         }
 
         Blinkers{
             id:rightTurnSignal
-            scale: 10
             color: "red"
             anchors.verticalCenter: auto.verticalCenter
-            anchors.verticalCenterOffset: 53
+            anchors.verticalCenterOffset: -15
             anchors.horizontalCenter: auto.horizontalCenter
-            anchors.horizontalCenterOffset: -100
+            anchors.horizontalCenterOffset: 8
         }
 
         Image {
@@ -134,62 +132,58 @@ function turnOffLongLights()
 
         BackLight{
             id: backLeftLight
-            scale: 10
             color: "red"
             anchors.verticalCenter: auto.verticalCenter
-            anchors.verticalCenterOffset: -40
+            anchors.verticalCenterOffset: 29
             anchors.horizontalCenter: auto.horizontalCenter
-            anchors.horizontalCenterOffset: 185
+            anchors.horizontalCenterOffset: -6
         }
 
         BackLight{
             id: secondBackLeftLight
-            scale: 10
             color: "red"
             anchors.verticalCenter: auto.verticalCenter
-            anchors.verticalCenterOffset: -25
+            anchors.verticalCenterOffset: 27.5
             anchors.horizontalCenter: auto.horizontalCenter
-            anchors.horizontalCenterOffset: 188
+            anchors.horizontalCenterOffset: -1.5
         }
 
         BackLight{
             id: backRightLight
-            scale: 10
             color: "red"
             anchors.verticalCenter: auto.verticalCenter
-            anchors.verticalCenterOffset: 40
+            anchors.verticalCenterOffset: 29
             anchors.horizontalCenter: auto.horizontalCenter
-            anchors.horizontalCenterOffset: 185
+            anchors.horizontalCenterOffset: 7
         }
 
         BackLight{
             id: secondBackRightLight
-            scale: 10
             color: "red"
             anchors.verticalCenter: auto.verticalCenter
-            anchors.verticalCenterOffset: 25
+            anchors.verticalCenterOffset: 27.5
             anchors.horizontalCenter: auto.horizontalCenter
-            anchors.horizontalCenterOffset: 188
+            anchors.horizontalCenterOffset: 2
         }
 
         LongLight{
             id: longLeftLight
-            rotation: 180
-            scale: 2
+            rotation: -90
+            scale: 0.6
             anchors.verticalCenter: auto.verticalCenter
-            anchors.verticalCenterOffset: 35
+            anchors.verticalCenterOffset: -47
             anchors.horizontalCenter: auto.horizontalCenter
-            anchors.horizontalCenterOffset: -250
+            anchors.horizontalCenterOffset: -6
         }
 
         LongLight{
             id:longRightLight
-            rotation: 180
-            scale: 2
+            rotation: -90
+            scale: 0.6
             anchors.verticalCenter: auto.verticalCenter
-            anchors.verticalCenterOffset: -35
+            anchors.verticalCenterOffset: -47
             anchors.horizontalCenter: auto.horizontalCenter
-            anchors.horizontalCenterOffset: -250
+            anchors.horizontalCenterOffset: 6
         }
     }
 }
