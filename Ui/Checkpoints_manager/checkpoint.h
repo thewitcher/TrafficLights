@@ -20,25 +20,68 @@ class Checkpoint: public QObject
     Q_OBJECT
 
 public:
+    /*!
+     * It defines turning direction for vehicle in this checkpoint.
+     */
     enum TurnType { TURN_90_LEFT = -90, TURN_90_RIGHT = 90, NOT_DEFINED = 0 };
 
     Checkpoint( qreal x, qreal y );
     ~Checkpoint();
+    /*!
+     * Every checkpoints contains some paths which can be given to vehicle. Path describe new way for vehicle. This method
+     * return random path from path storer. Random behaviour for this function is implemented in order to get more
+     * realistic car move.
+     */
     const Path* randomPath() const;
+    /*!
+     * Checkpoint x coordinate.
+     */
     qreal posX() const;
+    /*!
+     * Checkpoint y coordinate.
+     */
     qreal posY() const;
+    /*!
+     * Every vehicle which arrive to this checkpoit should ask for permission to move first. If this function return true
+     * than vehicle can continue moving, otherwise it should wait for a while.
+     */
     bool movePermission() const;
+    /*!
+     * @param permission Persmission to move.
+     *
+     * You can set permission to move on this checkpoint. If You set permission to false then every car will wait in this checkpoit
+     * till You set move permmision to true again.
+     */
     void setMovePermission( bool permission );
+    /*!
+     * Emits signal checkpointReached() with flags. Flags describe some behaviour of checkpoint. Some flags are now in use.
+     * But You can add new flags to checkpoint and write Your own support for it.
+     */
     void reached();
+    /*!
+     * @param flags Flags describe some behaviour of checkpoint. For more details see m_flags description.
+     *
+     * Sets new flags.
+     */
     void setFlags( uint flags = 0 );
+    /*!
+     * Returns checkpoint id.
+     */
     uchar id() const;
+    /*!
+     * Returns all paths associated with this checkpoint.
+     */
     QList<Path*> allPaths() const;
 
 private:
+    /// x coordinate
     qreal m_x;
+    /// y coordinate
     qreal m_y;
+    /// Checkpoint id
     uchar m_id;
-    bool m_movePermission; // It allows vehicle to move or not.
+    /// It allows vehicle to move or not
+    bool m_movePermission;
 
     /*!
      * m_flags contains parameters for checkpoints:

@@ -23,7 +23,6 @@ private:
 public slots:
     void letGoVehicles();
     void holdVehicles();
-
 };
 
 #endif // TRAFFICLIGHT_H

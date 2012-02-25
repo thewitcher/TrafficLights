@@ -36,6 +36,8 @@ void Vehicle::init( Checkpoint *initCheckpoint )
     LOG_INFO( "Sets new speed to checkpoint: %i", m_speed );
     LOG_INFO( "Creates new path for checkpoint: (%f, %f) position", initCheckpoint->posX(), initCheckpoint->posY() );
 
+    // This function can be call many times, but we want to init new checkpoints and othe parameters only for first time for any new
+    // checkpoint.
     if( m_first )
     {
         LOG_INFO( "First time: %s. Inits new checkpint and drawing new path", __FUNCTION__ )
@@ -46,6 +48,8 @@ void Vehicle::init( Checkpoint *initCheckpoint )
             m_checkCollisions = true;
         }
 
+        // For this particular checkpoint we switch off collision detection. These checkpoints are entrance to BladzioJunction.
+        // Collision detection will be switch on if vehicle will arrive to next checkpoint.
         if( ( initCheckpoint->id() == 35 )
             || ( initCheckpoint->id() == 39 )
             || ( initCheckpoint->id() == 22 )

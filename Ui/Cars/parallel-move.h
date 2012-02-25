@@ -11,7 +11,7 @@
  *
  * @author Marcin Haber
  *
- * This class inherits QParallelAnimationGroup and SimpleMove. The main reason of implement this class is to reimplement updateCurrentTime()
+ * This class inherits QParallelAnimationGroup and SimpleMove. The main reason of implementing this class is to reimplements updateCurrentTime()
  * method from QAbstractAnimation. SimpleMove provide method to manage conditions while animation is running (see SimpleMove documentation)
  */
 class ParallelMove: public QParallelAnimationGroup, public SimpleMove

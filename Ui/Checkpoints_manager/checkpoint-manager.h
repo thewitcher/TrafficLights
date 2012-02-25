@@ -18,9 +18,25 @@ class CheckpointManager: public QObject
     Q_OBJECT
 
 public:
+    /*!
+     * @param x X checkpoint coordinate
+     * @param y Y checkpoint coordinate
+     * @param id Unique checkpoint number
+     * @param flags Sets flags to checkpoint
+     *
+     * Adds new created checkpoints to m_checkpointVector and return new reated checkpoint.
+     */
     Checkpoint* addCheckpoint( qreal x, qreal y, uint id , uint flags );
+    /*!
+     * @param id Unique checkpoint number
+     *
+     * Returns pointer to checkpoint with appropriate id.
+     */
     virtual const Checkpoint* checkpointByIdConst( uint id ) const;
     virtual Checkpoint* checkpointById( uint id ) const;
+    /*!
+     * Returns checkpoints count.
+     */
     uint checkpointsCount() const;
 
 protected:

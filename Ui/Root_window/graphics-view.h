@@ -8,6 +8,7 @@ class Vehicle;
 class CheckpointManager;
 class GraphicsScene;
 class JunctionManager;
+class EventTimer;
 
 class GraphicsView: public QGraphicsView
 {
@@ -24,6 +25,7 @@ private:
     GraphicsScene *m_scene;
     CheckpointManager *m_checkpointManager;
     JunctionManager *m_junctionManager;
+    EventTimer* m_eventTimer;
 
     static int S_NEW_CAR_FREQUENCY;
     static int S_CAR_COUNT;
@@ -37,10 +39,13 @@ private slots:
     void initGraphicsView();
     void createItems();
     void createCheckpointsManager();
-    void addVehicle( int speed );
-    void addBus( int speed );
+    void addVehicle( int speed, bool dark = false, const QString& type = "MotorCar" );
     void createJunctionManager();
     void createConnections();
+    void changeBackgroundPixmap( bool dark = false );
+    void setDay();
+    void setNight();
+    void initEventTimer();
 };
 
 #endif // GRAPHICSVIEW_H
