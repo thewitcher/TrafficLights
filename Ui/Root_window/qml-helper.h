@@ -9,6 +9,7 @@
  */
 class Vehicle;
 class TrafficLight;
+class QDeclarativeEngine;
 
 class QmlHelper
 {
@@ -17,6 +18,8 @@ public:
     static TrafficLight* createLightsFromQml( const QString& qmlName );
 
 private:
+    static QDeclarativeEngine* s_engine;
+
     QmlHelper();
     ~QmlHelper() {}
 };
