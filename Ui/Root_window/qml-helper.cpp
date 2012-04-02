@@ -5,14 +5,22 @@
 #include <QDeclarativeEngine>
 #include <QDeclarativeComponent>
 
-QDeclarativeEngine* QmlHelper::s_engine = new QDeclarativeEngine();
 
 QmlHelper::QmlHelper()
 {
 }
 
+QDeclarativeEngine* QmlHelper::initDeclarativeEngine()
+{
+    static QDeclarativeEngine *engine = new QDeclarativeEngine();
+
+    return engine;
+}
+
 Vehicle* QmlHelper::createVehicleFromQml( const QString &qmlName )
 {
+    QDeclarativeEngine *engine = initDeclarativeEngine();
+
     LOG_INFO( "Qml with name %s will be created", qmlName.toLatin1().data() );
 
     if( qmlName.endsWith( ".qml" ) == true )
@@ -20,7 +28,7 @@ Vehicle* QmlHelper::createVehicleFromQml( const QString &qmlName )
         LOG_WARNING( "Your file name contains .qml, please give name without extension (you used: %s)", qmlName.toLatin1().data() );
     }
 
-    QDeclarativeComponent component( s_engine, QUrl( "qrc:/qml/Qml/Car/" + qmlName + ".qml" ) );
+    QDeclarativeComponent component( engine, QUrl( "qrc:/qml/Qml/Car/" + qmlName + ".qml" ) );
 
     Vehicle *vehicle = qobject_cast<Vehicle*>( component.create() );
     if( vehicle == NULL )
@@ -37,6 +45,8 @@ Vehicle* QmlHelper::createVehicleFromQml( const QString &qmlName )
 
 TrafficLight* QmlHelper::createLightsFromQml( const QString &qmlName )
 {
+    QDeclarativeEngine *engine = initDeclarativeEngine();
+
     LOG_INFO( "Qml with name %s will be created", qmlName.toLatin1().data() );
 
     if( qmlName.endsWith( ".qml" ) == true )
@@ -44,7 +54,7 @@ TrafficLight* QmlHelper::createLightsFromQml( const QString &qmlName )
         LOG_WARNING( "Your file name contains .qml, please give name without extension (you used: %s)",qmlName.toLatin1().data() );
     }
 
-    QDeclarativeComponent component( s_engine, QUrl( "qrc:/qml/Qml/Lights/" + qmlName + ".qml") );
+    QDeclarativeComponent component( engine, QUrl( "qrc:/qml/Qml/Lights/" + qmlName + ".qml") );
 
     TrafficLight * light = qobject_cast<TrafficLight*>( component.create() );
     if( light == NULL )

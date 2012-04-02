@@ -8,8 +8,8 @@ TARGET = TrafficLights
 TEMPLATE = subdirs
 CONFIG += ordered
 
-SUBDIRS += Settings \
+SUBDIRS += Ui \
            Logic \
            Build \
            Logger \
-           Ui
+           Settings

@@ -6,6 +6,7 @@
 #include "../Ui/Cars/motor-car.h"
 #include "../Ui/Lights/trafficlight.h"
 #include "../Ui/Cars/bus-car.h"
+#include "../Logic/Genetic_algorithm/GA/genetic-algorithm-manager.h"
 
 int main(int argc, char *argv[])
 {
@@ -15,12 +16,16 @@ int main(int argc, char *argv[])
     Logger::init();
 
     //Register type
-    qmlRegisterType<MotorCar> ( "Cars", 1, 0, "MotorCar" );
-    qmlRegisterType<BusCar> ( "Cars", 1, 0, "BusCar" );
-    qmlRegisterType<TrafficLight> ( "LightsPacket", 1, 0, "Light" );
+//    qmlRegisterType<MotorCar> ( "Cars", 1, 0, "MotorCar" );
+//    qmlRegisterType<BusCar> ( "Cars", 1, 0, "BusCar" );
+//    qmlRegisterType<TrafficLight> ( "LightsPacket", 1, 0, "Light" );
 
-    RootWindow w;
-    w.show();
+//    RootWindow w;
+//    w.show();
+
+    GeneticAlgorithmManager geneticAlgorithmManager;
+
+    Q_UNUSED( geneticAlgorithmManager );
 
     return a.exec();
 }
