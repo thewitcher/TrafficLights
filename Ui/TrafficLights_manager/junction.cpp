@@ -57,7 +57,6 @@ void Junction::manageVehicle( uint flags, uchar checkpointId )
     {
         m_currentNumberOfVehicles++;
         m_directedVehicleCount[ checkpointId ]++;
-        qDebug() << "Id: " << checkpointId << ", count: " << m_directedVehicleCount.value( checkpointId );
     }
     else
     {
@@ -71,7 +70,6 @@ void Junction::timerEvent( QTimerEvent *event )
 {
     if( event->timerId() == m_timerId )
     {
-        qDebug() << "Timer";
         m_averageArrivedVehicles.clear();
         uchar id;
         uint vehicleCount;
@@ -84,7 +82,7 @@ void Junction::timerEvent( QTimerEvent *event )
             id = iterator.key();
             vehicleCount = iterator.value();
 
-            LOG_INFO( "## Checkpoint: %i, vehicle arrived from this checkpoint: %i", id, vehicleCount );
+            LOG_INFO( "Checkpoint: %i, vehicle arrived from this checkpoint: %i", id, vehicleCount );
 
             m_averageArrivedVehicles[ id ] = vehicleCount;
         }
