@@ -83,7 +83,7 @@ void JunctionManager::createJunctions( QMap<int, QVector<TrafficLight *> > &junc
     m_junctionsVector.append( junction );
 }
 
-void JunctionManager::routeToAppropriateJunction( uint flags )
+void JunctionManager::routeToAppropriateJunction( uint flags, uchar checkpointId )
 {
     uint pow2 = 2;
     uchar junction = 0;
@@ -96,5 +96,5 @@ void JunctionManager::routeToAppropriateJunction( uint flags )
         pow2 *= 2;
     }
 
-    m_junctionsVector.at( junction )->manageVehicle( flags );
+    m_junctionsVector.at( junction )->manageVehicle( flags, checkpointId );
 }

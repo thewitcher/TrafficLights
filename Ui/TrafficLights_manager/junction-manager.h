@@ -26,7 +26,7 @@ private:
     void createJunctions( QMap<int, QVector<TrafficLight *> >& junctionsMap, QVector<QLCDNumber*>& vehicleCounters );
 
 public slots:
-    void routeToAppropriateJunction( uint flags );
+    void routeToAppropriateJunction( uint flags, uchar checkpointId );
 };
 
 #endif // JUNCTIONMANAGER_H

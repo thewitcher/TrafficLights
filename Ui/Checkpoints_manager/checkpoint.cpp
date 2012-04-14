@@ -283,7 +283,7 @@ void Checkpoint::reached()
 
     if( m_flags & 1 )
     {
-        emit checkpointReached( m_flags );
+        emit checkpointReached( m_flags, m_id );
     }
 }
 

@@ -6,6 +6,7 @@
 #include <QTimer>
 
 const int Vehicle::WAIT_ON_PERMISSION = 1000;
+int Vehicle::S_VEHICLE_ID = 0;
 
 Vehicle::Vehicle( QDeclarativeItem *parent ):
     QDeclarativeItem( parent ),
@@ -14,7 +15,8 @@ Vehicle::Vehicle( QDeclarativeItem *parent ):
     m_currentCheckpoint( NULL ),
     m_currentAnimation( NULL ),
     m_first( true ),
-    m_checkCollisions( true )
+    m_checkCollisions( true ),
+    m_vehicleId( S_VEHICLE_ID++ )
 {
     /// Sets transformation point to center
     setTransformOriginPoint( 9, 9 );

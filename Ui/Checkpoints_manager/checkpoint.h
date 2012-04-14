@@ -146,7 +146,7 @@ private:
     void addMove( QVector< Checkpoint* > checkpointsVector, const QString& parameters );
 
 signals:
-    void checkpointReached( uint flags );
+    void checkpointReached( uint flags, uchar checkpointId );
 
     friend class CheckpointManager;
     friend class CheckpointCreator;

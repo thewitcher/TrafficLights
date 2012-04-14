@@ -40,6 +40,9 @@ public:
     /// Vehicle can be in two type of direction: horizontal and vertical. There is a bonus enum to set if any error will happend.
     enum VehicleDirection { Unknown = 0, Horizontal = 1, Vertical = 2 };
 
+    /// This static variable is used to give new unique id to new car in constructor
+    static int S_VEHICLE_ID;
+
     /*!
      * Sets vehicle speed. For bigger value of speed car move slower. There is no checking that speed value is less than 0 in order
      * to increase performance, so You need to be care about this. We have checked that value 0 will crash program, values less than
@@ -102,6 +105,7 @@ public:
      * Base implementation do nothing.
      */
     virtual void setDarkDesign( bool dark = false );
+    int vehicleId() const { return m_vehicleId; }
 
 private:
     /// It is a description of current path to new checkpoint.
@@ -118,6 +122,8 @@ private:
     bool m_first;
     /// Collision detection is switched on or switched off.
     bool m_checkCollisions;
+    /// Vehile id
+    int m_vehicleId;
 
     /// After this time vehicle will ask for permission to move again.
     static const int WAIT_ON_PERMISSION;

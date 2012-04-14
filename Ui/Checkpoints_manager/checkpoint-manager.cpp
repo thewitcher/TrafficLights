@@ -29,7 +29,7 @@ Checkpoint* CheckpointManager::addCheckpoint( qreal x, qreal y, uint id, uint fl
 
     LOG_INFO( "Added new checkpoint with %i id", id );
 
-    connect( checkpoint, SIGNAL(checkpointReached(uint)), this, SIGNAL(checkpointReached(uint)) );
+    connect( checkpoint, SIGNAL(checkpointReached(uint,uchar)), this, SIGNAL(checkpointReached(uint,uchar)) );
 
     return checkpoint;
 }
