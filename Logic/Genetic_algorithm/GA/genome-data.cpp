@@ -2,7 +2,7 @@
 #include "GA1DArrayGenome.h"
 #include <QObject>
 
-GenomeData::GenomeData( int genomeSize, std::vector< float > &averages, std::vector< int > &vehiclesCount ):
+GenomeData::GenomeData( uint genomeSize, std::vector< float > &averages, std::vector< int > &vehiclesCount ):
     m_averages( averages ),
     m_vehiclesCount( vehiclesCount )
 {

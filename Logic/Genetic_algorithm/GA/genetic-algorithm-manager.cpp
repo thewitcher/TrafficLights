@@ -58,7 +58,7 @@ GAGenome GeneticAlgorithmManager::start( GenomeData *dynamicGenomeData )
     arrayGenome.initializer( initializer );
     GASteadyStateGA gaSteadyStateGA( arrayGenome );
     gaSteadyStateGA.populationSize( S_POPULATION_SIZE );
-    gaSteadyStateGA.pReplacement( S_REPLACEMENT_PROBABILITY ); // half population will be replaced
+    gaSteadyStateGA.pReplacement( S_REPLACEMENT_PROBABILITY ); // how percentage of population will be replaced
     gaSteadyStateGA.nGenerations( S_GENERATIONS );
     gaSteadyStateGA.pMutation( S_MUTATION );
     gaSteadyStateGA.pCrossover( S_CROSSOVER );
@@ -67,8 +67,6 @@ GAGenome GeneticAlgorithmManager::start( GenomeData *dynamicGenomeData )
     gaSteadyStateGA.flushFrequency( S_FLUSH_FREQUENCY );
     gaSteadyStateGA.selectScores( GAStatistics::AllScores );
     gaSteadyStateGA.evolve();
-
-    GA1DArrayGenome< int > &arrayGenome1 = ( GA1DArrayGenome< int > & )gaSteadyStateGA.population().best();
 
     return gaSteadyStateGA.population().best();
 }
