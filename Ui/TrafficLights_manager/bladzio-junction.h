@@ -30,6 +30,8 @@ private:
     TrafficLight* rightLight2d;
     uint t1v,t2v,t3v,t1h,t2h,t3h;
 
+    void setTimeVectorByGeneticAlgorithm();
+
 private slots:
     void firstVertivalSeries();
     void secondVerticalSeries();

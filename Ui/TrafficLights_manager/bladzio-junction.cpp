@@ -1,9 +1,13 @@
 #include "bladzio-junction.h"
 #include "../Lights/trafficlight.h"
+#include "../../Logger/logger.h"
+#include "../../Logic/Genetic_algorithm/GA/genome-data.h"
+#include "../../Logic/Genetic_algorithm/GA/GA1DArrayGenome.h"
+#include "../../Logic/Genetic_algorithm/GA/genetic-algorithm-manager.h"
 #include <QTimer>
 
 BladzioJunction::BladzioJunction( const QVector<TrafficLight *> &junction, QLCDNumber* vehicleCounter ):
-    Junction( junction, vehicleCounter ),
+    Junction( junction, vehicleCounter, 6 ),
     leftLight2a( junction.at( 0 ) ),
     straightLight2a( junction.at( 1 ) ),
     rightLight2a( junction.at( 2 ) ),
@@ -182,4 +186,39 @@ void BladzioJunction::holdSecondHorizontalSeries()
     rightLight2b->holdVehicles();
     rightLight2d->holdVehicles();
     run();
+}
+
+void BladzioJunction::setTimeVectorByGeneticAlgorithm()
+{
+    LOG_INFO( "Set new time vector in %s", __FUNCTION__ );
+
+    /// av - averages on approriate cycle.
+    std::vector< float > av;
+    /// vn - vehicle number on approriate cycle.
+    std::vector< int > vn;
+
+    for( int i = 0 ; i < m_cyclesNumber ; i++ )
+    {
+        av.push_back( 2 );
+
+        vn.push_back( 3 );
+    }
+
+
+    GeneticAlgorithmManager geneticAlgorithmManager;
+    GAGenome genome = geneticAlgorithmManager.start( new GenomeData( m_cyclesNumber, av, vn ) );
+
+    GA1DArrayGenome< int > &arrayGenome = ( GA1DArrayGenome< int > & )genome;
+
+    QVector<int> time;
+    qDebug() << "1";
+    qDebug() << "Dlugosc: " << arrayGenome.length();
+    for( int i = 0 ; i < m_cyclesNumber ; i++ )
+    {
+        qDebug() << "2";
+        time.append( arrayGenome.gene( i ) );
+    }
+    qDebug() << "3";
+
+//    m_timeVector = time;
 }

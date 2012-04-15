@@ -1,23 +1,23 @@
 #include "junction.h"
 #include "../Lights/trafficlight.h"
 #include "../Logger/logger.h"
-#include "../../Logic/Genetic_algorithm/GA/genome-data.h"
-#include "../../Logic/Genetic_algorithm/GA/GA1DArrayGenome.h"
-#include "../../Logic/Genetic_algorithm/GA/genetic-algorithm-manager.h"
 #include "vector"
 #include <QTimerEvent>
 #include <QLCDNumber>
 
 int Junction::S_TIME_TO_COUNT_AVERAGE = 20000;
+int Junction::S_TIME_TO_CHECK_JUNCTION_STATUS = 30000;
 
-Junction::Junction( const QVector<TrafficLight *> &junction, QLCDNumber *m_vehicleCounter ):
+Junction::Junction( const QVector<TrafficLight *> &junction, QLCDNumber *m_vehicleCounter, int cyclesNumber ):
     QObject( NULL ),
     m_trafficLightVector( junction ),
     m_interval( 500 ),
     m_currentNumberOfVehicles( 0 ),
-    m_vehicleCounter( m_vehicleCounter )
+    m_vehicleCounter( m_vehicleCounter ),
+    m_cyclesNumber( cyclesNumber )
 {
-    m_timerId = startTimer( S_TIME_TO_COUNT_AVERAGE );
+    m_averageTimerId = startTimer( S_TIME_TO_COUNT_AVERAGE );
+    m_statusTimerId = startTimer( S_TIME_TO_CHECK_JUNCTION_STATUS );
 }
 
 Junction::~Junction()
@@ -31,15 +31,6 @@ void Junction::setTimeVector( QVector<int> &time )
 
 void Junction::setTimeVectorByGeneticAlgorithm()
 {
-    std::vector< float > av;
-    av.push_back( 2 );
-    av.push_back( 3 );
-    std::vector< int > vn;
-    vn.push_back( 3 );
-    vn.push_back( 9 );
-
-    GeneticAlgorithmManager geneticAlgorithmManager;
-    geneticAlgorithmManager.start( new GenomeData( 2, av, vn ) );
 }
 
 void Junction::run()
@@ -68,7 +59,7 @@ void Junction::manageVehicle( uint flags, uchar checkpointId )
 
 void Junction::timerEvent( QTimerEvent *event )
 {
-    if( event->timerId() == m_timerId )
+    if( event->timerId() == m_averageTimerId )
     {
         m_averageArrivedVehicles.clear();
         uchar id;
@@ -89,4 +80,16 @@ void Junction::timerEvent( QTimerEvent *event )
 
         m_directedVehicleCount.clear();
     }
+    else if( event->timerId() == m_statusTimerId )
+    {
+        if( changeTimeVector() )
+        {
+            setTimeVectorByGeneticAlgorithm();
+        }
+    }
+}
+
+bool Junction::changeTimeVector()
+{
+    return true;
 }

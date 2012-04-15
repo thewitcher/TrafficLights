@@ -68,5 +68,7 @@ GAGenome GeneticAlgorithmManager::start( GenomeData *dynamicGenomeData )
     gaSteadyStateGA.selectScores( GAStatistics::AllScores );
     gaSteadyStateGA.evolve();
 
+    delete dynamicGenomeData;
+
     return gaSteadyStateGA.population().best();
 }

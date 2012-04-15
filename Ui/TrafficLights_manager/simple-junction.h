@@ -23,6 +23,8 @@ private:
     uint m_leftTime;
     uint m_leftAndStraightTime;
 
+    void setTimeVectorByGeneticAlgorithm();
+
 public slots:
     void firstSeries();
     void secondSeries();
