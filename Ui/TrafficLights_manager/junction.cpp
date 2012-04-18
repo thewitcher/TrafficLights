@@ -42,10 +42,12 @@ void Junction::manageVehicle( uint flags, uchar checkpointId )
 
     if( flags & 256 )
     {
+        m_vehicleCountOnLanes[ checkpointId ]++;
         m_currentNumberOfVehicles++;
     }
     else
     {
+        m_vehicleCountOnLanes[ checkpointId ]--;
         m_currentNumberOfVehicles--;
     }
 

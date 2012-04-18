@@ -39,6 +39,8 @@ protected:
     int m_currentNumberOfVehicles;
     /// Counter to show how many vehicles are currently on junction
     QLCDNumber* m_vehicleCounter;
+    QHash<uchar,int> m_vehicleCountOnLanes;
+
     /// If it returns true then time vector should be changed, otherwise it is ok and should not be changed.
     bool changeTimeVector();
     /// It uses genetic algorithm to create appropriate time vector for that junction.
