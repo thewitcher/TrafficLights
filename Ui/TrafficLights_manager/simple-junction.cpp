@@ -7,7 +7,7 @@
 #include <QTimer>
 
 SimpleJunction::SimpleJunction( const QVector<TrafficLight *> &junction, QLCDNumber* vehicleCounter ):
-    Junction( junction, vehicleCounter, 4 ),
+    Junction( junction, vehicleCounter ),
     m_leftLight( m_trafficLightVector.at( 0 ) ),
     m_rightLight( m_trafficLightVector.at( 1 ) ),
     m_leftAndStraightLight( m_trafficLightVector.at( 2 ) ),
@@ -131,31 +131,6 @@ void SimpleJunction::holdThird()
 
 void SimpleJunction::setTimeVectorByGeneticAlgorithm()
 {
-    LOG_INFO( "Set new time vector in %s", __FUNCTION__ );
-
-    /// av - averages on approriate cycle.
-    std::vector< float > av;
-    /// vn - vehicle number on approriate cycle.
-    std::vector< int > vn;
-
-    for( int i = 0 ; i < m_cyclesNumber ; i++ )
-    {
-        av.push_back( 2 );
-
-        vn.push_back( 3 );
-    }
-
-
-    GeneticAlgorithmManager geneticAlgorithmManager;
-    GAGenome genome = geneticAlgorithmManager.start( new GenomeData( m_cyclesNumber, av, vn ) );
-
-    GA1DArrayGenome< int > &arrayGenome = ( GA1DArrayGenome< int > & )genome;
-
-    QVector<int> time;
-    for( int i = 0 ; i < m_cyclesNumber ; i++ )
-    {
-        time.append( arrayGenome.gene( i ) );
-    }
-
-    m_timeVector = time;
+//    GeneticAlgorithmManager geneticAlgorithmManager;
+//    GAGenome genome = geneticAlgorithmManager.start( new GenomeData( m_cyclesNumber, av, vn ) );
 }
