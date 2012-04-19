@@ -85,7 +85,7 @@ private:
 
     /*!
      * m_flags contains parameters for checkpoints:
-     * <1,2,3,4,5,6,7,8,9,...>
+     * <...,9,8,7,6,5,4,3,2,1>
      * 1 - informs junction about vehicles
      * 2,3,4,5,6,7,8 - tells what junction shoud be inform
      * 9 - adds or subtracts to or from vehicles counter in junction
