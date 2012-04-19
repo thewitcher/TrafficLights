@@ -2,6 +2,7 @@
 #include "../Lights/trafficlight.h"
 #include "../Logger/logger.h"
 #include "vector"
+#include "../Cars/vehicle.h"
 #include "vehicle-count-manager.h"
 #include <QTimerEvent>
 #include <QLCDNumber>
@@ -83,18 +84,23 @@ int Junction::currentNumberOfVehicles() const
     return m_currentNumberOfVehicles;
 }
 
-void Junction::manageVehicle( uint flags, uchar checkpointId )
+void Junction::manageVehicle( uint flags, uchar checkpointId, Vehicle* vehicle )
 {
-    Q_UNUSED( checkpointId );
-
     if( flags & 256 )
     {
         m_vehicleCountOnLanes[ checkpointId ]++;
+
+        m_stayOnJunctionTime.insert( checkpointId, vehicle );
+        vehicle->updateWaitingTime();
+
         m_currentNumberOfVehicles++;
     }
     else
     {
         m_vehicleCountOnLanes[ checkpointId ]--;
+
+        m_stayOnJunctionTime.remove( checkpointId, vehicle );
+
         m_currentNumberOfVehicles--;
     }
 

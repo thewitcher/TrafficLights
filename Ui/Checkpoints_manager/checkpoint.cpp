@@ -277,13 +277,13 @@ bool Checkpoint::movePermission() const
     return m_movePermission;
 }
 
-void Checkpoint::reached()
+void Checkpoint::reached( Vehicle* vehicle )
 {
     LOG_INFO( "Checkpoint with id: %i was reached", m_id );
 
     if( m_flags & 1 )
     {
-        emit checkpointReached( m_flags, m_id );
+        emit checkpointReached( m_flags, m_id, vehicle );
     }
 }
 

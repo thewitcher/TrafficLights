@@ -51,8 +51,8 @@ GraphicsView::~GraphicsView()
 
 void GraphicsView::createConnections()
 {
-    connect( m_checkpointManager, SIGNAL(checkpointReached(uint,uchar)),
-             m_junctionManager, SLOT(routeToAppropriateJunction(uint,uchar)) );
+    connect( m_checkpointManager, SIGNAL(checkpointReached(uint,uchar,Vehicle*)),
+             m_junctionManager, SLOT(routeToAppropriateJunction(uint,uchar,Vehicle*)) );
 }
 
 /*!

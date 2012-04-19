@@ -57,7 +57,7 @@ public:
      * Emits signal checkpointReached() with flags. Flags describe some behaviour of checkpoint. Some flags are now in use.
      * But You can add new flags to checkpoint and write Your own support for it.
      */
-    void reached();
+    void reached( Vehicle* vehicle );
     /*!
      * @param flags Flags describe some behaviour of checkpoint. For more details see m_flags description.
      *
@@ -146,7 +146,7 @@ private:
     void addMove( QVector< Checkpoint* > checkpointsVector, const QString& parameters );
 
 signals:
-    void checkpointReached( uint flags, uchar checkpointId );
+    void checkpointReached( uint flags, uchar checkpointId, Vehicle* vehicle );
 
     friend class CheckpointManager;
     friend class CheckpointCreator;

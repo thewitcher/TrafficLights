@@ -8,6 +8,7 @@
 class Junction;
 class TrafficLight;
 class QLCDNumber;
+class Vehicle;
 
 class JunctionManager: public QObject
 {
@@ -26,7 +27,7 @@ private:
     void createJunctions( QMap<int, QVector<TrafficLight *> >& junctionsMap, QVector<QLCDNumber*>& vehicleCounters );
 
 public slots:
-    void routeToAppropriateJunction( uint flags, uchar checkpointId );
+    void routeToAppropriateJunction( uint flags, uchar checkpointId, Vehicle* vehicle );
 };
 
 #endif // JUNCTIONMANAGER_H

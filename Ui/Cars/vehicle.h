@@ -106,6 +106,8 @@ public:
      */
     virtual void setDarkDesign( bool dark = false );
     int vehicleId() const { return m_vehicleId; }
+    void updateWaitingTime();
+    int waitingTimeInSeconds();
 
 private:
     /// It is a description of current path to new checkpoint.
@@ -122,8 +124,10 @@ private:
     bool m_first;
     /// Collision detection is switched on or switched off.
     bool m_checkCollisions;
-    /// Vehile id
+    /// Vehicle id
     int m_vehicleId;
+    /// Time on junction
+    QTime m_startWaitingTime;
 
     /// After this time vehicle will ask for permission to move again.
     static const int WAIT_ON_PERMISSION;

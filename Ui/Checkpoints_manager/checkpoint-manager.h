@@ -48,7 +48,7 @@ protected:
     friend class GraphicsView;
 
 signals:
-    void checkpointReached( uint flags, uchar checkpointId );
+    void checkpointReached( uint flags, uchar checkpointId, Vehicle* vehicle );
 };
 
 #endif // CHECKPOINTMANAGER_H

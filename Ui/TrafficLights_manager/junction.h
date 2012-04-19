@@ -7,6 +7,7 @@
 
 class QLCDNumber;
 class TrafficLight;
+class Vehicle;
 
 /*!
  * This is abstract base class for all junctions in our program.
@@ -23,7 +24,7 @@ public:
     /// Sets time vector - you can use it to set fixed times at lights.
     void setTimeVector( QVector<int>& time );
     /// It is calles when vehicles arrived or leave junction.
-    void manageVehicle( uint flags, uchar checkpointId );
+    void manageVehicle( uint flags, uchar checkpointId, Vehicle* vehicle );
     /// Current number of vehicles on whole junction.
     int currentNumberOfVehicles() const;
 
@@ -40,6 +41,7 @@ protected:
     /// Counter to show how many vehicles are currently on junction
     QLCDNumber* m_vehicleCounter;
     QHash<uchar,int> m_vehicleCountOnLanes;
+    QMultiHash<uchar,Vehicle*> m_stayOnJunctionTime;
     int m_junctionId;
 
     void timerEvent( QTimerEvent *event );

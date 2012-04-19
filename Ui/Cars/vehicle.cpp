@@ -4,6 +4,7 @@
 #include "../../Logger/logger.h"
 #include <QAbstractAnimation>
 #include <QTimer>
+#include <QTime>
 
 const int Vehicle::WAIT_ON_PERMISSION = 1000;
 int Vehicle::S_VEHICLE_ID = 0;
@@ -85,7 +86,7 @@ void Vehicle::init( Checkpoint *initCheckpoint )
 
         m_currentAnimation = m_currentPath->animation( this, this, m_speed );
 
-        m_currentCheckpoint->reached();
+        m_currentCheckpoint->reached( this );
 
         m_first = true;
     }
@@ -270,4 +271,14 @@ void Vehicle::setLongLights( bool longLight )
         QMetaObject::invokeMethod( this, "turnOnLongLights" );
     else
         QMetaObject::invokeMethod( this, "turnOffLongLights" );
+}
+
+int Vehicle::waitingTimeInSeconds()
+{
+    return m_startWaitingTime.secsTo( QTime::currentTime() );
+}
+
+void Vehicle::updateWaitingTime()
+{
+    m_startWaitingTime = QTime::currentTime();
 }
