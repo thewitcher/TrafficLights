@@ -145,7 +145,6 @@ void SimpleJunction::setTimeVectorByGeneticAlgorithm()
         vn.push_back( 3 );
     }
 
-
     GeneticAlgorithmManager geneticAlgorithmManager;
     GAGenome genome = geneticAlgorithmManager.start( new GenomeData( m_cyclesNumber, av, vn ) );
 
