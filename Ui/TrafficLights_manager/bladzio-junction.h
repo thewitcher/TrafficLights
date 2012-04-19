@@ -13,7 +13,7 @@ public:
     ~BladzioJunction();
 
 protected:
-    void run();
+    void runForSubcycles();
 
 private:
     TrafficLight* leftLight2a;

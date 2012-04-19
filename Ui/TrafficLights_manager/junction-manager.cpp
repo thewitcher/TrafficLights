@@ -3,28 +3,13 @@
 #include "bladzio-junction.h"
 #include "../Logger/logger.h"
 
-JunctionManager::JunctionManager( QMap<int, QVector<TrafficLight *> > &junctionsMap, QVector<QLCDNumber *> &vehicleCounters ):
-    QObject( NULL )
+JunctionManager::JunctionManager( QMap<int, QVector<TrafficLight *> > &junctionsMap,
+                                  QVector<QLCDNumber *> &vehicleCounters ): QObject( NULL )
 {
     createJunctions( junctionsMap, vehicleCounters );
     QVector<int> vector;
-    vector << 5000 << 5000 << 5000 << 5000;
-    sendTimeVector( 0, vector );
-    m_junctionsVector.at(0)->run();
-    sendTimeVector( 1, vector );
-    m_junctionsVector.at(1)->run();
-    sendTimeVector( 3, vector );
-    m_junctionsVector.at(3)->run();
-    sendTimeVector( 4, vector );
-    m_junctionsVector.at(4)->run();
-    sendTimeVector( 5, vector );
-    m_junctionsVector.at(5)->run();
-    sendTimeVector( 6, vector );
-    m_junctionsVector.at(6)->run();
-
-    vector << 6000 << 5000;
-    sendTimeVector( 2, vector );
-    m_junctionsVector.at(2)->run();
+    vector << 5000 << 5000 << 5000;
+    setTimeVectorForSubcycles( vector );
 }
 
 JunctionManager::~JunctionManager()
@@ -32,11 +17,29 @@ JunctionManager::~JunctionManager()
     qDeleteAll( m_junctionsVector );
 }
 
+void JunctionManager::setTimeVectorForSubcycles( QVector<int>& vector )
+{
+    sendTimeVector( 0, vector );
+    m_junctionsVector.at(0)->runForSubcycles();
+    sendTimeVector( 1, vector );
+    m_junctionsVector.at(1)->runForSubcycles();
+    sendTimeVector( 3, vector );
+    m_junctionsVector.at(3)->runForSubcycles();
+    sendTimeVector( 4, vector );
+    m_junctionsVector.at(4)->runForSubcycles();
+    sendTimeVector( 5, vector );
+    m_junctionsVector.at(5)->runForSubcycles();
+    sendTimeVector( 6, vector );
+    m_junctionsVector.at(6)->runForSubcycles();
+
+    /// Jeszcze dla du¿ego skrzy¿owania
+}
+
 void JunctionManager::sendTimeVector( const uint id, QVector<int> time )
 {
     if( id < ( unsigned char )m_junctionsVector.count() )
     {
-        m_junctionsVector.at( id )->setTimeVector( time );
+        m_junctionsVector.at( id )->setTimeVectorForSubcycles( time );
     }
     else
     {

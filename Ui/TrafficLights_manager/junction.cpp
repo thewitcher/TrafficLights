@@ -1,6 +1,7 @@
 #include "junction.h"
 #include "../Lights/trafficlight.h"
 #include "../Logger/logger.h"
+#include "constans.h"
 #include "vector"
 #include "../Cars/vehicle.h"
 #include "vehicle-count-manager.h"
@@ -11,6 +12,7 @@
 Junction::Junction( const QVector<TrafficLight *> &junction, QLCDNumber *m_vehicleCounter, int junctionId ):
     QObject( NULL ),
     m_trafficLightVector( junction ),
+    m_pauseBetweenSubcycles( 2000 ),
     m_interval( 500 ),
     m_currentNumberOfVehicles( 0 ),
     m_vehicleCounter( m_vehicleCounter ),
@@ -20,8 +22,7 @@ Junction::Junction( const QVector<TrafficLight *> &junction, QLCDNumber *m_vehic
 }
 
 Junction::~Junction()
-{
-}
+{}
 
 void Junction::timerEvent( QTimerEvent *event )
 {
@@ -66,16 +67,16 @@ void Junction::timerEvent( QTimerEvent *event )
     VehicleCountManager::vehicleCountOnLane( m_vehicleCountOnLanes, VehicleCountManager::SOUTH_RIGHT, m_junctionId ) );
 }
 
-void Junction::setTimeVector( QVector<int> &time )
+void Junction::setTimeVectorForSubcycles( QVector<int> &time )
 {
-    m_timeVector = time;
+    m_timeVectorForSubcycles = time;
 }
 
 void Junction::setTimeVectorByGeneticAlgorithm()
 {
 }
 
-void Junction::run()
+void Junction::runForSubcycles()
 {
 }
 
@@ -97,10 +98,9 @@ void Junction::manageVehicle( uint flags, uchar checkpointId, Vehicle* vehicle )
     }
     else
     {
-        m_vehicleCountOnLanes[ checkpointId ]--;
-
         m_stayOnJunctionTime.remove( checkpointId, vehicle );
 
+        m_vehicleCountOnLanes[ Constans::mapCheckpointId( checkpointId ) ]--;
         m_currentNumberOfVehicles--;
     }
 

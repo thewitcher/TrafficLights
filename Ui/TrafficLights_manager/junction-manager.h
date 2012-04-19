@@ -16,14 +16,15 @@ class JunctionManager: public QObject
     Q_OBJECT
 
 public:
-    JunctionManager( QMap< int, QVector<TrafficLight*> >& junctionsMap, QVector<QLCDNumber*>& vehicleCounters );
+    JunctionManager( QMap< int, QVector<TrafficLight*> >& junctionsMap,
+                     QVector<QLCDNumber*>& vehicleCounters );
     ~JunctionManager();
 
     void sendTimeVector( const uint id, QVector<int> time );
 
 private:
     QVector<Junction*> m_junctionsVector;
-
+    void setTimeVectorForSubcycles( QVector<int>& vector );
     void createJunctions( QMap<int, QVector<TrafficLight *> >& junctionsMap, QVector<QLCDNumber*>& vehicleCounters );
 
 public slots:
