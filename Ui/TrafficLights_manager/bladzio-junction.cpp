@@ -6,8 +6,8 @@
 #include "../../Logic/Genetic_algorithm/GA/genetic-algorithm-manager.h"
 #include <QTimer>
 
-BladzioJunction::BladzioJunction( const QVector<TrafficLight *> &junction, QLCDNumber* vehicleCounter ):
-    Junction( junction, vehicleCounter ),
+BladzioJunction::BladzioJunction( const QVector<TrafficLight *> &junction, QLCDNumber* vehicleCounter, int junctionId ):
+    Junction( junction, vehicleCounter, junctionId ),
     leftLight2a( junction.at( 0 ) ),
     straightLight2a( junction.at( 1 ) ),
     rightLight2a( junction.at( 2 ) ),

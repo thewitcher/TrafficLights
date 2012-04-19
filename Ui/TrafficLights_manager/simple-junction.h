@@ -9,7 +9,7 @@ class SimpleJunction: public Junction
     Q_OBJECT
 
 public:
-    SimpleJunction( const QVector<TrafficLight*>& junction, QLCDNumber* vehicleCounter );
+    SimpleJunction( const QVector<TrafficLight*>& junction, QLCDNumber* vehicleCounter, int junctionId );
     ~SimpleJunction();
 
 protected:
