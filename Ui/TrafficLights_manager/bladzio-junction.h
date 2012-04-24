@@ -16,36 +16,51 @@ protected:
     void runForSubcycles();
 
 private:
-    TrafficLight* leftLight2a;
-    TrafficLight* straightLight2a;
-    TrafficLight* rightLight2a;
-    TrafficLight* leftLight2b;
-    TrafficLight* straightLight2b;
-    TrafficLight* rightLight2b;
-    TrafficLight* leftLight2c;
-    TrafficLight* straightLight2c;
-    TrafficLight* rightLight2c;
-    TrafficLight* leftLight2d;
-    TrafficLight* straightLight2d;
-    TrafficLight* rightLight2d;
-    uint t1v,t2v,t3v,t1h,t2h,t3h;
+    TrafficLight* m_leftLight2a;
+    TrafficLight* m_straightLight2a;
+    TrafficLight* m_rightLight2a;
+    TrafficLight* m_leftLight2b;
+    TrafficLight* m_straightLight2b;
+    TrafficLight* m_rightLight2b;
+    TrafficLight* m_leftLight2c;
+    TrafficLight* m_straightLight2c;
+    TrafficLight* m_rightLight2c;
+    TrafficLight* m_leftLight2d;
+    TrafficLight* m_straightLight2d;
+    TrafficLight* m_rightLight2d;
 
     void setTimeVectorByGeneticAlgorithm();
+    void runFirstSubcycle( uint subcycle_1 );
+    void runSecondSubcycle( uint subcycle_1, uint subcycle_2 );
+    void runThirdSubcycle( uint subcycle_1, uint subcycle_2, uint subcycle_3 );
+    void runFourthSubcycle( uint subcycle_1, uint subcycle_2, uint subcycle_3, uint subcycle_4 );
+    void exceptionWhenSubcycleSumEqualZero( uint subcycle_1, uint subcycle_2, uint subcycle_3, uint subcycle_4 );
+
+    void runSingleShotForSubcycle_1_WhenTimeIsDiferrentThanZero( uint time );
+
+    void runSingleShotForSubcycle_2_WhenTimeIsDiferrentThanZero( uint time_1, uint time_2 );
+    void runSingleShotForSubcycle_2_WhenTimeAreEqualZero( uint time );
+
+    void runSingleShotForSubcycle_3_WhenOneTimeIsDiferrentThanZero( uint time_1, uint time_2 );
+    void runSingleShotForSubcycle_3_WhenAllTimesAreDiferrentThanZero( uint time_1, uint time_2, uint time_3 );
+    void runSingleShotForSubcycle_3_WhenAllTimesAreEqualZero( uint time_3 );
+
+    void runSingleShotForSubcycle_4_WhenOneTimeIsDiferrentThanZero( uint time_1, uint time_2 );
+    void runSingleShotForSubcycle_4_WhenTwoTimesAreDiferrentThanZero( uint time_1, uint time_2, uint time_3 );
+    void runSingleShotForSubcycle_4_WhenAllTimesAreDiferrentThanZero( uint time_1, uint time_2, uint time_3, uint time_4 );
+    void runSingleShotForSubcycle_4_WhenAllTimesAreEqualZero( uint time );
 
 private slots:
-    void firstVertivalSeries();
-    void secondVerticalSeries();
 
-    void holdFirstVerticalSeries();
-    void holdPartialSecondVerticalSeries();
-    void holdAllSecondVerticalSeries();
+    void firstSubcycle();
+    void secondSubcycle();
+    void thirdSubcycle();
+    void fourthSubcycle();
 
-    void firstHorizontalSeries();
-    void secondHorizontalSeries();
-
-    void holdFirstHorizontalSeries();
-    void holdSecondHorizontalSeries();
-
+    void holdFirstSubcycle();
+    void holdSecondSubcycle();
+    void holdThirdSubcycle();
+    void holdFourthSubcycle();
 };
 
 #endif // BLADZIOJUNCTION_H

@@ -26,6 +26,14 @@ win32 {
     system($${replace(SOURCE_FILE,/,\\)} $${replace(SOURCE_PATH,/,\\)} $${replace(TARGET_PATH,/,\\)})
 }
 
+win32:debug {
+    LIBS += -L../Logic/debug/ -lLogic
+}
+
+win32:release {
+    LIBS += -L../Logic/release/ -lLogic
+}
+
 unix {
     SOURCE_FILE=$${IN_PWD}/Data/init_linux.sh
     SOURCE_PATH=$${IN_PWD}/Data

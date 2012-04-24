@@ -20,4 +20,7 @@
         <file>Qml/Lights/ArrowStraightAndRight.qml</file>
         <file>Qml/Car/Bus.qml</file>
     </qresource>
+    <qresource prefix="/music">
+        <file>Music/song.mp3</file>
+    </qresource>
 </RCC>

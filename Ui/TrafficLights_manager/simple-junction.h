@@ -27,6 +27,15 @@ private:
     void runSubcycle_3( uint subcycle_1, uint subcycle_2, uint subcycle_3 );
     void exceptionWhenSubcycleSumEqualZero( uint subcycle_1, uint subcycle_2, uint subcycle_3 );
 
+    void runSingleShotForSubcycle_1_WhenTimeIsDiferrentThanZero( uint time );
+
+    void runSingleShotForSubcycle_2_WhenTimeIsDiferrentThanZero( uint time_1, uint time_2 );
+    void runSingleShotForSubcycle_2_WhenTimeAreEqualZero( uint time );
+
+    void runSingleShotForSubcycle_3_WhenOneTimeIsDiferrentThanZero( uint time_1, uint time_2 );
+    void runSingleShotForSubcycle_3_WhenAllTimesAreDiferrentThanZero(uint time_1, uint time_2, uint time_3 );
+    void runSingleShotForSubcycle_3_WhenAllTimesAreEqualZero( uint time );
+
 private slots:
     void firstSubcycle();
     void secondSubcycle();

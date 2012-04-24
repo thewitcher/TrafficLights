@@ -6,4 +6,3 @@
 
 include(../Common.pri)
 include(Genetic_algorithm/GA/Genetic_algorithm.pri)
-
