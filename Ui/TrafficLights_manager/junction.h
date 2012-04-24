@@ -50,7 +50,7 @@ protected:
     /// Counter to show how many vehicles are currently on junction
     QLCDNumber* m_vehicleCounter;
     QHash<uchar,int> m_vehicleCountOnLanes;
-    QMultiHash<uchar,Vehicle*> m_stayOnJunctionTime;
+    QMultiHash<uchar,Vehicle*> m_waitingTime;
     int m_junctionId;
 
     void timerEvent( QTimerEvent *event );

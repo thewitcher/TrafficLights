@@ -344,3 +344,258 @@ int VehicleCountManager::vehicleCountOnLane6( const QHash<uchar, int> &vehicleCo
 
     return count;
 }
+
+int VehicleCountManager::wholeVehicleWaitingTimeOnLane( const QMultiHash<uchar, Vehicle *> &waitingTime, Lane lane, int junctionId )
+{
+    int time = 0;
+
+    switch( junctionId )
+    {
+    case 0:
+        time = vehicleWaitingTime0( waitingTime, lane );
+        break;
+    case 1:
+        time = vehicleWaitingTime1( waitingTime, lane );
+        break;
+    case 2:
+        time = vehicleWaitingTime2( waitingTime, lane );
+        break;
+    case 3:
+        time = vehicleWaitingTime3( waitingTime, lane );
+        break;
+    case 4:
+        time = vehicleWaitingTime4( waitingTime, lane );
+        break;
+    case 5:
+        time = vehicleWaitingTime5( waitingTime, lane );
+        break;
+    case 6:
+        time = vehicleWaitingTime6( waitingTime, lane );
+        break;
+    default:
+        LOG_WARNING( "There is no junction with %i id", junctionId );
+        break;
+    }
+
+    return time;
+}
+
+int VehicleCountManager::sumWaitingTime( const QList<Vehicle *> & vehicleList )
+{
+    int sumTime = 0;
+
+    QListIterator<Vehicle*> vehicleIterator( vehicleList );
+
+    while( vehicleIterator.hasNext() )
+    {
+        sumTime += vehicleIterator.next()->waitingTimeInSeconds();
+    }
+
+    return sumTime;
+}
+
+int VehicleCountManager::vehicleWaitingTime0( const QMultiHash<uchar, Vehicle *> &waitingTime, Lane lane )
+{
+    int time = 0;
+
+    switch( lane )
+    {
+    case WEST_MIDDLE:
+        time = sumWaitingTime( waitingTime.values( 6 ) );
+        break;
+    case EAST_MIDDLE:
+        time = sumWaitingTime( waitingTime.values( 107 ) );
+        break;
+    case SOUTH_LEFT:
+        time = sumWaitingTime( waitingTime.values( 38 ) );
+        break;
+    case SOUTH_RIGHT:
+        time = sumWaitingTime( waitingTime.values( 48 ) );
+        break;
+    default:
+        LOG_WARNING( "Wrong lane (%i) for this junction (id = 0)", lane );
+        break;
+    }
+
+    return time;
+}
+
+int VehicleCountManager::vehicleWaitingTime1( const QMultiHash<uchar, Vehicle *> &waitingTime, Lane lane )
+{
+    int time = 0;
+
+    switch( lane )
+    {
+    case NORTH_MIDDLE:
+        time = sumWaitingTime( waitingTime.values( 0 ) );
+        break;
+    case SOUTH_MIDDLE:
+        time = sumWaitingTime( waitingTime.values( 11 ) );
+        break;
+    case EAST_TOP:
+        time = sumWaitingTime( waitingTime.values( 20 ) );
+        break;
+    case EAST_BOTTOM:
+        time = sumWaitingTime( waitingTime.values( 21 ) );
+        break;
+    default:
+        LOG_WARNING( "Wrong lane (%i) for this junction (id = 1)", lane );
+        break;
+    }
+
+    return time;
+}
+
+int VehicleCountManager::vehicleWaitingTime2( const QMultiHash<uchar, Vehicle *> &waitingTime, Lane lane )
+{
+    int time = 0;
+
+    switch( lane )
+    {
+    case WEST_TOP:
+        time = sumWaitingTime( waitingTime.values( 2 ) ) + sumWaitingTime( waitingTime.values( 8 ) );
+        break;
+    case WEST_MIDDLE:
+        time = sumWaitingTime( waitingTime.values( 3 ) ) + sumWaitingTime( waitingTime.values( 9 ) );
+        break;
+    case WEST_BOTTOM:
+        time = sumWaitingTime( waitingTime.values( 4 ) ) + sumWaitingTime( waitingTime.values( 10 ) );
+        break;
+    case EAST_TOP:
+        time = sumWaitingTime( waitingTime.values( 119 ) );
+        break;
+    case EAST_MIDDLE:
+        time = sumWaitingTime( waitingTime.values( 102 ) );
+        break;
+    case EAST_BOTTOM:
+        time = sumWaitingTime( waitingTime.values( 104 ) );
+        break;
+    case NORTH_LEFT:
+        time = sumWaitingTime( waitingTime.values( 17 ) ) + sumWaitingTime( waitingTime.values( 18 ) );
+        break;
+    case NORTH_MIDDLE:
+        time = sumWaitingTime( waitingTime.values( 26 ) ) + sumWaitingTime( waitingTime.values( 27 ) );
+        break;
+    case NORTH_RIGHT:
+        time = sumWaitingTime( waitingTime.values( 32 ) ) + sumWaitingTime( waitingTime.values( 33 ) );
+        break;
+    case SOUTH_LEFT:
+        time = sumWaitingTime( waitingTime.values( 42 ) ) + sumWaitingTime( waitingTime.values( 43 ) );
+        break;
+    case SOUTH_MIDDLE:
+        time = sumWaitingTime( waitingTime.values( 44 ) ) + sumWaitingTime( waitingTime.values( 45 ) );
+        break;
+    case SOUTH_RIGHT:
+        time = sumWaitingTime( waitingTime.values( 53 ) ) + sumWaitingTime( waitingTime.values( 54 ) );
+        break;
+    default:
+        LOG_WARNING( "Wrong lane (%i) for this junction (id = 2)", lane );
+        break;
+    }
+
+    return time;
+}
+
+int VehicleCountManager::vehicleWaitingTime3( const QMultiHash<uchar, Vehicle *> &waitingTime, Lane lane )
+{
+    int time = 0;
+
+    switch( lane )
+    {
+    case WEST_MIDDLE:
+        time = sumWaitingTime( waitingTime.values( 5 ) );
+        break;
+    case EAST_MIDDLE:
+        time = sumWaitingTime( waitingTime.values( 101 ) );
+        break;
+    case NORTH_LEFT:
+        time = sumWaitingTime( waitingTime.values( 23 ) );
+        break;
+    case NORTH_RIGHT:
+        time = sumWaitingTime( waitingTime.values( 29 ) );
+        break;
+    default:
+        LOG_WARNING( "Wrong lane (%i) for this junction (id = 3)", lane );
+        break;
+    }
+
+    return time;
+}
+
+int VehicleCountManager::vehicleWaitingTime4( const QMultiHash<uchar, Vehicle *> &waitingTime, Lane lane )
+{
+    int time = 0;
+
+    switch( lane )
+    {
+    case WEST_MIDDLE:
+        time = sumWaitingTime( waitingTime.values( 100 ) );
+        break;
+    case EAST_MIDDLE:
+        time = sumWaitingTime( waitingTime.values( 72 ) );
+        break;
+    case NORTH_LEFT:
+        time = sumWaitingTime( waitingTime.values( 90 ) );
+        break;
+    case NORTH_RIGHT:
+        time = sumWaitingTime( waitingTime.values( 103 ) );
+        break;
+    default:
+        LOG_WARNING( "Wrong lane (%i) for this junction (id = 4)", lane );
+        break;
+    }
+
+    return time;
+}
+
+int VehicleCountManager::vehicleWaitingTime5( const QMultiHash<uchar, Vehicle *> &waitingTime, Lane lane )
+{
+    int time = 0;
+
+    switch( lane )
+    {
+    case NORTH_MIDDLE:
+        time = sumWaitingTime( waitingTime.values( 81 ) );
+        break;
+    case SOUTH_MIDDLE:
+        time = sumWaitingTime( waitingTime.values( 71 ) );
+        break;
+    case WEST_TOP:
+        time = sumWaitingTime( waitingTime.values( 105 ) );
+        break;
+    case WEST_BOTTOM:
+        time = sumWaitingTime( waitingTime.values( 108 ) );
+        break;
+    default:
+        LOG_WARNING( "Wrong lane (%i) for this junction (id = 5)", lane );
+        break;
+    }
+
+    return time;
+}
+
+int VehicleCountManager::vehicleWaitingTime6( const QMultiHash<uchar, Vehicle *> &waitingTime, Lane lane )
+{
+    int time = 0;
+
+    switch( lane )
+    {
+    case WEST_MIDDLE:
+        time = sumWaitingTime( waitingTime.values( 82 ) );
+        break;
+    case EAST_MIDDLE:
+        time = sumWaitingTime( waitingTime.values( 139 ) );
+        break;
+    case SOUTH_LEFT:
+        time = sumWaitingTime( waitingTime.values( 106 ) );
+        break;
+    case SOUTH_RIGHT:
+        time = sumWaitingTime( waitingTime.values( 121 ) );
+        break;
+    default:
+        LOG_WARNING( "Wrong lane (%i) for this junction (id = 6)", lane );
+        break;
+    }
+
+    return time;
+}

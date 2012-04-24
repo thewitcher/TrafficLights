@@ -4,7 +4,6 @@
 #include "../../Logger/logger.h"
 #include <QAbstractAnimation>
 #include <QTimer>
-#include <QTime>
 
 const int Vehicle::WAIT_ON_PERMISSION = 1000;
 int Vehicle::S_VEHICLE_ID = 0;

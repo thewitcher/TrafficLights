@@ -2,6 +2,7 @@
 #define VEHICLE_H
 
 #include <QDeclarativeItem>
+#include <QTime>
 #include "collision-point.h"
 
 class Checkpoint;
