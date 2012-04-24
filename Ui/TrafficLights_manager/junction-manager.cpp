@@ -8,7 +8,7 @@ JunctionManager::JunctionManager( QMap<int, QVector<TrafficLight *> > &junctions
 {
     createJunctions( junctionsMap, vehicleCounters );
     QVector<int> vector;
-    vector << 5000 << 5000 << 5000;
+    vector << 5000 << 5000 << 5000 << 5000;
     setTimeVectorForSubcycles( vector );
 }
 
@@ -32,7 +32,8 @@ void JunctionManager::setTimeVectorForSubcycles( QVector<int>& vector )
     sendTimeVector( 6, vector );
     m_junctionsVector.at(6)->runForSubcycles();
 
-    /// Jeszcze dla du¿ego skrzy¿owania
+    sendTimeVector( 2, vector );
+    m_junctionsVector.at(2)->runForSubcycles();
 }
 
 void JunctionManager::sendTimeVector( const uint id, QVector<int> time )
@@ -51,6 +52,7 @@ void JunctionManager::sendTimeVector( const uint id, QVector<int> time )
  * Creates 7 objects with responsibility for manage signallers on each junction. 6 of them is SimpleJunction type and one BladzioJunction type.
  * BladzioJunction is the largest cross in the map.
  */
+
 void JunctionManager::createJunctions( QMap<int, QVector<TrafficLight *> > &junctionsMap, QVector<QLCDNumber *> &vehicleCounters )
 {
     LOG_INFO( "Creating 7 junctions in %s", __FUNCTION__ );

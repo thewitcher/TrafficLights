@@ -2,6 +2,8 @@
 #define ROOTWINDOW_H
 
 #include <QMainWindow>
+//#include <phonon/AudioOutput>
+//#include <phonon/MediaObject>
 
 namespace Ui {
     class RootWindow;
@@ -17,6 +19,15 @@ public:
 
 private:
     Ui::RootWindow *ui;
+//    QAction *m_moute;
+//    Phonon::AudioOutput *m_audioOutput;
+//    Phonon::MediaObject *m_mediaObject;
+//    void setActionButtonToToolBar();
+//    void setAudio();
+
+//private slots:
+//    void regulateVoice();
+//    void playAgain();
 };
 
 #endif // ROOTWINDOW_H

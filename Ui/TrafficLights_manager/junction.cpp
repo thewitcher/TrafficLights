@@ -6,7 +6,6 @@
 #include <QTimerEvent>
 #include <QLCDNumber>
 
-
 Junction::Junction( const QVector<TrafficLight *> &junction, QLCDNumber *m_vehicleCounter ):
     QObject( NULL ),
     m_trafficLightVector( junction ),
