@@ -3,13 +3,14 @@
 
 #include <QVector>
 
+class Junction;
 
 class BaseAlgorithm
 {
 public:
     BaseAlgorithm();
 
-    virtual QVector<int> start() = 0;
+    virtual QVector<int> start( Junction* junction ) = 0;
 
 private:
     static unsigned int S_GENOME_SIZE;

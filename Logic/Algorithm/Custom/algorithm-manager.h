@@ -4,16 +4,19 @@
 #include "base-algorithm.h"
 #include <QVector>
 
+class Junction;
+
 class AlgorithmManager
 {
 public:
-    AlgorithmManager();
+    AlgorithmManager( Junction* junction );
     ~AlgorithmManager();
 
     QVector<int> start();
 
 private:
     BaseAlgorithm* m_baseAlgorithm;
+    Junction* m_junction;
 
     void updateAlgorithm();
 };

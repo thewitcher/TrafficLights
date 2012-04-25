@@ -5,8 +5,10 @@ NormalAlgorithm::NormalAlgorithm():
 {
 }
 
-QVector<int> NormalAlgorithm::start()
+QVector<int> NormalAlgorithm::start( Junction* junction )
 {
+    Q_UNUSED( junction );
+
     QVector<int> vector;
     vector << 5000 << 5000 << 5000 << 5000;
     return vector;

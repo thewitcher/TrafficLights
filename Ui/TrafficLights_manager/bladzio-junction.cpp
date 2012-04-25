@@ -7,7 +7,7 @@
 #include <QTimer>
 
 BladzioJunction::BladzioJunction( const QVector<TrafficLight *> &junction, QLCDNumber* vehicleCounter, int junctionId ):
-    Junction( junction, vehicleCounter, junctionId ),
+    Junction( junction, vehicleCounter, junctionId, BLADZIO ),
     m_leftLight2a( junction.at( 0 ) ),
     m_straightLight2a( junction.at( 1 ) ),
     m_rightLight2a( junction.at( 2 ) ),

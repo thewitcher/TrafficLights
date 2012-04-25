@@ -1,9 +1,11 @@
 #include "algorithm-manager.h"
 #include "../Settings/settings.h"
 #include "normal-algorithm.h"
+#include "../Ui/TrafficLights_manager/junction.h"
 
-AlgorithmManager::AlgorithmManager():
-    m_baseAlgorithm( NULL )
+AlgorithmManager::AlgorithmManager( Junction* junction ):
+    m_baseAlgorithm( NULL ),
+    m_junction( junction )
 {
     updateAlgorithm();
 }
@@ -18,7 +20,7 @@ AlgorithmManager::~AlgorithmManager()
 
 QVector<int> AlgorithmManager::start()
 {
-    return m_baseAlgorithm->start();
+    return m_baseAlgorithm->start( m_junction );
 }
 
 void AlgorithmManager::updateAlgorithm()

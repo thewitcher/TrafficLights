@@ -4,7 +4,7 @@
 #include <QTimer>
 
 SimpleJunction::SimpleJunction( const QVector<TrafficLight *> &junction, QLCDNumber* vehicleCounter, int junctionId ):
-    Junction( junction, vehicleCounter, junctionId ),
+    Junction( junction, vehicleCounter, junctionId, SIMPLE ),
     m_leftLight( m_trafficLightVector.at( 0 ) ),
     m_rightLight( m_trafficLightVector.at( 1 ) ),
     m_leftAndStraightLight( m_trafficLightVector.at( 2 ) ),

@@ -9,7 +9,9 @@
 #include <QTimerEvent>
 #include <QLCDNumber>
 
-Junction::Junction( const QVector<TrafficLight *> &junction, QLCDNumber *m_vehicleCounter, int junctionId ):
+
+Junction::Junction( const QVector<TrafficLight *> &junction, QLCDNumber *m_vehicleCounter, int junctionId,
+                    JUNCTION_TYPE junctionType ):
     QObject( NULL ),
     m_trafficLightVector( junction ),
     m_pauseBetweenSubcycles( 2000 ),
@@ -17,8 +19,10 @@ Junction::Junction( const QVector<TrafficLight *> &junction, QLCDNumber *m_vehic
     m_currentNumberOfVehicles( 0 ),
     m_vehicleCounter( m_vehicleCounter ),
     m_junctionId( junctionId ),
-    m_algorithmManager( new AlgorithmManager )
+    m_junctionType( junctionType )
 {
+    m_algorithmManager = new AlgorithmManager( this );
+
     startTimer( 10000 );
     setTimeVectorByAlgorithm();
 }
@@ -147,4 +151,9 @@ void Junction::manageVehicle( uint flags, uchar checkpointId, Vehicle* vehicle )
     }
 
     m_vehicleCounter->display( m_currentNumberOfVehicles );
+}
+
+Junction::JUNCTION_TYPE Junction::junctionType() const
+{
+    return m_junctionType;
 }

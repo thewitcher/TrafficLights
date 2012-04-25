@@ -19,13 +19,16 @@ class Junction: public QObject
     Q_OBJECT
 
 public:
-    Junction( const QVector<TrafficLight*>& junction, QLCDNumber* m_vehicleCounter, int junctionId );
+    enum JUNCTION_TYPE { BLADZIO, SIMPLE, NO_TYPE };
+
+    Junction( const QVector<TrafficLight*>& junction, QLCDNumber* m_vehicleCounter, int junctionId, JUNCTION_TYPE junctionType );
     virtual ~Junction();
 
     /// It is calles when vehicles arrived or leave junction.
     void manageVehicle( uint flags, uchar checkpointId, Vehicle* vehicle );
     /// Current number of vehicles on whole junction.
     int currentNumberOfVehicles() const;
+    JUNCTION_TYPE junctionType() const;
 
     virtual void runForSubcycles() = 0;
 
@@ -51,6 +54,7 @@ protected:
     QMultiHash<uchar,Vehicle*> m_waitingTime;
     int m_junctionId;
     AlgorithmManager *m_algorithmManager;
+    JUNCTION_TYPE m_junctionType;
 
     void timerEvent( QTimerEvent *event );
     /// If it returns true then time vector should be changed, otherwise it is ok and should not be changed.
