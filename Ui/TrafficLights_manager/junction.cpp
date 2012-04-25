@@ -5,6 +5,7 @@
 #include "vector"
 #include "../Cars/vehicle.h"
 #include "vehicle-count-manager.h"
+#include "../Logic/Algorithm/Custom/algorithm-manager.h"
 #include <QTimerEvent>
 #include <QLCDNumber>
 
@@ -15,13 +16,20 @@ Junction::Junction( const QVector<TrafficLight *> &junction, QLCDNumber *m_vehic
     m_interval( 500 ),
     m_currentNumberOfVehicles( 0 ),
     m_vehicleCounter( m_vehicleCounter ),
-    m_junctionId( junctionId )
+    m_junctionId( junctionId ),
+    m_algorithmManager( new AlgorithmManager )
 {
     startTimer( 10000 );
+    setTimeVectorByAlgorithm();
 }
 
 Junction::~Junction()
-{}
+{
+    if( m_algorithmManager )
+    {
+        delete m_algorithmManager;
+    }
+}
 
 void Junction::timerEvent( QTimerEvent *event )
 {
@@ -104,13 +112,9 @@ void Junction::timerEvent( QTimerEvent *event )
     VehicleCountManager::wholeVehicleWaitingTimeOnLane( m_waitingTime, VehicleCountManager::SOUTH_RIGHT, m_junctionId ) );
 }
 
-void Junction::setTimeVectorForSubcycles( QVector<int> &time )
+void Junction::setTimeVectorByAlgorithm()
 {
-    m_timeVectorForSubcycles = time;
-}
-
-void Junction::setTimeVectorByGeneticAlgorithm()
-{
+    m_timeVectorForSubcycles = m_algorithmManager->start();
 }
 
 void Junction::runForSubcycles()

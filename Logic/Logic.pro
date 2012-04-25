@@ -5,4 +5,5 @@
 #-------------------------------------------------
 
 include(../Common.pri)
-include(Genetic_algorithm/GA/Genetic_algorithm.pri)
+include(Algorithm/GA/GA.pri)
+include(Algorithm/Custom/CustomGA.pri)

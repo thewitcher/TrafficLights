@@ -1,16 +1,15 @@
-#ifndef GENETICALGORITHMMANAGER_H
-#define GENETICALGORITHMMANAGER_H
+#ifndef BASEALGORITHM_H
+#define BASEALGORITHM_H
 
-#include "GAGenome.h"
-#include "genome-data.h"
+#include <QVector>
 
 
-class GeneticAlgorithmManager
+class BaseAlgorithm
 {
 public:
-    GeneticAlgorithmManager();
+    BaseAlgorithm();
 
-    GAGenome start( GenomeData *dynamicGenomeData );
+    virtual QVector<int> start() = 0;
 
 private:
     static unsigned int S_GENOME_SIZE;
@@ -24,4 +23,4 @@ private:
     static char* S_LOG_FILE;
 };
 
-#endif // GENETICALGORITHMMANAGER_H
+#endif // BASEALGORITHM_H

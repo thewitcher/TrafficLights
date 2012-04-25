@@ -8,6 +8,7 @@
 class QLCDNumber;
 class TrafficLight;
 class Vehicle;
+class AlgorithmManager;
 
 /*!
  * This is abstract base class for all junctions in our program.
@@ -20,9 +21,6 @@ class Junction: public QObject
 public:
     Junction( const QVector<TrafficLight*>& junction, QLCDNumber* m_vehicleCounter, int junctionId );
     virtual ~Junction();
-
-    /// Sets time vector - you can use it to set fixed times at lights.
-    void setTimeVectorForSubcycles( QVector<int> &time );
 
     /// It is calles when vehicles arrived or leave junction.
     void manageVehicle( uint flags, uchar checkpointId, Vehicle* vehicle );
@@ -52,12 +50,13 @@ protected:
     QHash<uchar,int> m_vehicleCountOnLanes;
     QMultiHash<uchar,Vehicle*> m_waitingTime;
     int m_junctionId;
+    AlgorithmManager *m_algorithmManager;
 
     void timerEvent( QTimerEvent *event );
     /// If it returns true then time vector should be changed, otherwise it is ok and should not be changed.
     bool changeTimeVector();
     /// It uses genetic algorithm to create appropriate time vector for that junction.
-    virtual void setTimeVectorByGeneticAlgorithm() = 0;
+    virtual void setTimeVectorByAlgorithm();
 };
 
 #endif // JUNCTION_H

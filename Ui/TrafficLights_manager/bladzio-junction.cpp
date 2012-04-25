@@ -306,9 +306,3 @@ void BladzioJunction::holdFourthSubcycle()
 
     runForSubcycles();
 }
-
-void BladzioJunction::setTimeVectorByGeneticAlgorithm()
-{
-//    GeneticAlgorithmManager geneticAlgorithmManager;
-//    GAGenome genome = geneticAlgorithmManager.start( new GenomeData( m_cyclesNumber, av, vn ) );
-}

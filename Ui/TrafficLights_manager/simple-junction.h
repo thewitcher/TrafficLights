@@ -21,7 +21,6 @@ private:
     TrafficLight* m_leftAndStraightLight;
     TrafficLight* m_rightAndStraightLight;
 
-    void setTimeVectorByGeneticAlgorithm();
     void runSubcycle_1( uint subcycle_1 );
     void runSubcycle_2( uint subcycle_1, uint subcycle_2 );
     void runSubcycle_3( uint subcycle_1, uint subcycle_2, uint subcycle_3 );

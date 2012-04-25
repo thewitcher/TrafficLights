@@ -20,12 +20,10 @@ public:
                      QVector<QLCDNumber*>& vehicleCounters );
     ~JunctionManager();
 
-    void sendTimeVector( const uint id, QVector<int> time );
-
 private:
     QVector<Junction*> m_junctionsVector;
-    void setTimeVectorForSubcycles( QVector<int>& vector );
     void createJunctions( QMap<int, QVector<TrafficLight *> >& junctionsMap, QVector<QLCDNumber*>& vehicleCounters );
+    void runForSubcycles();
 
 public slots:
     void routeToAppropriateJunction( uint flags, uchar checkpointId, Vehicle* vehicle );

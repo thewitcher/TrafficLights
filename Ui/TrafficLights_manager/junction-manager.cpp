@@ -7,9 +7,7 @@ JunctionManager::JunctionManager( QMap<int, QVector<TrafficLight *> > &junctions
                                   QVector<QLCDNumber *> &vehicleCounters ): QObject( NULL )
 {
     createJunctions( junctionsMap, vehicleCounters );
-    QVector<int> vector;
-    vector << 5000 << 5000 << 5000 << 5000;
-    setTimeVectorForSubcycles( vector );
+    runForSubcycles();
 }
 
 JunctionManager::~JunctionManager()
@@ -17,34 +15,11 @@ JunctionManager::~JunctionManager()
     qDeleteAll( m_junctionsVector );
 }
 
-void JunctionManager::setTimeVectorForSubcycles( QVector<int>& vector )
+void JunctionManager::runForSubcycles()
 {
-    sendTimeVector( 0, vector );
-    m_junctionsVector.at(0)->runForSubcycles();
-    sendTimeVector( 1, vector );
-    m_junctionsVector.at(1)->runForSubcycles();
-    sendTimeVector( 3, vector );
-    m_junctionsVector.at(3)->runForSubcycles();
-    sendTimeVector( 4, vector );
-    m_junctionsVector.at(4)->runForSubcycles();
-    sendTimeVector( 5, vector );
-    m_junctionsVector.at(5)->runForSubcycles();
-    sendTimeVector( 6, vector );
-    m_junctionsVector.at(6)->runForSubcycles();
-
-    sendTimeVector( 2, vector );
-    m_junctionsVector.at(2)->runForSubcycles();
-}
-
-void JunctionManager::sendTimeVector( const uint id, QVector<int> time )
-{
-    if( id < ( unsigned char )m_junctionsVector.count() )
+    for( int i = 0 ; i < m_junctionsVector.count() ; i++ )
     {
-        m_junctionsVector.at( id )->setTimeVectorForSubcycles( time );
-    }
-    else
-    {
-        LOG_WARNING( "Id is not recognized. There is no junction with that id (id: %i)", id );
+        m_junctionsVector.at( i )->runForSubcycles();
     }
 }
 
