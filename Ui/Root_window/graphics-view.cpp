@@ -14,7 +14,7 @@ int GraphicsView::S_NEW_CAR_FREQUENCY = 5000;
 int GraphicsView::S_CAR_COUNT = 10;
 int GraphicsView::S_CAR_SPEED = 1;
 int GraphicsView::S_BUS_SPEED = 2;
-int GraphicsView::S_BUS_COUNT = 10;
+int GraphicsView::S_BUS_COUNT = 5;
 
 /*!
  * GraphicsView is a subclass of QGraphicsView. It was created for convenience. In constructor there are already four method, which
