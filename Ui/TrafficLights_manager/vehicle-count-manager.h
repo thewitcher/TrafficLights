@@ -33,9 +33,12 @@ public:
         SOUTH_RIGHT
     };
 
-    static int vehicleCountOnSubcycle( const QHash<uchar,int>& vehicleCountLanes, SubCycle subcycle, bool bigJunction );
+    /*! Returns the number vehicles on appropriate Junction for a given subcycle. */
+    static int vehicleCountOnSubcycle( const QHash<uchar,int>& vehicleCountLanes, SubCycle subcycle, int junctionId );
     static int vehicleCountOnLane( const QHash<uchar,int>& vehicleCountLanes, Lane lane, int junctionId );
 
+    /*! Returns the total waiting time vehicles on appropriate Junction for a given subcycle. */
+    static int wholeVehicleWaitingTimeForSubcycle( const QMultiHash<uchar,Vehicle*>& waitingTime, SubCycle subcycle, int junctionId );
     static int wholeVehicleWaitingTimeOnLane( const QMultiHash<uchar,Vehicle*>& waitingTime, Lane lane, int junctionId );
 
 private:
@@ -57,6 +60,12 @@ private:
     static int vehicleWaitingTime6( const QMultiHash<uchar,Vehicle*>& waitingTime, Lane lane );
 
     static int sumWaitingTime( const QList<Vehicle*>& vehicleList );
+
+    /* auxiliary function for vehicleCountOnSubcycle and wholeVehicleWaitingTimeForSubcycle */
+    static int vehicleCountOnSubcycleForSimpleJunction( const QHash<uchar,int>& vehicleCountLanes, SubCycle subcycle, int junctionId );
+    static int vehicleCountOnSubcycleForBladzioJunction( const QHash<uchar, int> &vehicleCountLanes, SubCycle subcycle, int junctionId );
+    static int wholeVehicleWaitingTimeForSimpleJunction( const QMultiHash<uchar,Vehicle*>& waitingTime, SubCycle subcycle, int junctionId );
+    static int wholeVehicleWaitingTimeForBladzioJunction( const QMultiHash<uchar,Vehicle*>& waitingTime, SubCycle subcycle, int junctionId );
 };
 
 #endif // VEHICLECOUNTMANAGER_H

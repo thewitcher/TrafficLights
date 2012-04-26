@@ -2,6 +2,7 @@
 #define CONSTANS_H
 
 #include <QHash>
+#include <QVector>
 
 class Constans
 {

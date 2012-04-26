@@ -144,7 +144,10 @@ void SimpleJunction::holdFirstSubcycle()
     m_leftLight->holdVehicles();
 
     if( subcycle_2 == 0 && subcycle_3 == 0 )
+    {
+        setTimeVectorByGeneticAlgorithm();
         runForSubcycles();
+    }
 }
 
 void SimpleJunction::secondSubcycle()
@@ -164,7 +167,10 @@ void SimpleJunction::holdSecondSubcycle()
 
     uint subcycle_3 = m_timeVectorForSubcycles.at( 2 );
     if( subcycle_3 == 0 )
+    {
+        setTimeVectorByGeneticAlgorithm();
         runForSubcycles();
+    }
 }
 
 void SimpleJunction::thirdSubcycle()
@@ -175,6 +181,7 @@ void SimpleJunction::thirdSubcycle()
 void SimpleJunction::holdThirdSubcycle()
 {
     m_rightAndStraightLight->holdVehicles();
+    setTimeVectorByGeneticAlgorithm();
     runForSubcycles();
 }
 
