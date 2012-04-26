@@ -235,7 +235,7 @@ void BladzioJunction::holdFirstSubcycle()
 
     if( subcycle_2 == 0 && subcycle_3 == 0 && subcycle_4 == 0 )
     {
-        setTimeVectorByGeneticAlgorithm();
+        setTimeVectorByAlgorithm();
         runForSubcycles();
     }
 }
@@ -264,7 +264,7 @@ void BladzioJunction::holdSecondSubcycle()
 
     if( subcycle_3 == 0 && subcycle_4 == 0 )
     {
-        setTimeVectorByGeneticAlgorithm();
+        setTimeVectorByAlgorithm();
         runForSubcycles();
     }
 }
@@ -293,7 +293,7 @@ void BladzioJunction::holdThirdSubcycle()
 
     if( subcycle_4 == 0 )
     {
-        setTimeVectorByGeneticAlgorithm();
+        setTimeVectorByAlgorithm();
         runForSubcycles();
     }
 }
@@ -313,6 +313,6 @@ void BladzioJunction::holdFourthSubcycle()
     m_rightLight2a->holdVehicles();
     m_rightLight2c->holdVehicles();
 
-    setTimeVectorByGeneticAlgorithm();
+    setTimeVectorByAlgorithm();
     runForSubcycles();
 }
