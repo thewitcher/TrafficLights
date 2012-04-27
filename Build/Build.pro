@@ -11,23 +11,28 @@ TEMPLATE = app
 
 SOURCES += main.cpp
 
-win32:debug {
-    LIBS += -L../Logic/debug/ -lLogic \
-            -L../Ui/debug/ -lUi \
-            -L../Logger/debug/ -lLogger \
-            -L../Settings/debug/ -lSettings
-}
+win32 {
+    SOURCE_FILE=$${IN_PWD}/Data/init_windows.bat
+    SOURCE_PATH=$${IN_PWD}/Data
+    TARGET_PATH=$${OUT_PWD}/../Build/Data
 
-win32:release {
-    LIBS += -L../Logic/release/ -lLogic \
-            -L../Ui/release/ -lUi \
-            -L../Logger/release/ -lLogger \
-            -L../Settings/release/ -lSettings
+    system($${replace(SOURCE_FILE,/,\\)} $${replace(SOURCE_PATH,/,\\)} $${replace(TARGET_PATH,/,\\)})
 }
 
 unix {
-    LIBS += -L../Logic/ -lLogic \
-            -L../Ui/ -lUi \
-            -L../Logger/ -lLogger \
-            -L../Settings/ -lSettings
+    SOURCE_FILE=$${IN_PWD}/Data/init_linux.sh
+    SOURCE_PATH=$${IN_PWD}/Data
+    TARGET_PATH=$${OUT_PWD}/../Build/Data
+
+    system($${SOURCE_FILE} $${SOURCE_PATH} $${TARGET_PATH})
 }
+
+RESOURCES += \
+    ../Ui/graphics.qrc
+
+DEFINES += LOGGER
+
+include(../Logger/Logger.pri)
+include(../Logic/Logic.pri)
+include(../Ui/Ui.pri)
+include(../Settings/Settings.pri)

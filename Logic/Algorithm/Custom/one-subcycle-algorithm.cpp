@@ -21,3 +21,8 @@ QVector<int> OneSubcycleAlgorithm::start( Junction* junction )
     vector << 5000 << 5000 << 5000 << 5000;
     return vector;
 }
+
+void OneSubcycleAlgorithm::chooseTheMostBlockSubcycle()
+{
+
+}

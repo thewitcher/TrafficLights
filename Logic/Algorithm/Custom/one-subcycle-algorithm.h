@@ -9,6 +9,9 @@ public:
     OneSubcycleAlgorithm();
 
     QVector<int> start( Junction* junction );
+
+private:
+    void chooseTheMostBlockSubcycle();
 };
 
 #endif // ONESUBCYCLEALGORITHM_H

@@ -10,6 +10,6 @@ QVector<int> NormalAlgorithm::start( Junction* junction )
     Q_UNUSED( junction );
 
     QVector<int> vector;
-    vector << 5000 << 5000 << 5000 << 5000;
+    vector << 6000 << 6000 << 6000 << 6000;
     return vector;
 }
