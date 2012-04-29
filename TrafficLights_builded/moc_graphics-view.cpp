@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'graphics-view.h'
 **
-** Created: Fri Apr 27 11:08:47 2012
+** Created: Sun Apr 29 15:25:59 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_GraphicsView[] = {
        5,       // revision
        0,       // classname
        0,    0, // classinfo
-      15,   14, // methods
+      14,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -45,7 +45,6 @@ static const uint qt_meta_data_GraphicsView[] = {
      291,   13,   13,   13, 0x28,
      316,   13,   13,   13, 0x08,
      325,   13,   13,   13, 0x08,
-     336,   13,   13,   13, 0x08,
 
        0        // eod
 };
@@ -60,7 +59,7 @@ static const char qt_meta_stringdata_GraphicsView[] = {
     "createJunctionManager()\0createConnections()\0"
     "dark\0changeBackgroundPixmap(bool)\0"
     "changeBackgroundPixmap()\0setDay()\0"
-    "setNight()\0initEventTimer()\0"
+    "setNight()\0"
 };
 
 const QMetaObject GraphicsView::staticMetaObject = {
@@ -106,10 +105,9 @@ int GraphicsView::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         case 11: changeBackgroundPixmap(); break;
         case 12: setDay(); break;
         case 13: setNight(); break;
-        case 14: initEventTimer(); break;
         default: ;
         }
-        _id -= 15;
+        _id -= 14;
     }
     return _id;
 }

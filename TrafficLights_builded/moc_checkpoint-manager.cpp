@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'checkpoint-manager.h'
 **
-** Created: Fri Apr 27 11:08:59 2012
+** Created: Sun Apr 29 15:26:11 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -38,7 +38,7 @@ static const uint qt_meta_data_CheckpointManager[] = {
 
 static const char qt_meta_stringdata_CheckpointManager[] = {
     "CheckpointManager\0\0flags,checkpointId,vehicle\0"
-    "checkpointReached(uint,uchar,Vehicle*)\0"
+    "checkpointReached(uint,int,Vehicle*)\0"
 };
 
 const QMetaObject CheckpointManager::staticMetaObject = {
@@ -70,7 +70,7 @@ int CheckpointManager::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
-        case 0: checkpointReached((*reinterpret_cast< uint(*)>(_a[1])),(*reinterpret_cast< uchar(*)>(_a[2])),(*reinterpret_cast< Vehicle*(*)>(_a[3]))); break;
+        case 0: checkpointReached((*reinterpret_cast< uint(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< Vehicle*(*)>(_a[3]))); break;
         default: ;
         }
         _id -= 1;
@@ -79,7 +79,7 @@ int CheckpointManager::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void CheckpointManager::checkpointReached(uint _t1, uchar _t2, Vehicle * _t3)
+void CheckpointManager::checkpointReached(uint _t1, int _t2, Vehicle * _t3)
 {
     void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)), const_cast<void*>(reinterpret_cast<const void*>(&_t3)) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);

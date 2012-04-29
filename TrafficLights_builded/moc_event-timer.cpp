@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'event-timer.h'
 **
-** Created: Fri Apr 27 11:08:49 2012
+** Created: Sun Apr 29 15:26:01 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -43,7 +43,7 @@ static const uint qt_meta_data_EventTimer[] = {
 
 static const char qt_meta_stringdata_EventTimer[] = {
     "EventTimer\0\0day()\0night()\0setDay()\0"
-    "setNigth()\0"
+    "setNight()\0"
 };
 
 const QMetaObject EventTimer::staticMetaObject = {
@@ -78,7 +78,7 @@ int EventTimer::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         case 0: day(); break;
         case 1: night(); break;
         case 2: setDay(); break;
-        case 3: setNigth(); break;
+        case 3: setNight(); break;
         default: ;
         }
         _id -= 4;

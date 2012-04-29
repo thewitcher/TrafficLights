@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'junction-manager.h'
 **
-** Created: Fri Apr 27 11:08:55 2012
+** Created: Sun Apr 29 15:26:07 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -38,7 +38,7 @@ static const uint qt_meta_data_JunctionManager[] = {
 
 static const char qt_meta_stringdata_JunctionManager[] = {
     "JunctionManager\0\0flags,checkpointId,vehicle\0"
-    "routeToAppropriateJunction(uint,uchar,Vehicle*)\0"
+    "routeToAppropriateJunction(uint,int,Vehicle*)\0"
 };
 
 const QMetaObject JunctionManager::staticMetaObject = {
@@ -70,7 +70,7 @@ int JunctionManager::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
-        case 0: routeToAppropriateJunction((*reinterpret_cast< uint(*)>(_a[1])),(*reinterpret_cast< uchar(*)>(_a[2])),(*reinterpret_cast< Vehicle*(*)>(_a[3]))); break;
+        case 0: routeToAppropriateJunction((*reinterpret_cast< uint(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< Vehicle*(*)>(_a[3]))); break;
         default: ;
         }
         _id -= 1;
