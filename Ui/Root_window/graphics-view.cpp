@@ -10,8 +10,8 @@
 #include <QTimer>
 
 
-int GraphicsView::S_NEW_CAR_FREQUENCY = 6000;
-int GraphicsView::S_CAR_COUNT = 10;
+int GraphicsView::S_NEW_CAR_FREQUENCY = 5000;
+int GraphicsView::S_CAR_COUNT = 100;
 int GraphicsView::S_CAR_SPEED = 1;
 int GraphicsView::S_BUS_SPEED = 3;
 int GraphicsView::S_BUS_COUNT = 5;
@@ -32,7 +32,9 @@ GraphicsView::GraphicsView( QWidget *parent ):
     createDeployTrafficLights();
     createJunctionManager();
     createConnections();
+#ifdef EVENTS
     initEventTimer();
+#endif
     createItems();
 }
 
@@ -51,8 +53,8 @@ GraphicsView::~GraphicsView()
 
 void GraphicsView::createConnections()
 {
-    connect( m_checkpointManager, SIGNAL(checkpointReached(uint,uchar,Vehicle*)),
-             m_junctionManager, SLOT(routeToAppropriateJunction(uint,uchar,Vehicle*)) );
+    connect( m_checkpointManager, SIGNAL(checkpointReached(uint,int,Vehicle*)),
+             m_junctionManager, SLOT(routeToAppropriateJunction(uint,int,Vehicle*)) );
 }
 
 /*!
@@ -153,7 +155,9 @@ void GraphicsView::addVehicle( int speed, bool dark, const QString &type )
     Vehicle *newVehicle = QmlHelper::createVehicleFromQml( type );
     newVehicle->setSpeed( speed );
     newVehicle->setDarkDesign( dark );
+#ifdef LIGHTS
     newVehicle->setLongLights( dark );
+#endif
 
     if( newVehicle != NULL )
     {
@@ -171,10 +175,12 @@ void GraphicsView::createItems()
     bool createBus = false;
     bool dark = false;
 
+#ifdef EVENTS
     if( m_eventTimer->isDark() )
     {
         dark = true;
     }
+#endif
 
     if( carCount < S_CAR_COUNT )
     {
@@ -206,14 +212,17 @@ void GraphicsView::createJunctionManager()
     m_junctionManager = new JunctionManager( m_scene->allTrafficLights(), m_scene->allVehicleCounters() );
 }
 
+#ifdef EVENTS
 void GraphicsView::initEventTimer()
 {
     m_eventTimer = new EventTimer( this );
+
     connect( m_eventTimer, SIGNAL(day()), this, SLOT(setDay()) );
     connect( m_eventTimer, SIGNAL(night()), this, SLOT(setNight()));
 
     m_eventTimer->startDayTimeTimer();
 }
+#endif
 
 void GraphicsView::setDay()
 {

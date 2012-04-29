@@ -1,7 +1,7 @@
 #include "vehicle-count-manager.h"
 #include "../../Logger/logger.h"
 
-int VehicleCountManager::vehicleCountOnSubcycle( const QHash<uchar, int> &vehicleCountLanes, SubCycle subcycle, int junctionId )
+int VehicleCountManager::vehicleCountOnSubcycle( const QHash<int, int> &vehicleCountLanes, SubCycle subcycle, int junctionId )
 {
     int count = 0;
 
@@ -15,7 +15,7 @@ int VehicleCountManager::vehicleCountOnSubcycle( const QHash<uchar, int> &vehicl
     return count;
 }
 
-int VehicleCountManager::vehicleCountOnSubcycleForSimpleJunction( const QHash<uchar, int> &vehicleCountLanes, SubCycle subcycle, int junctionId )
+int VehicleCountManager::vehicleCountOnSubcycleForSimpleJunction( const QHash<int, int> &vehicleCountLanes, SubCycle subcycle, int junctionId )
 {
     int count = 0;
     switch( subcycle )
@@ -36,7 +36,7 @@ int VehicleCountManager::vehicleCountOnSubcycleForSimpleJunction( const QHash<uc
     return count;
 }
 
-int VehicleCountManager::vehicleCountOnSubcycleForBladzioJunction( const QHash<uchar, int> &vehicleCountLanes, SubCycle subcycle, int junctionId )
+int VehicleCountManager::vehicleCountOnSubcycleForBladzioJunction( const QHash<int, int> &vehicleCountLanes, SubCycle subcycle, int junctionId )
 {
     int count = 0;
     switch( subcycle )
@@ -62,7 +62,7 @@ int VehicleCountManager::vehicleCountOnSubcycleForBladzioJunction( const QHash<u
     return count;
 }
 
-int VehicleCountManager::wholeVehicleWaitingTimeForSubcycle( const QMultiHash<uchar,Vehicle*>& waitingTime, SubCycle subcycle, int junctionId )
+int VehicleCountManager::wholeVehicleWaitingTimeForSubcycle( const QMultiHash<int,Vehicle*>& waitingTime, SubCycle subcycle, int junctionId )
 {
     int count = 0;
     if( junctionId != 2 )
@@ -75,7 +75,7 @@ int VehicleCountManager::wholeVehicleWaitingTimeForSubcycle( const QMultiHash<uc
     return count;
 }
 
-int VehicleCountManager::wholeVehicleWaitingTimeForSimpleJunction( const QMultiHash<uchar,Vehicle*>& waitingTime, SubCycle subcycle, int junctionId )
+int VehicleCountManager::wholeVehicleWaitingTimeForSimpleJunction( const QMultiHash<int,Vehicle*>& waitingTime, SubCycle subcycle, int junctionId )
 {
     int count = 0;
     switch( subcycle )
@@ -97,7 +97,7 @@ int VehicleCountManager::wholeVehicleWaitingTimeForSimpleJunction( const QMultiH
     return count;
 }
 
-int VehicleCountManager::wholeVehicleWaitingTimeForBladzioJunction( const QMultiHash<uchar,Vehicle*>& waitingTime, SubCycle subcycle, int junctionId )
+int VehicleCountManager::wholeVehicleWaitingTimeForBladzioJunction( const QMultiHash<int,Vehicle*>& waitingTime, SubCycle subcycle, int junctionId )
 {
     int count = 0;
     switch( subcycle )
@@ -129,7 +129,7 @@ int VehicleCountManager::wholeVehicleWaitingTimeForBladzioJunction( const QMulti
     return count;
 }
 
-int VehicleCountManager::vehicleCountOnLane( const QHash<uchar, int> &vehicleCountLanes, Lane lane, int junctionId )
+int VehicleCountManager::vehicleCountOnLane( const QHash<int, int> &vehicleCountLanes, Lane lane, int junctionId )
 {
     int count = 0;
 
@@ -224,7 +224,7 @@ int VehicleCountManager::vehicleCountOnLane( const QHash<uchar, int> &vehicleCou
  * - SOUTH_LEFT - checkpoints: 106
  * - SOUTH_RIGHT - checkpoints: 121
  */
-int VehicleCountManager::vehicleCountOnLane0( const QHash<uchar, int> &vehicleCountLanes, Lane lane )
+int VehicleCountManager::vehicleCountOnLane0( const QHash<int, int> &vehicleCountLanes, Lane lane )
 {
     int count = 0;
 
@@ -250,7 +250,7 @@ int VehicleCountManager::vehicleCountOnLane0( const QHash<uchar, int> &vehicleCo
     return count;
 }
 
-int VehicleCountManager::vehicleCountOnLane1( const QHash<uchar, int> &vehicleCountLanes, Lane lane )
+int VehicleCountManager::vehicleCountOnLane1( const QHash<int, int> &vehicleCountLanes, Lane lane )
 {
     int count = 0;
 
@@ -276,7 +276,7 @@ int VehicleCountManager::vehicleCountOnLane1( const QHash<uchar, int> &vehicleCo
     return count;
 }
 
-int VehicleCountManager::vehicleCountOnLane2( const QHash<uchar, int> &vehicleCountLanes, Lane lane )
+int VehicleCountManager::vehicleCountOnLane2( const QHash<int, int> &vehicleCountLanes, Lane lane )
 {
     int count = 0;
     switch( lane )
@@ -325,7 +325,7 @@ int VehicleCountManager::vehicleCountOnLane2( const QHash<uchar, int> &vehicleCo
     return count;
 }
 
-int VehicleCountManager::vehicleCountOnLane3( const QHash<uchar, int> &vehicleCountLanes, Lane lane )
+int VehicleCountManager::vehicleCountOnLane3( const QHash<int, int> &vehicleCountLanes, Lane lane )
 {
     int count = 0;
 
@@ -351,7 +351,7 @@ int VehicleCountManager::vehicleCountOnLane3( const QHash<uchar, int> &vehicleCo
     return count;
 }
 
-int VehicleCountManager::vehicleCountOnLane4( const QHash<uchar, int> &vehicleCountLanes, Lane lane )
+int VehicleCountManager::vehicleCountOnLane4( const QHash<int, int> &vehicleCountLanes, Lane lane )
 {
     int count = 0;
 
@@ -377,7 +377,7 @@ int VehicleCountManager::vehicleCountOnLane4( const QHash<uchar, int> &vehicleCo
     return count;
 }
 
-int VehicleCountManager::vehicleCountOnLane5( const QHash<uchar, int> &vehicleCountLanes, Lane lane )
+int VehicleCountManager::vehicleCountOnLane5( const QHash<int, int> &vehicleCountLanes, Lane lane )
 {
     int count = 0;
 
@@ -403,7 +403,7 @@ int VehicleCountManager::vehicleCountOnLane5( const QHash<uchar, int> &vehicleCo
     return count;
 }
 
-int VehicleCountManager::vehicleCountOnLane6( const QHash<uchar, int> &vehicleCountLanes, Lane lane )
+int VehicleCountManager::vehicleCountOnLane6( const QHash<int, int> &vehicleCountLanes, Lane lane )
 {
     int count = 0;
 
@@ -428,7 +428,7 @@ int VehicleCountManager::vehicleCountOnLane6( const QHash<uchar, int> &vehicleCo
     return count;
 }
 
-int VehicleCountManager::wholeVehicleWaitingTimeOnLane( const QMultiHash<uchar, Vehicle *> &waitingTime, Lane lane, int junctionId )
+int VehicleCountManager::wholeVehicleWaitingTimeOnLane( const QMultiHash<int, Vehicle *> &waitingTime, Lane lane, int junctionId )
 {
     int time = 0;
 
@@ -477,7 +477,7 @@ int VehicleCountManager::sumWaitingTime( const QList<Vehicle *> & vehicleList )
     return sumTime;
 }
 
-int VehicleCountManager::vehicleWaitingTime0( const QMultiHash<uchar, Vehicle *> &waitingTime, Lane lane )
+int VehicleCountManager::vehicleWaitingTime0( const QMultiHash<int, Vehicle *> &waitingTime, Lane lane )
 {
     int time = 0;
 
@@ -503,7 +503,7 @@ int VehicleCountManager::vehicleWaitingTime0( const QMultiHash<uchar, Vehicle *>
     return time;
 }
 
-int VehicleCountManager::vehicleWaitingTime1( const QMultiHash<uchar, Vehicle *> &waitingTime, Lane lane )
+int VehicleCountManager::vehicleWaitingTime1( const QMultiHash<int, Vehicle *> &waitingTime, Lane lane )
 {
     int time = 0;
 
@@ -529,7 +529,7 @@ int VehicleCountManager::vehicleWaitingTime1( const QMultiHash<uchar, Vehicle *>
     return time;
 }
 
-int VehicleCountManager::vehicleWaitingTime2( const QMultiHash<uchar, Vehicle *> &waitingTime, Lane lane )
+int VehicleCountManager::vehicleWaitingTime2( const QMultiHash<int, Vehicle *> &waitingTime, Lane lane )
 {
     int time = 0;
 
@@ -579,7 +579,7 @@ int VehicleCountManager::vehicleWaitingTime2( const QMultiHash<uchar, Vehicle *>
     return time;
 }
 
-int VehicleCountManager::vehicleWaitingTime3( const QMultiHash<uchar, Vehicle *> &waitingTime, Lane lane )
+int VehicleCountManager::vehicleWaitingTime3( const QMultiHash<int, Vehicle *> &waitingTime, Lane lane )
 {
     int time = 0;
 
@@ -605,7 +605,7 @@ int VehicleCountManager::vehicleWaitingTime3( const QMultiHash<uchar, Vehicle *>
     return time;
 }
 
-int VehicleCountManager::vehicleWaitingTime4( const QMultiHash<uchar, Vehicle *> &waitingTime, Lane lane )
+int VehicleCountManager::vehicleWaitingTime4( const QMultiHash<int, Vehicle *> &waitingTime, Lane lane )
 {
     int time = 0;
 
@@ -631,7 +631,7 @@ int VehicleCountManager::vehicleWaitingTime4( const QMultiHash<uchar, Vehicle *>
     return time;
 }
 
-int VehicleCountManager::vehicleWaitingTime5( const QMultiHash<uchar, Vehicle *> &waitingTime, Lane lane )
+int VehicleCountManager::vehicleWaitingTime5( const QMultiHash<int, Vehicle *> &waitingTime, Lane lane )
 {
     int time = 0;
 
@@ -656,7 +656,7 @@ int VehicleCountManager::vehicleWaitingTime5( const QMultiHash<uchar, Vehicle *>
     return time;
 }
 
-int VehicleCountManager::vehicleWaitingTime6( const QMultiHash<uchar, Vehicle *> &waitingTime, Lane lane )
+int VehicleCountManager::vehicleWaitingTime6( const QMultiHash<int, Vehicle *> &waitingTime, Lane lane )
 {
     int time = 0;
 

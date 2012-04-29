@@ -26,7 +26,7 @@ private:
     void runForSubcycles();
 
 public slots:
-    void routeToAppropriateJunction( uint flags, uchar checkpointId, Vehicle* vehicle );
+    void routeToAppropriateJunction( uint flags, int checkpointId, Vehicle* vehicle );
 };
 
 #endif // JUNCTIONMANAGER_H

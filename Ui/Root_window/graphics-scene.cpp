@@ -137,6 +137,8 @@ void GraphicsScene::setDark( bool dark )
         vehicle = iterator.next();
 
         vehicle->setDarkDesign( dark );
+#ifdef LIGHTS
         vehicle->setLongLights( dark );
+#endif
     }
 }

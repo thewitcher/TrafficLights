@@ -27,3 +27,15 @@ void Settings::loadAllSettings()
 {
     // It loads every settings needed on start up application. It will be implemented later.
 }
+
+QVariant Settings::takeValue( const QString &key )
+{
+    if( m_settingsHash.contains( key ) )
+    {
+        return m_settingsHash.value( key );
+    }
+
+    QVariant setting = value( key );
+    m_settingsHash.insert( key, setting );
+    return setting;
+}

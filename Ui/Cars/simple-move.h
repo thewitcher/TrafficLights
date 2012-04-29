@@ -34,10 +34,12 @@ protected:
     /// This object allows to call function after some period of time. We can't use QTimer::singleshot() here, becouse we can;t inherit from QObject.
     DelayCaller* m_delayCaller;
 
+#ifdef COLLISIONS
     /*!
      * Detects collision. Pause and resume vehicle move when necessary.
      */
     void collisionDetection();
+#endif
 
     friend class DelayCaller;
 };

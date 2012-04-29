@@ -25,7 +25,9 @@ private:
     GraphicsScene *m_scene;
     CheckpointManager *m_checkpointManager;
     JunctionManager *m_junctionManager;
+#ifdef EVENTS
     EventTimer* m_eventTimer;
+#endif
 
     static int S_NEW_CAR_FREQUENCY;
     static int S_CAR_COUNT;
@@ -45,7 +47,9 @@ private slots:
     void changeBackgroundPixmap( bool dark = false );
     void setDay();
     void setNight();
+#ifdef EVENTS
     void initEventTimer();
+#endif
 };
 
 #endif // GRAPHICSVIEW_H

@@ -29,7 +29,7 @@ unsigned char Checkpoint::randomNumber( unsigned char max ) const
     return random;
 }
 
-uchar Checkpoint::id() const
+int Checkpoint::id() const
 {
     return m_id;
 }

@@ -63,10 +63,10 @@ void JunctionManager::createJunctions( QMap<int, QVector<TrafficLight *> > &junc
     m_junctionsVector.append( junction );
 }
 
-void JunctionManager::routeToAppropriateJunction( uint flags, uchar checkpointId, Vehicle* vehicle )
+void JunctionManager::routeToAppropriateJunction( uint flags, int checkpointId, Vehicle* vehicle )
 {
     uint pow2 = 2;
-    uchar junction = 0;
+    int junction = 0;
 
     while( ( flags & pow2 ) == false )
     {

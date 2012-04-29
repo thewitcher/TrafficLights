@@ -56,6 +56,7 @@ public:
     /*!
      * Returns current animation associated with vehicle.
      */
+    int currentCheckpointId() const;
     QAbstractAnimation* currentAnimation();
     /*!
      * Returns collisionPoint. It works like a bumper.
@@ -109,6 +110,8 @@ public:
     int vehicleId() const { return m_vehicleId; }
     void updateWaitingTime();
     int waitingTimeInSeconds();
+    bool vehicleCanMove() const;
+    void setVehicleCanMove( bool canMove );
 
 private:
     /// It is a description of current path to new checkpoint.
@@ -129,7 +132,8 @@ private:
     int m_vehicleId;
     /// Time on junction
     QTime m_startWaitingTime;
-
+    /// If this variable is set to false, vehicle can't move
+    bool m_vehicleCanMove;
     /// After this time vehicle will ask for permission to move again.
     static const int WAIT_ON_PERMISSION;
 

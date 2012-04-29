@@ -11,26 +11,20 @@ TEMPLATE = app
 
 SOURCES += main.cpp
 
-win32 {
-    SOURCE_FILE=$${IN_PWD}/Data/init_windows.bat
-    SOURCE_PATH=$${IN_PWD}/Data
-    TARGET_PATH=$${OUT_PWD}/../Build/Data
-
-    system($${replace(SOURCE_FILE,/,\\)} $${replace(SOURCE_PATH,/,\\)} $${replace(TARGET_PATH,/,\\)})
-}
-
-unix {
-    SOURCE_FILE=$${IN_PWD}/Data/init_linux.sh
-    SOURCE_PATH=$${IN_PWD}/Data
-    TARGET_PATH=$${OUT_PWD}/../Build/Data
-
-    system($${SOURCE_FILE} $${SOURCE_PATH} $${TARGET_PATH})
-}
-
 RESOURCES += \
     ../Ui/graphics.qrc
 
+
+# You can define:
+# LOGGER - to have trace
+# COLLISIONS - to turn on collisions detection
+# LIGHTS - to turn on light in vehicle
+# EVENTS - to turn on timer which manages global events like day and night for example
 DEFINES += LOGGER
+#           COLLISIONS \
+#           LIGHTS \
+#           EVENTS
+
 
 include(../Logger/Logger.pri)
 include(../Logic/Logic.pri)
