@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'vehicle.h'
 **
-** Created: Sun Apr 29 15:26:01 2012
+** Created: Sun Apr 29 16:19:36 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!

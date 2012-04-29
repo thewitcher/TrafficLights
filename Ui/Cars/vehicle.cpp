@@ -312,3 +312,13 @@ int Vehicle::currentCheckpointId() const
 {
     return m_currentCheckpoint->id();
 }
+
+Junction* Vehicle::currentJunction() const
+{
+    return m_currentJunction;
+}
+
+void Vehicle::setCurrentJunction( Junction *junction )
+{
+    m_currentJunction = junction;
+}

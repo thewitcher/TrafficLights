@@ -9,6 +9,7 @@ class Checkpoint;
 class Path;
 class QAbstractAnimation;
 class GraphicsScene;
+class Junction;
 
 /*!
  * @file vehicle.h
@@ -112,6 +113,8 @@ public:
     int waitingTimeInSeconds();
     bool vehicleCanMove() const;
     void setVehicleCanMove( bool canMove );
+    Junction* currentJunction() const;
+    void setCurrentJunction( Junction* junction );
 
 private:
     /// It is a description of current path to new checkpoint.
@@ -136,6 +139,7 @@ private:
     bool m_vehicleCanMove;
     /// After this time vehicle will ask for permission to move again.
     static const int WAIT_ON_PERMISSION;
+    Junction* m_currentJunction;
 
 public slots:
     /*!
