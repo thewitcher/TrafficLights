@@ -3,13 +3,23 @@ SOURCES += \
     Algorithm/Custom/base-algorithm.cpp \
     Algorithm/Custom/genetic-algorithm-functions.cpp \
     Algorithm/Custom/algorithm-manager.cpp \
-    Algorithm/Custom/one-subcycle-algorithm.cpp
+    Algorithm/Custom/one-subcycle-algorithm.cpp \
+    Algorithm/Custom/all-subcycle-algorithm.cpp
 
 HEADERS += \  
     Algorithm/Custom/normal-algorithm.h \
     Algorithm/Custom/base-algorithm.h \
     Algorithm/Custom/genetic-algorithm-functions.h \
     Algorithm/Custom/algorithm-manager.h \
-    Algorithm/Custom/one-subcycle-algorithm.h
+    Algorithm/Custom/one-subcycle-algorithm.h \
+    Algorithm/Custom/all-subcycle-algorithm.h
+
+
+
+
+
+
+
+
 
 
