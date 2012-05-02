@@ -30,6 +30,9 @@ public:
     int currentNumberOfVehicles() const;
     JUNCTION_TYPE junctionType() const;
     bool isVehicleFirst( Vehicle* vehicle );
+    int id() const;
+    const QHash<int,int> vehicleCountOnLanes() const;
+    const QMultiHash<int,Vehicle*> waitingTime() const;
 
     virtual void runForSubcycles() = 0;
 
