@@ -15,7 +15,7 @@ QVector<int> AllSubcycleAlgorithm::start( Junction *junction )
     case Junction::BLADZIO:
         break;
     case Junction::SIMPLE:
-        timeVector = evalForSimple();
+//        timeVector = evalForSimple();
         break;
     default:
         break;
@@ -24,7 +24,7 @@ QVector<int> AllSubcycleAlgorithm::start( Junction *junction )
     return timeVector;
 }
 
-QVector<int> AllSubcycleAlgorithm::evalForSimple( QVector<int> vector, Junction *junction )
+int AllSubcycleAlgorithm::evalForSimple( QVector<int> vector, Junction *junction )
 {
     int currentScore = 0;
     int numberOfVehiclesAtJunction = junction->currentNumberOfVehicles();
@@ -36,54 +36,60 @@ QVector<int> AllSubcycleAlgorithm::evalForSimple( QVector<int> vector, Junction 
     }
 
     currentScore = ( numberOfVehiclesAtJunction / totalTimes ) * 1000;
+
+    return currentScore;
 }
 
 int AllSubcycleAlgorithm::theSumOfTheRemainingVehiclesAtJunction( const QVector<int> &vector, const int &numberOfVehiclesAtJunction, Junction *junction  )
 {
-   int numberOfVehiclesThatWillDrive = 0;
+    Q_UNUSED( vector );
+    Q_UNUSED( numberOfVehiclesAtJunction );
+//   int numberOfVehiclesThatWillDrive = 0;
 
    //SouthLeft
-   int numberVehiclesOnLane = VehicleCountManager::vehicleCountOnLane( junction->m_vehicleCountOnLanes, VehicleCountManager::SOUTH_LEFT, junction->m_junctionId );
-   if( numberVehiclesOnLane <= vector.at( 0 ) )
-   {
-       numberOfVehiclesThatWillDrive = numberVehiclesOnLane;
-   }
-   else{
-       numberOfVehiclesThatWillDrive = vector.at( 0 );
-   }
+//   int numberVehiclesOnLane = VehicleCountManager::vehicleCountOnLane( junction->m_vehicleCountOnLanes, VehicleCountManager::SOUTH_LEFT, junction->m_junctionId );
+//   if( numberVehiclesOnLane <= vector.at( 0 ) )
+//   {
+//       numberOfVehiclesThatWillDrive = numberVehiclesOnLane;
+//   }
+//   else{
+//       numberOfVehiclesThatWillDrive = vector.at( 0 );
+//   }
 
-   //SouthRight
-   numberVehiclesOnLane = VehicleCountManager::vehicleCountOnLane( junction->m_vehicleCountOnLanes, VehicleCountManager::SOUTH_RIGHT, junction->m_junctionId );
-   if( numberVehiclesOnLane <= vector.at( 0 ) )
-   {
-       numberOfVehiclesThatWillDrive = numberVehiclesOnLane;
-   }
-   else{
-       numberOfVehiclesThatWillDrive = vector.at( 0 );
-   }
+//   //SouthRight
+//   numberVehiclesOnLane = VehicleCountManager::vehicleCountOnLane( junction->m_vehicleCountOnLanes, VehicleCountManager::SOUTH_RIGHT, junction->m_junctionId );
+//   if( numberVehiclesOnLane <= vector.at( 0 ) )
+//   {
+//       numberOfVehiclesThatWillDrive = numberVehiclesOnLane;
+//   }
+//   else{
+//       numberOfVehiclesThatWillDrive = vector.at( 0 );
+//   }
 
-   //EastMiddle
-   numberVehiclesOnLane = VehicleCountManager::vehicleCountOnLane( junction->m_vehicleCountOnLanes, VehicleCountManager::EAST_MIDDLE, junction->m_junctionId );
-   if( numberVehiclesOnLane <= vector.at( 1 ) )
-   {
-       numberOfVehiclesThatWillDrive = numberVehiclesOnLane;
-   }
-   else{
-       numberOfVehiclesThatWillDrive = vector.at( 1 );
-   }
+//   //EastMiddle
+//   numberVehiclesOnLane = VehicleCountManager::vehicleCountOnLane( junction->m_vehicleCountOnLanes, VehicleCountManager::EAST_MIDDLE, junction->m_junctionId );
+//   if( numberVehiclesOnLane <= vector.at( 1 ) )
+//   {
+//       numberOfVehiclesThatWillDrive = numberVehiclesOnLane;
+//   }
+//   else{
+//       numberOfVehiclesThatWillDrive = vector.at( 1 );
+//   }
 
-   //WestMiddle
-   numberVehiclesOnLane = VehicleCountManager::vehicleCountOnLane( junction->m_vehicleCountOnLanes, VehicleCountManager::WEST_MIDDLE, junction->m_junctionId );
-   if( numberVehiclesOnLane <= vector.at( 2 ) )
-   {
-       numberOfVehiclesThatWillDrive = numberVehiclesOnLane;
-   }
-   else{
-       numberOfVehiclesThatWillDrive = vector.at( 2 );
-   }
+//   //WestMiddle
+//   numberVehiclesOnLane = VehicleCountManager::vehicleCountOnLane( junction->m_vehicleCountOnLanes, VehicleCountManager::WEST_MIDDLE, junction->m_junctionId );
+//   if( numberVehiclesOnLane <= vector.at( 2 ) )
+//   {
+//       numberOfVehiclesThatWillDrive = numberVehiclesOnLane;
+//   }
+//   else{
+//       numberOfVehiclesThatWillDrive = vector.at( 2 );
+//   }
+    return 3; // zmienic
 }
 
 int AllSubcycleAlgorithm::theSumOfTheRemainingVehiclesAtLane( VehicleCountManager::Lane, int subcycleId )
 {
-
+    Q_UNUSED( subcycleId );
+    return 3; // zmienic
 }

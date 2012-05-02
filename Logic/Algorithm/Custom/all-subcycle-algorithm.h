@@ -11,7 +11,7 @@ public:
 
     QVector<int> start( Junction* junction );
 
-    QVector<int> evalForSimple( QVector<int> vector, Junction *junction );
+    int evalForSimple( QVector<int> vector, Junction *junction );
     int theSumOfTheRemainingVehiclesAtJunction( const QVector<int> &vector, const int &numberOfVehiclesAtJunction, Junction *junction );
     int theSumOfTheRemainingVehiclesAtLane( VehicleCountManager::Lane, int subcycleId );
 };
