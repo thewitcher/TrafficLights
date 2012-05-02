@@ -1,6 +1,7 @@
 #include "simple-move.h"
 #include "../Logger/logger.h"
 #include "vehicle.h"
+#include "../Settings/settings.h"
 #include "../Root_window/graphics-scene.h"
 #include <QAbstractAnimation>
 #include <QTimer>
@@ -21,6 +22,7 @@ SimpleMove::~SimpleMove()
     }
 }
 
+#ifdef COLLISIONS
 void SimpleMove::collisionDetection()
 {
     // We switch off collision detection when vehicle arrives to big junction and tries to turn left.
@@ -57,6 +59,7 @@ void SimpleMove::collisionDetection()
 
     m_currentVehicle->resumeMove();
 }
+#endif
 
 // DELAYCALLER
 DelayCaller::DelayCaller( SimpleMove *mainObject, QObject *parent ):
@@ -73,6 +76,7 @@ void DelayCaller::callAfterDelay( int delay )
 void DelayCaller::invoke()
 {
     LOG_INFO( "Start %s", __FUNCTION__ );
-
+#ifdef COLLISIONS
     m_mainObject->collisionDetection();
+#endif
 }

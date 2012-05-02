@@ -15,10 +15,10 @@ EventTimer::~EventTimer()
 
 void EventTimer::startDayTimeTimer()
 {
-    m_timer->singleShot( DAY, this, SLOT(setNigth()) );
+    m_timer->singleShot( DAY, this, SLOT(setNight()) );
 }
 
-void EventTimer::setNigth()
+void EventTimer::setNight()
 {
     emit night();
 
@@ -34,7 +34,7 @@ void EventTimer::setDay()
 
     m_currentDayTime = DAY;
 
-    m_timer->singleShot( DAY, this, SLOT(setNigth()) );
+    m_timer->singleShot( DAY, this, SLOT(setNight()) );
 }
 
 bool EventTimer::isDark() const

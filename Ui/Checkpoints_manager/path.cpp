@@ -190,8 +190,10 @@ QAbstractAnimation* Path::moveAndTurningByXYToTargetCheckpointAnimation( Vehicle
 {
     LOG_INFO( "Turn and move animation by x and y coordinate (%s) (is sequential: %i)", __FUNCTION__, m_sequential );
 
+#ifdef LIGHTS
     LOG_INFO( "Switching on blinkers in: %s", target->objectName().toLatin1().data() );
     target->setBlinkers( Vehicle::Blinkers( m_turnType ) );
+#endif
 
     QAnimationGroup *animationGroup = NULL;
 
@@ -239,8 +241,10 @@ QAbstractAnimation* Path::moveAndTurningToTargetCheckpointAnimation( Vehicle *ta
 {
     LOG_INFO( "Turn and move animation by one coordinate (%s)", __FUNCTION__ );
 
+#ifdef LIGHTS
     LOG_INFO( "Switching on blinkers in: %s", target->objectName().toLatin1().data() );
     target->setBlinkers( Vehicle::Blinkers( m_turnType ) );
+#endif
 
     QAnimationGroup *animationGroup = NULL;
 

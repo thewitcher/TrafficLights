@@ -15,12 +15,14 @@ class Settings: public QSettings
 public:
     static Settings& settingsInstance();
     void loadAllSettings();
+    QVariant takeValue( const QString& key );
 
 private:
     explicit Settings();
     ~Settings() {}
 
     static QString m_settingsPath;
+    QHash<QString,QVariant> m_settingsHash;
 };
 
 #endif // SETTINGS_H

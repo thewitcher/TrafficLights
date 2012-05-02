@@ -2,10 +2,11 @@
 #include "../Checkpoints_manager/checkpoint.h"
 #include "../Checkpoints_manager/path.h"
 #include "../../Logger/logger.h"
+#include "../TrafficLights_manager/junction.h"
 #include <QAbstractAnimation>
 #include <QTimer>
 
-const int Vehicle::WAIT_ON_PERMISSION = 1000;
+const int Vehicle::WAIT_ON_PERMISSION = 500;
 int Vehicle::S_VEHICLE_ID = 0;
 
 Vehicle::Vehicle( QDeclarativeItem *parent ):
@@ -16,7 +17,9 @@ Vehicle::Vehicle( QDeclarativeItem *parent ):
     m_currentAnimation( NULL ),
     m_first( true ),
     m_checkCollisions( true ),
-    m_vehicleId( S_VEHICLE_ID++ )
+    m_vehicleId( S_VEHICLE_ID++ ),
+    m_vehicleCanMove( true ),
+    m_currentJunction( NULL )
 {
     /// Sets transformation point to center
     setTransformOriginPoint( 9, 9 );
@@ -71,8 +74,18 @@ void Vehicle::init( Checkpoint *initCheckpoint )
 
     if( m_currentPath != NULL )
     {
+#ifdef COLLISIONS
         if( initCheckpoint->movePermission() == false )
         {
+#else
+        if( ( initCheckpoint->movePermission() == false ) || ( m_vehicleCanMove == false ) )
+        {
+            if( m_currentJunction->isVehicleFirst( this ) == true )
+            {
+                m_vehicleCanMove = true;
+            }
+#endif
+
             QTimer::singleShot( WAIT_ON_PERMISSION, this, SLOT(init()) );
 
             LOG_INFO( "Permission denied. Wait time: %i", WAIT_ON_PERMISSION );
@@ -108,7 +121,9 @@ void Vehicle::resumeMove()
     {
         if( m_currentAnimation->state() == QAbstractAnimation::Paused )
         {
+#ifdef LIGHTS
             setBackLights( false );
+#endif
             m_currentAnimation->resume();
         }
     }
@@ -127,8 +142,9 @@ void Vehicle::pauseMove()
         if( m_currentAnimation->state() == QAbstractAnimation::Running )
         {
             LOG_INFO( "Animation has state: %i", m_currentAnimation->state() );
-
+#ifdef LIGHTS
             setBackLights( true );
+#endif
             m_currentAnimation->pause();
         }
 
@@ -280,4 +296,29 @@ int Vehicle::waitingTimeInSeconds()
 void Vehicle::updateWaitingTime()
 {
     m_startWaitingTime = QTime::currentTime();
+}
+
+void Vehicle::setVehicleCanMove( bool canMove )
+{
+    m_vehicleCanMove = canMove;
+}
+
+bool Vehicle::vehicleCanMove() const
+{
+    return m_vehicleCanMove;
+}
+
+int Vehicle::currentCheckpointId() const
+{
+    return m_currentCheckpoint->id();
+}
+
+Junction* Vehicle::currentJunction() const
+{
+    return m_currentJunction;
+}
+
+void Vehicle::setCurrentJunction( Junction *junction )
+{
+    m_currentJunction = junction;
 }

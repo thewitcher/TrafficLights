@@ -24,15 +24,18 @@ public:
     Junction( const QVector<TrafficLight*>& junction, QLCDNumber* m_vehicleCounter, int junctionId, JUNCTION_TYPE junctionType );
     virtual ~Junction();
 
-    /// It is calles when vehicles arrived or leave junction.
-    void manageVehicle( uint flags, uchar checkpointId, Vehicle* vehicle );
+    /// It is called when vehicles arrived or leave junction.
+    void manageVehicle( uint flags, int checkpointId, Vehicle* vehicle );
     /// Current number of vehicles on whole junction.
     int currentNumberOfVehicles() const;
     JUNCTION_TYPE junctionType() const;
+    bool isVehicleFirst( Vehicle* vehicle );
 
     virtual void runForSubcycles() = 0;
 
 protected:
+    Vehicle* firstArrived( int checkpointId );
+
     /// Contains all traffic lights uses by this junction.
     const QVector<TrafficLight*> m_trafficLightVector;
 
@@ -50,8 +53,8 @@ protected:
 
     /// Counter to show how many vehicles are currently on junction
     QLCDNumber* m_vehicleCounter;
-    QHash<uchar,int> m_vehicleCountOnLanes;
-    QMultiHash<uchar,Vehicle*> m_waitingTime;
+    QHash<int,int> m_vehicleCountOnLanes;
+    QMultiHash<int,Vehicle*> m_waitingTime;
     int m_junctionId;
     AlgorithmManager *m_algorithmManager;
     JUNCTION_TYPE m_junctionType;
@@ -61,6 +64,10 @@ protected:
     bool changeTimeVector();
     /// It uses genetic algorithm to create appropriate time vector for that junction.
     virtual void setTimeVectorByAlgorithm();
+
+protected slots:
+    void addVehicleToStatistic( int checkpointId, Vehicle* vehicle );
+    void subtractVehicleFromStatistic( int checkpointId, Vehicle* vehicle );
 };
 
 #endif // JUNCTION_H

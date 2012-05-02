@@ -33,42 +33,43 @@ public:
         SOUTH_RIGHT
     };
 
-    /*! Returns the number vehicles on appropriate Junction for a given subcycle. */
-    static int vehicleCountOnSubcycle( const QHash<uchar,int>& vehicleCountLanes, SubCycle subcycle, int junctionId );
-
-    /*! Returns the number vehicles on appropriate Junction for a given lane. */
-    static int vehicleCountOnLane( const QHash<uchar,int>& vehicleCountLanes, Lane lane, int junctionId );
-
+    /*! Returns the number vehicles on appropriate Junction for a given subcycle.*/
+    static int vehicleCountOnSubcycle( const QHash<int,int>& vehicleCountLanes, SubCycle subcycle, int junctionId );
+    
+    /*! Returns the number vehicles on appropriate Junction for a given lane. */    
+    static int vehicleCountOnLane( const QHash<int,int>& vehicleCountLanes, Lane lane, int junctionId );
+    
     /*! Returns the total waiting time vehicles on appropriate Junction for a given subcycle. */
-    static int wholeVehicleWaitingTimeForSubcycle( const QMultiHash<uchar,Vehicle*>& waitingTime, SubCycle subcycle, int junctionId );
+    static int wholeVehicleWaitingTimeForSubcycle( const QMultiHash<int,Vehicle*>& waitingTime, SubCycle subcycle, int junctionId );
+    
+    /*! Returns the total waiting time vehicles on appropriate Junction for a given lane. */    
+    static int wholeVehicleWaitingTimeOnLane( const QMultiHash<int,Vehicle*>& waitingTime, Lane lane, int junctionId );
 
-    /*! Returns the total waiting time vehicles on appropriate Junction for a given lane. */
-    static int wholeVehicleWaitingTimeOnLane( const QMultiHash<uchar,Vehicle*>& waitingTime, Lane lane, int junctionId );
 private:
     /// static int vehicleCountOnLaneI - I is a junction id
-    static int vehicleCountOnLane0( const QHash<uchar,int>& vehicleCountLanes, Lane lane );
-    static int vehicleCountOnLane1( const QHash<uchar,int>& vehicleCountLanes, Lane lane );
-    static int vehicleCountOnLane2( const QHash<uchar,int>& vehicleCountLanes, Lane lane );
-    static int vehicleCountOnLane3( const QHash<uchar,int>& vehicleCountLanes, Lane lane );
-    static int vehicleCountOnLane4( const QHash<uchar,int>& vehicleCountLanes, Lane lane );
-    static int vehicleCountOnLane5( const QHash<uchar,int>& vehicleCountLanes, Lane lane );
-    static int vehicleCountOnLane6( const QHash<uchar,int>& vehicleCountLanes, Lane lane );
+    static int vehicleCountOnLane0( const QHash<int,int>& vehicleCountLanes, Lane lane );
+    static int vehicleCountOnLane1( const QHash<int,int>& vehicleCountLanes, Lane lane );
+    static int vehicleCountOnLane2( const QHash<int,int>& vehicleCountLanes, Lane lane );
+    static int vehicleCountOnLane3( const QHash<int,int>& vehicleCountLanes, Lane lane );
+    static int vehicleCountOnLane4( const QHash<int,int>& vehicleCountLanes, Lane lane );
+    static int vehicleCountOnLane5( const QHash<int,int>& vehicleCountLanes, Lane lane );
+    static int vehicleCountOnLane6( const QHash<int,int>& vehicleCountLanes, Lane lane );
 
-    static int vehicleWaitingTime0( const QMultiHash<uchar,Vehicle*>& waitingTime, Lane lane );
-    static int vehicleWaitingTime1( const QMultiHash<uchar,Vehicle*>& waitingTime, Lane lane );
-    static int vehicleWaitingTime2( const QMultiHash<uchar,Vehicle*>& waitingTime, Lane lane );
-    static int vehicleWaitingTime3( const QMultiHash<uchar,Vehicle*>& waitingTime, Lane lane );
-    static int vehicleWaitingTime4( const QMultiHash<uchar,Vehicle*>& waitingTime, Lane lane );
-    static int vehicleWaitingTime5( const QMultiHash<uchar,Vehicle*>& waitingTime, Lane lane );
-    static int vehicleWaitingTime6( const QMultiHash<uchar,Vehicle*>& waitingTime, Lane lane );
+    static int vehicleWaitingTime0( const QMultiHash<int,Vehicle*>& waitingTime, Lane lane );
+    static int vehicleWaitingTime1( const QMultiHash<int,Vehicle*>& waitingTime, Lane lane );
+    static int vehicleWaitingTime2( const QMultiHash<int,Vehicle*>& waitingTime, Lane lane );
+    static int vehicleWaitingTime3( const QMultiHash<int,Vehicle*>& waitingTime, Lane lane );
+    static int vehicleWaitingTime4( const QMultiHash<int,Vehicle*>& waitingTime, Lane lane );
+    static int vehicleWaitingTime5( const QMultiHash<int,Vehicle*>& waitingTime, Lane lane );
+    static int vehicleWaitingTime6( const QMultiHash<int,Vehicle*>& waitingTime, Lane lane );
 
     static int sumWaitingTime( const QList<Vehicle*>& vehicleList );
 
     /* auxiliary function for vehicleCountOnSubcycle and wholeVehicleWaitingTimeForSubcycle */
-    static int vehicleCountOnSubcycleForSimpleJunction( const QHash<uchar,int>& vehicleCountLanes, SubCycle subcycle, int junctionId );
-    static int vehicleCountOnSubcycleForBladzioJunction( const QHash<uchar, int> &vehicleCountLanes, SubCycle subcycle, int junctionId );
-    static int wholeVehicleWaitingTimeForSimpleJunction( const QMultiHash<uchar,Vehicle*>& waitingTime, SubCycle subcycle, int junctionId );
-    static int wholeVehicleWaitingTimeForBladzioJunction( const QMultiHash<uchar,Vehicle*>& waitingTime, SubCycle subcycle, int junctionId );
+    static int vehicleCountOnSubcycleForSimpleJunction( const QHash<int,int>& vehicleCountLanes, SubCycle subcycle, int junctionId );
+    static int vehicleCountOnSubcycleForBladzioJunction( const QHash<int, int> &vehicleCountLanes, SubCycle subcycle, int junctionId );
+    static int wholeVehicleWaitingTimeForSimpleJunction( const QMultiHash<int,Vehicle*>& waitingTime, SubCycle subcycle, int junctionId );
+    static int wholeVehicleWaitingTimeForBladzioJunction( const QMultiHash<int,Vehicle*>& waitingTime, SubCycle subcycle, int junctionId );
 };
 
 #endif // VEHICLECOUNTMANAGER_H

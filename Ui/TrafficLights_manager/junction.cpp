@@ -7,6 +7,7 @@
 #include "vehicle-count-manager.h"
 #include "../Logic/Algorithm/Custom/algorithm-manager.h"
 #include <QTimerEvent>
+#include <QTimer>
 #include <QLCDNumber>
 
 
@@ -130,24 +131,57 @@ int Junction::currentNumberOfVehicles() const
     return m_currentNumberOfVehicles;
 }
 
-void Junction::manageVehicle( uint flags, uchar checkpointId, Vehicle* vehicle )
+void Junction::addVehicleToStatistic( int checkpointId, Vehicle *vehicle )
+{
+    vehicle->setCurrentJunction( this );
+    m_vehicleCountOnLanes[ Constans::mapCheckpointId2( checkpointId ) ]++;
+
+    vehicle->setVehicleCanMove( false );
+    m_waitingTime.insert( Constans::mapCheckpointId2( checkpointId ), vehicle );
+    vehicle->updateWaitingTime();
+
+    m_currentNumberOfVehicles++;
+}
+
+#ifdef COLLISIONS
+void Junction::subtractVehicleFromStatistic( int checkpointId, Vehicle *vehicle )
+{
+    m_waitingTime.remove( Constans::mapCheckpointId( checkpointId ), vehicle );
+
+    m_vehicleCountOnLanes[ Constans::mapCheckpointId( checkpointId ) ]--;
+
+    m_currentNumberOfVehicles--;
+}
+#else
+
+void Junction::subtractVehicleFromStatistic( int checkpointId, Vehicle *vehicle )
+{
+    LOG_INFO( "Vehicle with id: %i leave junction with time: %i", vehicle->vehicleId(), vehicle->waitingTimeInSeconds() );
+
+    Vehicle* first = firstArrived( Constans::mapCheckpointId( checkpointId ) );
+
+    m_waitingTime.remove( Constans::mapCheckpointId( checkpointId ), first );
+
+    m_vehicleCountOnLanes[ Constans::mapCheckpointId( checkpointId ) ]--;
+
+    m_currentNumberOfVehicles--;
+}
+#endif
+
+Vehicle* Junction::firstArrived( int checkpointId )
+{
+    return m_waitingTime.values( checkpointId ).last();
+}
+
+void Junction::manageVehicle( uint flags, int checkpointId, Vehicle* vehicle )
 {
     if( flags & 256 )
     {
-        m_vehicleCountOnLanes[ checkpointId ]++;
-
-        m_waitingTime.insert( checkpointId, vehicle );
-        vehicle->updateWaitingTime();
-
-        m_currentNumberOfVehicles++;
+        addVehicleToStatistic( checkpointId, vehicle );
     }
     else
     {
-        m_waitingTime.remove( Constans::mapCheckpointId( checkpointId ), vehicle );
-
-        m_vehicleCountOnLanes[ Constans::mapCheckpointId( checkpointId ) ]--;
-
-        m_currentNumberOfVehicles--;
+        subtractVehicleFromStatistic( checkpointId, vehicle );
     }
 
     m_vehicleCounter->display( m_currentNumberOfVehicles );
@@ -156,4 +190,14 @@ void Junction::manageVehicle( uint flags, uchar checkpointId, Vehicle* vehicle )
 Junction::JUNCTION_TYPE Junction::junctionType() const
 {
     return m_junctionType;
+}
+
+bool Junction::isVehicleFirst( Vehicle *vehicle )
+{
+    if( firstArrived( Constans::mapCheckpointId( vehicle->currentCheckpointId() ) )  == vehicle )
+    {
+        return true;
+    }
+
+    return false;
 }

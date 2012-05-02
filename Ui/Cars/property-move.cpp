@@ -9,7 +9,9 @@ PropertyMove::PropertyMove( Vehicle *target, const QByteArray &propertyName, QOb
 
 void PropertyMove::updateCurrentTime( int currentTime )
 {
+#ifdef COLLISIONS
     collisionDetection();
+#endif
 
     QPropertyAnimation::updateCurrentTime( currentTime );
 }

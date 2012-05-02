@@ -29,7 +29,6 @@ signals:
 
 private slots:
     void setDay();
-    void setNigth();
+    void setNight();
 };
-
 #endif // EVENTTIMER_H

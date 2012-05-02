@@ -67,7 +67,7 @@ public:
     /*!
      * Returns checkpoint id.
      */
-    uchar id() const;
+    int id() const;
     /*!
      * Returns all paths associated with this checkpoint.
      */
@@ -79,7 +79,7 @@ private:
     /// y coordinate
     qreal m_y;
     /// Checkpoint id
-    uchar m_id;
+    int m_id;
     /// It allows vehicle to move or not
     bool m_movePermission;
 
@@ -146,7 +146,7 @@ private:
     void addMove( QVector< Checkpoint* > checkpointsVector, const QString& parameters );
 
 signals:
-    void checkpointReached( uint flags, uchar checkpointId, Vehicle* vehicle );
+    void checkpointReached( uint flags, int checkpointId, Vehicle* vehicle );
 
     friend class CheckpointManager;
     friend class CheckpointCreator;

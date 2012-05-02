@@ -11,23 +11,22 @@ TEMPLATE = app
 
 SOURCES += main.cpp
 
-win32:debug {
-    LIBS += -L../Logic/debug/ -lLogic \
-            -L../Ui/debug/ -lUi \
-            -L../Logger/debug/ -lLogger \
-            -L../Settings/debug/ -lSettings
-}
+RESOURCES += \
+    ../Ui/graphics.qrc
 
-win32:release {
-    LIBS += -L../Logic/release/ -lLogic \
-            -L../Ui/release/ -lUi \
-            -L../Logger/release/ -lLogger \
-            -L../Settings/release/ -lSettings
-}
 
-unix {
-    LIBS += -L../Logic/ -lLogic \
-            -L../Ui/ -lUi \
-            -L../Logger/ -lLogger \
-            -L../Settings/ -lSettings
-}
+# You can define:
+# LOGGER - to have trace
+# COLLISIONS - to turn on collisions detection
+# LIGHTS - to turn on light in vehicle
+# EVENTS - to turn on timer which manages global events like day and night for example
+DEFINES += LOGGER
+#           COLLISIONS \
+#           LIGHTS \
+#           EVENTS
+
+
+include(../Logger/Logger.pri)
+include(../Logic/Logic.pri)
+include(../Ui/Ui.pri)
+include(../Settings/Settings.pri)
