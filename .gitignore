@@ -2,5 +2,4 @@
 *.orig
 *.autosave
 *.o
-application
-user_data.txt
+TrafficLights_builded/
