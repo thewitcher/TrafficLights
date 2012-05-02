@@ -232,7 +232,6 @@ int VehicleCountManager::vehicleCountOnLane0( const QHash<uchar, int> &vehicleCo
     {
     case WEST_MIDDLE:
         count = vehicleCountLanes.value( 6 );
-        qDebug() << "count: " << count;
         break;
     case EAST_MIDDLE:
         count = vehicleCountLanes.value( 107 );

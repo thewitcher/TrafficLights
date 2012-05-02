@@ -35,12 +35,15 @@ public:
 
     /*! Returns the number vehicles on appropriate Junction for a given subcycle. */
     static int vehicleCountOnSubcycle( const QHash<uchar,int>& vehicleCountLanes, SubCycle subcycle, int junctionId );
+
+    /*! Returns the number vehicles on appropriate Junction for a given lane. */
     static int vehicleCountOnLane( const QHash<uchar,int>& vehicleCountLanes, Lane lane, int junctionId );
 
     /*! Returns the total waiting time vehicles on appropriate Junction for a given subcycle. */
     static int wholeVehicleWaitingTimeForSubcycle( const QMultiHash<uchar,Vehicle*>& waitingTime, SubCycle subcycle, int junctionId );
-    static int wholeVehicleWaitingTimeOnLane( const QMultiHash<uchar,Vehicle*>& waitingTime, Lane lane, int junctionId );
 
+    /*! Returns the total waiting time vehicles on appropriate Junction for a given lane. */
+    static int wholeVehicleWaitingTimeOnLane( const QMultiHash<uchar,Vehicle*>& waitingTime, Lane lane, int junctionId );
 private:
     /// static int vehicleCountOnLaneI - I is a junction id
     static int vehicleCountOnLane0( const QHash<uchar,int>& vehicleCountLanes, Lane lane );
