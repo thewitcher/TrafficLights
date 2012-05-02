@@ -1,16 +1,14 @@
 #include "base-algorithm.h"
 
-unsigned int BaseAlgorithm::S_GENOME_SIZE = 2;
-float BaseAlgorithm::S_REPLACEMENT_PROBABILITY = 0.5;
-int BaseAlgorithm::S_POPULATION_SIZE = 10;
-int BaseAlgorithm::S_GENERATIONS = 5;
-int BaseAlgorithm::S_SCORE_FREQUENCY = 1;
-int BaseAlgorithm::S_FLUSH_FREQUENCY = 5;
-float BaseAlgorithm::S_MUTATION = 0.02;
-float BaseAlgorithm::S_CROSSOVER = 0.2;
-char* BaseAlgorithm::S_LOG_FILE = ( char* )"log_file.txt";
-
-
-BaseAlgorithm::BaseAlgorithm()
+BaseAlgorithm::BaseAlgorithm():
+    m_genomeSize( 2 ),
+    m_replacementProbability( 0.5 ),
+    m_populationSize( 10 ),
+    m_generations( 5 ),
+    m_scoreFrequency( 1 ),
+    m_flushFrequency( 5 ),
+    m_mutation( 0.02 ),
+    m_crossover( 0.2 ),
+    m_logFile( ( char* )"log_file.txt" )
 {
 }

@@ -13,15 +13,15 @@ public:
     virtual QVector<int> start( Junction* junction ) = 0;
 
 private:
-    static unsigned int S_GENOME_SIZE;
-    static float S_REPLACEMENT_PROBABILITY;
-    static int S_POPULATION_SIZE;
-    static int S_GENERATIONS;
-    static int S_SCORE_FREQUENCY;
-    static int S_FLUSH_FREQUENCY;
-    static float S_MUTATION;
-    static float S_CROSSOVER;
-    static char* S_LOG_FILE;
+    const unsigned int m_genomeSize;
+    const float m_replacementProbability;
+    const int m_populationSize;
+    const int m_generations;
+    const int m_scoreFrequency;
+    const int m_flushFrequency;
+    const float m_mutation;
+    const float m_crossover;
+    const char* m_logFile;
 };
 
 #endif // BASEALGORITHM_H

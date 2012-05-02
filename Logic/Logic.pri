@@ -2,14 +2,12 @@
 SOURCES += \
     ../Logic/Algorithm/Custom/normal-algorithm.cpp \
     ../Logic/Algorithm/Custom/base-algorithm.cpp \
-    ../Logic/Algorithm/Custom/genetic-algorithm-functions.cpp \
     ../Logic/Algorithm/Custom/algorithm-manager.cpp \
     ../Logic/Algorithm/Custom/one-subcycle-algorithm.cpp
 
 HEADERS += \
     ../Logic/Algorithm/Custom/normal-algorithm.h \
     ../Logic/Algorithm/Custom/base-algorithm.h \
-    ../Logic/Algorithm/Custom/genetic-algorithm-functions.h \
     ../Logic/Algorithm/Custom/algorithm-manager.h \
     ../Logic/Algorithm/Custom/one-subcycle-algorithm.h
 
@@ -91,3 +89,5 @@ HEADERS += \
            ../Logic/Algorithm/GA/GA3DArrayGenome.h \
            ../Logic/Algorithm/GA/GAEvalData.h \
            ../Logic/Algorithm/GA/GA1DBinStrGenome.h \
+
+
