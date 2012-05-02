@@ -13,9 +13,7 @@ public:
         SUBCYCLE_0,
         SUBCYCLE_1,
         SUBCYCLE_2,
-        SUBCYCLE_3,
-        SUBCYCLE_4,
-        SUBCYCLE_5
+        SUBCYCLE_3
     };
     enum Lane
     {
