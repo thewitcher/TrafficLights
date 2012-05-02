@@ -1,163 +1,164 @@
 #include "vehicle-count-manager.h"
 #include "../../Logger/logger.h"
+#include "../Ui/TrafficLights_manager/junction.h"
 
-int VehicleCountManager::vehicleCountOnSubcycle( const QHash<int, int> &vehicleCountLanes, SubCycle subcycle, int junctionId )
+int VehicleCountManager::vehicleCountOnSubcycle( const Junction* junction, SubCycle subcycle )
 {
     int count = 0;
 
-    if( junctionId != 2 )
+    if( junction->id() != 2 )
     {
-        count = vehicleCountOnSubcycleForSimpleJunction( vehicleCountLanes, subcycle, junctionId );
+        count = vehicleCountOnSubcycleForSimpleJunction( junction, subcycle );
     }
     else{
-        count = vehicleCountOnSubcycleForBladzioJunction( vehicleCountLanes, subcycle, junctionId );
+        count = vehicleCountOnSubcycleForBladzioJunction( junction, subcycle );
     }
     return count;
 }
 
-int VehicleCountManager::vehicleCountOnSubcycleForSimpleJunction( const QHash<int, int> &vehicleCountLanes, SubCycle subcycle, int junctionId )
+int VehicleCountManager::vehicleCountOnSubcycleForSimpleJunction( const Junction* junction, SubCycle subcycle )
 {
     int count = 0;
     switch( subcycle )
     {
     case SUBCYCLE_0:
-        count = vehicleCountOnLane( vehicleCountLanes, SOUTH_LEFT, junctionId ) + vehicleCountOnLane( vehicleCountLanes, SOUTH_RIGHT, junctionId );
+        count = vehicleCountOnLane( junction, SOUTH_LEFT ) + vehicleCountOnLane( junction, SOUTH_RIGHT );
         break;
     case SUBCYCLE_1:
-        count = vehicleCountOnLane( vehicleCountLanes, EAST_MIDDLE, junctionId );
+        count = vehicleCountOnLane( junction, EAST_MIDDLE );
         break;
     case SUBCYCLE_2:
-        count = vehicleCountOnLane( vehicleCountLanes, WEST_MIDDLE, junctionId );
+        count = vehicleCountOnLane( junction, WEST_MIDDLE );
         break;
     default:
-        LOG_WARNING( "There is no junction with %i id", junctionId );
+        LOG_WARNING( "There is no junction with %i id", junction->id() );
         break;
     }
     return count;
 }
 
-int VehicleCountManager::vehicleCountOnSubcycleForBladzioJunction( const QHash<int, int> &vehicleCountLanes, SubCycle subcycle, int junctionId )
+int VehicleCountManager::vehicleCountOnSubcycleForBladzioJunction( const Junction* junction, SubCycle subcycle )
 {
     int count = 0;
     switch( subcycle )
     {
     case SUBCYCLE_0:
-        count = vehicleCountOnLane( vehicleCountLanes, SOUTH_MIDDLE, junctionId ) + vehicleCountOnLane( vehicleCountLanes, SOUTH_RIGHT, junctionId ) +
-                vehicleCountOnLane( vehicleCountLanes, NORTH_MIDDLE, junctionId ) + vehicleCountOnLane( vehicleCountLanes, NORTH_LEFT, junctionId );
+        count = vehicleCountOnLane( junction, SOUTH_MIDDLE ) + vehicleCountOnLane( junction, SOUTH_RIGHT ) +
+                vehicleCountOnLane( junction, NORTH_MIDDLE ) + vehicleCountOnLane( junction, NORTH_LEFT );
         break;
     case SUBCYCLE_1:
-        count = vehicleCountOnLane( vehicleCountLanes, SOUTH_LEFT, junctionId ) + vehicleCountOnLane( vehicleCountLanes, NORTH_RIGHT, junctionId );
+        count = vehicleCountOnLane( junction, SOUTH_LEFT ) + vehicleCountOnLane( junction, NORTH_RIGHT );
         break;
     case SUBCYCLE_2:
-        count = vehicleCountOnLane( vehicleCountLanes, WEST_MIDDLE, junctionId ) + vehicleCountOnLane( vehicleCountLanes, WEST_BOTTOM, junctionId ) +
-                vehicleCountOnLane( vehicleCountLanes, EAST_MIDDLE, junctionId ) + vehicleCountOnLane( vehicleCountLanes, EAST_TOP, junctionId );
+        count = vehicleCountOnLane( junction, WEST_MIDDLE ) + vehicleCountOnLane( junction, WEST_BOTTOM ) +
+                vehicleCountOnLane( junction, EAST_MIDDLE ) + vehicleCountOnLane( junction, EAST_TOP );
         break;
     case SUBCYCLE_3:
-        count = vehicleCountOnLane( vehicleCountLanes, WEST_TOP, junctionId ) + vehicleCountOnLane( vehicleCountLanes, EAST_BOTTOM, junctionId );
+        count = vehicleCountOnLane( junction, WEST_TOP ) + vehicleCountOnLane( junction, EAST_BOTTOM );
         break;
     default:
-        LOG_WARNING( "There is no junction with %i id", junctionId );
+        LOG_WARNING( "There is no junction with %i id", junction->id() );
         break;
     }
     return count;
 }
 
-int VehicleCountManager::wholeVehicleWaitingTimeForSubcycle( const QMultiHash<int,Vehicle*>& waitingTime, SubCycle subcycle, int junctionId )
+int VehicleCountManager::wholeVehicleWaitingTimeForSubcycle( const Junction* junction, SubCycle subcycle )
 {
     int count = 0;
-    if( junctionId != 2 )
+    if( junction->id() != 2 )
     {
-        count = wholeVehicleWaitingTimeForSimpleJunction( waitingTime, subcycle, junctionId );
+        count = wholeVehicleWaitingTimeForSimpleJunction( junction, subcycle );
     }
     else{
-        count = wholeVehicleWaitingTimeForBladzioJunction( waitingTime, subcycle, junctionId );
+        count = wholeVehicleWaitingTimeForBladzioJunction( junction, subcycle );
     }
     return count;
 }
 
-int VehicleCountManager::wholeVehicleWaitingTimeForSimpleJunction( const QMultiHash<int,Vehicle*>& waitingTime, SubCycle subcycle, int junctionId )
+int VehicleCountManager::wholeVehicleWaitingTimeForSimpleJunction( const Junction* junction, SubCycle subcycle )
 {
     int count = 0;
     switch( subcycle )
     {
     case SUBCYCLE_0:
-        count = wholeVehicleWaitingTimeOnLane( waitingTime, SOUTH_LEFT, junctionId ) +
-                wholeVehicleWaitingTimeOnLane( waitingTime, SOUTH_RIGHT, junctionId );
+        count = wholeVehicleWaitingTimeOnLane( junction, SOUTH_LEFT ) +
+                wholeVehicleWaitingTimeOnLane( junction, SOUTH_RIGHT );
         break;
     case SUBCYCLE_1:
-        count = wholeVehicleWaitingTimeOnLane( waitingTime, EAST_MIDDLE, junctionId );
+        count = wholeVehicleWaitingTimeOnLane( junction, EAST_MIDDLE );
         break;
     case SUBCYCLE_2:
-        count = wholeVehicleWaitingTimeOnLane( waitingTime, WEST_MIDDLE, junctionId );
+        count = wholeVehicleWaitingTimeOnLane( junction, WEST_MIDDLE );
         break;
     default:
-        LOG_WARNING( "There is no junction with %i id", junctionId );
+        LOG_WARNING( "There is no junction with %i id", junction->id() );
         break;
     }
     return count;
 }
 
-int VehicleCountManager::wholeVehicleWaitingTimeForBladzioJunction( const QMultiHash<int,Vehicle*>& waitingTime, SubCycle subcycle, int junctionId )
+int VehicleCountManager::wholeVehicleWaitingTimeForBladzioJunction( const Junction* junction, SubCycle subcycle )
 {
     int count = 0;
     switch( subcycle )
     {
     case SUBCYCLE_0:
-        count = wholeVehicleWaitingTimeOnLane( waitingTime, SOUTH_MIDDLE, junctionId ) +
-                wholeVehicleWaitingTimeOnLane( waitingTime, SOUTH_RIGHT, junctionId ) +
-                wholeVehicleWaitingTimeOnLane( waitingTime, NORTH_MIDDLE, junctionId ) +
-                wholeVehicleWaitingTimeOnLane( waitingTime, NORTH_LEFT, junctionId );
+        count = wholeVehicleWaitingTimeOnLane( junction, SOUTH_MIDDLE ) +
+                wholeVehicleWaitingTimeOnLane( junction, SOUTH_RIGHT ) +
+                wholeVehicleWaitingTimeOnLane( junction, NORTH_MIDDLE ) +
+                wholeVehicleWaitingTimeOnLane( junction, NORTH_LEFT );
         break;
     case SUBCYCLE_1:
-        count = wholeVehicleWaitingTimeOnLane( waitingTime, SOUTH_LEFT, junctionId ) +
-                wholeVehicleWaitingTimeOnLane( waitingTime, NORTH_RIGHT, junctionId );
+        count = wholeVehicleWaitingTimeOnLane( junction, SOUTH_LEFT ) +
+                wholeVehicleWaitingTimeOnLane( junction, NORTH_RIGHT );
         break;
     case SUBCYCLE_2:
-        count = wholeVehicleWaitingTimeOnLane( waitingTime, WEST_MIDDLE, junctionId ) +
-                wholeVehicleWaitingTimeOnLane( waitingTime, WEST_BOTTOM, junctionId ) +
-                wholeVehicleWaitingTimeOnLane( waitingTime, EAST_MIDDLE, junctionId ) +
-                wholeVehicleWaitingTimeOnLane( waitingTime, EAST_TOP, junctionId );
+        count = wholeVehicleWaitingTimeOnLane( junction, WEST_MIDDLE ) +
+                wholeVehicleWaitingTimeOnLane( junction, WEST_BOTTOM ) +
+                wholeVehicleWaitingTimeOnLane( junction, EAST_MIDDLE ) +
+                wholeVehicleWaitingTimeOnLane( junction, EAST_TOP );
         break;
     case SUBCYCLE_3:
-        count = wholeVehicleWaitingTimeOnLane( waitingTime, WEST_TOP, junctionId ) +
-                wholeVehicleWaitingTimeOnLane( waitingTime, EAST_BOTTOM, junctionId );
+        count = wholeVehicleWaitingTimeOnLane( junction, WEST_TOP ) +
+                wholeVehicleWaitingTimeOnLane( junction, EAST_BOTTOM );
         break;
     default:
-        LOG_WARNING( "There is no junction with %i id", junctionId );
+        LOG_WARNING( "There is no junction with %i id", junction->id() );
         break;
     }
     return count;
 }
 
-int VehicleCountManager::vehicleCountOnLane( const QHash<int, int> &vehicleCountLanes, Lane lane, int junctionId )
+int VehicleCountManager::vehicleCountOnLane( const Junction* junction, Lane lane )
 {
     int count = 0;
 
-    switch( junctionId )
+    switch( junction->id() )
     {
     case 0:
-        count = vehicleCountOnLane0( vehicleCountLanes, lane );
+        count = vehicleCountOnLane0( junction->vehicleCountOnLanes(), lane );
         break;
     case 1:
-        count = vehicleCountOnLane1( vehicleCountLanes, lane );
+        count = vehicleCountOnLane1( junction->vehicleCountOnLanes(), lane );
         break;
     case 2:
-        count = vehicleCountOnLane2( vehicleCountLanes, lane );
+        count = vehicleCountOnLane2( junction->vehicleCountOnLanes(), lane );
         break;
     case 3:
-        count = vehicleCountOnLane3( vehicleCountLanes, lane );
+        count = vehicleCountOnLane3( junction->vehicleCountOnLanes(), lane );
         break;
     case 4:
-        count = vehicleCountOnLane4( vehicleCountLanes, lane );
+        count = vehicleCountOnLane4( junction->vehicleCountOnLanes(), lane );
         break;
     case 5:
-        count = vehicleCountOnLane5( vehicleCountLanes, lane );
+        count = vehicleCountOnLane5( junction->vehicleCountOnLanes(), lane );
         break;
     case 6:
-        count = vehicleCountOnLane6( vehicleCountLanes, lane );
+        count = vehicleCountOnLane6( junction->vehicleCountOnLanes(), lane );
         break;
     default:
-        LOG_WARNING( "There is no junction with %i id", junctionId );
+        LOG_WARNING( "There is no junction with %i id", junction->id() );
         break;
     }
       return count;
@@ -428,35 +429,35 @@ int VehicleCountManager::vehicleCountOnLane6( const QHash<int, int> &vehicleCoun
     return count;
 }
 
-int VehicleCountManager::wholeVehicleWaitingTimeOnLane( const QMultiHash<int, Vehicle *> &waitingTime, Lane lane, int junctionId )
+int VehicleCountManager::wholeVehicleWaitingTimeOnLane( const Junction* junction, Lane lane )
 {
     int time = 0;
 
-    switch( junctionId )
+    switch( junction->id() )
     {
     case 0:
-        time = vehicleWaitingTime0( waitingTime, lane );
+        time = vehicleWaitingTime0( junction->waitingTime(), lane );
         break;
     case 1:
-        time = vehicleWaitingTime1( waitingTime, lane );
+        time = vehicleWaitingTime1( junction->waitingTime(), lane );
         break;
     case 2:
-        time = vehicleWaitingTime2( waitingTime, lane );
+        time = vehicleWaitingTime2( junction->waitingTime(), lane );
         break;
     case 3:
-        time = vehicleWaitingTime3( waitingTime, lane );
+        time = vehicleWaitingTime3( junction->waitingTime(), lane );
         break;
     case 4:
-        time = vehicleWaitingTime4( waitingTime, lane );
+        time = vehicleWaitingTime4( junction->waitingTime(), lane );
         break;
     case 5:
-        time = vehicleWaitingTime5( waitingTime, lane );
+        time = vehicleWaitingTime5( junction->waitingTime(), lane );
         break;
     case 6:
-        time = vehicleWaitingTime6( waitingTime, lane );
+        time = vehicleWaitingTime6( junction->waitingTime(), lane );
         break;
     default:
-        LOG_WARNING( "There is no junction with %i id", junctionId );
+        LOG_WARNING( "There is no junction with %i id", junction->id() );
         break;
     }
 

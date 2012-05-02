@@ -43,78 +43,78 @@ void Junction::timerEvent( QTimerEvent *event )
     LOG_INFO( "### --- Count - junction id: %i ---", m_junctionId );
 
     LOG_INFO( "### EAST_BOTTOM: %i",
-    VehicleCountManager::vehicleCountOnLane( m_vehicleCountOnLanes, VehicleCountManager::EAST_BOTTOM, m_junctionId ) );
+    VehicleCountManager::vehicleCountOnLane( this, VehicleCountManager::EAST_BOTTOM ) );
 
     LOG_INFO( "### EAST_MIDDLE: %i",
-    VehicleCountManager::vehicleCountOnLane( m_vehicleCountOnLanes, VehicleCountManager::EAST_MIDDLE, m_junctionId ) );
+    VehicleCountManager::vehicleCountOnLane( this, VehicleCountManager::EAST_MIDDLE ) );
 
     LOG_INFO( "### EAST_TOP: %i",
-    VehicleCountManager::vehicleCountOnLane( m_vehicleCountOnLanes, VehicleCountManager::EAST_TOP, m_junctionId ) );
+    VehicleCountManager::vehicleCountOnLane( this, VehicleCountManager::EAST_TOP ) );
 
     LOG_INFO( "### WEST_BOTTOM: %i",
-    VehicleCountManager::vehicleCountOnLane( m_vehicleCountOnLanes, VehicleCountManager::WEST_BOTTOM, m_junctionId ) );
+    VehicleCountManager::vehicleCountOnLane( this, VehicleCountManager::WEST_BOTTOM ) );
 
     LOG_INFO( "### WEST_MIDDLE: %i",
-    VehicleCountManager::vehicleCountOnLane( m_vehicleCountOnLanes, VehicleCountManager::WEST_MIDDLE, m_junctionId ) );
+    VehicleCountManager::vehicleCountOnLane( this, VehicleCountManager::WEST_MIDDLE ) );
 
     LOG_INFO( "### WEST_TOP: %i",
-    VehicleCountManager::vehicleCountOnLane( m_vehicleCountOnLanes, VehicleCountManager::WEST_TOP, m_junctionId ) );
+    VehicleCountManager::vehicleCountOnLane( this, VehicleCountManager::WEST_TOP ) );
 
     LOG_INFO( "### NORTH_LEFT: %i",
-    VehicleCountManager::vehicleCountOnLane( m_vehicleCountOnLanes, VehicleCountManager::NORTH_LEFT, m_junctionId ) );
+    VehicleCountManager::vehicleCountOnLane( this, VehicleCountManager::NORTH_LEFT ) );
 
     LOG_INFO( "### NORTH_MIDDLE: %i",
-    VehicleCountManager::vehicleCountOnLane( m_vehicleCountOnLanes, VehicleCountManager::NORTH_MIDDLE, m_junctionId ) );
+    VehicleCountManager::vehicleCountOnLane( this, VehicleCountManager::NORTH_MIDDLE ) );
 
     LOG_INFO( "### NORTH_RIGHT: %i",
-    VehicleCountManager::vehicleCountOnLane( m_vehicleCountOnLanes, VehicleCountManager::NORTH_RIGHT, m_junctionId ) );
+    VehicleCountManager::vehicleCountOnLane( this, VehicleCountManager::NORTH_RIGHT ) );
 
     LOG_INFO( "### SOUTH_LEFT: %i",
-    VehicleCountManager::vehicleCountOnLane( m_vehicleCountOnLanes, VehicleCountManager::SOUTH_LEFT, m_junctionId ) );
+    VehicleCountManager::vehicleCountOnLane( this, VehicleCountManager::SOUTH_LEFT ) );
 
     LOG_INFO( "### SOUTH_MIDDLE: %i",
-    VehicleCountManager::vehicleCountOnLane( m_vehicleCountOnLanes, VehicleCountManager::SOUTH_MIDDLE, m_junctionId ) );
+    VehicleCountManager::vehicleCountOnLane( this, VehicleCountManager::SOUTH_MIDDLE ) );
 
     LOG_INFO( "### SOUTH_RIGHT: %i",
-    VehicleCountManager::vehicleCountOnLane( m_vehicleCountOnLanes, VehicleCountManager::SOUTH_RIGHT, m_junctionId ) );
+    VehicleCountManager::vehicleCountOnLane( this, VehicleCountManager::SOUTH_RIGHT ) );
 
     LOG_INFO( "TT --- Time - junction id: %i ---", m_junctionId );
 
     LOG_INFO( "TT EAST_BOTTOM: %i",
-    VehicleCountManager::wholeVehicleWaitingTimeOnLane( m_waitingTime, VehicleCountManager::EAST_BOTTOM, m_junctionId ) );
+    VehicleCountManager::wholeVehicleWaitingTimeOnLane( this, VehicleCountManager::EAST_BOTTOM ) );
 
     LOG_INFO( "TT EAST_MIDDLE: %i",
-    VehicleCountManager::wholeVehicleWaitingTimeOnLane( m_waitingTime, VehicleCountManager::EAST_MIDDLE, m_junctionId ) );
+    VehicleCountManager::wholeVehicleWaitingTimeOnLane( this, VehicleCountManager::EAST_MIDDLE ) );
 
     LOG_INFO( "TT EAST_TOP: %i",
-    VehicleCountManager::wholeVehicleWaitingTimeOnLane( m_waitingTime, VehicleCountManager::EAST_TOP, m_junctionId ) );
+    VehicleCountManager::wholeVehicleWaitingTimeOnLane( this, VehicleCountManager::EAST_TOP ) );
 
     LOG_INFO( "TT WEST_BOTTOM: %i",
-    VehicleCountManager::wholeVehicleWaitingTimeOnLane( m_waitingTime, VehicleCountManager::WEST_BOTTOM, m_junctionId ) );
+    VehicleCountManager::wholeVehicleWaitingTimeOnLane( this, VehicleCountManager::WEST_BOTTOM ) );
 
     LOG_INFO( "TT WEST_MIDDLE: %i",
-    VehicleCountManager::wholeVehicleWaitingTimeOnLane( m_waitingTime, VehicleCountManager::WEST_MIDDLE, m_junctionId ) );
+    VehicleCountManager::wholeVehicleWaitingTimeOnLane( this, VehicleCountManager::WEST_MIDDLE ) );
 
     LOG_INFO( "TT WEST_TOP: %i",
-    VehicleCountManager::wholeVehicleWaitingTimeOnLane( m_waitingTime, VehicleCountManager::WEST_TOP, m_junctionId ) );
+    VehicleCountManager::wholeVehicleWaitingTimeOnLane( this, VehicleCountManager::WEST_TOP ) );
 
     LOG_INFO( "TT NORTH_LEFT: %i",
-    VehicleCountManager::wholeVehicleWaitingTimeOnLane( m_waitingTime, VehicleCountManager::NORTH_LEFT, m_junctionId ) );
+    VehicleCountManager::wholeVehicleWaitingTimeOnLane( this, VehicleCountManager::NORTH_LEFT ) );
 
     LOG_INFO( "TT NORTH_MIDDLE: %i",
-    VehicleCountManager::wholeVehicleWaitingTimeOnLane( m_waitingTime, VehicleCountManager::NORTH_MIDDLE, m_junctionId ) );
+    VehicleCountManager::wholeVehicleWaitingTimeOnLane( this, VehicleCountManager::NORTH_MIDDLE ) );
 
     LOG_INFO( "TT NORTH_RIGHT: %i",
-    VehicleCountManager::wholeVehicleWaitingTimeOnLane( m_waitingTime, VehicleCountManager::NORTH_RIGHT, m_junctionId ) );
+    VehicleCountManager::wholeVehicleWaitingTimeOnLane( this, VehicleCountManager::NORTH_RIGHT ) );
 
     LOG_INFO( "TT SOUTH_LEFT: %i",
-    VehicleCountManager::wholeVehicleWaitingTimeOnLane( m_waitingTime, VehicleCountManager::SOUTH_LEFT, m_junctionId ) );
+    VehicleCountManager::wholeVehicleWaitingTimeOnLane( this, VehicleCountManager::SOUTH_LEFT ) );
 
     LOG_INFO( "TT SOUTH_MIDDLE: %i",
-    VehicleCountManager::wholeVehicleWaitingTimeOnLane( m_waitingTime, VehicleCountManager::SOUTH_MIDDLE, m_junctionId ) );
+    VehicleCountManager::wholeVehicleWaitingTimeOnLane( this, VehicleCountManager::SOUTH_MIDDLE ) );
 
     LOG_INFO( "TT SOUTH_RIGHT: %i",
-    VehicleCountManager::wholeVehicleWaitingTimeOnLane( m_waitingTime, VehicleCountManager::SOUTH_RIGHT, m_junctionId ) );
+    VehicleCountManager::wholeVehicleWaitingTimeOnLane( this, VehicleCountManager::SOUTH_RIGHT ) );
 }
 
 void Junction::setTimeVectorByAlgorithm()
@@ -200,4 +200,19 @@ bool Junction::isVehicleFirst( Vehicle *vehicle )
     }
 
     return false;
+}
+
+int Junction::id() const
+{
+    return m_junctionId;
+}
+
+const QHash<int,int> Junction::vehicleCountOnLanes() const
+{
+    return m_vehicleCountOnLanes;
+}
+
+const QMultiHash<int,Vehicle*> Junction::waitingTime() const
+{
+    return m_waitingTime;
 }
