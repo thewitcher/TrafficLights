@@ -2,3 +2,5 @@
 *.orig
 *.autosave
 *.o
+application
+user_data.txt
