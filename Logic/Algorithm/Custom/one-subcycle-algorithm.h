@@ -9,9 +9,9 @@ class Junction;
 class OneSubcycleAlgorithm : public BaseAlgorithm
 {
 public:
-    OneSubcycleAlgorithm();
+    OneSubcycleAlgorithm( Junction* junction );
 
-    QVector<int> start( Junction* junction );
+    QVector<int> startAlgorithm();
 
     void clear();
 

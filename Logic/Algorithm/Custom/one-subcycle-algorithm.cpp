@@ -12,7 +12,8 @@ float objective( GAGenome& genome )
 }
 ///////////////////////////////////
 
-OneSubcycleAlgorithm::OneSubcycleAlgorithm()
+OneSubcycleAlgorithm::OneSubcycleAlgorithm( Junction *junction ):
+    BaseAlgorithm( junction )
 {
 }
 
@@ -21,7 +22,7 @@ int OneSubcycleAlgorithm::estimateGreenLight()
     return 6000;
 }
 
-QVector<int> OneSubcycleAlgorithm::start( Junction* junction )
+QVector<int> OneSubcycleAlgorithm::startAlgorithm()
 {
     clear();
 
@@ -29,12 +30,12 @@ QVector<int> OneSubcycleAlgorithm::start( Junction* junction )
     data.greenLine = 6000;
     data.subcycle = VehicleCountManager::SUBCYCLE_0;
 
-    switch( junction->junctionType() )
+    switch( m_junction->junctionType() )
     {
     case Junction::BLADZIO:
-        data = startBladzio( junction );
+        data = startBladzio( m_junction );
     case Junction::SIMPLE:
-        data = startSimple( junction );
+        data = startSimple( m_junction );
     default:
         break;
     }

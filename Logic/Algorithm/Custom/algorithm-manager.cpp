@@ -5,10 +5,16 @@
 #include "../Ui/TrafficLights_manager/junction.h"
 
 AlgorithmManager::AlgorithmManager( Junction* junction ):
+    QObject( NULL ),
     m_baseAlgorithm( NULL ),
-    m_junction( junction )
+    m_junction( junction ),
+    m_finished( true )
 {
     updateAlgorithm();
+
+    Q_ASSERT( m_baseAlgorithm != NULL );
+
+    connect( m_baseAlgorithm, SIGNAL(finished()), this, SLOT(timeVectorChanged()) );
 }
 
 AlgorithmManager::~AlgorithmManager()
@@ -19,9 +25,13 @@ AlgorithmManager::~AlgorithmManager()
     }
 }
 
-QVector<int> AlgorithmManager::start()
+void AlgorithmManager::start()
 {
-    return m_baseAlgorithm->start( m_junction );
+    if( m_finished == true )
+    {
+        m_baseAlgorithm->start();
+        m_finished = false;
+    }
 }
 
 void AlgorithmManager::updateAlgorithm()
@@ -30,14 +40,20 @@ void AlgorithmManager::updateAlgorithm()
 
     if( type == "NORMAL" )
     {
-        m_baseAlgorithm = new NormalAlgorithm;
+        m_baseAlgorithm = new NormalAlgorithm( m_junction );
     }
     else if( type == "ONE_SUBCYCLE_ALGORITHM" )
     {
-        m_baseAlgorithm = new OneSubcycleAlgorithm;
+        m_baseAlgorithm = new OneSubcycleAlgorithm( m_junction );
     }
     else if( type == "ALL_SUBCYCLE_ALGORITHM" )
     {
         m_baseAlgorithm = NULL;
     }
+}
+
+void AlgorithmManager::timeVectorChanged()
+{
+    m_finished = true;
+    emit changeTimeVector( m_baseAlgorithm->timeVector() );
 }

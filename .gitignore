@@ -3,3 +3,4 @@
 *.autosave
 *.o
 /home/marcin/Pulpit/Programy/TrafficLightsProject/TrafficLights_builded/
+/TrafficLights_builded/moc_algorithm-manager.cpp

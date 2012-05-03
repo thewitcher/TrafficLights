@@ -65,12 +65,15 @@ protected:
     void timerEvent( QTimerEvent *event );
     /// If it returns true then time vector should be changed, otherwise it is ok and should not be changed.
     bool changeTimeVector();
-    /// It uses genetic algorithm to create appropriate time vector for that junction.
-    virtual void setTimeVectorByAlgorithm();
+    void setDefaultTimeVector();
 
 protected slots:
     void addVehicleToStatistic( int checkpointId, Vehicle* vehicle );
     void subtractVehicleFromStatistic( int checkpointId, Vehicle* vehicle );
+    void startAlgorithm();
+
+    /// It uses genetic algorithm to create appropriate time vector for that junction.
+    virtual void setTimeVectorByAlgorithm( const QVector<int>& timeVector );
 };
 
 #endif // JUNCTION_H

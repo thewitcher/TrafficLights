@@ -23,9 +23,11 @@ Junction::Junction( const QVector<TrafficLight *> &junction, QLCDNumber *m_vehic
     m_junctionType( junctionType )
 {
     m_algorithmManager = new AlgorithmManager( this );
+    connect( m_algorithmManager, SIGNAL(changeTimeVector(const QVector<int>)), this, SLOT(setTimeVectorByAlgorithm(const QVector<int>&)) );
 
     startTimer( 10000 );
-    setTimeVectorByAlgorithm();
+    setDefaultTimeVector();
+    startAlgorithm();
 }
 
 Junction::~Junction()
@@ -34,6 +36,11 @@ Junction::~Junction()
     {
         delete m_algorithmManager;
     }
+}
+
+void Junction::setDefaultTimeVector()
+{
+    m_timeVectorForSubcycles << 6000 << 6000 << 6000 << 6000;
 }
 
 void Junction::timerEvent( QTimerEvent *event )
@@ -117,9 +124,9 @@ void Junction::timerEvent( QTimerEvent *event )
     VehicleCountManager::wholeVehicleWaitingTimeOnLane( this, VehicleCountManager::SOUTH_RIGHT ) );
 }
 
-void Junction::setTimeVectorByAlgorithm()
+void Junction::setTimeVectorByAlgorithm( const QVector<int> &timeVector )
 {
-    m_timeVectorForSubcycles = m_algorithmManager->start();
+    m_timeVectorForSubcycles = timeVector;
 }
 
 void Junction::runForSubcycles()
@@ -215,4 +222,9 @@ const QHash<int,int> Junction::vehicleCountOnLanes() const
 const QMultiHash<int,Vehicle*> Junction::waitingTime() const
 {
     return m_waitingTime;
+}
+
+void Junction::startAlgorithm()
+{
+    m_algorithmManager->start();
 }

@@ -6,9 +6,9 @@
 class NormalAlgorithm: public BaseAlgorithm
 {
 public:
-    NormalAlgorithm();
+    NormalAlgorithm( Junction* junction );
 
-    QVector<int> start( Junction* junction );
+    QVector<int> startAlgorithm();
 };
 
 #endif // NORMALALGORITHM_H

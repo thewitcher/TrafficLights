@@ -89,5 +89,3 @@ HEADERS += \
            ../Logic/Algorithm/GA/GA3DArrayGenome.h \
            ../Logic/Algorithm/GA/GAEvalData.h \
            ../Logic/Algorithm/GA/GA1DBinStrGenome.h \
-
-

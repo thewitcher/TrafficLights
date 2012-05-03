@@ -2,17 +2,19 @@
 #define BASEALGORITHM_H
 
 #include <QVector>
+#include <QThread>
 
 class Junction;
 
-class BaseAlgorithm
+class BaseAlgorithm: public QThread
 {
 public:
-    BaseAlgorithm();
+    BaseAlgorithm( Junction* junction );
 
-    virtual QVector<int> start( Junction* junction ) = 0;
+    void run();
+    const QVector<int>& timeVector() const;
 
-private:
+protected:
     const unsigned int m_genomeSize;
     const float m_replacementProbability;
     const int m_populationSize;
@@ -22,6 +24,11 @@ private:
     const float m_mutation;
     const float m_crossover;
     const char* m_logFile;
+
+    QVector<int> m_timeVector;
+    Junction* m_junction;
+
+    virtual QVector<int> startAlgorithm() = 0;
 };
 
 #endif // BASEALGORITHM_H

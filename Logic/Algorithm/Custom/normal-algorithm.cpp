@@ -1,14 +1,12 @@
 #include "normal-algorithm.h"
 
-NormalAlgorithm::NormalAlgorithm():
-    BaseAlgorithm()
+NormalAlgorithm::NormalAlgorithm( Junction *junction ):
+    BaseAlgorithm( junction )
 {
 }
 
-QVector<int> NormalAlgorithm::start( Junction* junction )
+QVector<int> NormalAlgorithm::startAlgorithm()
 {
-    Q_UNUSED( junction );
-
     QVector<int> vector;
     vector << 6000 << 6000 << 6000 << 6000;
     return vector;
