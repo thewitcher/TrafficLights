@@ -11,8 +11,10 @@ QVector<int> OneSubcycleAlgorithm::start( Junction* junction )
     switch( junction->junctionType() )
     {
     case Junction::BLADZIO:
+        chooseTheMostBlockSubcycleForBladzio( junction );
         break;
     case Junction::SIMPLE:
+//        chooseTheMostBlockSubcycleForSimple();
         break;
     default:
         break;
