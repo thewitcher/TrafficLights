@@ -7,13 +7,29 @@
 class AllSubcycleAlgorithm : public BaseAlgorithm
 {
 public:
-    AllSubcycleAlgorithm();
+    AllSubcycleAlgorithm( Junction* junction );
 
-    QVector<int> start( Junction* junction );
+    QVector<int> startAlgorithm();
 
-    int evalForSimple( QVector<int> vector, Junction *junction );
-    int theSumOfTheRemainingVehiclesAtJunction( const QVector<int> &vector, const int &numberOfVehiclesAtJunction, Junction *junction );
-    int theSumOfTheRemainingVehiclesAtLane( VehicleCountManager::Lane, int subcycleId );
+    int objective( QVector<int> vector, Junction *junction );
+    int theSumOfTheRemainingVehiclesAtJunction( Junction *junction );
+    int howMuchVehiclesAtLaneWillDrive( const int& subcycleId, const int& numberVehiclesOnLane );
+    void setAlphaParam( const int& numberOfVehiclesThatWillDrive, Junction * junction );
+    int checkAllSubcycles( const int& vehiclesCountAtSubcycle, const int& time );
+
+private:
+    QVector<int> m_timeVector;
+    int m_totalTimes;
+    int m_numberOfVehiclesThatWillDrive;
+    int m_alpha;
+    int m_magicE;
+
+    int evalForSimpleJunction( const Junction *junction );
+    int evalForBladzioJunction( const Junction *junction );
+    void evalForBladzioJunctionSubcycle_0( const Junction *junction, int& numberOfVehiclesThatWillDrive );
+    void evalForBladzioJunctionSubcycle_1( const Junction *junction, int& numberOfVehiclesThatWillDrive );
+    void evalForBladzioJunctionSubcycle_2( const Junction *junction, int& numberOfVehiclesThatWillDrive );
+    void evalForBladzioJunctionSubcycle_3( const Junction *junction, int& numberOfVehiclesThatWillDrive );
 };
 
 #endif // ALLSUBCYCLEALGORITHM_H

@@ -2,6 +2,7 @@
 #include "../Settings/settings.h"
 #include "normal-algorithm.h"
 #include "one-subcycle-algorithm.h"
+#include "all-subcycle-algorithm.h"
 #include "../Ui/TrafficLights_manager/junction.h"
 
 AlgorithmManager::AlgorithmManager( Junction* junction ):
@@ -36,7 +37,7 @@ void AlgorithmManager::start()
 
 void AlgorithmManager::updateAlgorithm()
 {
-    QString type = Settings::settingsInstance().value( "ALGORITHM_TYPE", "ONE_SUBCYCLE_ALGORITHM" ).toString();
+    QString type = Settings::settingsInstance().value( "ALGORITHM_TYPE", "NORMAL"/*"ONE_SUBCYCLE_ALGORITHM"*/ ).toString();
 
     if( type == "NORMAL" )
     {
@@ -48,7 +49,7 @@ void AlgorithmManager::updateAlgorithm()
     }
     else if( type == "ALL_SUBCYCLE_ALGORITHM" )
     {
-        m_baseAlgorithm = NULL;
+        m_baseAlgorithm = new AllSubcycleAlgorithm( m_junction );
     }
 }
 

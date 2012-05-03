@@ -537,13 +537,13 @@ int VehicleCountManager::vehicleWaitingTime2( const QMultiHash<int, Vehicle *> &
     switch( lane )
     {
     case WEST_TOP:
-        time = sumWaitingTime( waitingTime.values( 2 ) ) + sumWaitingTime( waitingTime.values( 8 ) );
+        time = sumWaitingTime( waitingTime.values( 2080 ) );
         break;
     case WEST_MIDDLE:
-        time = sumWaitingTime( waitingTime.values( 3 ) ) + sumWaitingTime( waitingTime.values( 9 ) );
+        time = sumWaitingTime( waitingTime.values( 3090 ) );
         break;
     case WEST_BOTTOM:
-        time = sumWaitingTime( waitingTime.values( 4 ) ) + sumWaitingTime( waitingTime.values( 10 ) );
+        time = sumWaitingTime( waitingTime.values( 4010 ) );
         break;
     case EAST_TOP:
         time = sumWaitingTime( waitingTime.values( 119 ) );
@@ -555,22 +555,22 @@ int VehicleCountManager::vehicleWaitingTime2( const QMultiHash<int, Vehicle *> &
         time = sumWaitingTime( waitingTime.values( 104 ) );
         break;
     case NORTH_LEFT:
-        time = sumWaitingTime( waitingTime.values( 17 ) ) + sumWaitingTime( waitingTime.values( 18 ) );
+        time = sumWaitingTime( waitingTime.values( 1718 ) );
         break;
     case NORTH_MIDDLE:
-        time = sumWaitingTime( waitingTime.values( 26 ) ) + sumWaitingTime( waitingTime.values( 27 ) );
+        time = sumWaitingTime( waitingTime.values( 2627 ) );
         break;
     case NORTH_RIGHT:
-        time = sumWaitingTime( waitingTime.values( 32 ) ) + sumWaitingTime( waitingTime.values( 33 ) );
+        time = sumWaitingTime( waitingTime.values( 3233 ) );
         break;
     case SOUTH_LEFT:
-        time = sumWaitingTime( waitingTime.values( 42 ) ) + sumWaitingTime( waitingTime.values( 43 ) );
+        time = sumWaitingTime( waitingTime.values( 4243 ) );
         break;
     case SOUTH_MIDDLE:
-        time = sumWaitingTime( waitingTime.values( 44 ) ) + sumWaitingTime( waitingTime.values( 45 ) );
+        time = sumWaitingTime( waitingTime.values( 4445 ) );
         break;
     case SOUTH_RIGHT:
-        time = sumWaitingTime( waitingTime.values( 53 ) ) + sumWaitingTime( waitingTime.values( 54 ) );
+        time = sumWaitingTime( waitingTime.values( 5354 ) );
         break;
     default:
         LOG_WARNING( "Wrong lane (%i) for this junction (id = 2)", lane );
