@@ -20,11 +20,14 @@ private:
     TrafficLight* m_rightLight;
     TrafficLight* m_leftAndStraightLight;
     TrafficLight* m_rightAndStraightLight;
+    uint m_subcycle_1;
+    uint m_subcycle_2;
+    uint m_subcycle_3;
 
-    void runSubcycle_1( uint subcycle_1 );
-    void runSubcycle_2( uint subcycle_1, uint subcycle_2 );
-    void runSubcycle_3( uint subcycle_1, uint subcycle_2, uint subcycle_3 );
-    void exceptionWhenSubcycleSumEqualZero( uint subcycle_1, uint subcycle_2, uint subcycle_3 );
+    void runSubcycle_1();
+    void runSubcycle_2();
+    void runSubcycle_3();
+    void exceptionWhenSubcycleSumEqualZero();
 
     void runSingleShotForSubcycle_1_WhenTimeIsDiferrentThanZero( uint time );
 

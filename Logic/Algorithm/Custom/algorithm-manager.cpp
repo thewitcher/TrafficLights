@@ -37,7 +37,7 @@ void AlgorithmManager::start()
 
 void AlgorithmManager::updateAlgorithm()
 {
-    QString type = Settings::settingsInstance().value( "ALGORITHM_TYPE", "NORMAL"/*"ONE_SUBCYCLE_ALGORITHM"*/ ).toString();
+    QString type = Settings::settingsInstance().value( "ALGORITHM_TYPE", "ONE_SUBCYCLE_ALGORITHM" ).toString();
 
     if( type == "NORMAL" )
     {

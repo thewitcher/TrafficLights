@@ -1,9 +1,6 @@
 #include "bladzio-junction.h"
 #include "../Lights/trafficlight.h"
 #include "../../Logger/logger.h"
-//#include "../../Logic/Genetic_algorithm/GA/genome-data.h"
-//#include "../../Logic/Genetic_algorithm/GA/GA1DArrayGenome.h"
-//#include "../../Logic/Genetic_algorithm/GA/genetic-algorithm-manager.h"
 #include <QTimer>
 
 BladzioJunction::BladzioJunction( const QVector<TrafficLight *> &junction, QLCDNumber* vehicleCounter, int junctionId ):
@@ -27,114 +24,114 @@ BladzioJunction::~BladzioJunction()
 
 void BladzioJunction::runForSubcycles()
 {
-    uint subcycle_1 = m_timeVectorForSubcycles.at( 0 );
-    uint subcycle_2 = m_timeVectorForSubcycles.at( 1 );
-    uint subcycle_3 = m_timeVectorForSubcycles.at( 2 );
-    uint subcycle_4 = m_timeVectorForSubcycles.at( 3 );
+    m_subcycle_1 = m_timeVectorForSubcycles.at( 0 );
+    m_subcycle_2 = m_timeVectorForSubcycles.at( 1 );
+    m_subcycle_3 = m_timeVectorForSubcycles.at( 2 );
+    m_subcycle_4 = m_timeVectorForSubcycles.at( 3 );
 
     /* Series 1 */
-    runFirstSubcycle( subcycle_1 );
+    runFirstSubcycle();
 
     /* Series 2 */
-    runSecondSubcycle( subcycle_1, subcycle_2 );
+    runSecondSubcycle();
 
     /* Series 3 */
-    runThirdSubcycle( subcycle_1, subcycle_2, subcycle_3 );
+    runThirdSubcycle();
 
     /* Series 4 */
-    runFourthSubcycle( subcycle_1, subcycle_2, subcycle_3, subcycle_4 );
+    runFourthSubcycle();
 
     // Exception
-    exceptionWhenSubcycleSumEqualZero( subcycle_1, subcycle_2, subcycle_3, subcycle_4 );
+    exceptionWhenSubcycleSumEqualZero();
 }
 
-void BladzioJunction::runFirstSubcycle( uint subcycle_1 )
+void BladzioJunction::runFirstSubcycle()
 {
-    if( subcycle_1 != 0 )
+    if( m_subcycle_1 != 0 )
     {
-        runSingleShotForSubcycle_1_WhenTimeIsDiferrentThanZero( subcycle_1 );
+        runSingleShotForSubcycle_1_WhenTimeIsDiferrentThanZero( m_subcycle_1 );
     }
 }
 
-void BladzioJunction::runSecondSubcycle( uint subcycle_1, uint subcycle_2 )
+void BladzioJunction::runSecondSubcycle()
 {
-    if( subcycle_2 != 0 )
+    if( m_subcycle_2 != 0 )
     {
-        if( subcycle_1 != 0 )
+        if( m_subcycle_1 != 0 )
         {
-            runSingleShotForSubcycle_2_WhenTimeIsDiferrentThanZero( subcycle_1, subcycle_2 );
+            runSingleShotForSubcycle_2_WhenTimeIsDiferrentThanZero( m_subcycle_1, m_subcycle_2 );
         }
         else{
-            runSingleShotForSubcycle_2_WhenTimeAreEqualZero( subcycle_2 );
+            runSingleShotForSubcycle_2_WhenTimeAreEqualZero( m_subcycle_2 );
         }
     }
 }
 
-void BladzioJunction::runThirdSubcycle( uint subcycle_1, uint subcycle_2, uint subcycle_3 )
+void BladzioJunction::runThirdSubcycle()
 {
-    if( subcycle_3 != 0 )
+    if( m_subcycle_3 != 0 )
     {
-        if( subcycle_1 != 0 && subcycle_2 != 0 )
+        if( m_subcycle_1 != 0 && m_subcycle_2 != 0 )
         {
-            runSingleShotForSubcycle_3_WhenAllTimesAreDiferrentThanZero( subcycle_1, subcycle_2, subcycle_3 );
+            runSingleShotForSubcycle_3_WhenAllTimesAreDiferrentThanZero( m_subcycle_1, m_subcycle_2, m_subcycle_3 );
         }
-        else if( subcycle_1 == 0 && subcycle_2 != 0 )
+        else if( m_subcycle_1 == 0 && m_subcycle_2 != 0 )
         {
-            runSingleShotForSubcycle_3_WhenOneTimeIsDiferrentThanZero( subcycle_2, subcycle_3 );
+            runSingleShotForSubcycle_3_WhenOneTimeIsDiferrentThanZero( m_subcycle_2, m_subcycle_3 );
         }
-        else if( subcycle_1 != 0 && subcycle_2 == 0 )
+        else if( m_subcycle_1 != 0 && m_subcycle_2 == 0 )
         {
-            runSingleShotForSubcycle_3_WhenOneTimeIsDiferrentThanZero( subcycle_1, subcycle_3 );
+            runSingleShotForSubcycle_3_WhenOneTimeIsDiferrentThanZero( m_subcycle_1, m_subcycle_3 );
         }
-        else if( subcycle_1 == 0 && subcycle_2 == 0 )
+        else if( m_subcycle_1 == 0 && m_subcycle_2 == 0 )
         {
-            runSingleShotForSubcycle_3_WhenAllTimesAreEqualZero( subcycle_3 );
+            runSingleShotForSubcycle_3_WhenAllTimesAreEqualZero( m_subcycle_3 );
         }
     }
 }
 
-void BladzioJunction::runFourthSubcycle( uint subcycle_1, uint subcycle_2, uint subcycle_3, uint subcycle_4 )
+void BladzioJunction::runFourthSubcycle()
 {
-    if( subcycle_4 != 0 )
+    if( m_subcycle_4 != 0 )
     {
-        if( subcycle_1 != 0 && subcycle_2 != 0 && subcycle_3 != 0 )
+        if( m_subcycle_1 != 0 && m_subcycle_2 != 0 && m_subcycle_3 != 0 )
         {
-            runSingleShotForSubcycle_4_WhenAllTimesAreDiferrentThanZero( subcycle_1, subcycle_2, subcycle_3, subcycle_4 );
+            runSingleShotForSubcycle_4_WhenAllTimesAreDiferrentThanZero( m_subcycle_1, m_subcycle_2, m_subcycle_3, m_subcycle_4 );
         }
-        else if( subcycle_1 != 0 && subcycle_2 != 0 && subcycle_3 == 0 )
+        else if( m_subcycle_1 != 0 && m_subcycle_2 != 0 && m_subcycle_3 == 0 )
         {
-            runSingleShotForSubcycle_4_WhenTwoTimesAreDiferrentThanZero( subcycle_1, subcycle_2, subcycle_4 );
+            runSingleShotForSubcycle_4_WhenTwoTimesAreDiferrentThanZero( m_subcycle_1, m_subcycle_2, m_subcycle_4 );
         }
-        else if( subcycle_1 == 0 && subcycle_2 != 0 && subcycle_3 != 0 )
+        else if( m_subcycle_1 == 0 && m_subcycle_2 != 0 && m_subcycle_3 != 0 )
         {
-            runSingleShotForSubcycle_4_WhenTwoTimesAreDiferrentThanZero( subcycle_2, subcycle_3, subcycle_4 );
+            runSingleShotForSubcycle_4_WhenTwoTimesAreDiferrentThanZero( m_subcycle_2, m_subcycle_3, m_subcycle_4 );
         }
-        else if( subcycle_1 != 0 && subcycle_2 == 0 && subcycle_3 != 0 )
+        else if( m_subcycle_1 != 0 && m_subcycle_2 == 0 && m_subcycle_3 != 0 )
         {
-            runSingleShotForSubcycle_4_WhenTwoTimesAreDiferrentThanZero( subcycle_1, subcycle_3, subcycle_4 );
+            runSingleShotForSubcycle_4_WhenTwoTimesAreDiferrentThanZero( m_subcycle_1, m_subcycle_3, m_subcycle_4 );
         }
-        else if( subcycle_1 != 0 && subcycle_2 == 0 && subcycle_3 == 0 )
+        else if( m_subcycle_1 != 0 && m_subcycle_2 == 0 && m_subcycle_3 == 0 )
         {
-            runSingleShotForSubcycle_4_WhenOneTimeIsDiferrentThanZero( subcycle_1, subcycle_4 );
+            runSingleShotForSubcycle_4_WhenOneTimeIsDiferrentThanZero( m_subcycle_1, m_subcycle_4 );
         }
-        else if( subcycle_1 == 0 && subcycle_2 != 0 && subcycle_3 == 0 )
+        else if( m_subcycle_1 == 0 && m_subcycle_2 != 0 && m_subcycle_3 == 0 )
         {
-            runSingleShotForSubcycle_4_WhenOneTimeIsDiferrentThanZero( subcycle_2, subcycle_4 );
+            runSingleShotForSubcycle_4_WhenOneTimeIsDiferrentThanZero( m_subcycle_2, m_subcycle_4 );
         }
-        else if( subcycle_1 == 0 && subcycle_2 == 0 && subcycle_3 != 0 )
+        else if( m_subcycle_1 == 0 && m_subcycle_2 == 0 && m_subcycle_3 != 0 )
         {
-            runSingleShotForSubcycle_4_WhenOneTimeIsDiferrentThanZero( subcycle_3, subcycle_4 );
+            runSingleShotForSubcycle_4_WhenOneTimeIsDiferrentThanZero( m_subcycle_3, m_subcycle_4 );
         }
-        else if( subcycle_1 == 0 && subcycle_2 == 0 && subcycle_3 == 0 )
+        else if( m_subcycle_1 == 0 && m_subcycle_2 == 0 && m_subcycle_3 == 0 )
         {
-            runSingleShotForSubcycle_4_WhenAllTimesAreEqualZero( subcycle_4 );
+            runSingleShotForSubcycle_4_WhenAllTimesAreEqualZero( m_subcycle_4 );
         }
     }
 }
 
-void BladzioJunction::exceptionWhenSubcycleSumEqualZero( uint subcycle_1, uint subcycle_2, uint subcycle_3, uint subcycle_4 )
+void BladzioJunction::exceptionWhenSubcycleSumEqualZero()
 {
-    if( subcycle_1 == 0 && subcycle_2 == 0 && subcycle_3 == 0 && subcycle_4 == 0 )
+    if( m_subcycle_1 == 0 && m_subcycle_2 == 0 && m_subcycle_3 == 0 && m_subcycle_4 == 0 )
     {
         m_timeVectorForSubcycles[ 0 ] = 5000;
         m_timeVectorForSubcycles[ 1 ] = 5000;
@@ -229,11 +226,7 @@ void BladzioJunction::holdFirstSubcycle()
     m_straightLight2c->holdVehicles();
     m_rightLight2c->holdVehicles();
 
-    uint subcycle_2 = m_timeVectorForSubcycles.at( 1 );
-    uint subcycle_3 = m_timeVectorForSubcycles.at( 2 );
-    uint subcycle_4 = m_timeVectorForSubcycles.at( 3 );
-
-    if( subcycle_2 == 0 && subcycle_3 == 0 && subcycle_4 == 0 )
+    if( m_subcycle_2 == 0 && m_subcycle_3 == 0 && m_subcycle_4 == 0 )
     {
         startAlgorithm();
         runForSubcycles();
@@ -253,16 +246,13 @@ void BladzioJunction::holdSecondSubcycle()
     m_leftLight2a->holdVehicles();
     m_leftLight2c->holdVehicles();
 
-    uint subcycle_3 = m_timeVectorForSubcycles.at( 2 );
-    if( subcycle_3 == 0 )
+    if( m_subcycle_3 == 0 )
     {
         m_rightLight2b->holdVehicles();
         m_rightLight2d->holdVehicles();
     }
 
-    uint subcycle_4 = m_timeVectorForSubcycles.at( 3 );
-
-    if( subcycle_3 == 0 && subcycle_4 == 0 )
+    if( m_subcycle_3 == 0 && m_subcycle_4 == 0 )
     {
         startAlgorithm();
         runForSubcycles();
@@ -274,8 +264,7 @@ void BladzioJunction::thirdSubcycle()
     m_straightLight2b->letGoVehicles();
     m_straightLight2d->letGoVehicles();
 
-    uint subcycle_2 = m_timeVectorForSubcycles.at( 1 );
-    if( subcycle_2 == 0 )
+    if( m_subcycle_2 == 0 )
     {
         m_rightLight2b->letGoVehicles();
         m_rightLight2d->letGoVehicles();
@@ -289,9 +278,7 @@ void BladzioJunction::holdThirdSubcycle()
     m_straightLight2d->holdVehicles();
     m_rightLight2d->holdVehicles();
 
-    uint subcycle_4 = m_timeVectorForSubcycles.at( 3 );
-
-    if( subcycle_4 == 0 )
+    if( m_subcycle_4 == 0 )
     {
         startAlgorithm();
         runForSubcycles();
