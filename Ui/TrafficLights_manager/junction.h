@@ -73,7 +73,7 @@ protected slots:
     void startAlgorithm();
 
     /// It uses genetic algorithm to create appropriate time vector for that junction.
-    virtual void setTimeVectorByAlgorithm( const QVector<int>& timeVector );
+    void setTimeVectorByAlgorithm( const QVector<int>& timeVector );
 };
 
 #endif // JUNCTION_H

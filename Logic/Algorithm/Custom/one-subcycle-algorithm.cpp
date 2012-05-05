@@ -35,9 +35,7 @@ int OneSubcycleAlgorithm::estimateGreenLight()
     steadyStateGA.selectScores( GAStatistics::AllScores );
     steadyStateGA.evolve();
 
-    qDebug() << "Best: " << Helper::toDec( steadyStateGA.population().best() );
-
-    return 6000;
+    return ( Helper::toDec( steadyStateGA.population().best() ) * 1000 );
 }
 
 QVector<int> OneSubcycleAlgorithm::startAlgorithm()
