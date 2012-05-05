@@ -3,6 +3,7 @@
 #include "../GA/GASStateGA.h"
 #include "../GA/GA1DBinStrGenome.h"
 #include "helper.h"
+#include "../Logger/logger.h"
 
 /// GENETIC ALGORITHM FUNCTIONS ///
 float objective( GAGenome& genome )
@@ -34,6 +35,8 @@ int OneSubcycleAlgorithm::estimateGreenLight()
     steadyStateGA.flushFrequency( m_flushFrequency );
     steadyStateGA.selectScores( GAStatistics::AllScores );
     steadyStateGA.evolve();
+
+    LOG_INFO( "Best genome time: %i", Helper::toDec( steadyStateGA.population().best() ) * 1000 );
 
     return ( Helper::toDec( steadyStateGA.population().best() ) * 1000 );
 }

@@ -1,5 +1,6 @@
 #include "helper.h"
 #include "../GA/GA1DBinStrGenome.h"
+#include "../GA/GA1DArrayGenome.h"
 #include "../GA/GAGenome.h"
 #include "../GA/gaid.h"
 #include "../Logger/logger.h"
@@ -13,6 +14,15 @@ GA1DBinaryStringGenome& Helper::genomeToBinaryGenome( GAGenome& genome )
     GA1DBinaryStringGenome& binaryGenome = ( GA1DBinaryStringGenome & )genome;
 
     return binaryGenome;
+}
+
+GA1DArrayGenome& Helper::genomeToArrayGenome( GAGenome& genome )
+{
+    Q_ASSERT( genome.classID() == GAID::ArrayGenome );
+
+    GA1DArrayGenome& arrayGenome = ( GA1DArrayGenome & )genome;
+
+    return arrayGenome;
 }
 
 Junction* Helper::userDataToJunction( GAGenome& genome )
