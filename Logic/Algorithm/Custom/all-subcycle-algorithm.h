@@ -11,7 +11,7 @@ public:
 
     QVector<int> startAlgorithm();
 
-    int objective( QVector<int> vector, Junction *junction );
+    float objective( QVector<int> vector, Junction *junction );
     int theSumOfTheRemainingVehiclesAtJunction( Junction *junction );
     int howMuchVehiclesAtLaneWillDrive( const int& subcycleId, const int& numberVehiclesOnLane );
     void setAlphaParam( const int& numberOfVehiclesThatWillDrive, Junction * junction );
@@ -19,8 +19,8 @@ public:
 
 private:
     QVector<int> m_timeVector;
-    int m_totalTimes;
-    int m_numberOfVehiclesThatWillDrive;
+    float m_totalTimes;
+    float m_numberOfVehiclesThatWillDrive;
     int m_alpha;
     int m_magicE;
 

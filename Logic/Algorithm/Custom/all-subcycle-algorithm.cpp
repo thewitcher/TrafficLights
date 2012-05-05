@@ -27,7 +27,7 @@ QVector<int> AllSubcycleAlgorithm::startAlgorithm()
     return timeVector;
 }
 
-int AllSubcycleAlgorithm::objective( QVector<int> vector, Junction *junction )
+float AllSubcycleAlgorithm::objective( QVector<int> vector, Junction *junction )
 {
     float currentScore = 0.0;
     m_timeVector = vector;
