@@ -16,18 +16,18 @@ GA1DBinaryStringGenome& Helper::genomeToBinaryGenome( GAGenome& genome )
     return binaryGenome;
 }
 
-GA1DArrayGenome& Helper::genomeToArrayGenome( GAGenome& genome )
+GA1DArrayGenome<int>& Helper::genomeToArrayGenome( GAGenome& genome )
 {
     Q_ASSERT( genome.classID() == GAID::ArrayGenome );
 
-    GA1DArrayGenome& arrayGenome = ( GA1DArrayGenome & )genome;
+    GA1DArrayGenome<int>& arrayGenome = ( GA1DArrayGenome<int> & )genome;
 
     return arrayGenome;
 }
 
-Junction* Helper::userDataToJunction( GAGenome& genome )
+UserPackage* Helper::userDataToJunction( GAGenome& genome )
 {
-    return reinterpret_cast<Junction*>( genome.userData() );
+    return reinterpret_cast<UserPackage*>( genome.userData() );
 }
 
 int Helper::toDec( GAGenome& genome )

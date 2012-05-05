@@ -4,11 +4,21 @@
 #include "../GA/GA1DBinStrGenome.h"
 #include "helper.h"
 #include "../Logger/logger.h"
+#include "user-package.h"
 
 /// GENETIC ALGORITHM FUNCTIONS ///
 float objective( GAGenome& genome )
 {
-    Q_UNUSED( genome );
+    //GA1DBinaryStringGenome &binaryGenome = Helper::genomeToBinaryGenome( genome );
+
+    int greenTime = 0;
+    int vehicleCountOnTheRestSubcycles = 0;
+    double averageWaitingTime = 0.0;
+
+    /// t1 - how many seconds will be added to total waiting time
+    int t1 = greenTime * vehicleCountOnTheRestSubcycles;
+    /// t2 - how many seconds will be subtracted from total waiting time
+    int t2 = greenTime * averageWaitingTime;
 
     return 1.0;
 }
@@ -21,7 +31,9 @@ OneSubcycleAlgorithm::OneSubcycleAlgorithm( Junction *junction ):
 
 int OneSubcycleAlgorithm::estimateGreenLight()
 {
-    GA1DBinaryStringGenome genome( m_genomeSize, objective, m_junction );
+    UserPackage* userPackage = new UserPackage( m_junction, this );
+
+    GA1DBinaryStringGenome genome( m_genomeSize, objective, userPackage );
 
     GASteadyStateGA steadyStateGA( genome );
 
@@ -37,6 +49,8 @@ int OneSubcycleAlgorithm::estimateGreenLight()
     steadyStateGA.evolve();
 
     LOG_INFO( "Best genome time: %i", Helper::toDec( steadyStateGA.population().best() ) * 1000 );
+
+    delete userPackage;
 
     return ( Helper::toDec( steadyStateGA.population().best() ) * 1000 );
 }
@@ -75,7 +89,6 @@ QVector<int> OneSubcycleAlgorithm::startAlgorithm()
 
     return vector;
 }
-
 
 VehicleCountManager::SubCycle OneSubcycleAlgorithm::chooseTheMostBlockSubcycleForBladzio( Junction *junction )
 {
