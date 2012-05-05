@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'junction.h'
 **
-** Created: Wed May 2 09:17:48 2012
+** Created: Sat May 5 19:54:32 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_Junction[] = {
        5,       // revision
        0,       // classname
        0,    0, // classinfo
-       2,   14, // methods
+       4,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -33,6 +33,8 @@ static const uint qt_meta_data_Junction[] = {
  // slots: signature, parameters, type, tag, flags
       31,   10,    9,    9, 0x09,
       67,   10,    9,    9, 0x09,
+     110,    9,    9,    9, 0x09,
+     138,  127,    9,    9, 0x09,
 
        0        // eod
 };
@@ -41,6 +43,8 @@ static const char qt_meta_stringdata_Junction[] = {
     "Junction\0\0checkpointId,vehicle\0"
     "addVehicleToStatistic(int,Vehicle*)\0"
     "subtractVehicleFromStatistic(int,Vehicle*)\0"
+    "startAlgorithm()\0timeVector\0"
+    "setTimeVectorByAlgorithm(QVector<int>)\0"
 };
 
 const QMetaObject Junction::staticMetaObject = {
@@ -74,9 +78,11 @@ int Junction::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         switch (_id) {
         case 0: addVehicleToStatistic((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< Vehicle*(*)>(_a[2]))); break;
         case 1: subtractVehicleFromStatistic((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< Vehicle*(*)>(_a[2]))); break;
+        case 2: startAlgorithm(); break;
+        case 3: setTimeVectorByAlgorithm((*reinterpret_cast< const QVector<int>(*)>(_a[1]))); break;
         default: ;
         }
-        _id -= 2;
+        _id -= 4;
     }
     return _id;
 }

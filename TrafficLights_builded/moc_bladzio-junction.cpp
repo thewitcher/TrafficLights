@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'bladzio-junction.h'
 **
-** Created: Wed May 2 09:17:49 2012
+** Created: Sat May 5 19:54:34 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -31,14 +31,14 @@ static const uint qt_meta_data_BladzioJunction[] = {
        0,       // signalCount
 
  // slots: signature, parameters, type, tag, flags
-      17,   16,   16,   16, 0x08,
-      33,   16,   16,   16, 0x08,
-      50,   16,   16,   16, 0x08,
-      66,   16,   16,   16, 0x08,
-      83,   16,   16,   16, 0x08,
-     103,   16,   16,   16, 0x08,
-     124,   16,   16,   16, 0x08,
-     144,   16,   16,   16, 0x08,
+      17,   16,   16,   16, 0x0a,
+      33,   16,   16,   16, 0x0a,
+      50,   16,   16,   16, 0x0a,
+      66,   16,   16,   16, 0x0a,
+      83,   16,   16,   16, 0x0a,
+     103,   16,   16,   16, 0x0a,
+     124,   16,   16,   16, 0x0a,
+     144,   16,   16,   16, 0x0a,
 
        0        // eod
 };

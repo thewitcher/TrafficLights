@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'root-window.h'
 **
-** Created: Sun Apr 29 15:25:58 2012
+** Created: Sat May 5 19:54:23 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!

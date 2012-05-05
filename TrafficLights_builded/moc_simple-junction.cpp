@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'simple-junction.h'
 **
-** Created: Wed May 2 09:17:48 2012
+** Created: Sat May 5 19:54:33 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -31,12 +31,12 @@ static const uint qt_meta_data_SimpleJunction[] = {
        0,       // signalCount
 
  // slots: signature, parameters, type, tag, flags
-      16,   15,   15,   15, 0x08,
-      32,   15,   15,   15, 0x08,
-      49,   15,   15,   15, 0x08,
-      65,   15,   15,   15, 0x08,
-      85,   15,   15,   15, 0x08,
-     106,   15,   15,   15, 0x08,
+      16,   15,   15,   15, 0x0a,
+      32,   15,   15,   15, 0x0a,
+      49,   15,   15,   15, 0x0a,
+      65,   15,   15,   15, 0x0a,
+      85,   15,   15,   15, 0x0a,
+     106,   15,   15,   15, 0x0a,
 
        0        // eod
 };
