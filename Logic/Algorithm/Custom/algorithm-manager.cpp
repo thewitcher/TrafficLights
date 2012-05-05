@@ -8,10 +8,9 @@
 AlgorithmManager::AlgorithmManager( Junction* junction ):
     QObject( NULL ),
     m_baseAlgorithm( NULL ),
-    m_junction( junction ),
     m_finished( true )
 {
-    updateAlgorithm();
+    updateAlgorithm( junction );
 
     Q_ASSERT( m_baseAlgorithm != NULL );
 
@@ -35,21 +34,21 @@ void AlgorithmManager::start()
     }
 }
 
-void AlgorithmManager::updateAlgorithm()
+void AlgorithmManager::updateAlgorithm( Junction* junction )
 {
-    QString type = Settings::settingsInstance().value( "ALGORITHM_TYPE", "NORMAL"/*"ONE_SUBCYCLE_ALGORITHM"*/ ).toString();
+    QString type = Settings::settingsInstance().value( "ALGORITHM_TYPE", "ONE_SUBCYCLE_ALGORITHM" ).toString();
 
     if( type == "NORMAL" )
     {
-        m_baseAlgorithm = new NormalAlgorithm( m_junction );
+        m_baseAlgorithm = new NormalAlgorithm( junction );
     }
     else if( type == "ONE_SUBCYCLE_ALGORITHM" )
     {
-        m_baseAlgorithm = new OneSubcycleAlgorithm( m_junction );
+        m_baseAlgorithm = new OneSubcycleAlgorithm( junction );
     }
     else if( type == "ALL_SUBCYCLE_ALGORITHM" )
     {
-        m_baseAlgorithm = new AllSubcycleAlgorithm( m_junction );
+        m_baseAlgorithm = new AllSubcycleAlgorithm( junction );
     }
 }
 

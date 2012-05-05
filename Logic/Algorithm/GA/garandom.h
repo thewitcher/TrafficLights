@@ -157,10 +157,6 @@ inline float GARandomFloat(float low, float high){
 #endif
 
 
-
-
-
-
 unsigned int GAGetRandomSeed();
 void GARandomSeed(unsigned int seed=0);
 void GAResetRNG(unsigned int seed);

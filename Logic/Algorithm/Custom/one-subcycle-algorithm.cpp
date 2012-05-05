@@ -1,14 +1,15 @@
 #include "one-subcycle-algorithm.h"
 #include "../Ui/TrafficLights_manager/junction.h"
-#include "../GA/GAGenome.h"
 #include "../GA/GASStateGA.h"
+#include "../GA/GA1DBinStrGenome.h"
+#include "helper.h"
 
 /// GENETIC ALGORITHM FUNCTIONS ///
 float objective( GAGenome& genome )
 {
     Q_UNUSED( genome );
 
-    return 0.0;
+    return 1.0;
 }
 ///////////////////////////////////
 
@@ -19,6 +20,23 @@ OneSubcycleAlgorithm::OneSubcycleAlgorithm( Junction *junction ):
 
 int OneSubcycleAlgorithm::estimateGreenLight()
 {
+    GA1DBinaryStringGenome genome( m_genomeSize, objective, m_junction );
+
+    GASteadyStateGA steadyStateGA( genome );
+
+    steadyStateGA.populationSize( m_populationSize );
+    steadyStateGA.pReplacement( m_replacementProbability );
+    steadyStateGA.nGenerations( m_generations );
+    steadyStateGA.pMutation( m_mutation );
+    steadyStateGA.pCrossover( m_crossover );
+    steadyStateGA.scoreFilename( m_logFile );
+    steadyStateGA.scoreFrequency( m_scoreFrequency );
+    steadyStateGA.flushFrequency( m_flushFrequency );
+    steadyStateGA.selectScores( GAStatistics::AllScores );
+    steadyStateGA.evolve();
+
+    qDebug() << "Best: " << Helper::toDec( steadyStateGA.population().best() );
+
     return 6000;
 }
 

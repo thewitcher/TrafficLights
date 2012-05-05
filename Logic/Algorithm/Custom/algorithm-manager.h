@@ -23,7 +23,7 @@ private:
     Junction* m_junction;
     bool m_finished;
 
-    void updateAlgorithm();
+    void updateAlgorithm( Junction* junction );
 
 public slots:
     void timeVectorChanged();

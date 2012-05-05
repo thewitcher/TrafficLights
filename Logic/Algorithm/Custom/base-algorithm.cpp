@@ -3,7 +3,7 @@
 
 BaseAlgorithm::BaseAlgorithm( Junction *junction ):
     QThread( NULL ),
-    m_genomeSize( 2 ),
+    m_genomeSize( 10 ),
     m_replacementProbability( 0.5 ),
     m_populationSize( 10 ),
     m_generations( 5 ),

@@ -4,14 +4,18 @@ SOURCES += \
     ../Logic/Algorithm/Custom/base-algorithm.cpp \
     ../Logic/Algorithm/Custom/algorithm-manager.cpp \
     ../Logic/Algorithm/Custom/one-subcycle-algorithm.cpp \
-    ../Logic/Algorithm/Custom/all-subcycle-algorithm.cpp
+    ../Logic/Algorithm/Custom/all-subcycle-algorithm.cpp \
+    ../Logic/Algorithm/Custom/helper.cpp \
+    ../Logic/Algorithm/Custom/mutex-singleton.cpp
 
 HEADERS += \
     ../Logic/Algorithm/Custom/normal-algorithm.h \
     ../Logic/Algorithm/Custom/base-algorithm.h \
     ../Logic/Algorithm/Custom/algorithm-manager.h \
     ../Logic/Algorithm/Custom/one-subcycle-algorithm.h \
-    ../Logic/Algorithm/Custom/all-subcycle-algorithm.h
+    ../Logic/Algorithm/Custom/all-subcycle-algorithm.h \
+    ../Logic/Algorithm/Custom/helper.h \
+    ../Logic/Algorithm/Custom/mutex-singleton.h
 
 # GALib
 SOURCES += \

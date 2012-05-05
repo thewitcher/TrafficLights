@@ -9,6 +9,7 @@
   Random number stuff for use in GAlib.
 ---------------------------------------------------------------------------- */
 #include "garandom.h"
+#include "../Custom/mutex-singleton.h"
 #include <time.h>
 #include <math.h>
 #include <string.h>
@@ -298,6 +299,9 @@ gasran2(unsigned int seed) {
 
 float
 garan2() {
+
+    MutexSingleton::mutexInstance().lock();
+
   int j;
   long k;
   float temp;
@@ -312,8 +316,17 @@ garan2() {
   iy=iv[j]-idum2;
   iv[j] = idum;
   if (iy < 1) iy += IMM1;
-  if ((temp=AM*iy) > RNMX) return RNMX;
-  else return temp;
+
+  if ((temp=AM*iy) > RNMX)
+  {
+      MutexSingleton::mutexInstance().unlock();
+      return RNMX;
+  }
+  else
+  {
+      MutexSingleton::mutexInstance().unlock();
+      return temp;
+  }
 }
 
 #undef IM1
