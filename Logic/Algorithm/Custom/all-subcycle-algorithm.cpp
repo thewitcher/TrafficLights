@@ -1,7 +1,58 @@
 #include "all-subcycle-algorithm.h"
 #include "../Ui/TrafficLights_manager/junction.h"
-//#include "../Ui/TrafficLights_manager/vehicle-count-manager.h"
+#include "../Ui/TrafficLights_manager/vehicle-count-manager.h"
+#include "helper.h"
+#include "../GA/GA1DArrayGenome.h"
 #include <cmath>
+
+float bladzioObjective( GAGenome& genome )
+{
+    float currentScore = 0.0;
+    GA1DArrayGenome<int>& arrayGenome = Helper::genomeToArrayGenome( genome );
+    Junction *junction = Helper::userDataToJunction( genome );
+
+    AllSubcycleAlgorithm algorithm( junction );
+
+    for( int i = 0; i < arrayGenome.size(); i++ )
+    {
+        algorithm.m_timeVector[ i ] = arrayGenome.gene( i );
+    }
+
+    int countOfVehiclesRemainingAtJunction = algorithm.theSumOfTheRemainingVehiclesAtJunction( junction );
+
+    for( int i = 0; i < arrayGenome.size(); i++ )
+    {
+        algorithm.m_totalTimes += arrayGenome.gene( i );
+    }
+
+    currentScore = ((((( algorithm.m_numberOfVehiclesThatWillDrive / algorithm.m_totalTimes ) * 1000 ) -
+            countOfVehiclesRemainingAtJunction ) * exp( algorithm.m_alpha ) ) + algorithm.m_magicE );
+
+    return currentScore;
+}
+
+void initialize( GAGenome& genome )
+{
+    Junction *junction = Helper::userDataToJunction( genome );
+    GA1DArrayGenome<int>& arrayGenome = Helper::genomeToArrayGenome( genome );
+    switch( junction->junctionType() )
+    {
+    case Junction::BLADZIO:
+        for( unsigned int position = 0; position < 4; position++ )
+        {
+            arrayGenome.gene( position, 7 );
+        }
+        break;
+    case Junction::SIMPLE:
+        for( unsigned int position = 0; position < 3; position++ )
+        {
+            arrayGenome.gene( position, 7 );
+        }
+        break;
+    default:
+        break;
+    }
+}
 
 AllSubcycleAlgorithm::AllSubcycleAlgorithm( Junction *junction ):
     BaseAlgorithm( junction ),
@@ -13,35 +64,9 @@ AllSubcycleAlgorithm::AllSubcycleAlgorithm( Junction *junction ):
 QVector<int> AllSubcycleAlgorithm::startAlgorithm()
 {
     QVector<int> timeVector;
-    switch( m_junction->junctionType() )
-    {
-    case Junction::BLADZIO:
-        break;
-    case Junction::SIMPLE:
-//        timeVector = evalForSimple();
-        break;
-    default:
-        break;
-    }
+
 
     return timeVector;
-}
-
-float AllSubcycleAlgorithm::objective( QVector<int> vector, Junction *junction )
-{
-    float currentScore = 0.0;
-    m_timeVector = vector;
-    int countOfVehiclesRemainingAtJunction = theSumOfTheRemainingVehiclesAtJunction( junction );
-
-    for( int i = 0; i < vector.size(); i++ )
-    {
-        m_totalTimes += vector.at( i );
-    }
-
-    currentScore = ((((( m_numberOfVehiclesThatWillDrive / m_totalTimes ) * 1000) -
-            countOfVehiclesRemainingAtJunction ) * exp( m_alpha ) ) + m_magicE );
-
-    return currentScore;
 }
 
 int AllSubcycleAlgorithm::theSumOfTheRemainingVehiclesAtJunction( Junction *junction  )
