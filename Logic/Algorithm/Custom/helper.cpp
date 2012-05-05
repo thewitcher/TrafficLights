@@ -25,9 +25,9 @@ GA1DArrayGenome<int>& Helper::genomeToArrayGenome( GAGenome& genome )
     return arrayGenome;
 }
 
-Junction* Helper::userDataToJunction( GAGenome& genome )
+UserPackage* Helper::userDataToJunction( GAGenome& genome )
 {
-    return reinterpret_cast<Junction*>( genome.userData() );
+    return reinterpret_cast<UserPackage*>( genome.userData() );
 }
 
 int Helper::toDec( GAGenome& genome )

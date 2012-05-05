@@ -15,7 +15,8 @@ HEADERS += \
     ../Logic/Algorithm/Custom/one-subcycle-algorithm.h \
     ../Logic/Algorithm/Custom/all-subcycle-algorithm.h \
     ../Logic/Algorithm/Custom/helper.h \
-    ../Logic/Algorithm/Custom/mutex-singleton.h
+    ../Logic/Algorithm/Custom/mutex-singleton.h \
+    ../Logic/Algorithm/Custom/user-package.h
 
 # GALib
 SOURCES += \
@@ -95,3 +96,6 @@ HEADERS += \
            ../Logic/Algorithm/GA/GA3DArrayGenome.h \
            ../Logic/Algorithm/GA/GAEvalData.h \
            ../Logic/Algorithm/GA/GA1DBinStrGenome.h \
+
+
+
