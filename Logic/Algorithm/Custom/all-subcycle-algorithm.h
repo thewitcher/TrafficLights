@@ -2,8 +2,11 @@
 #define ALLSUBCYCLEALGORITHM_H
 
 #include "base-algorithm.h"
-#include "../Ui/TrafficLights_manager/vehicle-count-manager.h"
+//#include "../Ui/TrafficLights_manager/vehicle-count-manager.h"
 
+class Junction;
+class GAGenome;
+class UserPackage;
 class AllSubcycleAlgorithm : public BaseAlgorithm
 {
 public:
@@ -11,18 +14,20 @@ public:
 
     QVector<int> startAlgorithm();
 
-    float objective( QVector<int> vector, Junction *junction );
     int theSumOfTheRemainingVehiclesAtJunction( Junction *junction );
     int howMuchVehiclesAtLaneWillDrive( const int& subcycleId, const int& numberVehiclesOnLane );
     void setAlphaParam( const int& numberOfVehiclesThatWillDrive, Junction * junction );
     int checkAllSubcycles( const int& vehiclesCountAtSubcycle, const int& time );
 
-private:
     QVector<int> m_timeVector;
     float m_totalTimes;
     float m_numberOfVehiclesThatWillDrive;
     int m_alpha;
     int m_magicE;
+
+    void clearAll();
+
+    QVector<int> setParameters( int size );
 
     int evalForSimpleJunction( const Junction *junction );
     int evalForBladzioJunction( const Junction *junction );

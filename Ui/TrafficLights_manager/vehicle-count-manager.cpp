@@ -237,6 +237,32 @@ int VehicleCountManager::vehicleCountOnLane( const Junction* junction, Lane lane
       return count;
 }
 
+int VehicleCountManager::sumVehiclesAtJunction( const Junction *junction )
+{
+    int score = 0;
+    QList<SubCycle> list;
+
+    if( junction->id() != 2 )
+    {
+        list << SUBCYCLE_0 << SUBCYCLE_1 << SUBCYCLE_2;
+        for( int i = 0; i < list.size(); i++ )
+        {
+            score += vehicleCountOnSubcycleForSimpleJunction( junction, list.at( i ) );
+        }
+    }
+    else
+    {
+        list << SUBCYCLE_0 << SUBCYCLE_1 << SUBCYCLE_2 << SUBCYCLE_3;
+        for( int i = 0; i < list.size(); i++ )
+        {
+            score += vehicleCountOnSubcycleForBladzioJunction( junction, list.at( i ) );
+//            qDebug() << "score: " << score << ", junctionId: " << junction->id();
+        }
+    }
+
+    return score;
+}
+
 /*!
  * Undermentioned static methods return number of vehicles on lane. To more clarify like these methods work
  * I describe all of junctions:

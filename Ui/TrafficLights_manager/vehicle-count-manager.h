@@ -51,6 +51,7 @@ public:
     /*! Returns the average waiting vehicles time on appropriate Junction for a given subcycle. */
     static float averageVehicleWaitingTimeOnSubcycle( const Junction* junction, SubCycle subcycle );
 
+    static int sumVehiclesAtJunction( const Junction* junction );
 private:
     /// static int vehicleCountOnLaneI - I is a junction id
     static int vehicleCountOnLane0( const QHash<int,int>& vehicleCountLanes, Lane lane );
@@ -76,6 +77,7 @@ private:
     static int vehicleCountOnSubcycleForBladzioJunction( const Junction* junction, SubCycle subcycle );
     static int wholeVehicleWaitingTimeForSimpleJunction( const Junction* junction, SubCycle subcycle );
     static int wholeVehicleWaitingTimeForBladzioJunction( const Junction* junction, SubCycle subcycle );
+
 };
 
 #endif // VEHICLECOUNTMANAGER_H
