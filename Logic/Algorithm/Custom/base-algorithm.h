@@ -13,6 +13,7 @@ public:
 
     void run();
     const QVector<int>& timeVector() const;
+    Junction* junction();
 
 protected:
     const unsigned int m_genomeSize;

@@ -4,36 +4,43 @@
 #include "../GA/GA1DBinStrGenome.h"
 #include "helper.h"
 #include "../Logger/logger.h"
-#include "user-package.h"
+#include "../Ui/TrafficLights_manager/vehicle-count-manager.h"
 
 /// GENETIC ALGORITHM FUNCTIONS ///
 float objective( GAGenome& genome )
 {
     //GA1DBinaryStringGenome &binaryGenome = Helper::genomeToBinaryGenome( genome );
+    OneSubcycleAlgorithm* subcycleAlgorithm = Helper::userDataToOneSubcycleAlgorithm( genome );
 
-    int greenTime = 0;
-    int vehicleCountOnTheRestSubcycles = 0;
-    double averageWaitingTime = 0.0;
+    float result = 0;
+
+    int greenTime = Helper::toDec( genome );
+    int vehicleCountOnTheRestSubcycles = VehicleCountManager::vehicleCountOnRestSubcycle( subcycleAlgorithm->junction(),
+                                                                                          subcycleAlgorithm->data().subcycle );
+    float averageWaitingTime = VehicleCountManager::averageVehicleWaitingTimeOnSubcycle( subcycleAlgorithm->junction(),
+                                                                                         subcycleAlgorithm->data().subcycle );
 
     /// t1 - how many seconds will be added to total waiting time
     int t1 = greenTime * vehicleCountOnTheRestSubcycles;
     /// t2 - how many seconds will be subtracted from total waiting time
-    int t2 = greenTime * averageWaitingTime;
+    float t2 = greenTime * averageWaitingTime;
 
-    return 1.0;
+    ( t2 == 0 ) ? ( result = 0 ) : ( result = 10 * t2 - t1 * ( subcycleAlgorithm->ratio() + 0.001 * greenTime ) );
+
+    return result;
 }
 ///////////////////////////////////
 
 OneSubcycleAlgorithm::OneSubcycleAlgorithm( Junction *junction ):
-    BaseAlgorithm( junction )
+    BaseAlgorithm( junction ),
+    m_wholeTime( 0 ),
+    m_ratio( 0.0 )
 {
 }
 
 int OneSubcycleAlgorithm::estimateGreenLight()
 {
-    UserPackage* userPackage = new UserPackage( m_junction, this );
-
-    GA1DBinaryStringGenome genome( m_genomeSize, objective, userPackage );
+    GA1DBinaryStringGenome genome( m_genomeSize, objective, this );
 
     GASteadyStateGA steadyStateGA( genome );
 
@@ -50,8 +57,6 @@ int OneSubcycleAlgorithm::estimateGreenLight()
 
     LOG_INFO( "Best genome time: %i", Helper::toDec( steadyStateGA.population().best() ) * 1000 );
 
-    delete userPackage;
-
     return ( Helper::toDec( steadyStateGA.population().best() ) * 1000 );
 }
 
@@ -59,16 +64,15 @@ QVector<int> OneSubcycleAlgorithm::startAlgorithm()
 {
     clear();
 
-    Data data;
-    data.greenLine = 6000;
-    data.subcycle = VehicleCountManager::SUBCYCLE_0;
+    m_data.greenLine = 6000;
+    m_data.subcycle = VehicleCountManager::SUBCYCLE_0;
 
     switch( m_junction->junctionType() )
     {
     case Junction::BLADZIO:
-        data = startBladzio( m_junction );
+        m_data = startBladzio( m_junction );
     case Junction::SIMPLE:
-        data = startSimple( m_junction );
+        m_data = startSimple( m_junction );
     default:
         break;
     }
@@ -77,9 +81,9 @@ QVector<int> OneSubcycleAlgorithm::startAlgorithm()
     /// 4 - subcycles count
     for( int i = 0 ; i < 4 ; i++ )
     {
-        if( i == data.subcycle )
+        if( i == m_data.subcycle )
         {
-            vector << data.greenLine;
+            vector << m_data.greenLine;
         }
         else
         {
@@ -118,6 +122,8 @@ VehicleCountManager::SubCycle OneSubcycleAlgorithm::chooseTheMostBlockSubcycleFo
         result = VehicleCountManager::SUBCYCLE_3;
     }
 
+    ( m_wholeTime == 0 ) ? ( m_ratio = 0 ) : ( m_ratio = max / m_wholeTime );
+
     return result;
 }
 
@@ -142,6 +148,8 @@ VehicleCountManager::SubCycle OneSubcycleAlgorithm::chooseTheMostBlockSubcycleFo
         max = m_times.at( 2 );
         result = VehicleCountManager::SUBCYCLE_2;
     }
+
+    ( m_wholeTime == 0 ) ? ( m_ratio = 0 ) : ( m_ratio = max / m_wholeTime );
 
     return result;
 }
@@ -168,4 +176,14 @@ OneSubcycleAlgorithm::Data OneSubcycleAlgorithm::startSimple( Junction *junction
     data.subcycle = chooseTheMostBlockSubcycleForSimple( junction );
 
     return data;
+}
+
+float OneSubcycleAlgorithm::ratio() const
+{
+    return m_ratio;
+}
+
+OneSubcycleAlgorithm::Data OneSubcycleAlgorithm::data() const
+{
+    return m_data;
 }

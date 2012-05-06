@@ -25,9 +25,19 @@ GA1DArrayGenome<int>& Helper::genomeToArrayGenome( GAGenome& genome )
     return arrayGenome;
 }
 
-UserPackage* Helper::userDataToJunction( GAGenome& genome )
+BaseAlgorithm* Helper::userDataToBaseAlgorithm( GAGenome &genome )
 {
-    return reinterpret_cast<UserPackage*>( genome.userData() );
+    return reinterpret_cast<BaseAlgorithm*>( genome.userData() );
+}
+
+OneSubcycleAlgorithm* Helper::userDataToOneSubcycleAlgorithm( GAGenome &genome )
+{
+    return reinterpret_cast<OneSubcycleAlgorithm*>( genome.userData() );
+}
+
+AllSubcycleAlgorithm* Helper::userDataToAllSubcycleAlgorithm( GAGenome &genome )
+{
+    return reinterpret_cast<AllSubcycleAlgorithm*>( genome.userData() );
 }
 
 int Helper::toDec( GAGenome& genome )

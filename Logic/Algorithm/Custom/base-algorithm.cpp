@@ -25,3 +25,8 @@ const QVector<int>& BaseAlgorithm::timeVector() const
 {
     return m_timeVector;
 }
+
+Junction* BaseAlgorithm::junction()
+{
+    return m_junction;
+}

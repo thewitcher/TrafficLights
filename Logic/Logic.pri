@@ -15,8 +15,7 @@ HEADERS += \
     ../Logic/Algorithm/Custom/one-subcycle-algorithm.h \
     ../Logic/Algorithm/Custom/all-subcycle-algorithm.h \
     ../Logic/Algorithm/Custom/helper.h \
-    ../Logic/Algorithm/Custom/mutex-singleton.h \
-    ../Logic/Algorithm/Custom/user-package.h
+    ../Logic/Algorithm/Custom/mutex-singleton.h
 
 # GALib
 SOURCES += \

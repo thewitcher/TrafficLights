@@ -35,15 +35,21 @@ public:
 
     /*! Returns the number vehicles on appropriate Junction for a given subcycle.*/
     static int vehicleCountOnSubcycle( const Junction* junction, SubCycle subcycle );
-    
+
+    /*! Returns the number of vehicles on all Junction without given subcycle.*/
+    static int vehicleCountOnRestSubcycle( const Junction* junction, SubCycle subcycle );
+
     /*! Returns the number vehicles on appropriate Junction for a given lane. */    
     static int vehicleCountOnLane( const Junction* junction, Lane lane );
-    
+
     /*! Returns the total waiting time vehicles on appropriate Junction for a given subcycle. */
     static int wholeVehicleWaitingTimeForSubcycle( const Junction* junction, SubCycle subcycle );
     
     /*! Returns the total waiting time vehicles on appropriate Junction for a given lane. */    
     static int wholeVehicleWaitingTimeOnLane( const Junction* junction, Lane lane );
+
+    /*! Returns the average waiting vehicles time on appropriate Junction for a given subcycle. */
+    static float averageVehicleWaitingTimeOnSubcycle( const Junction* junction, SubCycle subcycle );
 
 private:
     /// static int vehicleCountOnLaneI - I is a junction id

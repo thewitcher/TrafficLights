@@ -6,14 +6,87 @@ int VehicleCountManager::vehicleCountOnSubcycle( const Junction* junction, SubCy
 {
     int count = 0;
 
-    if( junction->id() != 2 )
+    if( junction->junctionType() != Junction::BLADZIO )
     {
         count = vehicleCountOnSubcycleForSimpleJunction( junction, subcycle );
     }
-    else{
+    else
+    {
         count = vehicleCountOnSubcycleForBladzioJunction( junction, subcycle );
     }
+
     return count;
+}
+
+int VehicleCountManager::vehicleCountOnRestSubcycle( const Junction *junction, SubCycle subcycle )
+{
+    int count = 0;
+
+    if( junction->junctionType() != Junction::BLADZIO )
+    {
+        switch( subcycle )
+        {
+        case SUBCYCLE_0:
+            count = vehicleCountOnSubcycleForSimpleJunction( junction, SUBCYCLE_1 )
+                    + vehicleCountOnSubcycleForSimpleJunction( junction, SUBCYCLE_2 );
+            break;
+        case SUBCYCLE_1:
+            count = vehicleCountOnSubcycleForSimpleJunction( junction, SUBCYCLE_0 )
+                    + vehicleCountOnSubcycleForSimpleJunction( junction, SUBCYCLE_2 );
+            break;
+        case SUBCYCLE_2:
+            count = vehicleCountOnSubcycleForSimpleJunction( junction, SUBCYCLE_0 )
+                    + vehicleCountOnSubcycleForSimpleJunction( junction, SUBCYCLE_1 );
+            break;
+        default:
+            LOG_INFO( "Wrong subcycle: %i", subcycle );
+            break;
+        }
+    }
+    else
+    {
+        switch( subcycle )
+        {
+        case SUBCYCLE_0:
+            count = vehicleCountOnSubcycleForSimpleJunction( junction, SUBCYCLE_1 )
+                    + vehicleCountOnSubcycleForSimpleJunction( junction, SUBCYCLE_2 )
+                    + vehicleCountOnSubcycleForSimpleJunction( junction, SUBCYCLE_3 );
+            break;
+        case SUBCYCLE_1:
+            count = vehicleCountOnSubcycleForSimpleJunction( junction, SUBCYCLE_0 )
+                    + vehicleCountOnSubcycleForSimpleJunction( junction, SUBCYCLE_2 )
+                    + vehicleCountOnSubcycleForSimpleJunction( junction, SUBCYCLE_3 );
+            break;
+        case SUBCYCLE_2:
+            count = vehicleCountOnSubcycleForSimpleJunction( junction, SUBCYCLE_0 )
+                    + vehicleCountOnSubcycleForSimpleJunction( junction, SUBCYCLE_1 )
+                    + vehicleCountOnSubcycleForSimpleJunction( junction, SUBCYCLE_3 );
+            break;
+        case SUBCYCLE_3:
+            count = vehicleCountOnSubcycleForSimpleJunction( junction, SUBCYCLE_0 )
+                    + vehicleCountOnSubcycleForSimpleJunction( junction, SUBCYCLE_1 )
+                    + vehicleCountOnSubcycleForSimpleJunction( junction, SUBCYCLE_2 );
+            break;
+        default:
+            LOG_INFO( "Wrong subcycle: %i", subcycle );
+            break;
+        }
+    }
+
+    return count;
+}
+
+float VehicleCountManager::averageVehicleWaitingTimeOnSubcycle( const Junction *junction, SubCycle subcycle )
+{
+    float wholeWaitingTime = wholeVehicleWaitingTimeForSubcycle( junction, subcycle );
+    int vehicleCount = vehicleCountOnSubcycle( junction, subcycle );
+
+    if( vehicleCount == 0 )
+    {
+        return 0;
+    }
+
+    return ( wholeWaitingTime / vehicleCount );
 }
 
 int VehicleCountManager::vehicleCountOnSubcycleForSimpleJunction( const Junction* junction, SubCycle subcycle )
