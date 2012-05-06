@@ -64,15 +64,12 @@ QVector<int> OneSubcycleAlgorithm::startAlgorithm()
 {
     clear();
 
-    m_data.greenLine = 6000;
-    m_data.subcycle = VehicleCountManager::SUBCYCLE_0;
-
     switch( m_junction->junctionType() )
     {
     case Junction::BLADZIO:
-        m_data = startBladzio( m_junction );
+        startBladzio( m_junction );
     case Junction::SIMPLE:
-        m_data = startSimple( m_junction );
+        startSimple( m_junction );
     default:
         break;
     }
@@ -83,7 +80,7 @@ QVector<int> OneSubcycleAlgorithm::startAlgorithm()
     {
         if( i == m_data.subcycle )
         {
-            vector << m_data.greenLine;
+            vector << m_data.greenTime;
         }
         else
         {
@@ -149,6 +146,11 @@ VehicleCountManager::SubCycle OneSubcycleAlgorithm::chooseTheMostBlockSubcycleFo
         result = VehicleCountManager::SUBCYCLE_2;
     }
 
+    if( junction->id() == 0 )
+    {
+        qDebug() << "Max: " << result;
+    }
+
     ( m_wholeTime == 0 ) ? ( m_ratio = 0 ) : ( m_ratio = max / m_wholeTime );
 
     return result;
@@ -160,22 +162,16 @@ void OneSubcycleAlgorithm::clear()
     m_wholeTime = 0;
 }
 
-OneSubcycleAlgorithm::Data OneSubcycleAlgorithm::startBladzio( Junction* junction )
+void OneSubcycleAlgorithm::startBladzio( Junction* junction )
 {
-    Data data;
-    data.greenLine = estimateGreenLight();
-    data.subcycle = chooseTheMostBlockSubcycleForBladzio( junction );
-
-    return data;
+    m_data.subcycle = chooseTheMostBlockSubcycleForBladzio( junction );
+    m_data.greenTime = estimateGreenLight();
 }
 
-OneSubcycleAlgorithm::Data OneSubcycleAlgorithm::startSimple( Junction *junction )
+void OneSubcycleAlgorithm::startSimple( Junction *junction )
 {
-    Data data;
-    data.greenLine = estimateGreenLight();
-    data.subcycle = chooseTheMostBlockSubcycleForSimple( junction );
-
-    return data;
+    m_data.subcycle = chooseTheMostBlockSubcycleForSimple( junction );
+    m_data.greenTime = estimateGreenLight();
 }
 
 float OneSubcycleAlgorithm::ratio() const

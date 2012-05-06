@@ -13,7 +13,7 @@ public:
     struct Data
     {
         VehicleCountManager::SubCycle subcycle;
-        int greenLine;
+        int greenTime;
     };
 
     OneSubcycleAlgorithm( Junction* junction );
@@ -32,8 +32,8 @@ private:
 
     VehicleCountManager::SubCycle chooseTheMostBlockSubcycleForBladzio( Junction* junction );
     VehicleCountManager::SubCycle chooseTheMostBlockSubcycleForSimple( Junction* junction );
-    Data startBladzio( Junction* junction );
-    Data startSimple( Junction* junction );
+    void startBladzio( Junction* junction );
+    void startSimple( Junction* junction );
     int estimateGreenLight();
 };
 
