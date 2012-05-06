@@ -37,6 +37,9 @@ public:
 
     virtual void runForSubcycles() = 0;
 
+    /// It uses genetic algorithm to create appropriate time vector for that junction.
+    virtual void setTimeVectorByAlgorithm( const QVector<int>& timeVector );
+
 protected:
     Vehicle* firstArrived( int checkpointId );
 
@@ -72,9 +75,6 @@ protected slots:
     void addVehicleToStatistic( int checkpointId, Vehicle* vehicle );
     void subtractVehicleFromStatistic( int checkpointId, Vehicle* vehicle );
     void startAlgorithm();
-
-    /// It uses genetic algorithm to create appropriate time vector for that junction.
-    virtual void setTimeVectorByAlgorithm( const QVector<int>& timeVector );
 
 protected:
 

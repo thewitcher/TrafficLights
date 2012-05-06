@@ -7,14 +7,9 @@
 
 AlgorithmManager::AlgorithmManager( Junction* junction ):
     QObject( NULL ),
-    m_baseAlgorithm( NULL ),
-    m_finished( true )
+    m_baseAlgorithm( NULL )
 {
     updateAlgorithm( junction );
-
-    Q_ASSERT( m_baseAlgorithm != NULL );
-
-    connect( m_baseAlgorithm, SIGNAL(finished()), this, SLOT(timeVectorChanged()) );
 }
 
 AlgorithmManager::~AlgorithmManager()
@@ -27,11 +22,7 @@ AlgorithmManager::~AlgorithmManager()
 
 void AlgorithmManager::start()
 {
-    if( m_finished == true )
-    {
-        m_baseAlgorithm->start();
-        m_finished = false;
-    }
+    m_baseAlgorithm->start();
 }
 
 void AlgorithmManager::updateAlgorithm( Junction* junction )
@@ -50,10 +41,4 @@ void AlgorithmManager::updateAlgorithm( Junction* junction )
     {
         m_baseAlgorithm = new AllSubcycleAlgorithm( junction );
     }
-}
-
-void AlgorithmManager::timeVectorChanged()
-{
-    m_finished = true;
-    emit changeTimeVector( m_baseAlgorithm->timeVector() );
 }

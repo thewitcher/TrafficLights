@@ -6,13 +6,12 @@
 
 class Junction;
 
-class BaseAlgorithm: public QThread
+class BaseAlgorithm
 {
 public:
     BaseAlgorithm( Junction* junction );
 
-    void run();
-    const QVector<int>& timeVector() const;
+    void start();
     Junction* junction();
 
 protected:
@@ -26,10 +25,9 @@ protected:
     const float m_crossover;
     const char* m_logFile;
 
-    QVector<int> m_timeVector;
-    Junction* m_junction;
-
     virtual QVector<int> startAlgorithm() = 0;
+
+    Junction* m_junction;
 };
 
 #endif // BASEALGORITHM_H

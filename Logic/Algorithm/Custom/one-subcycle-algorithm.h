@@ -18,10 +18,8 @@ public:
 
     OneSubcycleAlgorithm( Junction* junction );
 
-    QVector<int> startAlgorithm();
     float ratio() const;
     Data data() const;
-
     void clear();
 
 private:
@@ -35,6 +33,7 @@ private:
     void startBladzio( Junction* junction );
     void startSimple( Junction* junction );
     int estimateGreenLight();
+    QVector<int> startAlgorithm();
 };
 
 #endif // ONESUBCYCLEALGORITHM_H

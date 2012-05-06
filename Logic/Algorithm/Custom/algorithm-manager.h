@@ -20,16 +20,8 @@ public:
 
 private:
     BaseAlgorithm* m_baseAlgorithm;
-    Junction* m_junction;
-    bool m_finished;
 
     void updateAlgorithm( Junction* junction );
-
-public slots:
-    void timeVectorChanged();
-
-signals:
-    void changeTimeVector( const QVector<int>& timeVector );
 };
 
 #endif // ALGORITHMMANAGER_H

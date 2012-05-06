@@ -24,9 +24,6 @@ Junction::Junction( const QVector<TrafficLight *> &junction, QLCDNumber *m_vehic
 {
     m_algorithmManager = new AlgorithmManager( this );
 
-    connect( m_algorithmManager, SIGNAL(changeTimeVector(const QVector<int>&)), this,
-                                 SLOT(setTimeVectorByAlgorithm(const QVector<int>&)) );
-
     startTimer( 10000 );
     setDefaultTimeVector();
     startAlgorithm();

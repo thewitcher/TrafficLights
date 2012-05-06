@@ -146,11 +146,6 @@ VehicleCountManager::SubCycle OneSubcycleAlgorithm::chooseTheMostBlockSubcycleFo
         result = VehicleCountManager::SUBCYCLE_2;
     }
 
-    if( junction->id() == 0 )
-    {
-        qDebug() << "Max: " << result;
-    }
-
     ( m_wholeTime == 0 ) ? ( m_ratio = 0 ) : ( m_ratio = max / m_wholeTime );
 
     return result;

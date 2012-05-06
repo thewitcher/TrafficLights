@@ -2,7 +2,6 @@
 #include "../Ui/TrafficLights_manager/junction.h"
 
 BaseAlgorithm::BaseAlgorithm( Junction *junction ):
-    QThread( NULL ),
     m_genomeSize( 3 ),
     m_replacementProbability( 0.5 ),
     m_populationSize( 10 ),
@@ -16,19 +15,12 @@ BaseAlgorithm::BaseAlgorithm( Junction *junction ):
 {
 }
 
-void BaseAlgorithm::run()
-{
-    m_timeVector.clear();
-
-    m_timeVector = startAlgorithm();
-}
-
-const QVector<int>& BaseAlgorithm::timeVector() const
-{
-    return m_timeVector;
-}
-
 Junction* BaseAlgorithm::junction()
 {
     return m_junction;
+}
+
+void BaseAlgorithm::start()
+{
+    m_junction->setTimeVectorByAlgorithm( startAlgorithm() );
 }
