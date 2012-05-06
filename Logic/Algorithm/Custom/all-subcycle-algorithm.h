@@ -5,6 +5,8 @@
 //#include "../Ui/TrafficLights_manager/vehicle-count-manager.h"
 
 class Junction;
+class GAGenome;
+class UserPackage;
 class AllSubcycleAlgorithm : public BaseAlgorithm
 {
 public:
@@ -17,12 +19,15 @@ public:
     void setAlphaParam( const int& numberOfVehiclesThatWillDrive, Junction * junction );
     int checkAllSubcycles( const int& vehiclesCountAtSubcycle, const int& time );
 
-
     QVector<int> m_timeVector;
     float m_totalTimes;
     float m_numberOfVehiclesThatWillDrive;
     int m_alpha;
     int m_magicE;
+
+    void clearAll();
+
+    QVector<int> setParameters( int size, UserPackage* userPackage );
 
     int evalForSimpleJunction( const Junction *junction );
     int evalForBladzioJunction( const Junction *junction );

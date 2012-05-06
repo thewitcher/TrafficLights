@@ -3,55 +3,75 @@
 #include "../Ui/TrafficLights_manager/vehicle-count-manager.h"
 #include "helper.h"
 #include "../GA/GA1DArrayGenome.h"
+#include "../GA/GASStateGA.h"
+#include "../GA/garandom.h"
+#include "user-package.h"
 #include <cmath>
+#include <QDebug>
 
 float bladzioObjective( GAGenome& genome )
 {
     float currentScore = 0.0;
     GA1DArrayGenome<int>& arrayGenome = Helper::genomeToArrayGenome( genome );
-    Junction *junction = Helper::userDataToJunction( genome );
 
-    AllSubcycleAlgorithm algorithm( junction );
+    UserPackage *userPackage = Helper::userDataToJunction( genome );
 
-    for( int i = 0; i < arrayGenome.size(); i++ )
-    {
-        algorithm.m_timeVector[ i ] = arrayGenome.gene( i );
-    }
-
-    int countOfVehiclesRemainingAtJunction = algorithm.theSumOfTheRemainingVehiclesAtJunction( junction );
+    AllSubcycleAlgorithm *allAlgorithm = dynamic_cast<AllSubcycleAlgorithm*>(userPackage->m_baseAlgorithm);
 
     for( int i = 0; i < arrayGenome.size(); i++ )
     {
-        algorithm.m_totalTimes += arrayGenome.gene( i );
+        allAlgorithm->m_timeVector.insert( i, arrayGenome.gene( i ));
     }
 
-    currentScore = ((((( algorithm.m_numberOfVehiclesThatWillDrive / algorithm.m_totalTimes ) * 1000 ) -
-            countOfVehiclesRemainingAtJunction ) * exp( algorithm.m_alpha ) ) + algorithm.m_magicE );
+    int countOfVehiclesRemainingAtJunction = allAlgorithm->theSumOfTheRemainingVehiclesAtJunction( userPackage->m_junction );
 
+    for( int i = 0; i < arrayGenome.size(); i++ )
+    {
+        allAlgorithm->m_totalTimes += arrayGenome.gene( i );
+//        std::cout << "gene: " << arrayGenome.gene(i) << "\n";
+    }
+
+    currentScore = ((((( allAlgorithm->m_numberOfVehiclesThatWillDrive / allAlgorithm->m_totalTimes ) * 1000 ) -
+            countOfVehiclesRemainingAtJunction ) * exp( allAlgorithm->m_alpha ) ) + allAlgorithm->m_magicE );
+
+    if(currentScore <= 0)
+        currentScore = 1;
+
+//    std:: cout << "current = " << currentScore << "\n........\n\n";
+
+    allAlgorithm->clearAll();
     return currentScore;
 }
 
-void initialize( GAGenome& genome )
+void myinitializer( GAGenome& genome )
 {
-    Junction *junction = Helper::userDataToJunction( genome );
+    UserPackage *userPackage = Helper::userDataToJunction( genome );
+    AllSubcycleAlgorithm *allAlgorithm = dynamic_cast<AllSubcycleAlgorithm*>(userPackage->m_baseAlgorithm);
     GA1DArrayGenome<int>& arrayGenome = Helper::genomeToArrayGenome( genome );
-    switch( junction->junctionType() )
+    int max = VehicleCountManager::sumVehiclesAtJunction( userPackage->m_junction ) * 0.8;
+    if( max < 6 )
+        max = 6;
+
+//    qDebug() << "initializer: " << max;
+    switch( userPackage->m_junction->junctionType() )
     {
     case Junction::BLADZIO:
         for( unsigned int position = 0; position < 4; position++ )
         {
-            arrayGenome.gene( position, 7 );
+            arrayGenome.gene( position, GARandomInt( 0, max ) );
         }
         break;
     case Junction::SIMPLE:
         for( unsigned int position = 0; position < 3; position++ )
         {
-            arrayGenome.gene( position, 7 );
+            arrayGenome.gene( position, GARandomInt( 0, max ) );
         }
         break;
     default:
         break;
     }
+
+//    delete userPackage;
 }
 
 AllSubcycleAlgorithm::AllSubcycleAlgorithm( Junction *junction ):
@@ -64,9 +84,67 @@ AllSubcycleAlgorithm::AllSubcycleAlgorithm( Junction *junction ):
 QVector<int> AllSubcycleAlgorithm::startAlgorithm()
 {
     QVector<int> timeVector;
+    UserPackage* userPackage = new UserPackage( m_junction, this );
+    int traffic = VehicleCountManager::sumVehiclesAtJunction( m_junction );
+//    qDebug() << "startalgo" << m_junction->junctionType() << " liczba aut: " << traffic;
 
+    if( traffic > 5 )
+    {
+        switch( m_junction->junctionType() )
+        {
+        case Junction::BLADZIO:
+//            qDebug() << "wchodze";
+            timeVector = setParameters(4, userPackage );
+//            qDebug() <<"duzy: "<< timeVector;
+            break;
+        case Junction::SIMPLE:
+    //        setParameters(3, userPackage );
+            timeVector << 5000 << 5000 << 5000;
+            break;
+        default:
+            break;
+        }
+    }
+    else
+    {
+        timeVector << 10000 << 10000 << 10000 << 10000;
+//        qDebug() << "zwykly";
+    }
+
+
+    delete userPackage;
 
     return timeVector;
+}
+
+QVector<int> AllSubcycleAlgorithm::setParameters( int size, UserPackage* userPackage )
+{
+    QVector<int> vector;
+
+    GA1DArrayGenome<int> genome( size, bladzioObjective, userPackage );
+    genome.initializer(myinitializer);
+    genome.initialize();
+
+    GASteadyStateGA steadyStateGA( genome );
+
+    steadyStateGA.populationSize( 100 );
+    steadyStateGA.pReplacement( m_replacementProbability );
+    steadyStateGA.nGenerations( m_generations );
+    steadyStateGA.pMutation( 0.2 );
+    steadyStateGA.pCrossover( 0.8 );
+    steadyStateGA.scoreFilename( m_logFile );
+    steadyStateGA.scoreFrequency( m_scoreFrequency );
+    steadyStateGA.flushFrequency( m_flushFrequency );
+    steadyStateGA.selectScores( GAStatistics::AllScores );
+    steadyStateGA.evolve();
+
+    GA1DArrayGenome<int>& bestGenome = Helper::genomeToArrayGenome( steadyStateGA.population().best() );
+    for(int i = 0; i < bestGenome.size(); i++)
+    {
+        vector.append( bestGenome.gene( i ) );
+    }
+
+    return vector;
 }
 
 int AllSubcycleAlgorithm::theSumOfTheRemainingVehiclesAtJunction( Junction *junction  )
@@ -159,7 +237,7 @@ void AllSubcycleAlgorithm::evalForBladzioJunctionSubcycle_1( const Junction *jun
     /* North subcycle 1 */
     numberVehiclesOnLane = VehicleCountManager::vehicleCountOnLane( junction, VehicleCountManager::NORTH_RIGHT );
     numberOfVehiclesThatWillDrive += howMuchVehiclesAtLaneWillDrive( 1, numberVehiclesOnLane );
-    m_magicE = checkAllSubcycles( numberVehiclesOnLane, m_timeVector.at( 1 ) );
+    m_magicE += checkAllSubcycles( numberVehiclesOnLane, m_timeVector.at( 1 ) );
 }
 
 void AllSubcycleAlgorithm::evalForBladzioJunctionSubcycle_2( const Junction *junction, int& numberOfVehiclesThatWillDrive )
@@ -177,7 +255,7 @@ void AllSubcycleAlgorithm::evalForBladzioJunctionSubcycle_2( const Junction *jun
 
     numberVehiclesOnLane = VehicleCountManager::vehicleCountOnLane( junction, VehicleCountManager::EAST_TOP );
     numberOfVehiclesThatWillDrive += howMuchVehiclesAtLaneWillDrive( 2, numberVehiclesOnLane );
-    m_magicE = checkAllSubcycles( numberVehiclesOnLane, m_timeVector.at( 2 ) );
+    m_magicE += checkAllSubcycles( numberVehiclesOnLane, m_timeVector.at( 2 ) );
 }
 
 void AllSubcycleAlgorithm::evalForBladzioJunctionSubcycle_3( const Junction *junction, int& numberOfVehiclesThatWillDrive )
@@ -189,7 +267,7 @@ void AllSubcycleAlgorithm::evalForBladzioJunctionSubcycle_3( const Junction *jun
     /* East subcycle 3 */
     numberVehiclesOnLane = VehicleCountManager::vehicleCountOnLane( junction, VehicleCountManager::EAST_BOTTOM );
     numberOfVehiclesThatWillDrive += howMuchVehiclesAtLaneWillDrive( 3, numberVehiclesOnLane );
-    m_magicE = checkAllSubcycles( numberVehiclesOnLane, m_timeVector.at( 3 ) );
+    m_magicE += checkAllSubcycles( numberVehiclesOnLane, m_timeVector.at( 3 ) );
 }
 
 int AllSubcycleAlgorithm::howMuchVehiclesAtLaneWillDrive( const int &subcycleId, const int& numberVehiclesOnLane )
@@ -210,7 +288,7 @@ void AllSubcycleAlgorithm::setAlphaParam( const int& numberOfVehiclesThatWillDri
     int minValue = junction->currentNumberOfVehicles() * 0.7;
     int maxValue = junction->currentNumberOfVehicles() * 0.8;
 
-    if( numberOfVehiclesThatWillDrive >= minValue || numberOfVehiclesThatWillDrive <= maxValue )
+    if( numberOfVehiclesThatWillDrive >= minValue && numberOfVehiclesThatWillDrive <= maxValue )
         m_alpha = 1;
     else
         m_alpha = 0;
@@ -236,4 +314,10 @@ int AllSubcycleAlgorithm::checkAllSubcycles( const int& vehiclesCountAtSubcycle,
     }
 
     return 0;
+}
+
+void AllSubcycleAlgorithm::clearAll()
+{
+    m_alpha = 0;
+    m_magicE = 0;
 }

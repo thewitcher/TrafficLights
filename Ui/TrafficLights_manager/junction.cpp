@@ -42,7 +42,7 @@ Junction::~Junction()
 
 void Junction::setDefaultTimeVector()
 {
-    m_timeVectorForSubcycles << 6000 << 6000 << 6000 << 6000;
+    m_timeVectorForSubcycles << 1 << 1 << 1 << 1;
 }
 
 void Junction::timerEvent( QTimerEvent *event )
