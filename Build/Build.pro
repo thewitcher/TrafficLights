@@ -20,8 +20,8 @@ RESOURCES += \
 # COLLISIONS - to turn on collisions detection
 # LIGHTS - to turn on light in vehicle
 # EVENTS - to turn on timer which manages global events like day and night for example
-#DEFINES += LOGGER
-#           COLLISIONS \
+#DEFINES += COLLISIONS
+#           LOGGER \
 #           LIGHTS \
 #           EVENTS
 
