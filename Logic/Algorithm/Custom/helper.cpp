@@ -6,7 +6,6 @@
 #include "../Logger/logger.h"
 #include <QObject>
 
-
 GA1DBinaryStringGenome& Helper::genomeToBinaryGenome( GAGenome& genome )
 {
     Q_ASSERT( genome.classID() == GAID::BinaryStringGenome );
@@ -40,21 +39,18 @@ AllSubcycleAlgorithm* Helper::userDataToAllSubcycleAlgorithm( GAGenome &genome )
     return reinterpret_cast<AllSubcycleAlgorithm*>( genome.userData() );
 }
 
-int Helper::toDec( GAGenome& genome )
+int Helper::toDec( GAGenome &genome )
 {
     GA1DBinaryStringGenome& binaryGenome = genomeToBinaryGenome( genome );
 
-    int result = 0;
+    float result = 0.0;
 
-    if( binaryGenome.length() > 0 )
+    for( int i = binaryGenome.length() - 1 ; i > 0 ; i-- )
     {
-        for( int i = binaryGenome.length() - 1 ; i > 0 ; i-- )
-        {
-            result = 2 * ( binaryGenome.gene( i ) + result );
-        }
-
-        result += binaryGenome.gene( 0 );
+        result = 2 * ( binaryGenome.gene( i ) + result );
     }
+
+    result += binaryGenome.gene( 0 );
 
     return result;
 }

@@ -2,7 +2,6 @@
 #define BASEALGORITHM_H
 
 #include <QVector>
-#include <QThread>
 
 class Junction;
 

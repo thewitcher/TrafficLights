@@ -48,7 +48,6 @@ void myinitializer( GAGenome& genome )
     if( max < 6 )
         max = 6;
 
-//    qDebug() << "initializer: " << max;
     switch( allAlgorithm->junction()->junctionType() )
     {
     case Junction::BLADZIO:
