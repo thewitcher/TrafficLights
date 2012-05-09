@@ -381,13 +381,13 @@ int VehicleCountManager::vehicleCountOnLane2( const QHash<int, int> &vehicleCoun
     switch( lane )
     {
     case WEST_TOP:
-        count = vehicleCountLanes.value( 2 ) + vehicleCountLanes.value( 8 );
+        count = vehicleCountLanes.value( 2080 );
         break;
     case WEST_MIDDLE:
-        count = vehicleCountLanes.value( 3 ) + vehicleCountLanes.value( 9 );
+        count = vehicleCountLanes.value( 3090 );
         break;
     case WEST_BOTTOM:
-        count = vehicleCountLanes.value( 4 ) + vehicleCountLanes.value( 10 );
+        count = vehicleCountLanes.value( 4010 );
         break;
     case EAST_TOP:
         count = vehicleCountLanes.value( 119 );
@@ -399,22 +399,22 @@ int VehicleCountManager::vehicleCountOnLane2( const QHash<int, int> &vehicleCoun
         count = vehicleCountLanes.value( 104 );
         break;
     case NORTH_LEFT:
-        count = vehicleCountLanes.value( 17 ) + vehicleCountLanes.value( 18 );
+        count = vehicleCountLanes.value( 1718 );
         break;
     case NORTH_MIDDLE:
-        count = vehicleCountLanes.value( 26 ) + vehicleCountLanes.value( 27 );
+        count = vehicleCountLanes.value( 2627 );
         break;
     case NORTH_RIGHT:
-        count = vehicleCountLanes.value( 32 ) + vehicleCountLanes.value( 33 );
+        count = vehicleCountLanes.value( 3233 );
         break;
     case SOUTH_LEFT:
-        count = vehicleCountLanes.value( 42 ) + vehicleCountLanes.value( 43 );
+        count = vehicleCountLanes.value( 4243 );
         break;
     case SOUTH_MIDDLE:
-        count = vehicleCountLanes.value( 44 ) + vehicleCountLanes.value( 45 );
+        count = vehicleCountLanes.value( 4445 );
         break;
     case SOUTH_RIGHT:
-        count = vehicleCountLanes.value( 53 ) + vehicleCountLanes.value( 54 );
+        count = vehicleCountLanes.value( 5354 );
         break;
     default:
         LOG_WARNING( "Wrong lane (%i) for this junction (id = 2)", lane );
