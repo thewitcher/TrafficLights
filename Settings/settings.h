@@ -1,8 +1,6 @@
 #ifndef SETTINGS_H
 #define SETTINGS_H
 
-#include <QSettings>
-
 /*!
  * @author Marcin Haber
  * This class is created for easy load and save application settings. It saves setings in Data directory.
@@ -10,19 +8,18 @@
  * Consider implementing loadAllSettings() function to easy load some setting from any moment in application.
  */
 
-class Settings: public QSettings
+#include <QVariant>
+
+class Settings
 {
 public:
-    static Settings& settingsInstance();
-    void loadAllSettings();
-    QVariant takeValue( const QString& key );
+    static QVariant takeValue( const QString& key, const QString& groupName, const QVariant& defaultValue = QVariant() );
 
 private:
-    explicit Settings();
+    explicit Settings() {}
     ~Settings() {}
 
-    static QString m_settingsPath;
-    QHash<QString,QVariant> m_settingsHash;
+    static QString S_SETTINGS_PATH;
 };
 
 #endif // SETTINGS_H

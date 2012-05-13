@@ -1,11 +1,13 @@
 #include "root-window.h"
 #include "ui_root-window.h"
+#include "../DatabaseManager/database.h"
 
 RootWindow::RootWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::RootWindow)
 {
     ui->setupUi(this);
+
 //    setActionButtonToToolBar();
 //    setAudio();
 //    connect( m_moute, SIGNAL(triggered()), this, SLOT(regulateVoice()) );

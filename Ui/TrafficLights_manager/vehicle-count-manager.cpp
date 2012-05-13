@@ -76,19 +76,6 @@ int VehicleCountManager::vehicleCountOnRestSubcycle( const Junction *junction, S
     return count;
 }
 
-float VehicleCountManager::averageVehicleWaitingTimeOnSubcycle( const Junction *junction, SubCycle subcycle )
-{
-    float wholeWaitingTime = wholeVehicleWaitingTimeForSubcycle( junction, subcycle );
-    int vehicleCount = vehicleCountOnSubcycle( junction, subcycle );
-
-    if( vehicleCount == 0 )
-    {
-        return 0;
-    }
-
-    return ( wholeWaitingTime / vehicleCount );
-}
-
 int VehicleCountManager::vehicleCountOnSubcycleForSimpleJunction( const Junction* junction, SubCycle subcycle )
 {
     int count = 0;
@@ -257,6 +244,28 @@ int VehicleCountManager::sumVehiclesAtJunction( const Junction *junction )
         {
             score += vehicleCountOnSubcycleForBladzioJunction( junction, list.at( i ) );
         }
+    }
+
+    return score;
+}
+
+int VehicleCountManager::sumVehiclesWaitingTimeAtJunction( const Junction *junction )
+{
+    int score = 0;
+    QList<SubCycle> list;
+
+    if( junction->id() != 2 )
+    {
+        list << SUBCYCLE_0 << SUBCYCLE_1 << SUBCYCLE_2;
+    }
+    else
+    {
+        list << SUBCYCLE_0 << SUBCYCLE_1 << SUBCYCLE_2 << SUBCYCLE_3;
+    }
+
+    for( int i = 0; i < list.size(); i++ )
+    {
+        score += wholeVehicleWaitingTimeForSubcycle( junction, list.at( i ) );
     }
 
     return score;
@@ -711,10 +720,10 @@ int VehicleCountManager::vehicleWaitingTime4( const QMultiHash<int, Vehicle *> &
     switch( lane )
     {
     case WEST_MIDDLE:
-        time = sumWaitingTime( waitingTime.values( 100 ) );
+        time = sumWaitingTime( waitingTime.values( 72 ) );
         break;
     case EAST_MIDDLE:
-        time = sumWaitingTime( waitingTime.values( 72 ) );
+        time = sumWaitingTime( waitingTime.values( 100 ) );
         break;
     case SOUTH_RIGHT:
         time = sumWaitingTime( waitingTime.values( 90 ) );

@@ -97,7 +97,6 @@ void GraphicsView::initGraphicsView()
     setDragMode( QGraphicsView::ScrollHandDrag );
     resize( 1326, 1070 );
     setMaximumSize( 1340, 1084 );
-    //scale( 2, 2 );
 
     LOG_INFO( "End: %s", __FUNCTION__ );
 }
@@ -176,10 +175,12 @@ void GraphicsView::createItems()
     bool dark = false;
 
 #ifdef EVENTS
+    #ifdef DAY_PARTS
     if( m_eventTimer->isDark() )
     {
         dark = true;
     }
+    #endif
 #endif
 
     if( carCount < S_CAR_COUNT )
@@ -217,10 +218,16 @@ void GraphicsView::initEventTimer()
 {
     m_eventTimer = new EventTimer( this );
 
+    #ifdef STATISTICS
+    m_eventTimer->startStatisticTimer( m_junctionManager->junctionsVector() );
+    #endif
+
+    #ifdef DAY_PARTS
     connect( m_eventTimer, SIGNAL(day()), this, SLOT(setDay()) );
     connect( m_eventTimer, SIGNAL(night()), this, SLOT(setNight()));
 
     m_eventTimer->startDayTimeTimer();
+    #endif
 }
 #endif
 

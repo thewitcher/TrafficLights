@@ -23,28 +23,45 @@ float objective( GAGenome& genome )
     float greenLight = Helper::toDec( genome );
 
     float difference = abs( greenLight * OneSubcycleAlgorithm::S_PASS_RATE
-                            - subcycleAlgorithm->m_vehicleCountOnSubcycle.at( subcycleAlgorithm->m_currentSubcycle ) );
-    float newVehicles = 0;
+                            - subcycleAlgorithm->m_vehicleCountOnSubcycle.at( int( subcycleAlgorithm->m_currentSubcycle ) ) );
+    float newVehiclesOnRestSubcycles = 0;
+    float newVehiclesOnChoosenSubcycles = 0;
+
+    if( subcycleAlgorithm->m_vehicleCount == 0 )
+    {
+        subcycleAlgorithm->m_vehicleCount = 1;
+    }
 
     for( int i = 0 ; i < subcycleAlgorithm->m_vehicleCountOnSubcycle.count() ; i++ )
     {
-        newVehicles += subcycleAlgorithm->m_vehicleCountOnSubcycle.at( i ) * estimateVehicleCountInFuture
-                     / subcycleAlgorithm->m_vehicleCount;
+        if( i == int( subcycleAlgorithm->m_currentSubcycle ) )
+        {
+            newVehiclesOnChoosenSubcycles = subcycleAlgorithm->m_vehicleCountOnSubcycle.at( i ) * estimateVehicleCountInFuture
+                                          / subcycleAlgorithm->m_vehicleCount;
+        }
+        else
+        {
+            newVehiclesOnRestSubcycles += subcycleAlgorithm->m_vehicleCountOnSubcycle.at( i ) * estimateVehicleCountInFuture
+                                        / subcycleAlgorithm->m_vehicleCount;
+        }
     }
 
-    if( difference == 0 || greenLight == 0 || newVehicles == 0 )
+    float denominator = newVehiclesOnChoosenSubcycles * difference
+                      + ( greenLight - newVehiclesOnChoosenSubcycles ) * newVehiclesOnRestSubcycles;
+
+    if( denominator == 0 )
     {
         return 0.0;
     }
 
-    float fitness = 1 / ( difference * greenLight * newVehicles );
+    float fitness = abs( greenLight / denominator ) + 0.5;
 
     return fitness;
 }
 ///////////////////////////////////
 
 OneSubcycleAlgorithm::OneSubcycleAlgorithm( Junction *junction ):
-    BaseAlgorithm( junction ),
+    BaseAlgorithm( junction, "ONE_SUBCYCLE_ALGORITHM" ),
     m_currentSubcycle( VehicleCountManager::SUBCYCLE_0 ),
     m_firstRun( true ),
     m_vehicleCount( 0 )
@@ -62,11 +79,16 @@ int OneSubcycleAlgorithm::estimateGreenLight()
     steadyStateGA.nGenerations( m_generations );
     steadyStateGA.pMutation( m_mutation );
     steadyStateGA.pCrossover( m_crossover );
-    steadyStateGA.scoreFilename( m_logFile );
+    steadyStateGA.scoreFilename( m_logFile.toAscii().constData() );
     steadyStateGA.scoreFrequency( m_scoreFrequency );
     steadyStateGA.flushFrequency( m_flushFrequency );
     steadyStateGA.selectScores( GAStatistics::AllScores );
     steadyStateGA.evolve();
+
+    LOG_INFO( "#%i# Best chromsome on junction with id: %i (best: %i)",
+              m_junction->id(),
+              m_junction->id(),
+              Helper::toDec( steadyStateGA.population().best() ) * 1000 );
 
     return ( Helper::toDec( steadyStateGA.population().best() ) * 1000 );
 }
@@ -174,6 +196,11 @@ void OneSubcycleAlgorithm::chooseTheMostBlockSubcycleForSimple()
         max = times.at( 2 );
         result = VehicleCountManager::SUBCYCLE_2;
     }
+
+    LOG_INFO( "#%i# Current subcycle on junction with id: %i (subcycle: %i)",
+              m_junction->id(),
+              m_junction->id(),
+              m_currentSubcycle );
 
     m_currentSubcycle = result;
 }

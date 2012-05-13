@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui declarative
+QT       += core gui declarative sql
 
 TARGET = application
 TEMPLATE = app
@@ -20,13 +20,16 @@ RESOURCES += \
 # COLLISIONS - to turn on collisions detection
 # LIGHTS - to turn on light in vehicle
 # EVENTS - to turn on timer which manages global events like day and night for example
-#DEFINES += COLLISIONS \
-#           LOGGER \
+DEFINES +=  EVENTS \
+            STATISTICS \
+            LOGGER
+#           DAY_PARTS \
+#           COLLISIONS \
 #           LIGHTS \
-#           EVENTS
 
 
 include(../Logger/Logger.pri)
 include(../Logic/Logic.pri)
 include(../Ui/Ui.pri)
 include(../Settings/Settings.pri)
+include(../DatabaseManager/DatabaseManager.pri)

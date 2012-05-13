@@ -78,3 +78,8 @@ void JunctionManager::routeToAppropriateJunction( uint flags, int checkpointId, 
 
     m_junctionsVector.at( junction )->manageVehicle( flags, checkpointId, vehicle );
 }
+
+const QVector<Junction*>& JunctionManager::junctionsVector() const
+{
+    return m_junctionsVector;
+}

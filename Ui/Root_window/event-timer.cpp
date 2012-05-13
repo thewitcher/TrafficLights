@@ -1,21 +1,30 @@
 #include "event-timer.h"
+#include "../DatabaseManager/database.h"
 #include <QTimer>
+#include <QTimerEvent>
+#include <QVector>
+
 
 EventTimer::EventTimer( QObject *parent ):
     QObject( parent ),
-    m_timer( new QTimer ),
     m_currentDayTime( DAY )
 {
 }
 
 EventTimer::~EventTimer()
+{}
+
+void EventTimer::startDayPartTimer()
 {
-    delete m_timer;
+    m_dayPartTimerId = startTimer( DAY_PART_INTERVAL );
 }
 
-void EventTimer::startDayTimeTimer()
+void EventTimer::startStatisticTimer( const QVector<Junction*> &junctions )
 {
-    m_timer->singleShot( DAY, this, SLOT(setNight()) );
+    Database::init();
+    m_junctions = junctions;
+
+    m_statisticTimerId = startTimer( STATISTIC_INTERVAL_LOW );
 }
 
 void EventTimer::setNight()
@@ -23,9 +32,6 @@ void EventTimer::setNight()
     emit night();
 
     m_currentDayTime = NIGHT;
-
-    m_timer->singleShot( NIGHT, this, SLOT(setDay()) );
-
 }
 
 void EventTimer::setDay()
@@ -33,21 +39,36 @@ void EventTimer::setDay()
     emit day();
 
     m_currentDayTime = DAY;
-
-    m_timer->singleShot( DAY, this, SLOT(setNight()) );
 }
 
 bool EventTimer::isDark() const
 {
-    switch( m_currentDayTime )
-    {
-    case DAY:
-        return false;
-        break;
-    case NIGHT:
-        return true;
-        break;
-    }
+    return m_currentDayTime;
+}
 
-    return false;
+void EventTimer::writeStatisticsToDatabase( const Junction *junction )
+{
+    Database::writeStatisticToDatabase( junction );
+}
+
+void EventTimer::timerEvent( QTimerEvent *event )
+{
+    if( event->timerId() == m_dayPartTimerId )
+    {
+        if( m_currentDayTime == DAY )
+        {
+            setNight();
+        }
+        else
+        {
+            setDay();
+        }
+    }
+    else if( event->timerId() == m_statisticTimerId )
+    {
+        for( int i = 0 ; i < m_junctions.count() ; i++ )
+        {
+            writeStatisticsToDatabase( m_junctions.at( i ) );
+        }
+    }
 }

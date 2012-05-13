@@ -2,19 +2,21 @@
 #define BASEALGORITHM_H
 
 #include <QVector>
+#include <QString>
 
 class Junction;
 
 class BaseAlgorithm
 {
 public:
-    BaseAlgorithm( Junction* junction );
+    BaseAlgorithm( Junction* junction, const QString& algorithmType );
 
     void start();
     Junction* junction();
 
 protected:
-    const unsigned int m_genomeSize;
+    const QString m_algorithmType;
+    unsigned int m_genomeSize;
     const float m_replacementProbability;
     const int m_populationSize;
     const int m_generations;
@@ -22,7 +24,7 @@ protected:
     const int m_flushFrequency;
     const float m_mutation;
     const float m_crossover;
-    const char* m_logFile;
+    const QString m_logFile;
 
     virtual QVector<int> startAlgorithm() = 0;
 

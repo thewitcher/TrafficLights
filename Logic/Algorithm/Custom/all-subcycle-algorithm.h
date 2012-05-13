@@ -6,6 +6,7 @@
 
 class Junction;
 class GAGenome;
+
 class AllSubcycleAlgorithm : public BaseAlgorithm
 {
 public:
@@ -16,7 +17,7 @@ public:
     void operationEval( float& score );
 
     /*! This function starts up genetic algorithm. As an argument assumes is population size. */
-    QVector<int> setParameters( int size );
+    QVector<int> setParameters();
     /*! Auxiliary functions for custom genetic algorithm.*/
     float evalForSimpleJunction();
     float evalForBladzioJunction();
@@ -46,7 +47,6 @@ public:
     float m_magicE;
 
     void clearAll();
-
 };
 
 #endif // ALLSUBCYCLEALGORITHM_H

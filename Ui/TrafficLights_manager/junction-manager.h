@@ -20,6 +20,8 @@ public:
                      QVector<QLCDNumber*>& vehicleCounters );
     ~JunctionManager();
 
+    const QVector<Junction*>& junctionsVector() const;
+
 private:
     QVector<Junction*> m_junctionsVector;
     void createJunctions( QMap<int, QVector<TrafficLight *> >& junctionsMap, QVector<QLCDNumber*>& vehicleCounters );

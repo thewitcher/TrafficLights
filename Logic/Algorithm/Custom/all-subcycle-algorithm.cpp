@@ -124,7 +124,7 @@ int myMutation( GAGenome& genome, float pmut )
 }
 
 AllSubcycleAlgorithm::AllSubcycleAlgorithm( Junction *junction ):
-    BaseAlgorithm( junction ),
+    BaseAlgorithm( junction, "ALL_SUBCYCLE_ALGORITHM" ),
     m_numberOfVehiclesThatWillDrive( 0 ),
     m_alpha( 0 ),
     m_magicE( 0 )
@@ -140,16 +140,25 @@ QVector<int> AllSubcycleAlgorithm::startAlgorithm()
         {
         case Junction::BLADZIO:
             if( traffic > 24 )
-                timeVector = setParameters( 4 );
-            else
-                timeVector = normalTraffic();
-            break;
-        case Junction::SIMPLE:
-            if( traffic > 18 ){
-                timeVector = setParameters( 3 );
+            {
+                m_genomeSize = 4;
+                timeVector = setParameters();
             }
             else
+            {
                 timeVector = normalTraffic();
+            }
+            break;
+        case Junction::SIMPLE:
+            if( traffic > 18 )
+            {
+                m_genomeSize = 3;
+                timeVector = setParameters();
+            }
+            else
+            {
+                timeVector = normalTraffic();
+            }
             break;
         default:
             break;
@@ -158,11 +167,11 @@ QVector<int> AllSubcycleAlgorithm::startAlgorithm()
     return timeVector;
 }
 
-QVector<int> AllSubcycleAlgorithm::setParameters( int size )
+QVector<int> AllSubcycleAlgorithm::setParameters()
 {
     QVector<int> vector;
 
-    GA1DArrayGenome<int> genome( size, bladzioObjective, this );
+    GA1DArrayGenome<int> genome( m_genomeSize, bladzioObjective, this );
     genome.initializer(myinitializer);
     genome.initialize();
     genome.mutator( myMutation );
@@ -170,12 +179,12 @@ QVector<int> AllSubcycleAlgorithm::setParameters( int size )
 
     GASteadyStateGA steadyStateGA( genome );
 
-    steadyStateGA.populationSize( 1000 );
+    steadyStateGA.populationSize( m_populationSize );
     steadyStateGA.pReplacement( m_replacementProbability );
-    steadyStateGA.nGenerations( 15 );
-    steadyStateGA.pMutation( 0.2 );
-    steadyStateGA.pCrossover( 0.8 );
-    steadyStateGA.scoreFilename( m_logFile );
+    steadyStateGA.nGenerations( m_generations );
+    steadyStateGA.pMutation( m_mutation );
+    steadyStateGA.pCrossover( m_crossover );
+    steadyStateGA.scoreFilename( m_logFile.toAscii().constData() );
     steadyStateGA.scoreFrequency( m_scoreFrequency );
     steadyStateGA.flushFrequency( m_flushFrequency );
     steadyStateGA.selectScores( GAStatistics::AllScores );

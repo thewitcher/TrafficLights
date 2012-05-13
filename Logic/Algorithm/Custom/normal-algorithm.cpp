@@ -1,7 +1,7 @@
 #include "normal-algorithm.h"
 
 NormalAlgorithm::NormalAlgorithm( Junction *junction ):
-    BaseAlgorithm( junction )
+    BaseAlgorithm( junction, "NORMAL" )
 {
 }
 
