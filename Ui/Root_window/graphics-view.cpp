@@ -7,11 +7,12 @@
 #include "graphics-scene.h"
 #include "../TrafficLights_manager/junction-manager.h"
 #include "event-timer.h"
+#include "../Settings/settings.h"
 #include <QTimer>
 
 
 int GraphicsView::S_NEW_CAR_FREQUENCY = 500;
-int GraphicsView::S_CAR_COUNT = 150;
+int GraphicsView::S_CAR_COUNT = Settings::takeValue( "S_CAR_COUNT", "GENERAL", 1 ).toInt();
 int GraphicsView::S_CAR_SPEED = 1;
 int GraphicsView::S_BUS_SPEED = 3;
 int GraphicsView::S_BUS_COUNT = 5;

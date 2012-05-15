@@ -5,7 +5,8 @@ SOURCES += \
     ../Logic/Algorithm/Custom/algorithm-manager.cpp \
     ../Logic/Algorithm/Custom/one-subcycle-algorithm.cpp \
     ../Logic/Algorithm/Custom/all-subcycle-algorithm.cpp \
-    ../Logic/Algorithm/Custom/helper.cpp
+    ../Logic/Algorithm/Custom/helper.cpp \
+    ../Logic/Algorithm/Custom/all-fuzzy-logic.cpp
 
 HEADERS += \
     ../Logic/Algorithm/Custom/normal-algorithm.h \
@@ -13,7 +14,8 @@ HEADERS += \
     ../Logic/Algorithm/Custom/algorithm-manager.h \
     ../Logic/Algorithm/Custom/one-subcycle-algorithm.h \
     ../Logic/Algorithm/Custom/all-subcycle-algorithm.h \
-    ../Logic/Algorithm/Custom/helper.h
+    ../Logic/Algorithm/Custom/helper.h \
+    ../Logic/Algorithm/Custom/all-fuzzy-logic.h
 
 # GALib
 SOURCES += \
@@ -93,6 +95,8 @@ HEADERS += \
            ../Logic/Algorithm/GA/GA3DArrayGenome.h \
            ../Logic/Algorithm/GA/GAEvalData.h \
            ../Logic/Algorithm/GA/GA1DBinStrGenome.h \
+
+
 
 
 

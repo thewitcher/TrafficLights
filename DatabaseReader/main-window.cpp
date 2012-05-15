@@ -52,8 +52,7 @@ void MainWindow::createReport()
     m_database->setExperimentId( experimentId() );
 
     /// VEHICLE COUNT
-    QFile file( ui->m_experimentsComboBox->currentText() + " vehicleCount.csv" );
-
+    QFile file( "vehicleCount.csv" );
     if( file.open( QIODevice::WriteOnly | QIODevice::Text ) == false )
     {
         return;
@@ -71,7 +70,7 @@ void MainWindow::createReport()
     file.close();
 
     /// VEHICLE WAITING TIME
-    file.setFileName( ui->m_experimentsComboBox->currentText() + " vehicleWaitingTime.csv" );
+    file.setFileName( " vehicleWaitingTime.csv" );
 
     if( file.open( QIODevice::WriteOnly | QIODevice::Text ) == false )
     {
@@ -92,7 +91,7 @@ void MainWindow::createReport()
     {
         file.close();
 
-        file.setFileName( ui->m_experimentsComboBox->currentText() + " vehicleCount" + QString::number( i ) + ".csv" );
+        file.setFileName( " vehicleCount" + QString::number( i ) + ".csv" );
 
         if( file.open( QIODevice::WriteOnly | QIODevice::Text ) == false )
         {
@@ -113,7 +112,7 @@ void MainWindow::createReport()
     {
         file.close();
 
-        file.setFileName( ui->m_experimentsComboBox->currentText() + " vehicleWaitingTime" + QString::number( i ) + ".csv" );
+        file.setFileName( " vehicleWaitingTime" + QString::number( i ) + ".csv" );
 
         if( file.open( QIODevice::WriteOnly | QIODevice::Text ) == false )
         {

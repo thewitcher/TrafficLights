@@ -36,7 +36,7 @@ QStringList Database::loadExperiments()
 
     while( query.next() )
     {
-        experimentsList << query.value( 0 ).toString() + ", Date: " + query.value( 1 ).toString();
+        experimentsList << query.value( 0 ).toString() + ", Date " + query.value( 1 ).toString();
     }
 
     return experimentsList;

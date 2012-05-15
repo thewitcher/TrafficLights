@@ -3,6 +3,7 @@
 #include "normal-algorithm.h"
 #include "one-subcycle-algorithm.h"
 #include "all-subcycle-algorithm.h"
+#include "all-fuzzy-logic.h"
 #include "../Ui/TrafficLights_manager/junction.h"
 
 AlgorithmManager::AlgorithmManager( Junction* junction ):
@@ -40,5 +41,9 @@ void AlgorithmManager::updateAlgorithm( Junction* junction )
     else if( type == "ALL_SUBCYCLE_ALGORITHM" )
     {
         m_baseAlgorithm = new AllSubcycleAlgorithm( junction );
+    }
+    else if( type == "ALL_FUZZY_LOGIC" )
+    {
+        m_baseAlgorithm = new AllFuzzyLogic( junction );
     }
 }

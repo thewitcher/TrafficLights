@@ -19,7 +19,6 @@ Database::Database( const QVector<Junction *> &junctions ):
     QSqlDatabase database = QSqlDatabase::addDatabase( "QSQLITE" );
     database.setDatabaseName( m_databaseName );
     m_isOpened = database.open();
-
     addNewExperiment();
 }
 
