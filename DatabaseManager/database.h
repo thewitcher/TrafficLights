@@ -1,31 +1,36 @@
 #ifndef DATABASE_H
 #define DATABASE_H
 
+#include "../Ui/TrafficLights_manager/junction.h"
 #include <QString>
 #include <QSqlQuery>
 #include <QDateTime>
+#include <QThread>
 
 class QSqlDatabase;
-class Junction;
 
-class Database
+class Database: public QThread
 {
 public:
-    static void init();
-    static void close();
-    static void writeStatisticToDatabase( const Junction* junction );
+    Database( const QVector<Junction*>& junctions );
+    ~Database() {}
+
+    void init();
+    void close();
+    void writeStatisticToDatabase( const Junction* junction );
+    void run();
 
 private:
-    static QString S_DATABASE_NAME;
-    static QDateTime S_CURRENT_DATE;
-    static int S_CURRENT_EXPERIMENT_ID;
+    QString m_databaseName;
+    QDateTime m_currentDate;
+    int m_currentExperimentId;
+    bool m_isOpened;
+    QVector<Junction*> m_junctions;
+    int m_statisticTime;
 
-    static QSqlDatabase databaseInstance();
-    static void addNewExperiment();
-    static void errorHandling( QSqlQuery& query );
-
-    Database() {}
-    ~Database() {}
+    QSqlDatabase databaseInstance();
+    void addNewExperiment();
+    void errorHandling( QSqlQuery& query );
 };
 
 #endif // DATABASE_H

@@ -4,6 +4,7 @@
 #include <QObject>
 #include "../Ui/TrafficLights_manager/junction.h"
 
+class Database;
 
 class EventTimer: public QObject
 {
@@ -20,13 +21,13 @@ public:
     void startDayPartTimer();
     void startStatisticTimer( const QVector<Junction*>& junctions );
     bool isDark() const;
-    void writeStatisticsToDatabase( const Junction *junction );
+    void writeStatisticsToDatabase();
 
 private:
     int m_dayPartTimerId;
     int m_statisticTimerId;
     DayPart m_currentDayTime;
-    QVector<Junction*> m_junctions;
+    Database* m_database;
 
     void timerEvent( QTimerEvent * event );
 

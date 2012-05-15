@@ -1,31 +1,31 @@
 #include "database.h"
 #include "../Logger/logger.h"
-#include "../Ui/TrafficLights_manager/junction.h"
 #include "../Ui/TrafficLights_manager/vehicle-count-manager.h"
 #include <QSqlDatabase>
 #include <QDir>
 #include <QVariant>
 #include <QSqlError>
 
-QString Database::S_DATABASE_NAME = QDir::currentPath() + "/Data/statistic.db3";
-QDateTime Database::S_CURRENT_DATE = QDateTime::currentDateTime();
-int Database::S_CURRENT_EXPERIMENT_ID = 0;
 
+Database::Database( const QVector<Junction *> &junctions ):
+    QThread( NULL ),
+    m_databaseName( QDir::currentPath() + "/Data/statistic.db3" ),
+    m_currentDate( QDateTime::currentDateTime() ),
+    m_currentExperimentId( 0 ),
+    m_isOpened( false ),
+    m_junctions( junctions ),
+    m_statisticTime( 0 )
+{
+    QSqlDatabase database = QSqlDatabase::addDatabase( "QSQLITE" );
+    database.setDatabaseName( m_databaseName );
+    m_isOpened = database.open();
+
+    addNewExperiment();
+}
 
 QSqlDatabase Database::databaseInstance()
 {
-    static bool open = false;
-
-    if( open == false )
-    {
-        QSqlDatabase database = QSqlDatabase::addDatabase( "QSQLITE" );
-        database.setDatabaseName( S_DATABASE_NAME );
-        open = database.open();
-
-        Q_ASSERT( open == true );
-
-        addNewExperiment();
-    }
+    Q_ASSERT( m_isOpened == true );
 
     return QSqlDatabase::database();
 }
@@ -40,7 +40,7 @@ void Database::addNewExperiment()
 {
     QSqlQuery query;
     query.prepare( "INSERT INTO Experiment( experimentDate ) VALUES( :experimentDate )" );
-    query.bindValue( ":experimentDate", S_CURRENT_DATE.toString( "MM-dd-yyyy ( hh:mm:ss )" ) );
+    query.bindValue( ":experimentDate", m_currentDate.toString( "MM-dd-yyyy ( hh:mm:ss )" ) );
 
     errorHandling( query );
 
@@ -48,7 +48,7 @@ void Database::addNewExperiment()
 
     query.exec( "SELECT MAX( experimentId ) FROM Experiment" );
     query.next();
-    S_CURRENT_EXPERIMENT_ID = query.value( 0 ).toInt();
+    m_currentExperimentId = query.value( 0 ).toInt();
 
     errorHandling( query );
 }
@@ -69,7 +69,7 @@ void Database::init()
 void Database::writeStatisticToDatabase( const Junction *junction )
 {
     QSqlQuery query;
-    query.exec( "SELECT MAX( experimentId ) FROM Experiment" );
+    query.exec( "SELECT MAX( statisticId ) FROM Statistic" );
     query.next();
     int statisticId = query.value( 0 ).toInt() + 1;
 
@@ -80,8 +80,8 @@ void Database::writeStatisticToDatabase( const Junction *junction )
     query.prepare( "INSERT INTO Statistic( junctionId, experimentId, statisticTime, vehicleCount, vehicleWaitingTime )"
                    "VALUES( :junctionId, :experimentId, :statisticTime, :vehicleCount, :vehicleWaitingTime )" );
     query.bindValue( ":junctionId", junction->id() );
-    query.bindValue( ":experimentId", S_CURRENT_EXPERIMENT_ID );
-    query.bindValue( ":statisticTime", S_CURRENT_DATE.secsTo( QDateTime::currentDateTime() ) );
+    query.bindValue( ":experimentId", m_currentExperimentId );
+    query.bindValue( ":statisticTime", m_statisticTime );
     query.bindValue( ":vehicleCount", VehicleCountManager::sumVehiclesAtJunction( junction ) );
     query.bindValue( ":vehicleWaitingTime", VehicleCountManager::sumVehiclesWaitingTimeAtJunction( junction ) );
 
@@ -111,10 +111,20 @@ void Database::writeStatisticToDatabase( const Junction *junction )
         query.prepare( "INSERT INTO Subcycle( statisticId, subcycleType, vehicleCount, vehicleWaitingTime )"
                        "VALUES( :statisticId, :subcycleType, :vehicleCount, :vehicleWaitingTime )" );
         query.bindValue( ":statisticId", statisticId );
-        query.bindValue( ":subcycleType", list.at( i ) );
+        query.bindValue( ":subcycleType", i );
         query.bindValue( ":vehicleCount", VehicleCountManager::vehicleCountOnSubcycle( junction, list.at( i ) ) );
         query.bindValue( ":vehicleWaitingTime", VehicleCountManager::wholeVehicleWaitingTimeForSubcycle( junction, list.at( i ) ) );
 
         errorHandling( query );
+    }
+}
+
+void Database::run()
+{
+    m_statisticTime = m_currentDate.secsTo( QDateTime::currentDateTime() );
+
+    for( int i = 0 ; i < m_junctions.count() ; i++ )
+    {
+        writeStatisticToDatabase( m_junctions.at( i ) );
     }
 }

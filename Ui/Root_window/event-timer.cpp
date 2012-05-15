@@ -7,12 +7,18 @@
 
 EventTimer::EventTimer( QObject *parent ):
     QObject( parent ),
-    m_currentDayTime( DAY )
+    m_currentDayTime( DAY ),
+    m_database( NULL )
 {
 }
 
 EventTimer::~EventTimer()
-{}
+{
+    if( m_database != NULL )
+    {
+        delete m_database;
+    }
+}
 
 void EventTimer::startDayPartTimer()
 {
@@ -21,8 +27,8 @@ void EventTimer::startDayPartTimer()
 
 void EventTimer::startStatisticTimer( const QVector<Junction*> &junctions )
 {
-    Database::init();
-    m_junctions = junctions;
+    m_database = new Database( junctions );
+    m_database->init();
 
     m_statisticTimerId = startTimer( STATISTIC_INTERVAL_LOW );
 }
@@ -46,9 +52,9 @@ bool EventTimer::isDark() const
     return m_currentDayTime;
 }
 
-void EventTimer::writeStatisticsToDatabase( const Junction *junction )
+void EventTimer::writeStatisticsToDatabase()
 {
-    Database::writeStatisticToDatabase( junction );
+    m_database->start();
 }
 
 void EventTimer::timerEvent( QTimerEvent *event )
@@ -66,9 +72,6 @@ void EventTimer::timerEvent( QTimerEvent *event )
     }
     else if( event->timerId() == m_statisticTimerId )
     {
-        for( int i = 0 ; i < m_junctions.count() ; i++ )
-        {
-            writeStatisticsToDatabase( m_junctions.at( i ) );
-        }
+        writeStatisticsToDatabase();
     }
 }
