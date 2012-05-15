@@ -5,35 +5,30 @@
 #include "../Ui/TrafficLights_manager/vehicle-count-manager.h"
 
 class Junction;
+class GAGenome;
 
 class OneSubcycleAlgorithm : public BaseAlgorithm
 {
 public:
-    /// User data
-    struct Data
-    {
-        VehicleCountManager::SubCycle subcycle;
-        int greenTime;
-    };
-
     OneSubcycleAlgorithm( Junction* junction );
 
-    float ratio() const;
-    Data data() const;
-    void clear();
-
 private:
-    QVector<int> m_times;
-    int m_wholeTime;
-    float m_ratio;
-    Data m_data;
+    VehicleCountManager::SubCycle m_currentSubcycle;
+    QVector<int> m_vehicleCountOnSubcycle;
+    bool m_firstRun;
+    int m_vehicleCount;
+    static float S_MIN;
+    static float S_MAX;
+    static float S_PASS_RATE;
 
-    VehicleCountManager::SubCycle chooseTheMostBlockSubcycleForBladzio( Junction* junction );
-    VehicleCountManager::SubCycle chooseTheMostBlockSubcycleForSimple( Junction* junction );
-    void startBladzio( Junction* junction );
-    void startSimple( Junction* junction );
+    void chooseTheMostBlockSubcycleForBladzio();
+    void chooseTheMostBlockSubcycleForSimple();
+    void loadDataForBladzio();
+    void loadDataForSimple();
     int estimateGreenLight();
     QVector<int> startAlgorithm();
+
+    friend float objective( GAGenome& genome );
 };
 
 #endif // ONESUBCYCLEALGORITHM_H

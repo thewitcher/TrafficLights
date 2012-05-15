@@ -5,36 +5,49 @@
 #include "helper.h"
 #include "../Logger/logger.h"
 #include "../Ui/TrafficLights_manager/vehicle-count-manager.h"
+#include <math.h>
+
+float OneSubcycleAlgorithm::S_MAX = 1.2;
+float OneSubcycleAlgorithm::S_MIN = 0.8;
+float OneSubcycleAlgorithm::S_PASS_RATE = 1;
 
 /// GENETIC ALGORITHM FUNCTIONS ///
 float objective( GAGenome& genome )
 {
-    //GA1DBinaryStringGenome &binaryGenome = Helper::genomeToBinaryGenome( genome );
     OneSubcycleAlgorithm* subcycleAlgorithm = Helper::userDataToOneSubcycleAlgorithm( genome );
 
-    float result = 0;
+    int beginRange = OneSubcycleAlgorithm::S_MIN * subcycleAlgorithm->m_vehicleCount;
+    int endRange = OneSubcycleAlgorithm::S_MAX * subcycleAlgorithm->m_vehicleCount;
+    int estimateVehicleCountInFuture = GARandomInt( beginRange, endRange );
 
-    int greenTime = Helper::toDec( genome );
-    int vehicleCountOnTheRestSubcycles = VehicleCountManager::vehicleCountOnRestSubcycle( subcycleAlgorithm->junction(),
-                                                                                          subcycleAlgorithm->data().subcycle );
-    float averageWaitingTime = VehicleCountManager::averageVehicleWaitingTimeOnSubcycle( subcycleAlgorithm->junction(),
-                                                                                         subcycleAlgorithm->data().subcycle );
+    float greenLight = Helper::toDec( genome );
 
-    /// t1 - how many seconds will be added to total waiting time
-    int t1 = greenTime * vehicleCountOnTheRestSubcycles;
-    /// t2 - how many seconds will be subtracted from total waiting time
-    float t2 = greenTime * averageWaitingTime;
+    float difference = abs( greenLight * OneSubcycleAlgorithm::S_PASS_RATE
+                            - subcycleAlgorithm->m_vehicleCountOnSubcycle.at( subcycleAlgorithm->m_currentSubcycle ) );
+    float newVehicles = 0;
 
-    ( t2 == 0 ) ? ( result = 0 ) : ( result = 10 * t2 - t1 * ( subcycleAlgorithm->ratio() + 0.001 * greenTime ) );
+    for( int i = 0 ; i < subcycleAlgorithm->m_vehicleCountOnSubcycle.count() ; i++ )
+    {
+        newVehicles += subcycleAlgorithm->m_vehicleCountOnSubcycle.at( i ) * estimateVehicleCountInFuture
+                     / subcycleAlgorithm->m_vehicleCount;
+    }
 
-    return result;
+    if( difference == 0 || greenLight == 0 || newVehicles == 0 )
+    {
+        return 0.0;
+    }
+
+    float fitness = 1 / ( difference * greenLight * newVehicles );
+
+    return fitness;
 }
 ///////////////////////////////////
 
 OneSubcycleAlgorithm::OneSubcycleAlgorithm( Junction *junction ):
     BaseAlgorithm( junction ),
-    m_wholeTime( 0 ),
-    m_ratio( 0.0 )
+    m_currentSubcycle( VehicleCountManager::SUBCYCLE_0 ),
+    m_firstRun( true ),
+    m_vehicleCount( 0 )
 {
 }
 
@@ -55,21 +68,39 @@ int OneSubcycleAlgorithm::estimateGreenLight()
     steadyStateGA.selectScores( GAStatistics::AllScores );
     steadyStateGA.evolve();
 
-    LOG_INFO( "Best genome time: %i", Helper::toDec( steadyStateGA.population().best() ) * 1000 );
-
     return ( Helper::toDec( steadyStateGA.population().best() ) * 1000 );
 }
 
 QVector<int> OneSubcycleAlgorithm::startAlgorithm()
 {
-    clear();
+    if( m_firstRun == true )
+    {
+        m_firstRun = false;
+        return QVector<int>() << 3000 << 3000 << 3000 << 3000;
+    }
+
+    int greenTime = 0;
 
     switch( m_junction->junctionType() )
     {
-    case Junction::BLADZIO:
-        startBladzio( m_junction );
     case Junction::SIMPLE:
-        startSimple( m_junction );
+        chooseTheMostBlockSubcycleForSimple();
+        loadDataForSimple();
+        if( m_vehicleCount == 0 )
+        {
+            return QVector<int>() << 1000 << 1000 << 1000 << 1000;
+        }
+        greenTime = estimateGreenLight();
+        break;
+    case Junction::BLADZIO:
+        chooseTheMostBlockSubcycleForBladzio();
+        loadDataForBladzio();
+        if( m_vehicleCount == 0 )
+        {
+            return QVector<int>() << 1000 << 1000 << 1000 << 1000;
+        }
+        greenTime = estimateGreenLight();
+        break;
     default:
         break;
     }
@@ -78,9 +109,9 @@ QVector<int> OneSubcycleAlgorithm::startAlgorithm()
     /// 4 - subcycles count
     for( int i = 0 ; i < 4 ; i++ )
     {
-        if( i == m_data.subcycle )
+        if( i == int( m_currentSubcycle ) )
         {
-            vector << m_data.greenTime;
+            vector << greenTime;
         }
         else
         {
@@ -91,90 +122,86 @@ QVector<int> OneSubcycleAlgorithm::startAlgorithm()
     return vector;
 }
 
-VehicleCountManager::SubCycle OneSubcycleAlgorithm::chooseTheMostBlockSubcycleForBladzio( Junction *junction )
+void OneSubcycleAlgorithm::chooseTheMostBlockSubcycleForBladzio()
 {
-    m_times << VehicleCountManager::wholeVehicleWaitingTimeForSubcycle( junction, VehicleCountManager::SUBCYCLE_0 )
-            << VehicleCountManager::wholeVehicleWaitingTimeForSubcycle( junction, VehicleCountManager::SUBCYCLE_1 )
-            << VehicleCountManager::wholeVehicleWaitingTimeForSubcycle( junction, VehicleCountManager::SUBCYCLE_2 )
-            << VehicleCountManager::wholeVehicleWaitingTimeForSubcycle( junction, VehicleCountManager::SUBCYCLE_3 );
+    QVector<int> times;
 
-    m_wholeTime = m_times.at( 0 ) + m_times.at( 1 ) + m_times.at( 2 ) + m_times.at( 3 );
+    times << VehicleCountManager::wholeVehicleWaitingTimeForSubcycle( m_junction, VehicleCountManager::SUBCYCLE_0 )
+          << VehicleCountManager::wholeVehicleWaitingTimeForSubcycle( m_junction, VehicleCountManager::SUBCYCLE_1 )
+          << VehicleCountManager::wholeVehicleWaitingTimeForSubcycle( m_junction, VehicleCountManager::SUBCYCLE_2 )
+          << VehicleCountManager::wholeVehicleWaitingTimeForSubcycle( m_junction, VehicleCountManager::SUBCYCLE_3 );
 
-    int max = m_times.at( 0 );
+    int max = times.at( 0 );
     VehicleCountManager::SubCycle result = VehicleCountManager::SUBCYCLE_0;
 
-    if( m_times.at( 0 ) < m_times.at( 1 ) )
+    if( times.at( 0 ) < times.at( 1 ) )
     {
-        max = m_times.at( 1 );
+        max = times.at( 1 );
         result = VehicleCountManager::SUBCYCLE_1;
     }
-    if( max < m_times.at( 2 ) )
+    if( max < times.at( 2 ) )
     {
-        max = m_times.at( 2 );
+        max = times.at( 2 );
         result = VehicleCountManager::SUBCYCLE_2;
     }
-    if( max < m_times.at( 3 ) )
+    if( max < times.at( 3 ) )
     {
-        max = m_times.at( 3 );
+        max = times.at( 3 );
         result = VehicleCountManager::SUBCYCLE_3;
     }
 
-    ( m_wholeTime == 0 ) ? ( m_ratio = 0 ) : ( m_ratio = max / m_wholeTime );
-
-    return result;
+    m_currentSubcycle = result;
 }
 
-VehicleCountManager::SubCycle OneSubcycleAlgorithm::chooseTheMostBlockSubcycleForSimple( Junction *junction )
+void OneSubcycleAlgorithm::chooseTheMostBlockSubcycleForSimple()
 {
-    m_times << VehicleCountManager::wholeVehicleWaitingTimeForSubcycle( junction, VehicleCountManager::SUBCYCLE_0 )
-            << VehicleCountManager::wholeVehicleWaitingTimeForSubcycle( junction, VehicleCountManager::SUBCYCLE_1 )
-            << VehicleCountManager::wholeVehicleWaitingTimeForSubcycle( junction, VehicleCountManager::SUBCYCLE_2 );
+    QVector<int> times;
 
-    m_wholeTime = m_times.at( 0 ) + m_times.at( 1 ) + m_times.at( 2 );
+    times << VehicleCountManager::wholeVehicleWaitingTimeForSubcycle( m_junction, VehicleCountManager::SUBCYCLE_0 )
+            << VehicleCountManager::wholeVehicleWaitingTimeForSubcycle( m_junction, VehicleCountManager::SUBCYCLE_1 )
+            << VehicleCountManager::wholeVehicleWaitingTimeForSubcycle( m_junction, VehicleCountManager::SUBCYCLE_2 );
 
-    int max = m_times.at( 0 );
+    int max = times.at( 0 );
     VehicleCountManager::SubCycle result = VehicleCountManager::SUBCYCLE_0;
 
-    if( m_times.at( 0 ) < m_times.at( 1 ) )
+    if( times.at( 0 ) < times.at( 1 ) )
     {
-        max = m_times.at( 1 );
+        max = times.at( 1 );
         result = VehicleCountManager::SUBCYCLE_1;
     }
-    if( max < m_times.at( 2 ) )
+    if( max < times.at( 2 ) )
     {
-        max = m_times.at( 2 );
+        max = times.at( 2 );
         result = VehicleCountManager::SUBCYCLE_2;
     }
 
-    ( m_wholeTime == 0 ) ? ( m_ratio = 0 ) : ( m_ratio = max / m_wholeTime );
-
-    return result;
+    m_currentSubcycle = result;
 }
 
-void OneSubcycleAlgorithm::clear()
+void OneSubcycleAlgorithm::loadDataForBladzio()
 {
-    m_times.clear();
-    m_wholeTime = 0;
+    m_vehicleCountOnSubcycle.clear();
+
+    m_vehicleCountOnSubcycle << VehicleCountManager::vehicleCountOnSubcycle( m_junction, VehicleCountManager::SUBCYCLE_0 )
+                             << VehicleCountManager::vehicleCountOnSubcycle( m_junction, VehicleCountManager::SUBCYCLE_1 )
+                             << VehicleCountManager::vehicleCountOnSubcycle( m_junction, VehicleCountManager::SUBCYCLE_2 )
+                             << VehicleCountManager::vehicleCountOnSubcycle( m_junction, VehicleCountManager::SUBCYCLE_3 );
+
+    m_vehicleCount = m_vehicleCountOnSubcycle.at( 0 )
+                   + m_vehicleCountOnSubcycle.at( 1 )
+                   + m_vehicleCountOnSubcycle.at( 2 )
+                   + m_vehicleCountOnSubcycle.at( 3 );
 }
 
-void OneSubcycleAlgorithm::startBladzio( Junction* junction )
+void OneSubcycleAlgorithm::loadDataForSimple()
 {
-    m_data.subcycle = chooseTheMostBlockSubcycleForBladzio( junction );
-    m_data.greenTime = estimateGreenLight();
-}
+    m_vehicleCountOnSubcycle.clear();
 
-void OneSubcycleAlgorithm::startSimple( Junction *junction )
-{
-    m_data.subcycle = chooseTheMostBlockSubcycleForSimple( junction );
-    m_data.greenTime = estimateGreenLight();
-}
+    m_vehicleCountOnSubcycle << VehicleCountManager::vehicleCountOnSubcycle( m_junction, VehicleCountManager::SUBCYCLE_0 )
+                             << VehicleCountManager::vehicleCountOnSubcycle( m_junction, VehicleCountManager::SUBCYCLE_1 )
+                             << VehicleCountManager::vehicleCountOnSubcycle( m_junction, VehicleCountManager::SUBCYCLE_2 );
 
-float OneSubcycleAlgorithm::ratio() const
-{
-    return m_ratio;
-}
-
-OneSubcycleAlgorithm::Data OneSubcycleAlgorithm::data() const
-{
-    return m_data;
+    m_vehicleCount = m_vehicleCountOnSubcycle.at( 0 )
+                   + m_vehicleCountOnSubcycle.at( 1 )
+                   + m_vehicleCountOnSubcycle.at( 2 );
 }

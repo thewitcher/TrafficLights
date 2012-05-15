@@ -256,7 +256,6 @@ int VehicleCountManager::sumVehiclesAtJunction( const Junction *junction )
         for( int i = 0; i < list.size(); i++ )
         {
             score += vehicleCountOnSubcycleForBladzioJunction( junction, list.at( i ) );
-//            qDebug() << "score: " << score << ", junctionId: " << junction->id();
         }
     }
 

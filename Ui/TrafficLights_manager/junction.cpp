@@ -25,7 +25,6 @@ Junction::Junction( const QVector<TrafficLight *> &junction, QLCDNumber *m_vehic
     m_algorithmManager = new AlgorithmManager( this );
 
     startTimer( 10000 );
-    setDefaultTimeVector();
     startAlgorithm();
 }
 
@@ -39,7 +38,7 @@ Junction::~Junction()
 
 void Junction::setDefaultTimeVector()
 {
-    m_timeVectorForSubcycles << 1 << 1 << 1 << 1;
+    m_timeVectorForSubcycles << 3000 << 3000 << 3000 << 3000;
 }
 
 void Junction::timerEvent( QTimerEvent *event )
