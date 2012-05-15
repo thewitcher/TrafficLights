@@ -27,7 +27,7 @@ void AlgorithmManager::start()
 
 void AlgorithmManager::updateAlgorithm( Junction* junction )
 {
-    QString type = Settings::settingsInstance().value( "ALGORITHM_TYPE", "ALL_SUBCYCLE_ALGORITHM" ).toString();
+    QString type = Settings::settingsInstance().value( "ALGORITHM_TYPE", "NORMAL" ).toString();
 
     if( type == "NORMAL" )
     {

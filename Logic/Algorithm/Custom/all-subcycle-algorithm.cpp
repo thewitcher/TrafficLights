@@ -143,7 +143,7 @@ QVector<int> AllSubcycleAlgorithm::startAlgorithm()
                 timeVector = setParameters( 4 );
             else
                 timeVector = normalTraffic();
-                qDebug() << timeVector;
+//                qDebug() << timeVector;
             break;
         case Junction::SIMPLE:
             if( traffic > 18 ){
@@ -151,6 +151,8 @@ QVector<int> AllSubcycleAlgorithm::startAlgorithm()
             }
             else
                 timeVector = normalTraffic();
+            if( m_junction->id() == 0)
+                 qDebug() << timeVector;
             break;
         default:
             break;
@@ -173,7 +175,7 @@ QVector<int> AllSubcycleAlgorithm::setParameters( int size )
 
     steadyStateGA.populationSize( 1000 );
     steadyStateGA.pReplacement( m_replacementProbability );
-    steadyStateGA.nGenerations( 15 );
+    steadyStateGA.nGenerations( 30 );
     steadyStateGA.pMutation( 0.2 );
     steadyStateGA.pCrossover( 0.8 );
     steadyStateGA.scoreFilename( m_logFile );
@@ -214,12 +216,15 @@ float AllSubcycleAlgorithm::evalForSimpleJunction()
 
     /* SouthLeft */
     int numberVehiclesOnLane = VehicleCountManager::vehicleCountOnLane( m_junction, VehicleCountManager::SOUTH_LEFT );
-    numberOfVehiclesThatWillDrive += howMuchVehiclesAtLaneWillDrive( 0, numberVehiclesOnLane );
+    int countFromLane_1 = howMuchVehiclesAtLaneWillDrive( 0, numberVehiclesOnLane );
+    numberOfVehiclesThatWillDrive += countFromLane_1;
 
     /* SouthRight */
     numberVehiclesOnLane = VehicleCountManager::vehicleCountOnLane( m_junction, VehicleCountManager::SOUTH_RIGHT );
-    numberOfVehiclesThatWillDrive += howMuchVehiclesAtLaneWillDrive( 0, numberVehiclesOnLane );
-    m_magicE = checkAllSubcycles( numberVehiclesOnLane, m_timeVector.at( 0 ) );
+    int countFromLane_2 = howMuchVehiclesAtLaneWillDrive( 0, numberVehiclesOnLane );
+    numberOfVehiclesThatWillDrive += countFromLane_2;
+    int max = ( countFromLane_1 > countFromLane_2 ) ? countFromLane_1 : countFromLane_2;
+    m_magicE = checkAllSubcycles( max, m_timeVector.at( 0 ) );
 
     /* EastMiddle */
     numberVehiclesOnLane = VehicleCountManager::vehicleCountOnLane( m_junction, VehicleCountManager::EAST_MIDDLE );
@@ -377,11 +382,11 @@ float AllSubcycleAlgorithm::checkAllSubcycles( const int& vehiclesCountAtLane, c
     }
     else if( vehiclesCountAtLane > 0 && time == 0 )
     {
-        return -1000 * vehiclesCountAtLane;
+        return -10000 * vehiclesCountAtLane;
     }
     else if( vehiclesCountAtLane == 0 && time > 0 )
     {
-        return -1000 * time;
+        return -10000 * (time+5);
     }
     else if( vehiclesCountAtLane == 0 && time == 0 )
     {
