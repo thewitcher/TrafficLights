@@ -222,12 +222,15 @@ float AllSubcycleAlgorithm::evalForSimpleJunction()
 
     /* SouthLeft */
     int numberVehiclesOnLane = VehicleCountManager::vehicleCountOnLane( m_junction, VehicleCountManager::SOUTH_LEFT );
-    numberOfVehiclesThatWillDrive += howMuchVehiclesAtLaneWillDrive( 0, numberVehiclesOnLane );
+    int countFromLane_1 = howMuchVehiclesAtLaneWillDrive( 0, numberVehiclesOnLane );
+    numberOfVehiclesThatWillDrive += countFromLane_1;
 
     /* SouthRight */
     numberVehiclesOnLane = VehicleCountManager::vehicleCountOnLane( m_junction, VehicleCountManager::SOUTH_RIGHT );
-    numberOfVehiclesThatWillDrive += howMuchVehiclesAtLaneWillDrive( 0, numberVehiclesOnLane );
-    m_magicE = checkAllSubcycles( numberVehiclesOnLane, m_timeVector.at( 0 ) );
+    int countFromLane_2 = howMuchVehiclesAtLaneWillDrive( 0, numberVehiclesOnLane );
+    numberOfVehiclesThatWillDrive += countFromLane_2;
+    int max = ( countFromLane_1 > countFromLane_2 ) ? countFromLane_1 : countFromLane_2;
+    m_magicE = checkAllSubcycles( max, m_timeVector.at( 0 ) );
 
     /* EastMiddle */
     numberVehiclesOnLane = VehicleCountManager::vehicleCountOnLane( m_junction, VehicleCountManager::EAST_MIDDLE );
@@ -385,11 +388,11 @@ float AllSubcycleAlgorithm::checkAllSubcycles( const int& vehiclesCountAtLane, c
     }
     else if( vehiclesCountAtLane > 0 && time == 0 )
     {
-        return -1000 * vehiclesCountAtLane;
+        return -10000 * vehiclesCountAtLane;
     }
     else if( vehiclesCountAtLane == 0 && time > 0 )
     {
-        return -1000 * time;
+        return -10000 * (time+5);
     }
     else if( vehiclesCountAtLane == 0 && time == 0 )
     {
