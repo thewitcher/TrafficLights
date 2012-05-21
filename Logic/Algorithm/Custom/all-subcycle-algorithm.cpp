@@ -94,7 +94,6 @@ int myMutation( GAGenome& genome, float pmut )
         position2 = GARandomInt( 0, 3 );
 
         if( position1 > 3 || position2 > 3 ) {}
-            //qDebug() << "CRITICAL";
         else
         {
             arrayGenome.gene( position1, value1 );
@@ -107,7 +106,6 @@ int myMutation( GAGenome& genome, float pmut )
         position2 = GARandomInt( 0, 2 );
 
         if( position1 > 2 || position2 > 2 ) {}
-            //qDebug() << "CRITICAL";
         else
         {
             arrayGenome.gene( position1, value1 );

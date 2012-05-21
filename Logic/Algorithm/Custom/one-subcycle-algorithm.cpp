@@ -65,9 +65,7 @@ OneSubcycleAlgorithm::OneSubcycleAlgorithm( Junction *junction, const QString &a
     m_currentSubcycle( VehicleCountManager::SUBCYCLE_0 ),
     m_firstRun( true ),
     m_vehicleCount( 0 )
-{
-    qDebug() << "Genome: " << m_genomeSize;
-}
+{}
 
 int OneSubcycleAlgorithm::estimateGreenLight()
 {
@@ -90,11 +88,6 @@ int OneSubcycleAlgorithm::estimateGreenLight()
               m_junction->id(),
               m_junction->id(),
               Helper::toDec( steadyStateGA.population().best() ) * 1000 );
-
-    if( m_junction->id() == 6 )
-    {
-        qDebug() << "Time: " << Helper::toDec( steadyStateGA.population().best() ) * 1000;
-    }
 
     return ( Helper::toDec( steadyStateGA.population().best() ) * 1000 );
 }
