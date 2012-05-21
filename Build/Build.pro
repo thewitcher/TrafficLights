@@ -9,7 +9,7 @@ QT       += core gui declarative sql
 TARGET = application
 TEMPLATE = app
 
-SOURCES += main.cpp
+SOURCES += main.cpp \
 
 RESOURCES += \
     ../Ui/graphics.qrc
@@ -21,11 +21,11 @@ RESOURCES += \
 # LIGHTS - to turn on light in vehicle
 # EVENTS - to turn on timer which manages global events like day and night for example
 DEFINES +=  EVENTS \
-            STATISTICS \
-            LOGGER
-#           DAY_PARTS \
-#           COLLISIONS \
-#           LIGHTS \
+            STATISTICS
+#            LOGGER \
+#            DAY_PARTS \
+#            COLLISIONS \
+#            LIGHTS
 
 
 include(../Logger/Logger.pri)

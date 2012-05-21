@@ -1,7 +1,7 @@
 #include "normal-algorithm.h"
 
-NormalAlgorithm::NormalAlgorithm( Junction *junction ):
-    BaseAlgorithm( junction, "NORMAL" )
+NormalAlgorithm::NormalAlgorithm( Junction *junction, const QString& algorithmType ):
+    BaseAlgorithm( junction, algorithmType )
 {
 }
 

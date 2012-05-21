@@ -8,7 +8,7 @@ class Junction;
 class AllFuzzyLogic : public BaseAlgorithm
 {
 public:
-    AllFuzzyLogic( Junction *junction );
+    AllFuzzyLogic( Junction *junction, const QString& algorithmType );
     QVector<int> startAlgorithm();
 };
 

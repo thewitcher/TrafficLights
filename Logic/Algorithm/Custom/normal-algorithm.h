@@ -6,7 +6,7 @@
 class NormalAlgorithm: public BaseAlgorithm
 {
 public:
-    NormalAlgorithm( Junction* junction );
+    NormalAlgorithm( Junction* junction, const QString& algorithmType );
 
     QVector<int> startAlgorithm();
 };

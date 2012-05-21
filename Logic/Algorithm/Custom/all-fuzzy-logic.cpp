@@ -1,6 +1,6 @@
 #include "all-fuzzy-logic.h"
 
-AllFuzzyLogic::AllFuzzyLogic( Junction *junction ): BaseAlgorithm( junction, "ALL_FUZZY_LOGIC" )
+AllFuzzyLogic::AllFuzzyLogic( Junction *junction, const QString& algorithmType ): BaseAlgorithm( junction, algorithmType )
 {
 }
 

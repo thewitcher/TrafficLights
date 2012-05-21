@@ -123,8 +123,8 @@ int myMutation( GAGenome& genome, float pmut )
     return nmut;
 }
 
-AllSubcycleAlgorithm::AllSubcycleAlgorithm( Junction *junction ):
-    BaseAlgorithm( junction, "ALL_SUBCYCLE_ALGORITHM" ),
+AllSubcycleAlgorithm::AllSubcycleAlgorithm( Junction *junction, const QString& algorithmType ):
+    BaseAlgorithm( junction, algorithmType ),
     m_numberOfVehiclesThatWillDrive( 0 ),
     m_alpha( 0 ),
     m_magicE( 0 )

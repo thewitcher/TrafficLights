@@ -227,7 +227,7 @@ void GraphicsView::initEventTimer()
     connect( m_eventTimer, SIGNAL(day()), this, SLOT(setDay()) );
     connect( m_eventTimer, SIGNAL(night()), this, SLOT(setNight()));
 
-    m_eventTimer->startDayTimeTimer();
+    m_eventTimer->startDayPartTimer();
     #endif
 }
 #endif

@@ -6,7 +6,8 @@ SOURCES += \
     ../Logic/Algorithm/Custom/one-subcycle-algorithm.cpp \
     ../Logic/Algorithm/Custom/all-subcycle-algorithm.cpp \
     ../Logic/Algorithm/Custom/helper.cpp \
-    ../Logic/Algorithm/Custom/all-fuzzy-logic.cpp
+    ../Logic/Algorithm/Custom/all-fuzzy-logic.cpp \
+    ../Logic/Algorithm/Custom/one-fuzzy-logic.cpp
 
 HEADERS += \
     ../Logic/Algorithm/Custom/normal-algorithm.h \
@@ -15,7 +16,8 @@ HEADERS += \
     ../Logic/Algorithm/Custom/one-subcycle-algorithm.h \
     ../Logic/Algorithm/Custom/all-subcycle-algorithm.h \
     ../Logic/Algorithm/Custom/helper.h \
-    ../Logic/Algorithm/Custom/all-fuzzy-logic.h
+    ../Logic/Algorithm/Custom/all-fuzzy-logic.h \
+    ../Logic/Algorithm/Custom/one-fuzzy-logic.h
 
 # GALib
 SOURCES += \
@@ -96,7 +98,85 @@ HEADERS += \
            ../Logic/Algorithm/GA/GAEvalData.h \
            ../Logic/Algorithm/GA/GA1DBinStrGenome.h \
 
+# FIS
+SOURCES += \
+    ../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/src/TriangularTerm.cpp \
+    ../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/src/TrapezoidalTerm.cpp \
+    ../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/src/test.cpp \
+    ../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/src/TakagiSugenoTerm.cpp \
+    ../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/src/TakagiSugenoRule.cpp \
+    ../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/src/TakagiSugenoConsequent.cpp \
+    ../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/src/StrOp.cpp \
+    ../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/src/SingletonTerm.cpp \
+    ../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/src/ShoulderTerm.cpp \
+    ../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/src/RuleBlock.cpp \
+    ../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/src/RectangularTerm.cpp \
+    ../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/src/OutputLVar.cpp \
+    ../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/src/MamdaniRule.cpp \
+    ../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/src/MamdaniConsequent.cpp \
+    ../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/src/LinguisticVariable.cpp \
+    ../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/src/LinguisticTerm.cpp \
+    ../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/src/InputLVar.cpp \
+    ../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/src/InfixToPostfix.cpp \
+    ../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/src/HedgeSet.cpp \
+    ../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/src/Hedge.cpp \
+    ../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/src/FuzzyRule.cpp \
+    ../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/src/FuzzyOr.cpp \
+    ../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/src/FuzzyOperator.cpp \
+    ../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/src/FuzzyOperation.cpp \
+    ../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/src/FuzzyModulation.cpp \
+    ../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/src/FuzzyExceptions.cpp \
+    ../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/src/FuzzyException.cpp \
+    ../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/src/FuzzyEngine.cpp \
+    ../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/src/FuzzyDefuzzifier.cpp \
+    ../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/src/FuzzyConsequent.cpp \
+    ../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/src/FuzzyAntecedent.cpp \
+    ../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/src/FuzzyAnd.cpp \
+    ../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/src/FunctionTerm.cpp \
+    ../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/src/DiscreteTerm.cpp \
+    ../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/src/DescriptiveAntecedent.cpp \
+    ../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/src/CompoundTerm.cpp \
+    ../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/src/AreaCentroidAlgorithm.cpp
 
+HEADERS += \
+    ../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/fuzzylite/TriangularTerm.h \
+    ../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/fuzzylite/TrapezoidalTerm.h \
+    ../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/fuzzylite/test.h \
+    ../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/fuzzylite/TakagiSugenoTerm.h \
+    ../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/fuzzylite/TakagiSugenoRule.h \
+    ../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/fuzzylite/TakagiSugenoConsequent.h \
+    ../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/fuzzylite/StrOp.h \
+    ../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/fuzzylite/SingletonTerm.h \
+    ../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/fuzzylite/ShoulderTerm.h \
+    ../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/fuzzylite/RuleBlock.h \
+    ../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/fuzzylite/RectangularTerm.h \
+    ../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/fuzzylite/OutputLVar.h \
+    ../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/fuzzylite/MamdaniRule.h \
+    ../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/fuzzylite/MamdaniConsequent.h \
+    ../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/fuzzylite/main.h \
+    ../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/fuzzylite/LinguisticVariable.h \
+    ../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/fuzzylite/LinguisticTerm.h \
+    ../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/fuzzylite/InputLVar.h \
+    ../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/fuzzylite/InfixToPostfix.h \
+    ../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/fuzzylite/HedgeSet.h \
+    ../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/fuzzylite/Hedge.h \
+    ../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/fuzzylite/FuzzyRule.h \
+    ../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/fuzzylite/FuzzyOr.h \
+    ../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/fuzzylite/FuzzyOperator.h \
+    ../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/fuzzylite/FuzzyOperation.h \
+    ../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/fuzzylite/FuzzyModulation.h \
+    ../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/fuzzylite/FuzzyExceptions.h \
+    ../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/fuzzylite/FuzzyException.h \
+    ../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/fuzzylite/FuzzyEngine.h \
+    ../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/fuzzylite/FuzzyDefuzzifier.h \
+    ../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/fuzzylite/FuzzyConsequent.h \
+    ../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/fuzzylite/FuzzyAntecedent.h \
+    ../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/fuzzylite/FuzzyAnd.h \
+    ../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/fuzzylite/FunctionTerm.h \
+    ../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/fuzzylite/DiscreteTerm.h \
+    ../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/fuzzylite/DescriptiveAntecedent.h \
+    ../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/fuzzylite/CompoundTerm.h \
+    ../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/fuzzylite/AreaCentroidAlgorithm.h
 
 
 
