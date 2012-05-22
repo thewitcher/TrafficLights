@@ -60,13 +60,12 @@ float objective( GAGenome& genome )
 }
 ///////////////////////////////////
 
-OneSubcycleAlgorithm::OneSubcycleAlgorithm( Junction *junction ):
-    BaseAlgorithm( junction, "ONE_SUBCYCLE_ALGORITHM" ),
+OneSubcycleAlgorithm::OneSubcycleAlgorithm( Junction *junction, const QString &algorithmType ):
+    BaseAlgorithm( junction, algorithmType ),
     m_currentSubcycle( VehicleCountManager::SUBCYCLE_0 ),
     m_firstRun( true ),
     m_vehicleCount( 0 )
-{
-}
+{}
 
 int OneSubcycleAlgorithm::estimateGreenLight()
 {

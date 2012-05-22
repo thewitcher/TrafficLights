@@ -10,7 +10,7 @@ class GAGenome;
 class AllSubcycleAlgorithm : public BaseAlgorithm
 {
 public:
-    AllSubcycleAlgorithm( Junction* junction );
+    AllSubcycleAlgorithm( Junction* junction, const QString& algorithmType );
 
     QVector<int> startAlgorithm();
     /*! Objective function.*/

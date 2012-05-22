@@ -1,0 +1,281 @@
+﻿CREATE TABLE Agent_ubezpieczeniowy
+(
+    Agent_id          serial,
+    Pesel_agenta      varchar(50) UNIQUE,
+    Imie_agenta       varchar(50),
+    Nazwisko_agenta   varchar(50),
+    Firma             varchar(50),
+    CONSTRAINT Agent_ubezpieczeniowy_pk PRIMARY KEY(Agent_id) 
+);
+
+CREATE TABLE Logowanie
+(
+    Agent_id       integer NOT NULL UNIQUE,
+    Liczba_bledow  integer DEFAULT 0,
+    Zablokowany    bool DEFAULT FALSE,
+    CONSTRAINT Logowanie_Agent_id_fk FOREIGN KEY (Agent_id) REFERENCES Agent_ubezpieczeniowy(Agent_id)
+);
+
+CREATE TABLE Haslo
+(
+    Agent_id    integer NOT NULL UNIQUE,
+    Haslo       varchar(50) UNIQUE,
+    CONSTRAINT Haslo_Agent_id_fk FOREIGN KEY(Agent_id) REFERENCES Agent_ubezpieczeniowy(Agent_id)
+);
+
+CREATE TABLE Nazwa_uzytkownika
+(
+    Agent_id                integer NOT NULL UNIQUE,
+    Nazwa_uzytkownika       varchar(50) UNIQUE,
+    CONSTRAINT Nazwa_uzytkownika_Agent_id_fk FOREIGN KEY(Agent_id) REFERENCES Agent_ubezpieczeniowy(Agent_id)
+);
+
+CREATE TABLE Klient
+(
+    Klient_id               serial,
+    Agent_id                integer NOT NULL,
+    Rodzaj_klienta          varchar(50),
+    CONSTRAINT Klient_Agent_id_fk FOREIGN KEY(Agent_id) REFERENCES Agent_ubezpieczeniowy(Agent_id),
+    CONSTRAINT Klient_id_pk PRIMARY KEY (Klient_id)
+);
+
+CREATE TABLE Adres
+(
+    Klient_id       integer NOT NULL,
+    Miasto          varchar(50),
+    Ulica           varchar(50),
+    Kod             varchar(6),
+    CONSTRAINT Adres_Klient_id_fk FOREIGN KEY(Klient_id) REFERENCES Klient(Klient_id)
+);
+
+CREATE TABLE Klient_grupowy
+(
+    Klient_id                integer NOT NULL UNIQUE,
+    Dane                     varchar(50),
+    CONSTRAINT Klient_grupowy_Klient_id_fk FOREIGN KEY(Klient_id) REFERENCES Klient(Klient_id)
+);
+
+CREATE TABLE Klient_indywidualny
+(
+    Klient_indywidualny_id   serial,
+    Klient_id                integer NOT NULL UNIQUE,
+    Imie                     varchar(50), 
+    Nazwisko                 varchar(50),
+    Pesel                    varchar(11) UNIQUE,
+    Data_urodzenia           date,
+    Numer_dowodu_osobistego  varchar(50),
+    Organ_wydajacy_dowod     varchar(50),
+    Data_wydania_dowodu      date,
+    CONSTRAINT Klient_indywidualny_Klient_id_fk FOREIGN KEY(Klient_id) REFERENCES Klient(Klient_id),
+    CONSTRAINT Klient_indywidualny_id_pk PRIMARY KEY(Klient_indywidualny_id)
+);
+
+CREATE TABLE Klient_instytucjonalny
+(
+    Klient_id     integer NOT NULL UNIQUE,
+    Nazwa_firmy   varchar(50),
+    EKD           varchar(50),
+    REGON         varchar(50) UNIQUE,
+    NIP           varchar(50) UNIQUE,
+    CONSTRAINT Klient_instytucjonalny_Klient_id_fk FOREIGN KEY(Klient_id) REFERENCES Klient(Klient_id)
+);
+
+CREATE TABLE Klient_specjalny
+(
+    Klient_id                integer NOT NULL UNIQUE,
+    Dane                     varchar(50),
+    CONSTRAINT Klient_specjalny_Klient_id_fk FOREIGN KEY(Klient_id) REFERENCES Klient(Klient_id)
+);
+
+CREATE TABLE Uposazenie
+(
+    Uposazenie_id             serial,      
+    Imie                      varchar(50), 
+    Nazwisko                  varchar(50),
+    Pesel                     varchar(50),
+    CONSTRAINT Uposazenie_id_fk PRIMARY KEY(Uposazenie_id)
+);
+
+CREATE TABLE Towarzystwo_ubezpieczeniowe
+(
+    Towarzystwo_ubezpieczeniowe_id     serial,      
+    Nazwa                              varchar(50),
+    CONSTRAINT Towarzystwo_ubezpieczeniowe_id_pk PRIMARY KEY (Towarzystwo_ubezpieczeniowe_id)
+);
+
+CREATE TABLE Ofe
+(
+    Ofe_id                           serial,      
+    Klient_indywidualny_id           integer NOT NULL,
+    Uposazenie_id                    integer NOT NULL UNIQUE, 
+    Towarzystwo_ubezpieczeniowe_id   integer NOT NULL UNIQUE,
+    Numer_członkowski                varchar(50),
+    Numer_wniosku                    varchar(50),
+    Data_przystapienia               date,
+    Nazwa_ofe                        varchar(50),
+    Zgromadzone_srodki               integer,
+    Sprawdzanie_skladek              boolean,
+    Jest_ok                          boolean,
+    CONSTRAINT Ofe_Klient_indywidualny_id_fk FOREIGN KEY(Klient_indywidualny_id) REFERENCES Klient_indywidualny(Klient_indywidualny_id),
+    CONSTRAINT Ofe_Uposazenie_id_fk FOREIGN KEY(Uposazenie_id) REFERENCES Uposazenie(Uposazenie_id),
+    CONSTRAINT Ofe_Towarzystwo_ubezpieczeniowe_id_fk FOREIGN KEY(Towarzystwo_ubezpieczeniowe_id) REFERENCES Towarzystwo_ubezpieczeniowe(Towarzystwo_ubezpieczeniowe_id),
+    CONSTRAINT Ofe_id_pk PRIMARY KEY (Ofe_id)
+);
+
+CREATE TABLE Inwestycje
+(
+    Inwestycje_id                    serial,      
+    Klient_indywidualny_id           integer NOT NULL,
+    Uposazenie_id                    integer NOT NULL UNIQUE, 
+    Towarzystwo_ubezpieczeniowe_id  integer NOT NULL UNIQUE,
+    Numer_wniosku                    varchar(50),
+    Data_wniosku                     date,
+    Numer_polisy                     varchar(50),
+    Poczatek_polisy_inwestycyjnej    date,
+    Fundusze                         varchar(50),
+    Umowy_dodatkowe                  boolean,
+    CONSTRAINT Inwestycje_Klient_indywidualny_id_fk FOREIGN KEY(Klient_indywidualny_id) REFERENCES Klient_indywidualny(Klient_indywidualny_id),
+    CONSTRAINT Inwestycje_Uposazenie_id_fk FOREIGN KEY(Uposazenie_id) REFERENCES Uposazenie(Uposazenie_id),
+    CONSTRAINT Inwestycje_Towarzystwo_ubezpieczeniowe_id_fk FOREIGN KEY(Towarzystwo_ubezpieczeniowe_id) REFERENCES Towarzystwo_ubezpieczeniowe(Towarzystwo_ubezpieczeniowe_id),
+    CONSTRAINT Inwestycje_id_pk PRIMARY KEY (Inwestycje_id)
+);
+
+CREATE TABLE Skladka
+(
+    Ofe_id                    integer NOT NULL UNIQUE,      
+    Rodzaj_platnosci          varchar(50),
+    Liczba_rat                integer,
+    Rata_pierwsza             integer,
+    Rata_druga                integer,
+    Skladka_laczna            integer,
+    Data                      date,
+    CONSTRAINT Skladka_Ofe_id_id_fk FOREIGN KEY(Ofe_id) REFERENCES Ofe(Ofe_id)
+);
+
+CREATE TABLE Kontakt
+(
+    Klient_id        integer NOT NULL,
+    Komorka          varchar(50),
+    Telefon          varchar(50),
+    Mail             varchar(50),
+    CONSTRAINT Kontakt_Klient_id_fk FOREIGN KEY(Klient_id) REFERENCES Klient(Klient_id)
+);
+
+CREATE TABLE Plik_klient
+(
+    Klient_id       integer NOT NULL,
+    Nazwa_pliku     varchar(50),
+    CONSTRAINT Plik_klient_Klient_id_fk FOREIGN KEY(Klient_id) REFERENCES Klient(Klient_id)
+);
+
+CREATE TABLE Notatka
+(
+    Klient_id       integer NOT NULL,
+    Tresc           varchar(1000),
+    CONSTRAINT Notatka_Klient_id_fk FOREIGN KEY(Klient_id) REFERENCES Klient(Klient_id)
+);
+
+CREATE TABLE Polisa
+(
+    Polisa_id                         serial,
+    Klient_id                         integer NOT NULL,
+    Towarszystwo_ubezpieczeniowe_id   integer NOT NULL UNIQUE,
+    Numer_polisy                      varchar(50),
+    Numer_wniosku                     varchar(50),
+    Data_wniosku                      date,
+    Poczatek_okresu_ubezpieczenia     date,
+    Koniec_okresu_ubezpieczenia       date,
+    Data_wystawienia                  date,
+    Data_wprowadzenia                 date,
+    Data_wznowienia                   date,
+    CONSTRAINT Polisa_Klient_id_fk FOREIGN KEY(Klient_id) REFERENCES Klient(Klient_id),
+    CONSTRAINT Polisa_id_pk PRIMARY KEY (Polisa_id)
+);
+
+CREATE TABLE Typ_polisy
+(
+    Polisa_id                         integer NOT NULL UNIQUE,
+    Typ                               varchar(50),
+    CONSTRAINT Typ_polisy_Polisa_id_fk FOREIGN KEY(Polisa_id) REFERENCES Polisa(Polisa_id)
+);
+
+CREATE TABLE Polisa_ubezpieczenia_grupowego
+(
+    Polisa_id         integer NOT NULL UNIQUE,
+    Certyfikat        varchar(50),
+    ZK                varchar(50), 
+    Assistance        varchar(50),
+    CONSTRAINT Polisa_ubezpieczenia_grupowego_Polisa_id_fk FOREIGN KEY(Polisa_id) REFERENCES Polisa(Polisa_id)
+);
+
+CREATE TABLE Polisa_majatkowa
+(
+    Polisa_id                    integer NOT NULL UNIQUE,
+    Miejsce_ubezpieczenia        varchar(50),
+    CONSTRAINT Polisa_majatkowa_Polisa_id_fk FOREIGN KEY(Polisa_id) REFERENCES Polisa(Polisa_id)
+);
+
+CREATE TABLE Pojazd
+(
+    Pojazd_id                           serial,
+    Numer_rejestracyjny                 varchar(50),
+    Marka                               varchar(50),
+    Model                               varchar(50),
+    Rodzaj                              varchar(50),
+    Karta_pojazdu                       varchar(50), 
+    Pojemnosc                           integer,
+    Rok_produkcji                       date, 
+    Numer_nadwozia                      integer,
+    Numer_silnika                       integer, 
+    Liczba_miejsc                       integer,
+    Diesel                              boolean,
+    Gaz                                 boolean,
+    Ladownosc                           integer,
+    Dopuszczalna_masa_calkowita         integer,
+    Kolor                               varchar(50),
+    Numer_dowodu_rejestracyjnego        integer,  
+    Organ_wydajacy_dowod_rejestracyjny  varchar(50),
+    Data_wydania_dowodu_rejestracyjnego date,
+    Moc                                 integer, 
+    Przebieg                            integer,
+    Data_pierwszej_rejestracji          date,
+    Data_badan_technicznych             date, 
+    CONSTRAINT Pojazd_id_pk PRIMARY KEY (Pojazd_id)
+);
+
+CREATE TABLE Plik_pojazd
+(
+    Pojazd_id             integer NOT NULL,
+    Nazwa_pliku           varchar(50),
+    CONSTRAINT Polisa_pojazd_Pojazd_id_fk FOREIGN KEY(Pojazd_id) REFERENCES Pojazd(Pojazd_id)
+);
+
+CREATE TABLE Polisa_komunikacyjna
+(
+    Polisa_id      integer NOT NULL UNIQUE,
+    Pojazd_id      integer NOT NULL UNIQUE, 
+    Certyfikat     varchar(50),
+    ZK             varchar(50),
+    Assistance     varchar(50),
+    CONSTRAINT Polisa_komunikacyjna_Polisa_id_fk FOREIGN KEY(Polisa_id) REFERENCES Polisa(Polisa_id),
+    CONSTRAINT Polisa_komunikacyjna_Pojazd_id_fk FOREIGN KEY(Pojazd_id) REFERENCES Pojazd(Pojazd_id)
+);
+
+CREATE TABLE Polisa_zyciowa
+(
+    Polisa_id     integer NOT NULL UNIQUE,
+    Dane          varchar(50),
+    CONSTRAINT Polisa_zyciowa_Polisa_id_fk FOREIGN KEY(Polisa_id) REFERENCES Polisa(Polisa_id)
+);
+
+CREATE TABLE Rodzaj
+(
+    Rodzaj      varchar(50)
+);
+
+CREATE TABLE Produkt
+(
+    Towarzystwo_ubezpieczeniowe_id     integer NOT NULL,      
+    Nazwa                              varchar(50),
+    CONSTRAINT Towarzystwo_ubezpieczeniowe_Towarzystwo_ubezpieczeniowe_id_fk FOREIGN KEY(Towarzystwo_ubezpieczeniowe_id) REFERENCES Towarzystwo_ubezpieczeniowe(Towarzystwo_ubezpieczeniowe_id)
+);

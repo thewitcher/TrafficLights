@@ -10,9 +10,9 @@ class GAGenome;
 class OneSubcycleAlgorithm : public BaseAlgorithm
 {
 public:
-    OneSubcycleAlgorithm( Junction* junction );
+    OneSubcycleAlgorithm( Junction* junction, const QString& algorithmType );
 
-private:
+protected:
     VehicleCountManager::SubCycle m_currentSubcycle;
     QVector<int> m_vehicleCountOnSubcycle;
     bool m_firstRun;
@@ -21,12 +21,12 @@ private:
     static float S_MAX;
     static float S_PASS_RATE;
 
-    void chooseTheMostBlockSubcycleForBladzio();
-    void chooseTheMostBlockSubcycleForSimple();
-    void loadDataForBladzio();
-    void loadDataForSimple();
+    virtual void chooseTheMostBlockSubcycleForBladzio();
+    virtual void chooseTheMostBlockSubcycleForSimple();
+    virtual void loadDataForBladzio();
+    virtual void loadDataForSimple();
     int estimateGreenLight();
-    QVector<int> startAlgorithm();
+    virtual QVector<int> startAlgorithm();
 
     friend float objective( GAGenome& genome );
 };

@@ -60,10 +60,10 @@ SELECT * FROM Experiment;
 SELECT * FROM Statistic;
 SELECT * FROM Subcycle;
 
-SELECT statisticTime, vehicleCount, vehicleWaitingTime FROM Statistic WHERE junctionId = 6 AND experimentId = 52;
+SELECT statisticTime, vehicleCount, vehicleWaitingTime FROM Statistic WHERE junctionId = 6 AND experimentId = 1;
 SELECT statisticTime, vehicleCount, junctionId FROM Statistic WHERE experimentId = 52 ORDER BY statisticTime;
 
-SELECT statisticTime, Subcycle.vehicleCount, subcycleType FROM Subcycle, Statistic WHERE  Statistic.statisticId = Subcycle.subcycleId AND junctionId = 0 ORDER BY statisticTime;
+SELECT statisticTime, Subcycle.vehicleCount, subcycleType FROM Subcycle, Statistic WHERE  Statistic.experimentId = 2 AND Statistic.statisticId = Subcycle.statisticId AND Statistic.junctionId = 0 ORDER BY statisticTime;
 
 SELECT MAX( experimentId ) FROM Experiment;
 

@@ -10,7 +10,7 @@ class Junction;
 class AllFuzzyLogic : public BaseAlgorithm
 {
 public:
-    AllFuzzyLogic( Junction *junction );
+    AllFuzzyLogic( Junction *junction, const QString& algorithmType );
     QVector<int> startAlgorithm();
     enum GroupForLaneAtJunction { SMALL_AT_SIMPLE_JUNCTION, MEDIUM_AT_SIMPLE_JUNCTION, LARGE_AT_SIMPLE_JUNCTION,
                                        SMALL_AT_BLADZIO_JUNCTION, MEDIUM_AT_BLADZIO_JUNCTION, LARGE_AT_BLADZIO_JUNCTION };

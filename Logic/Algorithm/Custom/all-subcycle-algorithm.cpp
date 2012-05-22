@@ -93,9 +93,7 @@ int myMutation( GAGenome& genome, float pmut )
         position1 = GARandomInt( 0, 3 );
         position2 = GARandomInt( 0, 3 );
 
-        if( position1 > 3 || position2 > 3 ) /*{}*/
-            qDebug() << "CRITICAL";
-        else
+        if( position1 <= 3 && position2 <= 3 )
         {
             arrayGenome.gene( position1, value1 );
             arrayGenome.gene( position2, value2 );
@@ -106,9 +104,7 @@ int myMutation( GAGenome& genome, float pmut )
         position1 = GARandomInt( 0, 2 );
         position2 = GARandomInt( 0, 2 );
 
-        if( position1 > 2 || position2 > 2 ) /*{}*/
-            qDebug() << "CRITICAL";
-        else
+        if( position1 <= 2 && position2 <= 2 )
         {
             arrayGenome.gene( position1, value1 );
             arrayGenome.gene( position2, value2 );
@@ -123,8 +119,8 @@ int myMutation( GAGenome& genome, float pmut )
     return nmut;
 }
 
-AllSubcycleAlgorithm::AllSubcycleAlgorithm( Junction *junction ):
-    BaseAlgorithm( junction, "ALL_SUBCYCLE_ALGORITHM" ),
+AllSubcycleAlgorithm::AllSubcycleAlgorithm( Junction *junction, const QString& algorithmType ):
+    BaseAlgorithm( junction, algorithmType ),
     m_numberOfVehiclesThatWillDrive( 0 ),
     m_alpha( 0 ),
     m_magicE( 0 ),

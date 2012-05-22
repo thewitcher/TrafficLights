@@ -2,7 +2,9 @@
 #include "../Ui/TrafficLights_manager/junction.h"
 #include "../Ui/TrafficLights_manager/vehicle-count-manager.h"
 
-AllFuzzyLogic::AllFuzzyLogic( Junction *junction ): BaseAlgorithm( junction, "ALL_FUZZY_LOGIC" ),
+
+AllFuzzyLogic::AllFuzzyLogic( Junction *junction, const QString& algorithmType ):
+  BaseAlgorithm( junction, algorithmType ),
   runCount( 0 ),
   nullVectorCount( 0 ),
   firstRun( false )
