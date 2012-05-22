@@ -6,22 +6,30 @@
 #include "../Ui/Cars/motor-car.h"
 #include "../Ui/Lights/trafficlight.h"
 #include "../Ui/Cars/bus-car.h"
+#include "../Ui/Choose_algorithm_type_and_parameters/choose-algorithm-type.h"
 
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    //It is neccessary to open file to writes logs
-    Logger::init();
+    ChooseAlgorithmType *choosealgorithmtype = new ChooseAlgorithmType;
+    choosealgorithmtype->setAttribute( Qt::WA_DeleteOnClose );
 
-    //Register type
-    qmlRegisterType<MotorCar> ( "Cars", 1, 0, "MotorCar" );
-    qmlRegisterType<BusCar> ( "Cars", 1, 0, "BusCar" );
-    qmlRegisterType<TrafficLight> ( "LightsPacket", 1, 0, "Light" );
 
-    RootWindow w;
-    w.show();
+    if( choosealgorithmtype->exec() == false )
+    {
+        //It is neccessary to open file to writes logs
+        Logger::init();
 
-    return a.exec();
+        //Register type
+        qmlRegisterType<MotorCar> ( "Cars", 1, 0, "MotorCar" );
+        qmlRegisterType<BusCar> ( "Cars", 1, 0, "BusCar" );
+        qmlRegisterType<TrafficLight> ( "LightsPacket", 1, 0, "Light" );
+
+        RootWindow w;
+        w.show();
+        return a.exec();
+    }
+    return 0;
 }

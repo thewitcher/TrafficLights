@@ -20,6 +20,9 @@ public:
     ~GraphicsView();
 
     void addToScene( Vehicle *item, Checkpoint* initCheckpoint );
+    static void updateStaticVariables( int numberOfCars, int numberOfBuses,
+                                       int vehiclesFrequency, int carsSpeed,
+                                       int busesSpeed );
 
 private:
     GraphicsScene *m_scene;

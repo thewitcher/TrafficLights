@@ -15,3 +15,11 @@ QVariant Settings::takeValue( const QString &key, const QString &groupName, cons
 
     return value;
 }
+
+void Settings::setValues( const QString &key, const QString &groupName, const QString& value )
+{
+    QSettings settings( S_SETTINGS_PATH, QSettings::IniFormat );
+    settings.beginGroup( groupName );
+    settings.setValue( key, value );
+    settings.endGroup();
+}

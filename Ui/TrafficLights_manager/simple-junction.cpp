@@ -28,21 +28,6 @@ void SimpleJunction::runForSubcycles()
 
     /* Subcycle 3 */
     runThirdSubcycle( m_subcycle_1, m_subcycle_2, m_subcycle_3, this );
-
-    /* runForSubcycles function call when all subcycles sum equal 0 */
-    exceptionWhenSubcycleSumEqualZero();
-}
-
-void SimpleJunction::exceptionWhenSubcycleSumEqualZero()
-{
-    if( m_subcycle_1 == 0 && m_subcycle_2 == 0 && m_subcycle_3 == 0 )
-    {
-        for( int i = 0; i < m_timeVectorForSubcycles.size(); i++ )
-        {
-            m_timeVectorForSubcycles[ i ] = 5000;
-        }
-        runForSubcycles();
-    }
 }
 
 void SimpleJunction::firstSubcycle()

@@ -3,15 +3,18 @@ SOURCES += ../Ui/Root_window/root-window.cpp \
            ../Ui/Root_window/graphics-view.cpp \
            ../Ui/Root_window/qml-helper.cpp \
            ../Ui/Root_window/graphics-scene.cpp \
-           ../Ui/Root_window/event-timer.cpp
+           ../Ui/Root_window/event-timer.cpp \
+    ../Ui/Choose_algorithm_type_and_parameters/choose-algorithm-type.cpp
 
 HEADERS += ../Ui/Root_window/root-window.h \
            ../Ui/Root_window/graphics-view.h \
            ../Ui/Root_window/qml-helper.h \
            ../Ui/Root_window/graphics-scene.h \
-           ../Ui/Root_window/event-timer.h
+           ../Ui/Root_window/event-timer.h \
+    ../Ui/Choose_algorithm_type_and_parameters/choose-algorithm-type.h
 
-FORMS   += ../Ui/Root_window/root-window.ui
+FORMS   += ../Ui/Root_window/root-window.ui \
+    ../Ui/Choose_algorithm_type_and_parameters/choose-algorithm-type.ui
 
 # Cars
 SOURCES += \
@@ -86,3 +89,6 @@ SOURCES += \
     ../Ui/Checkpoints_manager/path.cpp \
     ../Ui/Checkpoints_manager/checkpoint-manager.cpp \
     ../Ui/Checkpoints_manager/checkpoint-creator.cpp
+
+
+

@@ -14,7 +14,7 @@ class Settings
 {
 public:
     static QVariant takeValue( const QString& key, const QString& groupName, const QVariant& defaultValue = QVariant() );
-
+    static void setValues( const QString& key, const QString& groupName, const QString& value );
 private:
     explicit Settings() {}
     ~Settings() {}

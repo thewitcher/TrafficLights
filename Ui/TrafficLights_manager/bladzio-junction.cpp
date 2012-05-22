@@ -40,21 +40,6 @@ void BladzioJunction::runForSubcycles()
 
     /* Series 4 */
     runFourthSubcycle( m_subcycle_1, m_subcycle_2, m_subcycle_3, m_subcycle_4, this );
-
-    // Exception
-    exceptionWhenSubcycleSumEqualZero();
-}
-
-void BladzioJunction::exceptionWhenSubcycleSumEqualZero()
-{
-    if( m_subcycle_1 == 0 && m_subcycle_2 == 0 && m_subcycle_3 == 0 && m_subcycle_4 == 0 )
-    {
-        for( int i = 0; i < m_timeVectorForSubcycles.size(); i++ )
-        {
-            m_timeVectorForSubcycles[ i ] = 5000;
-        }
-        runForSubcycles();
-    }
 }
 
 void BladzioJunction::firstSubcycle()

@@ -47,6 +47,11 @@ public:
     float m_magicE;
 
     void clearAll();
+    bool firstRun;
+    void exceptionForSimple( QVector<int>& vector );
+    void exceptionForBladzio( QVector<int> &vector );
+
+
 };
 
 #endif // ALLSUBCYCLEALGORITHM_H
