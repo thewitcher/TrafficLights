@@ -1,5 +1,6 @@
 #include "one-fuzzy-logic.h"
 #include "../Ui/TrafficLights_manager/junction.h"
+#include "../FIS/fuzzylite-1.03/fuzzylite/fuzzylite/FuzzyEngine.h"
 
 OneFuzzyLogic::OneFuzzyLogic( Junction *junction, const QString& algorithmType ):
     OneSubcycleAlgorithm( junction, algorithmType )
@@ -60,5 +61,10 @@ QVector<int> OneFuzzyLogic::startAlgorithm()
 
 int OneFuzzyLogic::estimateGreenLight()
 {
+    //fl::FuzzyEngine engine;
+    //engine.hedgeSet().add(new fl::HedgeNot);
+    //engine.hedgeSet().add(new fl::HedgeSomewhat);
+    //engine.hedgeSet().add(new fl::HedgeVery);
+
     return 5000;
 }
