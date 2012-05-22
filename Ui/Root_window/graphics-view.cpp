@@ -11,11 +11,11 @@
 #include <QTimer>
 
 
-int GraphicsView::S_NEW_CAR_FREQUENCY = 500;
-int GraphicsView::S_CAR_COUNT = Settings::takeValue( "S_CAR_COUNT", "GENERAL", 1 ).toInt();
-int GraphicsView::S_CAR_SPEED = 1;
-int GraphicsView::S_BUS_SPEED = 3;
-int GraphicsView::S_BUS_COUNT = 5;
+int GraphicsView::S_NEW_CAR_FREQUENCY = Settings::takeValue( "S_NEW_CAR_FREQUENCY", "GENERAL", 500 ).toInt();
+int GraphicsView::S_CAR_COUNT = Settings::takeValue( "S_CAR_COUNT", "GENERAL", 200 ).toInt();
+int GraphicsView::S_CAR_SPEED = Settings::takeValue( "S_CAR_SPEED", "GENERAL", 1 ).toInt();
+int GraphicsView::S_BUS_SPEED = Settings::takeValue( "S_BUS_SPEED", "GENERAL", 3 ).toInt();
+int GraphicsView::S_BUS_COUNT = Settings::takeValue( "S_BUS_COUNT", "GENERAL", 5 ).toInt();
 
 /*!
  * GraphicsView is a subclass of QGraphicsView. It was created for convenience. In constructor there are already four method, which
@@ -242,4 +242,15 @@ void GraphicsView::setNight()
 {
     changeBackgroundPixmap( true );
     m_scene->setDark( true );
+}
+
+void GraphicsView::updateStaticVariables( int numberOfCars, int numberOfBuses,
+                                                 int vehiclesFrequency, int carsSpeed,
+                                                 int busesSpeed )
+{
+    S_NEW_CAR_FREQUENCY = vehiclesFrequency;
+    S_CAR_COUNT = numberOfCars;
+    S_BUS_COUNT = numberOfBuses;
+    S_CAR_SPEED = carsSpeed;
+    S_BUS_SPEED = busesSpeed;
 }

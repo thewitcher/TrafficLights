@@ -93,8 +93,8 @@ int myMutation( GAGenome& genome, float pmut )
         position1 = GARandomInt( 0, 3 );
         position2 = GARandomInt( 0, 3 );
 
-        if( position1 > 3 || position2 > 3 ) {}
-            //qDebug() << "CRITICAL";
+        if( position1 > 3 || position2 > 3 ) /*{}*/
+            qDebug() << "CRITICAL";
         else
         {
             arrayGenome.gene( position1, value1 );
@@ -106,8 +106,8 @@ int myMutation( GAGenome& genome, float pmut )
         position1 = GARandomInt( 0, 2 );
         position2 = GARandomInt( 0, 2 );
 
-        if( position1 > 2 || position2 > 2 ) {}
-            //qDebug() << "CRITICAL";
+        if( position1 > 2 || position2 > 2 ) /*{}*/
+            qDebug() << "CRITICAL";
         else
         {
             arrayGenome.gene( position1, value1 );
@@ -127,7 +127,8 @@ AllSubcycleAlgorithm::AllSubcycleAlgorithm( Junction *junction ):
     BaseAlgorithm( junction, "ALL_SUBCYCLE_ALGORITHM" ),
     m_numberOfVehiclesThatWillDrive( 0 ),
     m_alpha( 0 ),
-    m_magicE( 0 )
+    m_magicE( 0 ),
+    firstRun( false )
 {}
 
 QVector<int> AllSubcycleAlgorithm::startAlgorithm()
@@ -148,6 +149,7 @@ QVector<int> AllSubcycleAlgorithm::startAlgorithm()
             {
                 timeVector = normalTraffic();
             }
+            exceptionForBladzio( timeVector );
             break;
         case Junction::SIMPLE:
             if( traffic > 18 )
@@ -159,6 +161,7 @@ QVector<int> AllSubcycleAlgorithm::startAlgorithm()
             {
                 timeVector = normalTraffic();
             }
+            exceptionForSimple( timeVector );
             break;
         default:
             break;
@@ -388,11 +391,13 @@ float AllSubcycleAlgorithm::checkAllSubcycles( const int& vehiclesCountAtLane, c
     }
     else if( vehiclesCountAtLane > 0 && time == 0 )
     {
-        return -10000 * vehiclesCountAtLane;
+//        return -100000 * vehiclesCountAtLane;
+        return -100000 - vehiclesCountAtLane;
     }
     else if( vehiclesCountAtLane == 0 && time > 0 )
     {
-        return -10000 * (time+5);
+//        return -100000 * (time+5);
+        return -100000 - (time << 3);
     }
     else if( vehiclesCountAtLane == 0 && time == 0 )
     {
@@ -504,4 +509,22 @@ int AllSubcycleAlgorithm::maxTimeFromTwoLanes( QList<VehicleCountManager::Lane> 
     timeBottom = VehicleCountManager::vehicleCountOnLane( m_junction, list.at( 1 ) );
 
     return ( ( timeTop > timeBottom ) ? timeTop : timeBottom ) * 1000;
+}
+
+void AllSubcycleAlgorithm::exceptionForSimple( QVector<int> &vector )
+{
+    if( vector.at( 0 ) == 0 && vector.at( 1 ) == 0 && vector.at( 2 ) == 0 )
+    {
+        for( int i = 0; i < vector.size(); i++ )
+            vector[ i ] = 3000;
+    }
+}
+
+void AllSubcycleAlgorithm::exceptionForBladzio( QVector<int> &vector )
+{
+    if( vector.at( 0 ) == 0 && vector.at( 1 ) == 0 && vector.at( 2 ) == 0 && vector.at( 3 ) == 0)
+    {
+        for( int i = 0; i < vector.size(); i++ )
+            vector[ i ] = 3000;
+    }
 }

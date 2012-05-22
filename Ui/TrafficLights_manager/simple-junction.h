@@ -24,8 +24,6 @@ private:
     uint m_subcycle_2;
     uint m_subcycle_3;
 
-    void exceptionWhenSubcycleSumEqualZero();
-
 public slots:
     void firstSubcycle();
     void secondSubcycle();
