@@ -13,11 +13,12 @@
    limitations under the License.
  */
 
-#include "../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/fuzzylite/test.h"
-#include "../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/fuzzylite/FuzzyLite.h"
+#include "../fuzzylite/test.h"
+#include "../fuzzylite/FuzzyLite.h"
+#include "../fuzzylite/FunctionTerm.h"
 #include <limits>
 
-#include "../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/fuzzylite/FunctionTerm.h"
+
 namespace fl {
 
     void Test::SimpleMamdani() {
@@ -43,7 +44,8 @@ namespace fl {
         block->addRule(new fl::MamdaniRule("if Energy is HIGH then Health is GOOD", engine));
         engine.addRuleBlock(block);
 
-        for (fl::flScalar in = 0.0; in < 1.1; in += 0.1) {
+        for (fl::flScalar in = 0.0; in < 1.1; in += 0.1)
+        {
             energy->setInput(in);
             engine.process();
             fl::flScalar out = health->output().defuzzify();
