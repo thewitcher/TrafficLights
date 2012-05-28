@@ -2,5 +2,5 @@
 *.orig
 *.autosave
 *.o
-/home/marcin/Pulpit/Programy/TrafficLightsProject/TrafficLights_builded/
-/home/marcin/Pulpit/Programy/TrafficLightsProject/TrafficLights/DatabaseReader_builded/
+user_logger.txt
+statistic.db3
