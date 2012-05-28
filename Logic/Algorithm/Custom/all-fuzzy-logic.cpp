@@ -2,25 +2,35 @@
 #include "../Ui/TrafficLights_manager/junction.h"
 #include "../Ui/TrafficLights_manager/vehicle-count-manager.h"
 
+#include "../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/fuzzylite/FuzzyEngine.h"
+#include "../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/fuzzylite/TriangularTerm.h"
+#include "../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/fuzzylite/TrapezoidalTerm.h"
+#include "../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/fuzzylite/RuleBlock.h"
+#include "../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/fuzzylite/MamdaniRule.h"
+#include "../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/fuzzylite/FuzzyDefuzzifier.h"
+
+#include "../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/fuzzylite/AreaCentroidAlgorithm.h"
+#include "../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/fuzzylite/FuzzyOperator.h"
+
+#include "../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/fuzzylite/ShoulderTerm.h"
+
 
 AllFuzzyLogic::AllFuzzyLogic( Junction *junction, const QString& algorithmType ):
   BaseAlgorithm( junction, algorithmType ),
-  runCount( 0 ),
-  nullVectorCount( 0 ),
-  firstRun( false )
+  m_runCount( 0 ),
+  m_nullVectorCount( 0 ),
+  m_firstRun( false )
 {
 }
 
 QVector<int> AllFuzzyLogic::startAlgorithm()
 {
-    clearAll();
     QVector<int> vector ;
-    vector << 3000 << 4000 << 5000 << 6000 ;
-    if( firstRun == false )
+    if( m_firstRun == false )
     {
         vector.clear();
         vector << 3000 << 3000 << 3000 << 3000;
-        firstRun = true;
+        m_firstRun = true;
         return vector;
     }
 
@@ -28,158 +38,73 @@ QVector<int> AllFuzzyLogic::startAlgorithm()
     {
     case Junction::SIMPLE:
         setNumberOfCycleForSimpleJunction();
-        if(m_junction->id() == 6)
-        qDebug() << "S_RUN_COUNT: " << runCount ;
         vehiclesCountForSimpleJunction();
-        startFuzzyForSimple();
-        baseOfRulesForSimpleJunction();
-        fuzzyActions();
-        vector = sharpening();
-        if(m_junction->id() == 6)
-            qDebug() << vector;
+        if( m_vehiclesCountAtLane != 0 ){
+            vector = returnTimeVectorForSimple( startSimulation() );
+            m_runCount++;
+        }
+        else{
+            exceptionForSimpleJunction( vector );
+        }
         break;
     case Junction::BLADZIO:
-//        setNumberOfCycleForBladzioJunction();
-//        vehiclesCountForBladzioJunction();
-//        startFuzzyForBladzio();
-//        baseOfRulesForBladzioJunction();
-//        fuzzyActions();
-//        vector = sharpening();
+        setNumberOfCycleForBladzioJunction();
+        vehiclesCountForBladzioJunction();
+        if( m_vehiclesCountAtLane != 0 ){
+            vector = returnTimeVectorForBladzio( startSimulation() );
+            m_runCount++;
+        }
+        else{
+            exceptionForBladzioJunction( vector );
+        }
+
         break;
     default:
         break;
     }
+    return vector;
+}
 
-    runCount++;
-    if( vector.at( 0 ) == 0 && vector.at( 1 )== 0 && vector.at( 2 ) == 0 && nullVectorCount < 3 )
+void AllFuzzyLogic::exceptionForSimpleJunction( QVector<int>& vector )
+{
+    vector << 0 << 0 << 0;
+    m_runCount++;
+    if( vector.at( 0 ) == 0 && vector.at( 1 )== 0 && vector.at( 2 ) == 0 && m_nullVectorCount < 3 )
     {
-        nullVectorCount++;
-        if(m_junction->id() == 6)
-        qDebug() << "nul < 3";
+        m_nullVectorCount++;
         vector = startAlgorithm();
     }
-    else if( vector.at( 0 ) == 0 && vector.at( 1 )== 0 && vector.at( 2 ) == 0 && nullVectorCount == 3 )
+    else if( vector.at( 0 ) == 0 && vector.at( 1 )== 0 && vector.at( 2 ) == 0 && m_nullVectorCount == 3 )
     {
         vector.clear();
-        nullVectorCount = 0;
+        m_nullVectorCount = 0;
+        vector << 0 << 4000 << 0;
+    }
+}
+
+void AllFuzzyLogic::exceptionForBladzioJunction( QVector<int> &vector )
+{
+    vector << 0 << 0 << 0 << 0;
+    m_runCount++;
+    if( vector.at( 0 ) == 0 && vector.at( 1 )== 0 && vector.at( 2 ) == 0
+            && vector.at( 3 ) == 0 && m_nullVectorCount < 4 )
+    {
+        m_nullVectorCount++;
+        vector = startAlgorithm();
+    }
+    else if( vector.at( 0 ) == 0 && vector.at( 1 )== 0 && vector.at( 2 ) == 0
+             && vector.at( 3 ) == 0 && m_nullVectorCount == 4 )
+    {
+        vector.clear();
+        m_nullVectorCount = 0;
         vector << 0 << 4000 << 0 << 0;
     }
-
-    return vector;
 }
-
-void AllFuzzyLogic::startFuzzyForSimple()
-{
-    /* For Lane */
-    setGroupValuesForLaneAtSimpleJunction( SMALL_AT_SIMPLE_JUNCTION );
-    m_degreeOfMembershipForTheFirstSet.insert( SMALL_AT_SIMPLE_JUNCTION, fuzzyValueForTriangle( m_vehiclesCountAtLane ) );
-
-    setGroupValuesForLaneAtSimpleJunction( MEDIUM_AT_SIMPLE_JUNCTION );
-    m_degreeOfMembershipForTheFirstSet.insert( MEDIUM_AT_SIMPLE_JUNCTION, fuzzyValueForTriangle( m_vehiclesCountAtLane ) );
-
-    setGroupValuesForLaneAtSimpleJunction( LARGE_AT_SIMPLE_JUNCTION );
-    m_degreeOfMembershipForTheFirstSet.insert( LARGE_AT_SIMPLE_JUNCTION, fuzzyValueForTrapeze( m_vehiclesCountAtLane ) );
-
-    /* For Junction */
-    setGroupValuesForSimpleJunction( SMALL_AT_SIMPLE_CROSSROADS );
-    m_degreeOfMembershipForTheSecondSet.insert( SMALL_AT_SIMPLE_CROSSROADS, fuzzyValueForTriangle( m_vehiclesCountAtJunction ) );
-
-    setGroupValuesForSimpleJunction( MEDIUM_AT_SIMPLE_CROSSROADS );
-    m_degreeOfMembershipForTheSecondSet.insert( MEDIUM_AT_SIMPLE_CROSSROADS, fuzzyValueForTriangle( m_vehiclesCountAtJunction ) );
-
-    setGroupValuesForSimpleJunction( LARGE_AT_SIMPLE_CROSSROADS );
-    m_degreeOfMembershipForTheSecondSet.insert( LARGE_AT_SIMPLE_CROSSROADS, fuzzyValueForTrapeze( m_vehiclesCountAtJunction ) );
-}
-
-void AllFuzzyLogic::startFuzzyForBladzio()
-{
-    /* For Lane */
-    setGroupValuesForLaneAtBladzioJunction( SMALL_AT_BLADZIO_JUNCTION );
-    m_degreeOfMembershipForTheFirstSet.insert( SMALL_AT_BLADZIO_JUNCTION, fuzzyValueForTriangle( m_vehiclesCountAtLane ) );
-
-    setGroupValuesForLaneAtBladzioJunction( MEDIUM_AT_BLADZIO_JUNCTION );
-    m_degreeOfMembershipForTheFirstSet.insert( MEDIUM_AT_BLADZIO_JUNCTION, fuzzyValueForTriangle( m_vehiclesCountAtLane ) );
-
-    setGroupValuesForLaneAtBladzioJunction( LARGE_AT_BLADZIO_JUNCTION );
-    m_degreeOfMembershipForTheFirstSet.insert( LARGE_AT_BLADZIO_JUNCTION, fuzzyValueForTrapeze( m_vehiclesCountAtLane ) );
-
-    /* For Junction */
-    setGroupValuesForBladzioJunction( SMALL_AT_BLADZIO_CROSSROADS );
-    m_degreeOfMembershipForTheSecondSet.insert( SMALL_AT_BLADZIO_CROSSROADS, fuzzyValueForTriangle( m_vehiclesCountAtJunction ) );
-
-    setGroupValuesForBladzioJunction( MEDIUM_AT_BLADZIO_CROSSROADS );
-    m_degreeOfMembershipForTheSecondSet.insert( MEDIUM_AT_BLADZIO_CROSSROADS, fuzzyValueForTriangle( m_vehiclesCountAtJunction ) );
-
-    setGroupValuesForBladzioJunction( LARGE_AT_BLADZIO_CROSSROADS );
-    m_degreeOfMembershipForTheSecondSet.insert( LARGE_AT_BLADZIO_CROSSROADS, fuzzyValueForTrapeze( m_vehiclesCountAtJunction ) );
-}
-
-void AllFuzzyLogic::fuzzyActions()
-{
-    QMultiHash<TimeForSubcycle, float>::iterator it = m_fuzzyActions.begin();
-    QMultiHash<TimeForSubcycle,float>::iterator it2 = m_fuzzyActions.begin();
-
-    float max = it.value();
-    while( it2 != m_fuzzyActions.end() )
-    {
-        max = it.value();
-        while(it.key() == it2.key())
-        {
-            if( max < it2.value() )
-                max = it2.value();
-
-            ++it2;
-        }
-        m_afterFuzzyActions.insert(it.key(),max);
-        it = it2;
-    }
-    if(m_junction->id() == 6)
-    qDebug() << "afterfuzzy: " << m_afterFuzzyActions;
-}
-
-QVector<int> AllFuzzyLogic::sharpening()
-{
-    QVector<int> vector;
-    QMultiHash<TimeForSubcycle, float>::iterator it = m_afterFuzzyActions.begin();
-    QMultiHash<TimeForSubcycle, float>::iterator itWhichSet = it;
-
-    float max = it.value();
-    while( it != m_afterFuzzyActions.end() )
-    {
-        if( max < it.value() )
-        {
-            max = it.value();
-            itWhichSet = it;
-        }
-        ++it;
-    }
-    if(m_junction->id() == 6)
-    qDebug() << "max: " << max << "itWhichSet: " << itWhichSet.key();
-    setGroupValuesForFuzzyTime( itWhichSet.key() ); // tu byl max
-    vector = returnTimeVector( inverseFuzzyValue( max ) );
-    return vector;
-}
-
-QVector<int> AllFuzzyLogic::returnTimeVector( const int &value )
-{
-    QVector<int> vector;
-    switch( m_junction->junctionType() )
-    {
-    case Junction::SIMPLE:
-        vector = returnTimeVectorForSimple( value );
-    case Junction::BLADZIO:
-        vector = returnTimeVectorForBladzio( value );
-    default:
-        break;
-    }
-    return vector;
-}
-
 
 QVector<int> AllFuzzyLogic::returnTimeVectorForSimple( const int &value )
 {
     QVector<int> vector;
-    switch( runCount )
+    switch( m_runCount )
     {
     case 0:
         vector << value * 1000 << 0 << 0;
@@ -191,6 +116,7 @@ QVector<int> AllFuzzyLogic::returnTimeVectorForSimple( const int &value )
         vector << 0 << 0 << value * 1000;
         break;
     default:
+        qDebug() << "Zlapalem: " << m_runCount;
         break;
     }
     return vector;
@@ -199,7 +125,7 @@ QVector<int> AllFuzzyLogic::returnTimeVectorForSimple( const int &value )
 QVector<int> AllFuzzyLogic::returnTimeVectorForBladzio( const int &value )
 {
     QVector<int> vector;
-    switch( runCount )
+    switch( m_runCount )
     {
     case 0:
         vector << value * 1000 << 0 << 0 << 0;
@@ -212,91 +138,14 @@ QVector<int> AllFuzzyLogic::returnTimeVectorForBladzio( const int &value )
         break;
     case 3:
         vector << 0 << 0 << 0 << value * 1000;
+        break;
     default:
+        qDebug() << "mam!: " <<m_runCount;
         break;
     }
     return vector;
 }
 
-void AllFuzzyLogic::baseOfRulesForSimpleJunction()
-{
-
-    if(m_junction->id() == 6){
-    qDebug() << "Reguly: Lane: " << m_degreeOfMembershipForTheFirstSet;
-    qDebug() << "Reguly: Junction: " << m_degreeOfMembershipForTheSecondSet;
-    }
-
-    QMap<GroupForLaneAtJunction,float>::iterator itFirstSet = m_degreeOfMembershipForTheFirstSet.begin();
-    while( itFirstSet != m_degreeOfMembershipForTheFirstSet.end() )
-    {
-        m_groupForLaneAtJunction = itFirstSet.key();
-        float value1 = itFirstSet.value();
-        QMap<GroupForCrossroads,float>::iterator itSecondSet = m_degreeOfMembershipForTheSecondSet.begin();
-        while( itSecondSet != m_degreeOfMembershipForTheSecondSet.end() )
-        {
-            m_groupForCrossroads = itSecondSet.key();
-            float value2 = itSecondSet.value();
-
-            float min = ( value1 < value2 ) ? value1 : value2;
-
-            /* Base for simple junction */
-            if( m_groupForLaneAtJunction == SMALL_AT_SIMPLE_JUNCTION &&
-                    m_groupForCrossroads == SMALL_AT_SIMPLE_CROSSROADS )
-            {
-                m_fuzzyActions.insert( SMALL, min );
-            }
-            if( m_groupForLaneAtJunction == SMALL_AT_SIMPLE_JUNCTION &&
-                    m_groupForCrossroads == MEDIUM_AT_SIMPLE_CROSSROADS )
-            {
-                m_fuzzyActions.insert( SMALL, min );
-            }
-            if( m_groupForLaneAtJunction == SMALL_AT_SIMPLE_JUNCTION &&
-                    m_groupForCrossroads == LARGE_AT_SIMPLE_CROSSROADS )
-            {
-                m_fuzzyActions.insert( SMALL, min );
-            }
-            if( m_groupForLaneAtJunction == MEDIUM_AT_SIMPLE_JUNCTION &&
-                    m_groupForCrossroads == SMALL_AT_SIMPLE_CROSSROADS )
-            {
-                m_fuzzyActions.insert( MEDIUM, min );
-            }
-            if( m_groupForLaneAtJunction == MEDIUM_AT_SIMPLE_JUNCTION &&
-                    m_groupForCrossroads == MEDIUM_AT_SIMPLE_CROSSROADS )
-            {
-                m_fuzzyActions.insert( MEDIUM, min );
-            }
-            if( m_groupForLaneAtJunction == MEDIUM_AT_SIMPLE_JUNCTION &&
-                    m_groupForCrossroads == LARGE_AT_SIMPLE_CROSSROADS )
-            {
-                m_fuzzyActions.insert( MEDIUM, min );
-            }
-            if( m_groupForLaneAtJunction == LARGE_AT_SIMPLE_JUNCTION &&
-                    m_groupForCrossroads == SMALL_AT_SIMPLE_CROSSROADS )
-            {
-                m_fuzzyActions.insert( LARGE, min );
-            }
-            if( m_groupForLaneAtJunction == LARGE_AT_SIMPLE_JUNCTION &&
-                    m_groupForCrossroads == MEDIUM_AT_SIMPLE_CROSSROADS )
-            {
-                m_fuzzyActions.insert( MEDIUM, min );
-            }
-            if( m_groupForLaneAtJunction == LARGE_AT_SIMPLE_JUNCTION &&
-                    m_groupForCrossroads == LARGE_AT_SIMPLE_CROSSROADS )
-            {
-                m_fuzzyActions.insert( MEDIUM, min );
-            }
-            ++itSecondSet;
-        }
-        ++itFirstSet;
-    }
-    if( m_junction->id() == 6 )
-        qDebug() << m_fuzzyActions;
-}
-
-void AllFuzzyLogic::baseOfRulesForBladzioJunction()
-{
-
-}
 
 void AllFuzzyLogic::vehiclesCountForSimpleJunction()
 {
@@ -307,18 +156,12 @@ void AllFuzzyLogic::vehiclesCountForSimpleJunction()
         sLeft = VehicleCountManager::vehicleCountOnLane( m_junction, VehicleCountManager::SOUTH_LEFT );
         sRight = VehicleCountManager::vehicleCountOnLane( m_junction, VehicleCountManager::SOUTH_RIGHT );
         m_vehiclesCountAtLane = ( sLeft > sRight ) ? sLeft : sRight;
-        if(m_junction->id() == 6)
-            qDebug() << "first";
         break;
     case SECOND:
         m_vehiclesCountAtLane = VehicleCountManager::vehicleCountOnLane( m_junction, VehicleCountManager::EAST_MIDDLE );
-        if(m_junction->id() == 6)
-            qDebug() << "second";
         break;
     case THIRD:
         m_vehiclesCountAtLane = VehicleCountManager::vehicleCountOnLane( m_junction, VehicleCountManager::WEST_MIDDLE );
-        if(m_junction->id() == 6)
-            qDebug() << "third";
         break;
     default:
         break;
@@ -378,9 +221,9 @@ void AllFuzzyLogic::vehiclesCountForBladzioJunction()
 
 void AllFuzzyLogic::setNumberOfCycleForSimpleJunction()
 {
-    if( runCount == 3 )
-        runCount = 0;
-    switch( runCount )
+    if( m_runCount == 3 )
+        m_runCount = 0;
+    switch( m_runCount )
     {
     case 0:
         m_numberOfCycle = FIRST;
@@ -398,9 +241,9 @@ void AllFuzzyLogic::setNumberOfCycleForSimpleJunction()
 
 void AllFuzzyLogic::setNumberOfCycleForBladzioJunction()
 {
-    if( runCount == 4 )
-        runCount = 0;
-    switch( runCount )
+    if( m_runCount == 4 )
+        m_runCount = 0;
+    switch( m_runCount )
     {
     case 0:
         m_numberOfCycle = FIRST;
@@ -418,163 +261,142 @@ void AllFuzzyLogic::setNumberOfCycleForBladzioJunction()
     }
 }
 
-float AllFuzzyLogic::fuzzyValueForTriangle( const int& value )
+int AllFuzzyLogic::startSimulation()
 {
-    float result = 0.0;
+    fl::FuzzyOperator &op = fl::FuzzyOperator::DefaultFuzzyOperator();
+    fl::FuzzyEngine engine( "complex-mamdani", op );
+    engine.hedgeSet().add( new fl::HedgeNot );
+    engine.hedgeSet().add( new fl::HedgeSomewhat );
+    engine.hedgeSet().add( new fl::HedgeVery );
 
-    if(m_junction->id() == 6)
-        qDebug() << "trojkat: "<< m_startValueForLane << ", " << m_medianValueForLane <<", "<<m_finalValueForLane <<
-                    ", value: " << value;
-    if( value <= m_startValueForLane )
-    {
-        result = 0.0;
-    }
-    else if( value > m_startValueForLane && value <= m_medianValueForLane )
-    {
-        result = ( value - m_startValueForLane ) / ( m_medianValueForLane - m_startValueForLane );
-    }
-    else if( value > m_medianValueForLane && value <= m_finalValueForLane )
-    {
-        result = ( m_finalValueForLane - value ) / ( m_finalValueForLane - m_medianValueForLane );
-    }
-    else if( value > m_finalValueForLane )
-    {
-        result = 0.0;
-    }
+    fl::InputLVar *inPutLane = new fl::InputLVar( "Lane" );
+    inPutLane->addTerm( new fl::ShoulderTerm( "SMALL_L", 0, 10, true ) );
+    inPutLane->addTerm( new fl::TriangularTerm( "MEDIUM_L", 0, 20 ) ); //30
+    fl::TrapezoidalTerm *trapezoidalTerm = new fl::TrapezoidalTerm( "LARGE_L", 10, 250 );
+    trapezoidalTerm->setB( 30 );
+    trapezoidalTerm->setC( 250 );
+    trapezoidalTerm->setD( 250 );
+    inPutLane->addTerm( trapezoidalTerm );
+    engine.addInputLVar( inPutLane );
 
-    if(m_junction->id() == 6)
-        qDebug() << result;
-    return result;
+    fl::InputLVar *inPutJunction = new fl::InputLVar( "Junction" );
+    inPutJunction->addTerm( new fl::ShoulderTerm( "SMALL_J", 0, 30, true ) );
+    inPutJunction->addTerm( new fl::TriangularTerm( "MEDIUM_J", 0, 60 ) );
+    fl::TrapezoidalTerm *trapezoidalTermJunction = new fl::TrapezoidalTerm( "LARGE_J", 30, 250 );
+    trapezoidalTermJunction->setB( 60 );
+    trapezoidalTermJunction->setC( 250 );
+    trapezoidalTermJunction->setD( 250 );
+    inPutJunction->addTerm( trapezoidalTermJunction );
+    engine.addInputLVar( inPutJunction );
+
+    fl::OutputLVar *outPutValues = new fl::OutputLVar( "Time" );
+    outPutValues->addTerm( new fl::ShoulderTerm( "SMALL_T", 0, 10, true ) );
+    outPutValues->addTerm( new fl::TriangularTerm( "MEDIUM_T", 0, 20 ) );  //bylo 20
+    outPutValues->addTerm( new fl::ShoulderTerm( "LARGE_T", 10, 30, false ) );
+    engine.addOutputLVar( outPutValues );
+    fl::FuzzyOperator& opFuzzy = fl::FuzzyOperator::DefaultFuzzyOperator();
+    opFuzzy.setAreaCentroidAlgorithm( new fl::TriangulationAlgorithm );
+    opFuzzy.setTnorm( new fl::FuzzyAndMin );
+    opFuzzy.setSnorm( new fl::FuzzyOrMax );
+
+
+    fl::RuleBlock *block = new fl::RuleBlock();
+    block->addRule( new fl::MamdaniRule( "if Lane is SMALL_L and Junction is SMALL_J then Time is SMALL_T", engine ) );
+    block->addRule( new fl::MamdaniRule( "if Lane is SMALL_L and Junction is MEDIUM_J then Time is SMALL_T", engine ) );
+    block->addRule( new fl::MamdaniRule( "if Lane is SMALL_L and Junction is LARGE_J then Time is SMALL_T", engine ) );
+
+    block->addRule( new fl::MamdaniRule( "if Lane is MEDIUM_L and Junction is SMALL_J then Time is MEDIUM_T", engine ) );
+    block->addRule( new fl::MamdaniRule( "if Lane is MEDIUM_L and Junction is MEDIUM_J then Time is MEDIUM_T", engine ) );
+    block->addRule( new fl::MamdaniRule( "if Lane is MEDIUM_L and Junction is LARGE_J then Time is MEDIUM_T", engine ) );
+
+    block->addRule( new fl::MamdaniRule( "if Lane is LARGE_L and Junction is SMALL_J then Time is LARGE_T", engine ) );
+    block->addRule( new fl::MamdaniRule( "if Lane is LARGE_L and Junction is MEDIUM_J then Time is LARGE_T", engine ) );
+    block->addRule( new fl::MamdaniRule( "if Lane is LARGE_L and Junction is LARGE_J then Time is MEDIUM_T", engine ) );
+    engine.addRuleBlock( block );
+
+    int laneValue = m_vehiclesCountAtLane;
+    int junctionValue = m_vehiclesCountAtJunction;
+    inPutLane->setInput( laneValue );
+    inPutJunction->setInput( junctionValue );
+
+    setTerm( block );
+    QHash<int,float>::iterator it = m_hash.begin();
+    whichSet( it.key() );
+    whichTerm( laneValue );
+    opFuzzy.setDefuzzifier( new fl::MaxHalfDefuzzier( startDefuzzy( it.value()) ) );
+
+    engine.process();
+    int score = startDefuzzy( it.value() );
+    fl::flScalar out = outPutValues->output().defuzzify();
+    m_hash.clear();
+//    return out;
+    return score;
 }
 
-float AllFuzzyLogic::fuzzyValueForTrapeze( const int &value )
+int AllFuzzyLogic::startDefuzzy( const float& value )
 {
-    float result = 0.0;
-    if(m_junction->id() == 6)
-        qDebug() << "trapez: "<< m_startValueForLane << ", " << m_medianValueForLane <<", "<<m_finalValueForLane <<
-                    ", value: " << value;
+    int score = 0;
+    if( m_term == FIRST_TERM )
+        score = ( value * ( m_medium - m_start ) ) + m_start;
+    else
+        score = ( value * ( m_end - m_medium ) - m_end ) * (-1);
 
-    if( value <= m_startValueForLane )
-    {
-        result = 0.0;
-    }
-    else if( value > m_startValueForLane && value <= m_medianValueForLane )
-    {
-        result = ( value - m_startValueForLane ) / ( m_medianValueForLane - m_startValueForLane );
-    }
-    else if( value > m_medianValueForLane && value <= m_finalValueForLane )
-    {
-        result = 1.0;
-    }
-    if(m_junction->id() == 6)
-        qDebug() << result;
-    return result;
+    return score;
 }
 
-int AllFuzzyLogic::inverseFuzzyValue( const float &value ) // do zrobienia
+void AllFuzzyLogic::setTerm( fl::RuleBlock* block )
 {
-    int max, max2, score = 0;
-
-    max = (value * ( m_medianValueForLane - m_startValueForLane ) ) + m_startValueForLane;
-//    max2 = ( value * ( m_finalValueForLane - m_medianValueForLane ) - m_finalValueForLane ) * (-1);
-//    return score = ( max+max2 ) / 2;
-    return max;
+    fl::flScalar max = 0;
+    int position = 0;
+    for(int i = 0; i < block->numberOfRules(); ++i)
+    {
+        if( max <= block->rule( i )->firingStrength() ) // mozna dac <
+        {
+            max = block->rule( i )->firingStrength();
+            position = i;
+        }
+    }
+    m_hash.insert( position, max );
 }
 
-void AllFuzzyLogic::setGroupValuesForSimpleJunction( const GroupForCrossroads &group )
+void AllFuzzyLogic::whichSet( const int& value )
 {
-    switch( group )
+    if( value >= 0 && value < 3 )
     {
-    case AllFuzzyLogic::SMALL_AT_SIMPLE_CROSSROADS:
-        m_startValueForLane = 0, m_medianValueForLane = 15, m_finalValueForLane = 30;
+        m_set = SMALL_SET;
+        m_start = 0, m_medium = 0, m_end = 10;
+    }
+    else if( value >= 3 && value < 6 )
+    {
+        m_set = MEDIUM_SET;
+        m_start = 0, m_medium = 10, m_end = 20;
+    }
+    else if( value >= 6 && value < 9 )
+    {
+        m_set = LARGE_SET;
+        m_start = 10, m_medium = 30, m_end = 30;
+    }
+    else
+        qDebug() << "NOTHING";
+}
+
+void AllFuzzyLogic::whichTerm( const int &value )
+{
+    switch( m_set )
+    {
+    case SMALL_SET:
+        m_term = SECOND_TERM;
         break;
-    case AllFuzzyLogic::MEDIUM_AT_SIMPLE_CROSSROADS:
-        m_startValueForLane = 20, m_medianValueForLane = 35, m_finalValueForLane = 50;
+    case MEDIUM_SET:
+        if( value < 10 )
+            m_term = FIRST_TERM;
+        else
+            m_term = SECOND_TERM;
         break;
-    case AllFuzzyLogic::LARGE_AT_SIMPLE_CROSSROADS:
-        m_startValueForLane = 40, m_medianValueForLane = 60, m_finalValueForLane = 300;
+    case LARGE_SET:
+        m_term = FIRST_TERM;
         break;
     default:
         break;
     }
-}
-
-void AllFuzzyLogic::setGroupValuesForLaneAtSimpleJunction( const GroupForLaneAtJunction &group )
-{
-    switch( group )
-    {
-    case AllFuzzyLogic::SMALL_AT_SIMPLE_JUNCTION:
-        m_startValueForLane = 0, m_medianValueForLane = 4, m_finalValueForLane = 10;
-        break;
-    case AllFuzzyLogic::MEDIUM_AT_SIMPLE_JUNCTION:
-        m_startValueForLane = 7, m_medianValueForLane = 13, m_finalValueForLane = 20;
-        break;
-    case AllFuzzyLogic::LARGE_AT_SIMPLE_JUNCTION:
-        m_startValueForLane = 15, m_medianValueForLane = 30, m_finalValueForLane = 300;
-        break;
-    default:
-        break;
-    }
-}
-
-void AllFuzzyLogic::setGroupValuesForLaneAtBladzioJunction( const GroupForLaneAtJunction &group )
-{
-    switch( group )
-    {
-    case AllFuzzyLogic::SMALL_AT_BLADZIO_JUNCTION:
-        m_startValueForLane = 0, m_medianValueForLane = 0, m_finalValueForLane = 15;
-        break;
-    case AllFuzzyLogic::MEDIUM_AT_BLADZIO_JUNCTION:
-        m_startValueForLane = 10, m_medianValueForLane = 17, m_finalValueForLane = 25;
-        break;
-    case AllFuzzyLogic::LARGE_AT_BLADZIO_JUNCTION:
-        m_startValueForLane = 20, m_medianValueForLane = 35, m_finalValueForLane = 35;
-        break;
-    default:
-        break;
-    }
-}
-
-void AllFuzzyLogic::setGroupValuesForBladzioJunction( const GroupForCrossroads &group )
-{
-    switch( group )
-    {
-    case AllFuzzyLogic::SMALL_AT_BLADZIO_JUNCTION:
-        m_startValueForLane = 0, m_medianValueForLane = 0, m_finalValueForLane = 40;
-        break;
-    case AllFuzzyLogic::MEDIUM_AT_BLADZIO_JUNCTION:
-        m_startValueForLane = 30, m_medianValueForLane = 50, m_finalValueForLane = 70;
-        break;
-    case AllFuzzyLogic::LARGE_AT_BLADZIO_JUNCTION:
-        m_startValueForLane = 60, m_medianValueForLane = 120, m_finalValueForLane = 120;
-        break;
-    default:
-        break;
-    }
-}
-
-void AllFuzzyLogic::setGroupValuesForFuzzyTime( const TimeForSubcycle& group )
-{
-    switch( group )
-    {
-    case AllFuzzyLogic::SMALL:
-        m_startValueForLane = 0, m_medianValueForLane = 10, m_finalValueForLane = 15;
-        break;
-    case AllFuzzyLogic::MEDIUM:
-        m_startValueForLane = 10, m_medianValueForLane = 20, m_finalValueForLane = 30;
-        break;
-    case AllFuzzyLogic::LARGE:
-        m_startValueForLane = 25, m_medianValueForLane = 43, m_finalValueForLane = 60;
-        break;
-    default:
-        break;
-    }
-}
-
-void AllFuzzyLogic::clearAll()
-{
-    m_degreeOfMembershipForTheFirstSet.clear();
-    m_degreeOfMembershipForTheSecondSet.clear();
-    m_fuzzyActions.clear();
-    m_afterFuzzyActions.clear();
 }

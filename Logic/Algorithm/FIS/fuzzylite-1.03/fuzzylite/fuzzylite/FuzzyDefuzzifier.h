@@ -25,6 +25,7 @@
 #include "../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/fuzzylite/flScalar.h"
 #include "../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/fuzzylite/AreaCentroidAlgorithm.h"
 #include <string>
+
 namespace fl {
 
     class LinguisticTerm;
@@ -50,6 +51,15 @@ namespace fl {
         virtual std::string name() const;
         virtual flScalar defuzzify(const LinguisticTerm* term, int number_of_samples,
                 const AreaCentroidAlgorithm* algorithm) const;
+    };
+
+    class MaxHalfDefuzzier : public FuzzyDefuzzifier {
+    public:
+        MaxHalfDefuzzier( int score );
+        virtual std::string name() const;
+        virtual flScalar defuzzify(const LinguisticTerm* term, int number_of_samples,
+                const AreaCentroidAlgorithm* algorithm) const;
+        int m_score;
     };
 }
 

@@ -102,7 +102,6 @@ HEADERS += \
 SOURCES += \
     ../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/src/TriangularTerm.cpp \
     ../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/src/TrapezoidalTerm.cpp \
-    ../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/src/test.cpp \
     ../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/src/TakagiSugenoTerm.cpp \
     ../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/src/TakagiSugenoRule.cpp \
     ../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/src/TakagiSugenoConsequent.cpp \
@@ -177,6 +176,7 @@ HEADERS += \
     ../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/fuzzylite/DescriptiveAntecedent.h \
     ../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/fuzzylite/CompoundTerm.h \
     ../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/fuzzylite/AreaCentroidAlgorithm.h
+
 
 
 
