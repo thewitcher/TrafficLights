@@ -184,6 +184,36 @@ const QStringList Database::loadVehicleCountOnSubcyclesOnAppropriateJunction( in
     return resultList;
 }
 
+const QStringList Database::loadVehicleDrivedAwayCountOnJunctions() const
+{
+    QSqlQuery query;
+    query.prepare( "SELECT statisticTime, vehicleDriveAwayCount, junctionId FROM Statistic WHERE experimentId = :experimentId ORDER BY statisticTime" );
+    query.bindValue( ":experimentId", m_experimentId );
+    query.exec();
+
+    QStringList resultList;
+    QString line;
+    int currentJunctionId = 0;
+
+    line = " 0 1 2 3 4 5 6";
+    resultList << line;
+    line.clear();
+
+    while( query.next() )
+    {
+        currentJunctionId = query.value( 2 ).toInt();
+        line += ( " " + query.value( 1 ).toString() );
+
+        if( currentJunctionId == 6 )
+        {
+            resultList << ( query.value( 0 ).toString() + line );
+            line.clear();
+        }
+    }
+
+    return resultList;
+}
+
 const QString& Database::databaseName() const
 {
     return m_databaseName;
