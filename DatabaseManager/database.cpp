@@ -76,13 +76,14 @@ void Database::writeStatisticToDatabase( const Junction *junction )
 
     query.clear();
 
-    query.prepare( "INSERT INTO Statistic( junctionId, experimentId, statisticTime, vehicleCount, vehicleWaitingTime )"
-                   "VALUES( :junctionId, :experimentId, :statisticTime, :vehicleCount, :vehicleWaitingTime )" );
+    query.prepare( "INSERT INTO Statistic( junctionId, experimentId, statisticTime, vehicleCount, vehicleWaitingTime, vehicleDriveAwayCount )"
+                   "VALUES( :junctionId, :experimentId, :statisticTime, :vehicleCount, :vehicleWaitingTime, :vehicleDriveAwayCount )" );
     query.bindValue( ":junctionId", junction->id() );
     query.bindValue( ":experimentId", m_currentExperimentId );
     query.bindValue( ":statisticTime", m_statisticTime );
     query.bindValue( ":vehicleCount", VehicleCountManager::sumVehiclesAtJunction( junction ) );
     query.bindValue( ":vehicleWaitingTime", VehicleCountManager::sumVehiclesWaitingTimeAtJunction( junction ) );
+    query.bindValue( ":vehicleDriveAwayCount", 10 );
 
     errorHandling( query );
 

@@ -17,6 +17,7 @@ CREATE TABLE Statistic
     statisticTime            integer NOT NULL,
     vehicleCount            integer,
     vehicleWaitingTime integer,
+    vehicleDriveAwayCount integer,
 
     CONSTRAINT ExperimentFK FOREIGN KEY( experimentId ) REFERENCES Experiment( experimentId )
     CONSTRAINT JunctionFK FOREIGN KEY( junctionId ) REFERENCES Junction( junctionId )

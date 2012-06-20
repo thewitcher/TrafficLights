@@ -85,6 +85,23 @@ void MainWindow::createReport()
         writer << statisticList.at( i ) << "\n";
     }
 
+    file.close();
+
+    /// VEHICLE DRIVED AWAY COUNT
+    file.setFileName( " vehicleDriveAwayCount.csv" );
+
+    if( file.open( QIODevice::WriteOnly | QIODevice::Text ) == false )
+    {
+        return;
+    }
+
+    statisticList.clear();
+    statisticList = m_database->loadVehicleDrivedAwayCountOnJunctions();
+
+    for( int i = 0 ; i < statisticList.count() ; i++ )
+    {
+        writer << statisticList.at( i ) << "\n";
+    }
 
     /// VEHICLE COUNT ON SUBCYCLES
     for( int i = 0 ; i <= 6 ; i++ )
@@ -127,4 +144,6 @@ void MainWindow::createReport()
             writer << statisticList.at( i ) << "\n";
         }
     }
+
+    qApp->quit();
 }

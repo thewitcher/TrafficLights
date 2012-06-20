@@ -7,7 +7,7 @@ use Cwd;
 $currentDirectory = abs_path( $0 );
 
 # Delete last part - script name to get path to directory with scripts
-$currentDirectory =~ s/$0//;
+$currentDirectory =~ s/Scripts\/cleanCurrentDir\.pl//;
 
 # List of directories to clean:
 # - TrafficLights_builded
@@ -21,9 +21,9 @@ opendir( DATABASE_READER_DIR, $currentDirectory.$dataBaseReader );
 
 while( my $file = readdir( DATABASE_READER_DIR ) )
 {
-    if( $file =~ /^moc|\.o$|^ui_|^qrc_|^application$|^Makefile$/ )
+    if( $file =~ /^moc|\.o$|^ui_|^qrc_|^DatabaseReader$|^Makefile$|\.csv$/ )
     {
-        unlink( $currentDirectory.$trafficLights."/".$file );
+        unlink( $currentDirectory.$dataBaseReader."/".$file );
     }   
 }
 

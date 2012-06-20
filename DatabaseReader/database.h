@@ -12,6 +12,7 @@ public:
     QStringList loadExperiments();
     const QStringList loadVehicleCountOnJunctions() const;
     const QStringList loadVehicleWaitingTimeOnJunctions() const;
+    const QStringList loadVehicleDrivedAwayCountOnJunctions() const;
     const QStringList loadWaitingTimeOnSubcyclesOnAppropriateJunction( int junctionId ) const;
     const QStringList loadVehicleCountOnSubcyclesOnAppropriateJunction( int junctionId ) const;
     const QString& databaseName() const;
