@@ -327,7 +327,7 @@ int AllFuzzyLogic::startSimulation()
 
     engine.process();
     int score = startDefuzzy( it.value() );
-    fl::flScalar out = outPutValues->output().defuzzify();
+//    fl::flScalar out = outPutValues->output().defuzzify();
     m_hash.clear();
 //    return out;
     return score;

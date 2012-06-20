@@ -16,6 +16,7 @@
 #include "../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/fuzzylite/FuzzyDefuzzifier.h"
 #include "../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/fuzzylite/CompoundTerm.h"
 #include "../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/fuzzylite/TakagiSugenoTerm.h"
+
 namespace fl {
 
     FuzzyDefuzzifier::~FuzzyDefuzzifier() {
@@ -72,8 +73,10 @@ namespace fl {
     flScalar MaxHalfDefuzzier::defuzzify(const LinguisticTerm* term, int number_of_samples,
             const AreaCentroidAlgorithm* algorithm) const {
 //        flScalar x;
-//        x = m_score;
+
         return m_score;
     }
+
 }
+
 

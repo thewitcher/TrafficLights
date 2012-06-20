@@ -16,6 +16,7 @@ class ChooseAlgorithmType : public QDialog
 public:
     explicit ChooseAlgorithmType(QWidget *parent = 0);
     ~ChooseAlgorithmType();
+    static bool S_CAN_RUN;
 
 private:
     Ui::ChooseAlgorithmType *ui;

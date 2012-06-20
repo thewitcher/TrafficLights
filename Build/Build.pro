@@ -22,7 +22,7 @@ RESOURCES += \
 # EVENTS - to turn on timer which manages global events like day and night for example
 DEFINES +=  EVENTS \
             STATISTICS \
-            LOGGER
+      #      LOGGER
 #            DAY_PARTS \
 #            COLLISIONS \
 #            LIGHTS

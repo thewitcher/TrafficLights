@@ -6,7 +6,6 @@
 #include <QVariant>
 #include <QSqlError>
 
-
 Database::Database( const QVector<Junction *> &junctions ):
     QThread( NULL ),
     m_databaseName( QDir::currentPath() + "/Data/statistic.db3" ),

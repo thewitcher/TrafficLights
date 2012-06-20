@@ -10,7 +10,6 @@ MainWindow::MainWindow(QWidget *parent):
     m_database( new Database )
 {
     ui->setupUi(this);
-
     init();
     createConnections();
 }

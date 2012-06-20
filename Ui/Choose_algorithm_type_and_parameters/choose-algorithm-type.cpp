@@ -3,6 +3,8 @@
 #include "../Settings/settings.h"
 #include "../Ui/Root_window/graphics-view.h"
 
+bool ChooseAlgorithmType::S_CAN_RUN = false;
+
 ChooseAlgorithmType::ChooseAlgorithmType( QWidget *parent ) :
     QDialog( parent ),
     ui( new Ui::ChooseAlgorithmType )
@@ -45,6 +47,7 @@ void ChooseAlgorithmType::setParametersForAlgorithm()
 
     customParametersForGeneral( i, radioButtonsList );
     customParametersForGA( i, radioButtonsList );
+    S_CAN_RUN = true; /* chyba tu */
     close();
 }
 
