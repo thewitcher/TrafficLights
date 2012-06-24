@@ -82,7 +82,7 @@ void Database::writeStatisticToDatabase( const Junction *junction )
     query.bindValue( ":statisticTime", m_statisticTime );
     query.bindValue( ":vehicleCount", VehicleCountManager::sumVehiclesAtJunction( junction ) );
     query.bindValue( ":vehicleWaitingTime", VehicleCountManager::sumVehiclesWaitingTimeAtJunction( junction ) );
-    query.bindValue( ":vehicleDriveAwayCount", 10 );
+    query.bindValue( ":vehicleDriveAwayCount", junction->getAndClearVehicleDriveAwayCount() );
 
     errorHandling( query );
 

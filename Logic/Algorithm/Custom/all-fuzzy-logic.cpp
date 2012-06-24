@@ -1,18 +1,14 @@
 #include "all-fuzzy-logic.h"
 #include "../Ui/TrafficLights_manager/junction.h"
 #include "../Ui/TrafficLights_manager/vehicle-count-manager.h"
-
-#include "../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/fuzzylite/FuzzyEngine.h"
 #include "../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/fuzzylite/TriangularTerm.h"
+#include "../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/fuzzylite/ShoulderTerm.h"
 #include "../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/fuzzylite/TrapezoidalTerm.h"
+#include "../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/fuzzylite/FuzzyEngine.h"
 #include "../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/fuzzylite/RuleBlock.h"
 #include "../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/fuzzylite/MamdaniRule.h"
-#include "../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/fuzzylite/FuzzyDefuzzifier.h"
-
-#include "../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/fuzzylite/AreaCentroidAlgorithm.h"
 #include "../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/fuzzylite/FuzzyOperator.h"
-
-#include "../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/fuzzylite/ShoulderTerm.h"
+#include "../Logger/logger.h"
 
 
 AllFuzzyLogic::AllFuzzyLogic( Junction *junction, const QString& algorithmType ):
@@ -65,6 +61,7 @@ QVector<int> AllFuzzyLogic::startAlgorithm()
     return vector;
 }
 
+/*! If at simple junction doesn't have vehicles, timeVector is set as follows timeVector << 0 << 4000 << 0. */
 void AllFuzzyLogic::exceptionForSimpleJunction( QVector<int>& vector )
 {
     vector << 0 << 0 << 0;
@@ -82,6 +79,7 @@ void AllFuzzyLogic::exceptionForSimpleJunction( QVector<int>& vector )
     }
 }
 
+/*! If at Bladzio junction doesn't have vehicles, timeVector is set as follows timeVector << 0 << 4000 << 0 << 0. */
 void AllFuzzyLogic::exceptionForBladzioJunction( QVector<int> &vector )
 {
     vector << 0 << 0 << 0 << 0;
@@ -116,7 +114,7 @@ QVector<int> AllFuzzyLogic::returnTimeVectorForSimple( const int &value )
         vector << 0 << 0 << value * 1000;
         break;
     default:
-        qDebug() << "Zlapalem: " << m_runCount;
+        LOG_CRITICAL( "[ALL_FUZZY] : return bad time vector for Simple Junction. m_runCount = %i", m_runCount );
         break;
     }
     return vector;
@@ -140,7 +138,7 @@ QVector<int> AllFuzzyLogic::returnTimeVectorForBladzio( const int &value )
         vector << 0 << 0 << 0 << value * 1000;
         break;
     default:
-        qDebug() << "mam!: " <<m_runCount;
+        LOG_CRITICAL( "[ALL_FUZZY] : return bad time vector for Bladzio Junction. m_runCount = %i", m_runCount );
         break;
     }
     return vector;
@@ -219,6 +217,7 @@ void AllFuzzyLogic::vehiclesCountForBladzioJunction()
     m_vehiclesCountAtJunction = count;
 }
 
+/*! This is help function for simple junction. Sets the number subcycle, which must be checked. */
 void AllFuzzyLogic::setNumberOfCycleForSimpleJunction()
 {
     if( m_runCount == 3 )
@@ -238,7 +237,7 @@ void AllFuzzyLogic::setNumberOfCycleForSimpleJunction()
         break;
     }
 }
-
+/*! This is help function for Bladzio junction. Sets the number subcycle, which must be checked. */
 void AllFuzzyLogic::setNumberOfCycleForBladzioJunction()
 {
     if( m_runCount == 4 )
@@ -314,25 +313,20 @@ int AllFuzzyLogic::startSimulation()
     block->addRule( new fl::MamdaniRule( "if Lane is LARGE_L and Junction is LARGE_J then Time is MEDIUM_T", engine ) );
     engine.addRuleBlock( block );
 
-    int laneValue = m_vehiclesCountAtLane;
-    int junctionValue = m_vehiclesCountAtJunction;
-    inPutLane->setInput( laneValue );
-    inPutJunction->setInput( junctionValue );
+    inPutLane->setInput( m_vehiclesCountAtLane );
+    inPutJunction->setInput( m_vehiclesCountAtJunction );
 
     setTerm( block );
     QHash<int,float>::iterator it = m_hash.begin();
     whichSet( it.key() );
-    whichTerm( laneValue );
-    opFuzzy.setDefuzzifier( new fl::MaxHalfDefuzzier( startDefuzzy( it.value()) ) );
-
+    whichTerm( m_vehiclesCountAtLane );
     engine.process();
     int score = startDefuzzy( it.value() );
-//    fl::flScalar out = outPutValues->output().defuzzify();
     m_hash.clear();
-//    return out;
     return score;
 }
 
+/*! This function is defuzzificator. Based on term and fuzzy value defuzzifier the final result.  */
 int AllFuzzyLogic::startDefuzzy( const float& value )
 {
     int score = 0;
@@ -344,13 +338,14 @@ int AllFuzzyLogic::startDefuzzy( const float& value )
     return score;
 }
 
+/*! This function saves in hash rule number and fuzzy value. */
 void AllFuzzyLogic::setTerm( fl::RuleBlock* block )
 {
     fl::flScalar max = 0;
     int position = 0;
-    for(int i = 0; i < block->numberOfRules(); ++i)
+    for( int i = 0; i < block->numberOfRules(); ++i )
     {
-        if( max <= block->rule( i )->firingStrength() ) // mozna dac <
+        if( max <= block->rule( i )->firingStrength() )
         {
             max = block->rule( i )->firingStrength();
             position = i;
@@ -359,6 +354,7 @@ void AllFuzzyLogic::setTerm( fl::RuleBlock* block )
     m_hash.insert( position, max );
 }
 
+/*! Based on rule number, function sets appropriate parameters for one of three collections. */
 void AllFuzzyLogic::whichSet( const int& value )
 {
     if( value >= 0 && value < 3 )
@@ -376,10 +372,9 @@ void AllFuzzyLogic::whichSet( const int& value )
         m_set = LARGE_SET;
         m_start = 10, m_medium = 30, m_end = 30;
     }
-    else
-        qDebug() << "NOTHING";
 }
 
+/*! Based on number of vehicles, function sets appropriate half of TriangularTerm. */
 void AllFuzzyLogic::whichTerm( const int &value )
 {
     switch( m_set )

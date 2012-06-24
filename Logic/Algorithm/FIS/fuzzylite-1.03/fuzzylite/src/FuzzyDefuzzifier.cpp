@@ -59,24 +59,6 @@ namespace fl {
         }
         return result / sum_wi;
     }
-
-
-    /* New defuzzier */
-    MaxHalfDefuzzier::MaxHalfDefuzzier( int score ) :
-        m_score( score )
-    {}
-
-    std::string MaxHalfDefuzzier::name() const {
-        return "MaxHalfDefuzzier";
-    }
-
-    flScalar MaxHalfDefuzzier::defuzzify(const LinguisticTerm* term, int number_of_samples,
-            const AreaCentroidAlgorithm* algorithm) const {
-//        flScalar x;
-
-        return m_score;
-    }
-
 }
 
 

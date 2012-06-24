@@ -2,8 +2,7 @@
 #define ALLFUZZYLOGIC_H
 
 #include "base-algorithm.h"
-#include <QMap>
-#include <QMultiHash>
+#include <QHash>
 
 namespace fl {
 class RuleBlock;
@@ -24,7 +23,7 @@ public:
 private:
     int m_runCount, m_nullVectorCount, m_start, m_medium, m_end;
     bool m_firstRun;
-    float m_vehiclesCountAtLane, m_vehiclesCountAtJunction;
+    int m_vehiclesCountAtLane, m_vehiclesCountAtJunction;
 
     void vehiclesCountForSimpleJunction();
     void vehiclesCountForBladzioJunction();
