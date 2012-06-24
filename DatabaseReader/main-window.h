@@ -27,6 +27,8 @@ private:
 
 public slots:
     void createReport();
+    void clearDatabase();
+    void createFolder( const QString & name );
 };
 
 #endif // MAINWINDOW_H

@@ -55,6 +55,7 @@ void ChooseAlgorithmType::customParametersForGeneral( const int& position, const
     int carsSpeed = Settings::takeValue( "S_CAR_SPEED", "GENERAL", 1 ).toInt();
     int busesSpeed = Settings::takeValue( "S_BUS_SPEED", "GENERAL", 3 ).toInt();
     int numberOfTheBuses = Settings::takeValue( "S_BUS_COUNT", "GENERAL", 5 ).toInt();
+    int timeout = Settings::takeValue( "S_TIMEOUT", "GENERAL", 360 ).toInt();
 
     /* Algorithm type */
     Settings::setValues( "ALGORITHM_TYPE", "GENERAL", list.at( position )->accessibleName() );
@@ -94,8 +95,15 @@ void ChooseAlgorithmType::customParametersForGeneral( const int& position, const
         Settings::setValues( "S_BUS_SPEED", "GENERAL", ui->busSpeedLineEdit->text() );
     }
 
+    /* Timeout */
+    if( ui->timeoutLineEdit->text().isEmpty() == false )
+    {
+        busesSpeed = ui->timeoutLineEdit->text().toInt();
+        Settings::setValues( "S_TIMEOUT", "GENERAL", ui->timeoutLineEdit->text() );
+    }
+
     GraphicsView::updateStaticVariables( numberOfCars, numberOfTheBuses,
-                                         vehiclesFrequency, carsSpeed, busesSpeed );
+                                         vehiclesFrequency, carsSpeed, busesSpeed, timeout );
 }
 
 void ChooseAlgorithmType::customParametersForGA( const int& position, const QList<QRadioButton*> &list )
@@ -155,6 +163,7 @@ void ChooseAlgorithmType::setDefaultValuesForGeneral()
     ui->carSpeedLineEdit->setText( list.at( 2 ) );
     ui->busSpeedLineEdit->setText( list.at( 3 ) );
     ui->numberOfBusesLineEdit->setText( list.at( 4 ) );
+    ui->timeoutLineEdit->setText( list.at( 5 ) );
 }
 
 QList<QString> ChooseAlgorithmType::defaultValuesForAllSubcycleAlgorithm()
@@ -193,7 +202,8 @@ QList<QString> ChooseAlgorithmType::defaultValuesForGeneral()
     QString carsSpeed = "1";
     QString busesSpeed = "3";
     QString numberOfTheBuses = "5";
-    list << vehiclesFrequency << numberOfCars << carsSpeed << busesSpeed << numberOfTheBuses;
+    QString timeout = "360";
+    list << vehiclesFrequency << numberOfCars << carsSpeed << busesSpeed << numberOfTheBuses << timeout;
 
     return list;
 }

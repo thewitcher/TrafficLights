@@ -31,7 +31,7 @@
       <rect>
        <x>80</x>
        <y>40</y>
-       <width>332</width>
+       <width>336</width>
        <height>71</height>
       </rect>
      </property>
@@ -54,7 +54,7 @@ color: rgb(0, 0, 255);</string>
       <rect>
        <x>30</x>
        <y>120</y>
-       <width>434</width>
+       <width>486</width>
        <height>51</height>
       </rect>
      </property>
@@ -160,7 +160,7 @@ color: rgb(0, 0, 255);</string>
       <rect>
        <x>390</x>
        <y>171</y>
-       <width>81</width>
+       <width>86</width>
        <height>80</height>
       </rect>
      </property>
@@ -419,7 +419,7 @@ max-height: 13px;</string>
       <rect>
        <x>150</x>
        <y>20</y>
-       <width>171</width>
+       <width>201</width>
        <height>26</height>
       </rect>
      </property>
@@ -428,32 +428,6 @@ max-height: 13px;</string>
      </property>
      <property name="text">
       <string>General parameters</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_12">
-     <property name="geometry">
-      <rect>
-       <x>90</x>
-       <y>70</y>
-       <width>91</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">font: 10pt &quot;Times New Roman&quot;;</string>
-     </property>
-     <property name="text">
-      <string>Number of cars</string>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="countOfVehiclesLineEdit">
-     <property name="geometry">
-      <rect>
-       <x>240</x>
-       <y>70</y>
-       <width>111</width>
-       <height>20</height>
-      </rect>
      </property>
     </widget>
     <widget class="QPushButton" name="closeButtonForGeneral">
@@ -514,110 +488,6 @@ max-height: 13px;</string>
       <string>Back</string>
      </property>
     </widget>
-    <widget class="QLineEdit" name="carSpeedLineEdit">
-     <property name="geometry">
-      <rect>
-       <x>240</x>
-       <y>190</y>
-       <width>111</width>
-       <height>20</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="busSpeedLineEdit">
-     <property name="geometry">
-      <rect>
-       <x>240</x>
-       <y>230</y>
-       <width>111</width>
-       <height>20</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_14">
-     <property name="geometry">
-      <rect>
-       <x>90</x>
-       <y>190</y>
-       <width>101</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">font: 10pt &quot;Times New Roman&quot;;</string>
-     </property>
-     <property name="text">
-      <string>Cars speed ( 1-5 ):</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_15">
-     <property name="geometry">
-      <rect>
-       <x>90</x>
-       <y>230</y>
-       <width>101</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">font: 10pt &quot;Times New Roman&quot;;</string>
-     </property>
-     <property name="text">
-      <string>Bus speed ( 1-5 ):</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_16">
-     <property name="geometry">
-      <rect>
-       <x>70</x>
-       <y>150</y>
-       <width>151</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">font: 10pt &quot;Times New Roman&quot;;</string>
-     </property>
-     <property name="text">
-      <string>Vehicles frequency ( in sec ):</string>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="vehiclesFrequencyLineEdit">
-     <property name="geometry">
-      <rect>
-       <x>240</x>
-       <y>150</y>
-       <width>111</width>
-       <height>20</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_17">
-     <property name="geometry">
-      <rect>
-       <x>90</x>
-       <y>110</y>
-       <width>151</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">font: 10pt &quot;Times New Roman&quot;;</string>
-     </property>
-     <property name="text">
-      <string>Number of the buses:</string>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="numberOfBusesLineEdit">
-     <property name="geometry">
-      <rect>
-       <x>240</x>
-       <y>110</y>
-       <width>111</width>
-       <height>20</height>
-      </rect>
-     </property>
-    </widget>
     <widget class="QPushButton" name="defaultValuesButtonForGeneral">
      <property name="geometry">
       <rect>
@@ -647,6 +517,102 @@ max-height: 13px;</string>
       <string>Default values</string>
      </property>
     </widget>
+    <widget class="QWidget" name="gridLayoutWidget">
+     <property name="geometry">
+      <rect>
+       <x>40</x>
+       <y>50</y>
+       <width>411</width>
+       <height>194</height>
+      </rect>
+     </property>
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="0" column="0">
+       <widget class="QLabel" name="label_12">
+        <property name="styleSheet">
+         <string notr="true">font: 10pt &quot;Times New Roman&quot;;</string>
+        </property>
+        <property name="text">
+         <string>Number of cars:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLineEdit" name="countOfVehiclesLineEdit"/>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="label_17">
+        <property name="styleSheet">
+         <string notr="true">font: 10pt &quot;Times New Roman&quot;;</string>
+        </property>
+        <property name="text">
+         <string>Number of the buses:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QLineEdit" name="numberOfBusesLineEdit"/>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="label_16">
+        <property name="styleSheet">
+         <string notr="true">font: 10pt &quot;Times New Roman&quot;;</string>
+        </property>
+        <property name="text">
+         <string>Vehicles frequency ( in sec ):</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QLineEdit" name="vehiclesFrequencyLineEdit"/>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="label_14">
+        <property name="styleSheet">
+         <string notr="true">font: 10pt &quot;Times New Roman&quot;;</string>
+        </property>
+        <property name="text">
+         <string>Cars speed ( 1-5 ):</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QLineEdit" name="carSpeedLineEdit"/>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="label_15">
+        <property name="styleSheet">
+         <string notr="true">font: 10pt &quot;Times New Roman&quot;;</string>
+        </property>
+        <property name="text">
+         <string>Bus speed ( 1-5 ):</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="QLineEdit" name="busSpeedLineEdit"/>
+      </item>
+      <item row="5" column="0">
+       <widget class="QLabel" name="label_18">
+        <property name="styleSheet">
+         <string notr="true">font: 10pt &quot;Times New Roman&quot;;</string>
+        </property>
+        <property name="text">
+         <string>Timeout:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="1">
+       <widget class="QLineEdit" name="timeoutLineEdit"/>
+      </item>
+     </layout>
+    </widget>
+    <zorder>label_11</zorder>
+    <zorder>closeButtonForGeneral</zorder>
+    <zorder>backButtonForGeneral</zorder>
+    <zorder>defaultValuesButtonForGeneral</zorder>
+    <zorder>gridLayoutWidget</zorder>
+    <zorder>label_12</zorder>
    </widget>
   </widget>
  </widget>

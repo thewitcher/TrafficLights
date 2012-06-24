@@ -3,6 +3,7 @@
 #include "database.h"
 #include <QFile>
 #include <QTextStream>
+#include <QDir>
 
 MainWindow::MainWindow(QWidget *parent):
     QMainWindow(parent),
@@ -29,6 +30,7 @@ void MainWindow::init()
 void MainWindow::createConnections()
 {
     connect( ui->m_reportButton, SIGNAL(clicked()), this, SLOT(createReport()) );
+    connect( ui->m_clearButton, SIGNAL(clicked()), this, SLOT(clearDatabase()));
 }
 
 int MainWindow::experimentId()
@@ -51,8 +53,12 @@ void MainWindow::createReport()
 {
     m_database->setExperimentId( experimentId() );
 
+    QString folderName  = ui->m_experimentsComboBox->currentText();
+
+    createFolder( folderName );
+
     /// VEHICLE COUNT
-    QFile file( "vehicleCount.csv" );
+    QFile file( folderName + "/vehicleCount.csv" );
     if( file.open( QIODevice::WriteOnly | QIODevice::Text ) == false )
     {
         return;
@@ -60,7 +66,7 @@ void MainWindow::createReport()
 
     QTextStream writer( &file );
 
-    QStringList statisticList = m_database->loadVehicleCountOnJunctions();
+    QStringList statisticList = m_database->load( Database::VEHICLE_COUNT );
 
     for( int i = 0 ; i < statisticList.count() ; i++ )
     {
@@ -70,7 +76,7 @@ void MainWindow::createReport()
     file.close();
 
     /// VEHICLE WAITING TIME
-    file.setFileName( " vehicleWaitingTime.csv" );
+    file.setFileName( folderName + "/vehicleWaitingTime.csv" );
 
     if( file.open( QIODevice::WriteOnly | QIODevice::Text ) == false )
     {
@@ -78,7 +84,7 @@ void MainWindow::createReport()
     }
 
     statisticList.clear();
-    statisticList = m_database->loadVehicleWaitingTimeOnJunctions();
+    statisticList = m_database->load( Database::VEHICLE_WAITING_TIME );
 
     for( int i = 0 ; i < statisticList.count() ; i++ )
     {
@@ -88,7 +94,7 @@ void MainWindow::createReport()
     file.close();
 
     /// VEHICLE DRIVED AWAY COUNT
-    file.setFileName( " vehicleDriveAwayCount.csv" );
+    file.setFileName( folderName + "/vehicleDriveAwayCount.csv" );
 
     if( file.open( QIODevice::WriteOnly | QIODevice::Text ) == false )
     {
@@ -96,7 +102,7 @@ void MainWindow::createReport()
     }
 
     statisticList.clear();
-    statisticList = m_database->loadVehicleDrivedAwayCountOnJunctions();
+    statisticList = m_database->load( Database::VEHICLE_DRIVED_AWAY );
 
     for( int i = 0 ; i < statisticList.count() ; i++ )
     {
@@ -108,7 +114,7 @@ void MainWindow::createReport()
     {
         file.close();
 
-        file.setFileName( " vehicleCount" + QString::number( i ) + ".csv" );
+        file.setFileName( folderName + "/vehicleCount" + QString::number( i ) + ".csv" );
 
         if( file.open( QIODevice::WriteOnly | QIODevice::Text ) == false )
         {
@@ -116,7 +122,7 @@ void MainWindow::createReport()
         }
 
         statisticList.clear();
-        statisticList = m_database->loadVehicleCountOnSubcyclesOnAppropriateJunction( i );
+        statisticList = m_database->load( Database::LOCAL_VEHICLE_COUNT, i );
 
         for( int i = 0 ; i < statisticList.count() ; i++ )
         {
@@ -129,7 +135,7 @@ void MainWindow::createReport()
     {
         file.close();
 
-        file.setFileName( " vehicleWaitingTime" + QString::number( i ) + ".csv" );
+        file.setFileName( folderName + "/vehicleWaitingTime" + QString::number( i ) + ".csv" );
 
         if( file.open( QIODevice::WriteOnly | QIODevice::Text ) == false )
         {
@@ -137,7 +143,7 @@ void MainWindow::createReport()
         }
 
         statisticList.clear();
-        statisticList = m_database->loadWaitingTimeOnSubcyclesOnAppropriateJunction( i );
+        statisticList = m_database->load( Database::LOCAL_VEHICLE_WAITING_TIME, i );
 
         for( int i = 0 ; i < statisticList.count() ; i++ )
         {
@@ -146,4 +152,17 @@ void MainWindow::createReport()
     }
 
     qApp->quit();
+}
+
+void MainWindow::clearDatabase()
+{
+    ui->m_experimentsComboBox->clear();
+    m_database->clearDatabase();
+}
+
+void MainWindow::createFolder( const QString & name )
+{
+    QDir dir;
+
+    dir.mkdir( dir.currentPath() + "/" + name );
 }

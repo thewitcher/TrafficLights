@@ -7,15 +7,15 @@
 class Database
 {
 public:
+    enum LOAD_TYPE { VEHICLE_COUNT = 0, VEHICLE_WAITING_TIME, VEHICLE_DRIVED_AWAY, LOCAL_VEHICLE_COUNT = 3, LOCAL_VEHICLE_WAITING_TIME };
+
     Database();
 
     QStringList loadExperiments();
-    const QStringList loadVehicleCountOnJunctions() const;
-    const QStringList loadVehicleWaitingTimeOnJunctions() const;
-    const QStringList loadVehicleDrivedAwayCountOnJunctions() const;
-    const QStringList loadWaitingTimeOnSubcyclesOnAppropriateJunction( int junctionId ) const;
-    const QStringList loadVehicleCountOnSubcyclesOnAppropriateJunction( int junctionId ) const;
+    const QStringList load( LOAD_TYPE loadType, int junctionId = -1 ) const;
     const QString& databaseName() const;
+
+    void clearDatabase();
 
     void setExperimentId( int experimentId )
     {

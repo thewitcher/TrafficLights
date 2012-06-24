@@ -3,7 +3,7 @@
 #include <QTimer>
 #include <QTimerEvent>
 #include <QVector>
-
+#include <QtGui/QApplication>
 
 EventTimer::EventTimer( QObject *parent ):
     QObject( parent ),
@@ -31,6 +31,11 @@ void EventTimer::startStatisticTimer( const QVector<Junction*> &junctions )
     m_database->init();
 
     m_statisticTimerId = startTimer( STATISTIC_INTERVAL_LOW );
+}
+
+void EventTimer::startTimeoutTimer( int timeout )
+{
+    m_timeoutTimerId = startTimer( timeout * 60 * 1000 );
 }
 
 void EventTimer::setNight()
@@ -73,5 +78,9 @@ void EventTimer::timerEvent( QTimerEvent *event )
     else if( event->timerId() == m_statisticTimerId )
     {
         writeStatisticsToDatabase();
+    }
+    else if( event->timerId() == m_timeoutTimerId )
+    {
+        qApp->quit();
     }
 }

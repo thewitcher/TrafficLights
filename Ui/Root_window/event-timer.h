@@ -20,12 +20,15 @@ public:
 
     void startDayPartTimer();
     void startStatisticTimer( const QVector<Junction*>& junctions );
+    void startTimeoutTimer( int timeout );
     bool isDark() const;
     void writeStatisticsToDatabase();
 
 private:
     int m_dayPartTimerId;
     int m_statisticTimerId;
+    int m_timeoutTimerId;
+
     DayPart m_currentDayTime;
     Database* m_database;
 

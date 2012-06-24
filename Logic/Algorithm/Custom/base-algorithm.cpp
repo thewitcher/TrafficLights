@@ -1,7 +1,7 @@
 #include "base-algorithm.h"
 #include "../Ui/TrafficLights_manager/junction.h"
 #include "../Settings/settings.h"
-#include <QDebug>
+
 BaseAlgorithm::BaseAlgorithm( Junction *junction, const QString &algorithmType ):
     m_algorithmType( algorithmType ),
     m_genomeSize( Settings::takeValue( "GENOME_SIZE", "%" + m_algorithmType, 1 ).toInt() ),

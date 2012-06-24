@@ -22,7 +22,7 @@ public:
     void addToScene( Vehicle *item, Checkpoint* initCheckpoint );
     static void updateStaticVariables( int numberOfCars, int numberOfBuses,
                                        int vehiclesFrequency, int carsSpeed,
-                                       int busesSpeed );
+                                       int busesSpeed, int timeout );
 
 private:
     GraphicsScene *m_scene;
@@ -37,6 +37,7 @@ private:
     static int S_BUS_COUNT;
     static int S_CAR_SPEED;
     static int S_BUS_SPEED;
+    static int S_TIMEOUT;
 
 private slots:
     void initScene();

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>129</width>
-    <height>161</height>
+    <width>263</width>
+    <height>240</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -32,6 +32,13 @@
     <item row="2" column="0">
      <widget class="QComboBox" name="m_experimentsComboBox"/>
     </item>
+    <item row="4" column="0">
+     <widget class="QPushButton" name="m_clearButton">
+      <property name="text">
+       <string>Clear database</string>
+      </property>
+     </widget>
+    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menuBar">
@@ -39,7 +46,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>129</width>
+     <width>263</width>
      <height>25</height>
     </rect>
    </property>

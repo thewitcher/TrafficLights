@@ -16,6 +16,7 @@ int GraphicsView::S_CAR_COUNT = Settings::takeValue( "S_CAR_COUNT", "GENERAL", 2
 int GraphicsView::S_CAR_SPEED = Settings::takeValue( "S_CAR_SPEED", "GENERAL", 1 ).toInt();
 int GraphicsView::S_BUS_SPEED = Settings::takeValue( "S_BUS_SPEED", "GENERAL", 3 ).toInt();
 int GraphicsView::S_BUS_COUNT = Settings::takeValue( "S_BUS_COUNT", "GENERAL", 5 ).toInt();
+int GraphicsView::S_TIMEOUT = Settings::takeValue( "S_TIMEOUT", "GENERAL", 360 ).toInt();
 
 /*!
  * GraphicsView is a subclass of QGraphicsView. It was created for convenience. In constructor there are already four method, which
@@ -78,7 +79,7 @@ void GraphicsView::initScene()
 
     setScene(m_scene);
 
-    QTimer::singleShot(5000, m_scene, SLOT(setDark()));
+    QTimer::singleShot( 5000, m_scene, SLOT(setDark()) );
 
     LOG_INFO( "End: %s", __FUNCTION__ );
 }
@@ -219,6 +220,8 @@ void GraphicsView::initEventTimer()
 {
     m_eventTimer = new EventTimer( this );
 
+    m_eventTimer->startTimeoutTimer( S_TIMEOUT );
+
     #ifdef STATISTICS
     m_eventTimer->startStatisticTimer( m_junctionManager->junctionsVector() );
     #endif
@@ -245,12 +248,13 @@ void GraphicsView::setNight()
 }
 
 void GraphicsView::updateStaticVariables( int numberOfCars, int numberOfBuses,
-                                                 int vehiclesFrequency, int carsSpeed,
-                                                 int busesSpeed )
+                                          int vehiclesFrequency, int carsSpeed,
+                                          int busesSpeed, int timeout )
 {
     S_NEW_CAR_FREQUENCY = vehiclesFrequency;
     S_CAR_COUNT = numberOfCars;
     S_BUS_COUNT = numberOfBuses;
     S_CAR_SPEED = carsSpeed;
     S_BUS_SPEED = busesSpeed;
+    S_TIMEOUT = timeout;
 }

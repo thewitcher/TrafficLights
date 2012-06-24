@@ -19,6 +19,16 @@ Database::Database( const QVector<Junction *> &junctions ):
     QSqlDatabase database = QSqlDatabase::addDatabase( "QSQLITE" );
     database.setDatabaseName( m_databaseName );
     m_isOpened = database.open();
+
+    if( m_isOpened == true )
+    {
+        LOG_INFO( "Database was opened (%s)", __FUNCTION__ );
+    }
+    else
+    {
+        LOG_INFO( "Database not available. Check whether database file exists (%s)", __FUNCTION__ );
+    }
+
     addNewExperiment();
 }
 
@@ -26,6 +36,7 @@ QSqlDatabase Database::databaseInstance()
 {
     Q_ASSERT( m_isOpened == true );
 
+    LOG_INFO( "Database is not open (%s)", __FUNCTION__ )
     return QSqlDatabase::database();
 }
 
@@ -33,6 +44,8 @@ void Database::close()
 {
     databaseInstance().removeDatabase( databaseInstance().databaseName() );
     databaseInstance().close();
+
+    LOG_INFO( "Close database connection (%s)", __FUNCTION__ )
 }
 
 void Database::addNewExperiment()
@@ -41,7 +54,7 @@ void Database::addNewExperiment()
     query.prepare( "INSERT INTO Experiment( experimentDate ) VALUES( :experimentDate )" );
     query.bindValue( ":experimentDate", m_currentDate.toString( "MM-dd-yyyy ( hh:mm:ss )" ) );
 
-    errorHandling( query );
+    errorHandling( query, "Insert into Experiment table can not be performed" );
 
     query.clear();
 
@@ -49,14 +62,17 @@ void Database::addNewExperiment()
     query.next();
     m_currentExperimentId = query.value( 0 ).toInt();
 
-    errorHandling( query );
+    errorHandling( query, "Read MAX from statistic table can not be performed" );
+
+    LOG_INFO( "Add new experiment into database with date: %s", m_currentDate.toString( "MM-dd-yyyy ( hh:mm:ss )" ).toAscii().data() )
 }
 
-void Database::errorHandling( QSqlQuery &query )
+void Database::errorHandling( QSqlQuery &query, const char *additionalComment )
 {
     if( !query.exec() )
     {
         LOG_WARNING( "Error: %s", query.lastError().text().toAscii().data() );
+        LOG_WARNING( "Additional comment for error: %s", additionalComment );
     }
 }
 
@@ -72,7 +88,7 @@ void Database::writeStatisticToDatabase( const Junction *junction )
     query.next();
     int statisticId = query.value( 0 ).toInt() + 1;
 
-    errorHandling( query );
+    errorHandling( query, "Read MAX from statistic table can not be performed" );
 
     query.clear();
 
@@ -85,7 +101,7 @@ void Database::writeStatisticToDatabase( const Junction *junction )
     query.bindValue( ":vehicleWaitingTime", VehicleCountManager::sumVehiclesWaitingTimeAtJunction( junction ) );
     query.bindValue( ":vehicleDriveAwayCount", 10 );
 
-    errorHandling( query );
+    errorHandling( query, "Insert into statistic table can not be performed" );
 
     query.clear();
 
@@ -115,7 +131,7 @@ void Database::writeStatisticToDatabase( const Junction *junction )
         query.bindValue( ":vehicleCount", VehicleCountManager::vehicleCountOnSubcycle( junction, list.at( i ) ) );
         query.bindValue( ":vehicleWaitingTime", VehicleCountManager::wholeVehicleWaitingTimeForSubcycle( junction, list.at( i ) ) );
 
-        errorHandling( query );
+        errorHandling( query, "Insert into Subcycle table can not be performed" );
     }
 }
 
