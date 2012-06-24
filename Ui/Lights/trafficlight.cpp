@@ -8,6 +8,7 @@ TrafficLight::TrafficLight( QDeclarativeItem *parent ) :
 {
 }
 
+/*! Creats appropriate trafficlight through calls proper function from QML. */
 void TrafficLight::setDirection( const Direction &direct )
 {
     switch( direct )
@@ -39,12 +40,14 @@ void TrafficLight::createCheckpoint( Checkpoint *checkpoint )
     m_checkpoint = checkpoint;
 }
 
+/*! Calls functions responsible for driving vehicles. */
 void TrafficLight::letGoVehicles()
 {
     QMetaObject::invokeMethod( this, "letGo" );
     m_checkpoint->setMovePermission( true );
 }
 
+/*! Calls functions responsible for stopping vehicles. */
 void TrafficLight::holdVehicles()
 {
     QMetaObject::invokeMethod( this, "hold" );

@@ -24,7 +24,7 @@
 
 #include "../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/fuzzylite/flScalar.h"
 #include "../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/fuzzylite/AreaCentroidAlgorithm.h"
-#include <string>
+
 namespace fl {
 
     class LinguisticTerm;

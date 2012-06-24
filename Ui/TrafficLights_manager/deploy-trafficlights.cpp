@@ -10,9 +10,7 @@ DeployTrafficLights::DeployTrafficLights( CheckpointManager * checkpoint )
     setCheckpointForLights( checkpoint );
 }
 
-/*!
- * This function sets coordinates for all TrafficLight items in cross.
- */
+/*! This function sets coordinates for all TrafficLight items in cross. */
 void DeployTrafficLights::setLights()
 {
 
@@ -74,9 +72,7 @@ void DeployTrafficLights::setLights()
     templateSimpleCross( cross7, 6 );
 }
 
-/*!
- * It's simple template for creates TrafficLight item for simple cross.
- */
+/*! It's simple template for creates TrafficLight item for simple cross. */
 
 void DeployTrafficLights::templateSimpleCross( QVector<double> vector, uint id )
 {
@@ -110,9 +106,7 @@ void DeployTrafficLights::templateSimpleCross( QVector<double> vector, uint id )
     m_lights.insert( id, container );
 }
 
-/*!
- * It's complex template for creates TrafficLight item for Bladzio cross.
- */
+/*! It's complex template for creates TrafficLight item for Bladzio cross. */
 void DeployTrafficLights::templatecomplexCross( QVector<qreal> vector, uint id )
 {
     if( vector.count() == 36 ){
@@ -155,9 +149,7 @@ void DeployTrafficLights::templatecomplexCross( QVector<qreal> vector, uint id )
     }
 }
 
-/*!
- * Returns map all TrafficLight items.
- */
+/*! Returns map all TrafficLight items. */
 QMap< int, QVector<TrafficLight*> >& DeployTrafficLights::trafficLightsMap()
 {
     return m_lights;

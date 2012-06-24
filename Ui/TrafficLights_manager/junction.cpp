@@ -14,6 +14,7 @@
 Junction::Junction( const QVector<TrafficLight *> &junction, QLCDNumber *m_vehicleCounter, int junctionId,
                     JUNCTION_TYPE junctionType ):
     QObject( NULL ),
+    m_vehicleDriveAwayCount( 0 ),
     m_trafficLightVector( junction ),
     m_pauseBetweenSubcycles( 2000 ),
     m_interval( 500 ),
@@ -128,8 +129,7 @@ void Junction::setTimeVectorByAlgorithm( const QVector<int> &timeVector )
 }
 
 void Junction::runForSubcycles()
-{
-}
+{}
 
 int Junction::currentNumberOfVehicles() const
 {
@@ -159,6 +159,8 @@ void Junction::subtractVehicleFromStatistic( int checkpointId, Vehicle *vehicle 
 }
 #else
 
+/*! Function responisble for subtract vehicles count, which have been run across junction from total number
+    vehicles at junction. */
 void Junction::subtractVehicleFromStatistic( int checkpointId, Vehicle *vehicle )
 {
     LOG_INFO( "Vehicle with id: %i leave junction with time: %i", vehicle->vehicleId(), vehicle->waitingTimeInSeconds() );
@@ -169,9 +171,17 @@ void Junction::subtractVehicleFromStatistic( int checkpointId, Vehicle *vehicle 
 
     m_vehicleCountOnLanes[ Constans::mapCheckpointId( checkpointId ) ]--;
 
-    m_currentNumberOfVehicles--;
+    m_currentNumberOfVehicles--, m_vehicleDriveAwayCount++;
 }
 #endif
+
+/*! Compute how many vehicles left any junction within a 10 sek. */
+int Junction::getAndClearVehicleDriveAwayCount() const
+{
+    int vehicleDriveAwayCount = m_vehicleDriveAwayCount;
+    m_vehicleDriveAwayCount = 0;
+    return vehicleDriveAwayCount;
+}
 
 Vehicle* Junction::firstArrived( int checkpointId )
 {

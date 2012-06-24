@@ -16,6 +16,7 @@
 #include "../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/fuzzylite/FuzzyDefuzzifier.h"
 #include "../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/fuzzylite/CompoundTerm.h"
 #include "../Logic/Algorithm/FIS/fuzzylite-1.03/fuzzylite/fuzzylite/TakagiSugenoTerm.h"
+
 namespace fl {
 
     FuzzyDefuzzifier::~FuzzyDefuzzifier() {
@@ -59,4 +60,5 @@ namespace fl {
         return result / sum_wi;
     }
 }
+
 

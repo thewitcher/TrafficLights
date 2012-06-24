@@ -6,7 +6,6 @@
 #include <QVariant>
 #include <QSqlError>
 
-
 Database::Database( const QVector<Junction *> &junctions ):
     QThread( NULL ),
     m_databaseName( QDir::currentPath() + "/Data/statistic.db3" ),
@@ -99,7 +98,7 @@ void Database::writeStatisticToDatabase( const Junction *junction )
     query.bindValue( ":statisticTime", m_statisticTime );
     query.bindValue( ":vehicleCount", VehicleCountManager::sumVehiclesAtJunction( junction ) );
     query.bindValue( ":vehicleWaitingTime", VehicleCountManager::sumVehiclesWaitingTimeAtJunction( junction ) );
-    query.bindValue( ":vehicleDriveAwayCount", 10 );
+    query.bindValue( ":vehicleDriveAwayCount", junction->getAndClearVehicleDriveAwayCount() );
 
     errorHandling( query, "Insert into statistic table can not be performed" );
 

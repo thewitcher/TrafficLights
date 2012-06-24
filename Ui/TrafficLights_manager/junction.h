@@ -41,7 +41,12 @@ public:
     virtual void setTimeVectorByAlgorithm( const QVector<int>& timeVector );
     void setDefaultTimeVector();
 
+    int getAndClearVehicleDriveAwayCount() const;
+
 protected:
+
+    int mutable m_vehicleDriveAwayCount;
+
     Vehicle* firstArrived( int checkpointId );
 
     /// Contains all traffic lights uses by this junction.

@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
     choosealgorithmtype->setAttribute( Qt::WA_DeleteOnClose );
 
 
-    if( choosealgorithmtype->exec() == false )
+    if( choosealgorithmtype->exec() == false && ChooseAlgorithmType::S_CAN_RUN == true )
     {
         //It is neccessary to open file to writes logs
         Logger::init();

@@ -23,10 +23,9 @@ void JunctionManager::runForSubcycles()
     }
 }
 
-/*!
- * Creates 7 objects with responsibility for manage signallers on each junction. 6 of them is SimpleJunction type and one BladzioJunction type.
- * BladzioJunction is the largest cross in the map.
- */
+/*! Creates 7 objects with responsibility for manage signallers on each junction.
+    6 of them is SimpleJunction type and one BladzioJunction type.
+    BladzioJunction is the largest cross in the map. */
 
 void JunctionManager::createJunctions( QMap<int, QVector<TrafficLight *> > &junctionsMap, QVector<QLCDNumber *> &vehicleCounters )
 {

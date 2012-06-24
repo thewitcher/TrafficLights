@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui declarative sql
+QT       += core gui declarative sql phonon
 
 TARGET = application
 TEMPLATE = app
@@ -22,10 +22,11 @@ RESOURCES += \
 # EVENTS - to turn on timer which manages global events like day and night for example
 DEFINES +=  EVENTS \
             STATISTICS \
-            LOGGER \
-            DAY_PARTS \
-            #COLLISIONS \
-            LIGHTS
+#            MUSIC \
+#            LOGGER
+#            DAY_PARTS \
+#            COLLISIONS \
+#            LIGHTS
 
 
 include(../Logger/Logger.pri)

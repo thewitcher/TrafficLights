@@ -14,10 +14,11 @@ public:
 
     QVector<int> startAlgorithm();
     /*! Objective function.*/
-    void operationEval( float& score );
+    void allSubcycleFitness( float& score );
 
     /*! This function starts up genetic algorithm. As an argument assumes is population size. */
     QVector<int> setParameters();
+
     /*! Auxiliary functions for custom genetic algorithm.*/
     float evalForSimpleJunction();
     float evalForBladzioJunction();
@@ -26,7 +27,7 @@ public:
     void evalForBladzioJunctionSubcycle_2( int& numberOfVehiclesThatWillDrive );
     void evalForBladzioJunctionSubcycle_3( int& numberOfVehiclesThatWillDrive );
 
-    /*! Auxiliary fuctions for bladzioObjective function. */
+    /*! Auxiliary fuctions for allSubcycleObjective function. */
     float theSumOfTheRemainingVehiclesAtJunction();
     int howMuchVehiclesAtLaneWillDrive( const int& subcycleId, const int& numberVehiclesOnLane );
     void setAlphaParam( const int& numberOfVehiclesThatWillDrive);
@@ -47,11 +48,8 @@ public:
     float m_magicE;
 
     void clearAll();
-    bool firstRun;
     void exceptionForSimple( QVector<int>& vector );
     void exceptionForBladzio( QVector<int> &vector );
-
-
 };
 
 #endif // ALLSUBCYCLEALGORITHM_H
