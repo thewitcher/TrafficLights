@@ -22,11 +22,11 @@ RESOURCES += \
 # EVENTS - to turn on timer which manages global events like day and night for example
 DEFINES +=  EVENTS \
             STATISTICS \
-#            MUSIC \
-#            LOGGER
-#            DAY_PARTS \
-#            COLLISIONS \
-#            LIGHTS
+            MUSIC \
+            LOGGER \
+            #DAY_PARTS \
+            COLLISIONS
+            #LIGHTS
 
 
 include(../Logger/Logger.pri)

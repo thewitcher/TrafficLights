@@ -6,344 +6,220 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>488</width>
-    <height>305</height>
+    <width>526</width>
+    <height>286</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Settings</string>
   </property>
-  <widget class="QStackedWidget" name="stackedWidget">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>491</width>
-     <height>301</height>
-    </rect>
-   </property>
-   <property name="currentIndex">
-    <number>0</number>
-   </property>
-   <widget class="QWidget" name="page">
-    <widget class="QWidget" name="verticalLayoutWidget">
-     <property name="geometry">
-      <rect>
-       <x>80</x>
-       <y>40</y>
-       <width>336</width>
-       <height>71</height>
-      </rect>
+  <layout class="QGridLayout" name="gridLayout_3">
+   <item row="0" column="0">
+    <widget class="QStackedWidget" name="stackedWidget">
+     <property name="currentIndex">
+      <number>0</number>
      </property>
-     <layout class="QVBoxLayout" name="verticalLayout_2">
-      <item>
-       <widget class="QLabel" name="label">
-        <property name="styleSheet">
-         <string notr="true">font: 75 21pt &quot;Times New Roman&quot;;
+     <widget class="QWidget" name="page">
+      <layout class="QGridLayout" name="gridLayout_2">
+       <item row="0" column="0" colspan="3">
+        <layout class="QVBoxLayout" name="verticalLayout_2">
+         <item>
+          <widget class="QLabel" name="label">
+           <property name="styleSheet">
+            <string notr="true">font: 75 21pt &quot;Times New Roman&quot;;
 color: rgb(0, 0, 255);</string>
-        </property>
-        <property name="text">
-         <string>Choose appropriate algorithm</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-    <widget class="QWidget" name="horizontalLayoutWidget">
-     <property name="geometry">
-      <rect>
-       <x>30</x>
-       <y>120</y>
-       <width>486</width>
-       <height>51</height>
-      </rect>
-     </property>
-     <layout class="QHBoxLayout" name="horizontalLayout">
-      <item>
-       <widget class="QLabel" name="label_2">
-        <property name="styleSheet">
-         <string notr="true">font: 75 16pt &quot;Palatino Linotype&quot;;</string>
-        </property>
-        <property name="text">
-         <string>  Genetic algorithm</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLabel" name="label_3">
-        <property name="styleSheet">
-         <string notr="true">font: 75 16pt &quot;Palatino Linotype&quot;;</string>
-        </property>
-        <property name="text">
-         <string>     Fuzzy logic</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLabel" name="label_13">
-        <property name="styleSheet">
-         <string notr="true">font: 75 16pt &quot;Palatino Linotype&quot;;</string>
-        </property>
-        <property name="text">
-         <string>     Normal</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-    <widget class="QWidget" name="verticalLayoutWidget_3">
-     <property name="geometry">
-      <rect>
-       <x>40</x>
-       <y>171</y>
-       <width>181</width>
-       <height>80</height>
-      </rect>
-     </property>
-     <layout class="QVBoxLayout" name="verticalLayout_4">
-      <item>
-       <widget class="QRadioButton" name="allGAradioButton">
-        <property name="styleSheet">
-         <string notr="true">font: 75 11pt &quot;Times New Roman&quot;;</string>
-        </property>
-        <property name="text">
-         <string>All subcycle algorithm</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QRadioButton" name="OneGAradioButton">
-        <property name="styleSheet">
-         <string notr="true">font: 11pt &quot;Times New Roman&quot;;</string>
-        </property>
-        <property name="text">
-         <string>One subcycle algorithm</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-    <widget class="QWidget" name="verticalLayoutWidget_4">
-     <property name="geometry">
-      <rect>
-       <x>250</x>
-       <y>170</y>
-       <width>131</width>
-       <height>80</height>
-      </rect>
-     </property>
-     <layout class="QVBoxLayout" name="verticalLayout_5">
-      <item>
-       <widget class="QRadioButton" name="AllFLradioButton">
-        <property name="styleSheet">
-         <string notr="true">font: 11pt &quot;Times New Roman&quot;;</string>
-        </property>
-        <property name="text">
-         <string>All fuzzy logic</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QRadioButton" name="OneFLradioButton">
-        <property name="styleSheet">
-         <string notr="true">font: 11pt &quot;Times New Roman&quot;;</string>
-        </property>
-        <property name="text">
-         <string>One fuzzy logic</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-    <widget class="QWidget" name="verticalLayoutWidget_5">
-     <property name="geometry">
-      <rect>
-       <x>390</x>
-       <y>171</y>
-       <width>86</width>
-       <height>80</height>
-      </rect>
-     </property>
-     <layout class="QVBoxLayout" name="verticalLayout_6">
-      <item>
-       <widget class="QRadioButton" name="standardRadioButton">
-        <property name="styleSheet">
-         <string notr="true">font: 11pt &quot;Times New Roman&quot;;</string>
-        </property>
-        <property name="text">
-         <string>Standard</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </widget>
-   <widget class="QWidget" name="page_2">
-    <widget class="QPushButton" name="nextButtonForGA">
-     <property name="geometry">
-      <rect>
-       <x>390</x>
-       <y>260</y>
-       <width>62</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">color: white;
-background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #88d, stop: 0.1 #99e, stop: 0.49 #77c, stop: 0.5 #66b, stop: 1 #77c);
-border-width: 1px;
-border-color: #339;
-border-style: solid;
-border-radius: 7;
-padding:3px;
-font-size: 10px;
-padding-left: 5px;
-padding-right: 5px;
-min-width: 50px;
-max-width: 50px;
-min-height: 13px;
-max-height: 13px;</string>
-     </property>
-     <property name="text">
-      <string>Next</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_4">
-     <property name="geometry">
-      <rect>
-       <x>150</x>
-       <y>10</y>
-       <width>159</width>
-       <height>26</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">font: 75 14pt &quot;Palatino Linotype&quot;;</string>
-     </property>
-     <property name="text">
-      <string>  Genetic algorithm</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="backButtonForGA">
-     <property name="geometry">
-      <rect>
-       <x>310</x>
-       <y>260</y>
-       <width>62</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">color: white;
-background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #88d, stop: 0.1 #99e, stop: 0.49 #77c, stop: 0.5 #66b, stop: 1 #77c);
-border-width: 1px;
-border-color: #339;
-border-style: solid;
-border-radius: 7;
-padding:3px;
-font-size: 10px;
-padding-left: 5px;
-padding-right: 5px;
-min-width: 50px;
-max-width: 50px;
-min-height: 13px;
-max-height: 13px;</string>
-     </property>
-     <property name="text">
-      <string>Back</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_5">
-     <property name="geometry">
-      <rect>
-       <x>90</x>
-       <y>60</y>
-       <width>141</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">font: 10pt &quot;Times New Roman&quot;;</string>
-     </property>
-     <property name="text">
-      <string>Replacement probability</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_6">
-     <property name="geometry">
-      <rect>
-       <x>90</x>
-       <y>100</y>
-       <width>111</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">font: 10pt &quot;Times New Roman&quot;;</string>
-     </property>
-     <property name="text">
-      <string>Population size</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_7">
-     <property name="geometry">
-      <rect>
-       <x>90</x>
-       <y>140</y>
-       <width>91</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">font: 10pt &quot;Times New Roman&quot;;</string>
-     </property>
-     <property name="text">
-      <string>Generations</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_8">
-     <property name="geometry">
-      <rect>
-       <x>90</x>
-       <y>180</y>
-       <width>121</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">font: 10pt &quot;Times New Roman&quot;;</string>
-     </property>
-     <property name="text">
-      <string>Mutation probability</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_9">
-     <property name="geometry">
-      <rect>
-       <x>90</x>
-       <y>220</y>
-       <width>131</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">font: 10pt &quot;Times New Roman&quot;;</string>
-     </property>
-     <property name="text">
-      <string>Crossover probability</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="defaultValuesButton">
-     <property name="geometry">
-      <rect>
-       <x>210</x>
-       <y>260</y>
-       <width>77</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">color: white;
+           </property>
+           <property name="text">
+            <string>Choose appropriate algorithm</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="1" column="0">
+        <layout class="QVBoxLayout" name="verticalLayout_4">
+         <item>
+          <widget class="QLabel" name="label_2">
+           <property name="styleSheet">
+            <string notr="true">font: 75 16pt &quot;Palatino Linotype&quot;;</string>
+           </property>
+           <property name="text">
+            <string>Genetic algorithm</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignHCenter|Qt::AlignTop</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QRadioButton" name="allGAradioButton">
+           <property name="styleSheet">
+            <string notr="true">font: 75 11pt &quot;Times New Roman&quot;;</string>
+           </property>
+           <property name="text">
+            <string>All subcycle algorithm</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QRadioButton" name="OneGAradioButton">
+           <property name="styleSheet">
+            <string notr="true">font: 11pt &quot;Times New Roman&quot;;</string>
+           </property>
+           <property name="text">
+            <string>One subcycle algorithm</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="1" column="1">
+        <layout class="QVBoxLayout" name="verticalLayout_5">
+         <item>
+          <widget class="QLabel" name="label_3">
+           <property name="styleSheet">
+            <string notr="true">font: 75 16pt &quot;Palatino Linotype&quot;;</string>
+           </property>
+           <property name="text">
+            <string>Fuzzy logic</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignHCenter|Qt::AlignTop</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QRadioButton" name="AllFLradioButton">
+           <property name="styleSheet">
+            <string notr="true">font: 11pt &quot;Times New Roman&quot;;</string>
+           </property>
+           <property name="text">
+            <string>All fuzzy logic</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QRadioButton" name="OneFLradioButton">
+           <property name="styleSheet">
+            <string notr="true">font: 11pt &quot;Times New Roman&quot;;</string>
+           </property>
+           <property name="text">
+            <string>One fuzzy logic</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="1" column="2">
+        <layout class="QVBoxLayout" name="verticalLayout_6">
+         <item>
+          <widget class="QLabel" name="label_13">
+           <property name="styleSheet">
+            <string notr="true">font: 75 16pt &quot;Palatino Linotype&quot;;</string>
+           </property>
+           <property name="text">
+            <string>Normal</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignHCenter|Qt::AlignTop</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QRadioButton" name="standardRadioButton">
+           <property name="styleSheet">
+            <string notr="true">font: 11pt &quot;Times New Roman&quot;;</string>
+           </property>
+           <property name="text">
+            <string>Standard</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="page_2">
+      <layout class="QGridLayout" name="gridLayout_4">
+       <item row="0" column="0" colspan="3">
+        <widget class="QLabel" name="label_4">
+         <property name="styleSheet">
+          <string notr="true">font: 75 14pt &quot;Palatino Linotype&quot;;</string>
+         </property>
+         <property name="text">
+          <string>  Genetic algorithm</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0" colspan="2">
+        <widget class="QLabel" name="label_5">
+         <property name="styleSheet">
+          <string notr="true">font: 10pt &quot;Times New Roman&quot;;</string>
+         </property>
+         <property name="text">
+          <string>Replacement probability</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="2" colspan="2">
+        <widget class="QLineEdit" name="replacementProbabilityLineEdit"/>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="label_6">
+         <property name="styleSheet">
+          <string notr="true">font: 10pt &quot;Times New Roman&quot;;</string>
+         </property>
+         <property name="text">
+          <string>Population size</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="2" colspan="2">
+        <widget class="QLineEdit" name="populationSizeLineEdit"/>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="label_7">
+         <property name="styleSheet">
+          <string notr="true">font: 10pt &quot;Times New Roman&quot;;</string>
+         </property>
+         <property name="text">
+          <string>Generations</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="2" colspan="2">
+        <widget class="QLineEdit" name="generationsLineEdit"/>
+       </item>
+       <item row="4" column="0">
+        <widget class="QLabel" name="label_8">
+         <property name="styleSheet">
+          <string notr="true">font: 10pt &quot;Times New Roman&quot;;</string>
+         </property>
+         <property name="text">
+          <string>Mutation probability</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="2" colspan="2">
+        <widget class="QLineEdit" name="mutationProbabilityLineEdit"/>
+       </item>
+       <item row="5" column="0" colspan="2">
+        <widget class="QLabel" name="label_9">
+         <property name="styleSheet">
+          <string notr="true">font: 10pt &quot;Times New Roman&quot;;</string>
+         </property>
+         <property name="text">
+          <string>Crossover probability</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="2" colspan="2">
+        <widget class="QLineEdit" name="crossoverProbabilityLineEdit"/>
+       </item>
+       <item row="6" column="1" colspan="2">
+        <widget class="QPushButton" name="defaultValuesButton">
+         <property name="styleSheet">
+          <string notr="true">color: white;
 background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #88d, stop: 0.1 #99e, stop: 0.49 #77c, stop: 0.5 #66b, stop: 1 #77c);
 border-width: 1px;
 border-color: #339;
@@ -357,90 +233,16 @@ min-width: 65px;
 max-width: 65px;
 min-height: 13px;
 max-height: 13px;</string>
-     </property>
-     <property name="text">
-      <string>Default values</string>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="replacementProbabilityLineEdit">
-     <property name="geometry">
-      <rect>
-       <x>260</x>
-       <y>60</y>
-       <width>113</width>
-       <height>20</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="populationSizeLineEdit">
-     <property name="geometry">
-      <rect>
-       <x>260</x>
-       <y>100</y>
-       <width>113</width>
-       <height>20</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="generationsLineEdit">
-     <property name="geometry">
-      <rect>
-       <x>260</x>
-       <y>140</y>
-       <width>113</width>
-       <height>20</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="mutationProbabilityLineEdit">
-     <property name="geometry">
-      <rect>
-       <x>260</x>
-       <y>180</y>
-       <width>113</width>
-       <height>20</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="crossoverProbabilityLineEdit">
-     <property name="geometry">
-      <rect>
-       <x>260</x>
-       <y>220</y>
-       <width>113</width>
-       <height>20</height>
-      </rect>
-     </property>
-    </widget>
-   </widget>
-   <widget class="QWidget" name="page_3">
-    <widget class="QLabel" name="label_11">
-     <property name="geometry">
-      <rect>
-       <x>150</x>
-       <y>20</y>
-       <width>201</width>
-       <height>26</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">font: 75 14pt &quot;Palatino Linotype&quot;;</string>
-     </property>
-     <property name="text">
-      <string>General parameters</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="closeButtonForGeneral">
-     <property name="geometry">
-      <rect>
-       <x>390</x>
-       <y>270</y>
-       <width>62</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">color: white;
+         </property>
+         <property name="text">
+          <string>Default values</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="3">
+        <widget class="QPushButton" name="backButtonForGA">
+         <property name="styleSheet">
+          <string notr="true">color: white;
 background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #88d, stop: 0.1 #99e, stop: 0.49 #77c, stop: 0.5 #66b, stop: 1 #77c);
 border-width: 1px;
 border-color: #339;
@@ -454,22 +256,16 @@ min-width: 50px;
 max-width: 50px;
 min-height: 13px;
 max-height: 13px;</string>
-     </property>
-     <property name="text">
-      <string>OK</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="backButtonForGeneral">
-     <property name="geometry">
-      <rect>
-       <x>310</x>
-       <y>270</y>
-       <width>62</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">color: white;
+         </property>
+         <property name="text">
+          <string>Back</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="4">
+        <widget class="QPushButton" name="nextButtonForGA">
+         <property name="styleSheet">
+          <string notr="true">color: white;
 background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #88d, stop: 0.1 #99e, stop: 0.49 #77c, stop: 0.5 #66b, stop: 1 #77c);
 border-width: 1px;
 border-color: #339;
@@ -483,22 +279,112 @@ min-width: 50px;
 max-width: 50px;
 min-height: 13px;
 max-height: 13px;</string>
-     </property>
-     <property name="text">
-      <string>Back</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="defaultValuesButtonForGeneral">
-     <property name="geometry">
-      <rect>
-       <x>210</x>
-       <y>270</y>
-       <width>77</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">color: white;
+         </property>
+         <property name="text">
+          <string>Next</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="page_3">
+      <layout class="QGridLayout" name="gridLayout_5">
+       <item row="0" column="0" colspan="2">
+        <widget class="QLabel" name="label_11">
+         <property name="styleSheet">
+          <string notr="true">font: 75 14pt &quot;Palatino Linotype&quot;;</string>
+         </property>
+         <property name="text">
+          <string>General parameters</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0" colspan="3">
+        <layout class="QGridLayout" name="gridLayout">
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_12">
+           <property name="styleSheet">
+            <string notr="true">font: 10pt &quot;Times New Roman&quot;;</string>
+           </property>
+           <property name="text">
+            <string>Number of cars:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLineEdit" name="countOfVehiclesLineEdit"/>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="label_17">
+           <property name="styleSheet">
+            <string notr="true">font: 10pt &quot;Times New Roman&quot;;</string>
+           </property>
+           <property name="text">
+            <string>Number of the buses:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QLineEdit" name="numberOfBusesLineEdit"/>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="label_16">
+           <property name="styleSheet">
+            <string notr="true">font: 10pt &quot;Times New Roman&quot;;</string>
+           </property>
+           <property name="text">
+            <string>Vehicles frequency ( in sec ):</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QLineEdit" name="vehiclesFrequencyLineEdit"/>
+         </item>
+         <item row="3" column="0">
+          <widget class="QLabel" name="label_14">
+           <property name="styleSheet">
+            <string notr="true">font: 10pt &quot;Times New Roman&quot;;</string>
+           </property>
+           <property name="text">
+            <string>Cars speed ( 1-5 ):</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="1">
+          <widget class="QLineEdit" name="carSpeedLineEdit"/>
+         </item>
+         <item row="4" column="0">
+          <widget class="QLabel" name="label_15">
+           <property name="styleSheet">
+            <string notr="true">font: 10pt &quot;Times New Roman&quot;;</string>
+           </property>
+           <property name="text">
+            <string>Bus speed ( 1-5 ):</string>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="1">
+          <widget class="QLineEdit" name="busSpeedLineEdit"/>
+         </item>
+         <item row="5" column="0">
+          <widget class="QLabel" name="label_18">
+           <property name="styleSheet">
+            <string notr="true">font: 10pt &quot;Times New Roman&quot;;</string>
+           </property>
+           <property name="text">
+            <string>Timeout:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="5" column="1">
+          <widget class="QLineEdit" name="timeoutLineEdit"/>
+         </item>
+        </layout>
+       </item>
+       <item row="2" column="0">
+        <widget class="QPushButton" name="defaultValuesButtonForGeneral">
+         <property name="styleSheet">
+          <string notr="true">color: white;
 background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #88d, stop: 0.1 #99e, stop: 0.49 #77c, stop: 0.5 #66b, stop: 1 #77c);
 border-width: 1px;
 border-color: #339;
@@ -512,109 +398,63 @@ min-width: 65px;
 max-width: 65px;
 min-height: 13px;
 max-height: 13px;</string>
-     </property>
-     <property name="text">
-      <string>Default values</string>
-     </property>
+         </property>
+         <property name="text">
+          <string>Default values</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QPushButton" name="backButtonForGeneral">
+         <property name="styleSheet">
+          <string notr="true">color: white;
+background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #88d, stop: 0.1 #99e, stop: 0.49 #77c, stop: 0.5 #66b, stop: 1 #77c);
+border-width: 1px;
+border-color: #339;
+border-style: solid;
+border-radius: 7;
+padding:3px;
+font-size: 10px;
+padding-left: 5px;
+padding-right: 5px;
+min-width: 50px;
+max-width: 50px;
+min-height: 13px;
+max-height: 13px;</string>
+         </property>
+         <property name="text">
+          <string>Back</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="2">
+        <widget class="QPushButton" name="closeButtonForGeneral">
+         <property name="styleSheet">
+          <string notr="true">color: white;
+background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #88d, stop: 0.1 #99e, stop: 0.49 #77c, stop: 0.5 #66b, stop: 1 #77c);
+border-width: 1px;
+border-color: #339;
+border-style: solid;
+border-radius: 7;
+padding:3px;
+font-size: 10px;
+padding-left: 5px;
+padding-right: 5px;
+min-width: 50px;
+max-width: 50px;
+min-height: 13px;
+max-height: 13px;</string>
+         </property>
+         <property name="text">
+          <string>OK</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
     </widget>
-    <widget class="QWidget" name="gridLayoutWidget">
-     <property name="geometry">
-      <rect>
-       <x>40</x>
-       <y>50</y>
-       <width>411</width>
-       <height>194</height>
-      </rect>
-     </property>
-     <layout class="QGridLayout" name="gridLayout">
-      <item row="0" column="0">
-       <widget class="QLabel" name="label_12">
-        <property name="styleSheet">
-         <string notr="true">font: 10pt &quot;Times New Roman&quot;;</string>
-        </property>
-        <property name="text">
-         <string>Number of cars:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="QLineEdit" name="countOfVehiclesLineEdit"/>
-      </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="label_17">
-        <property name="styleSheet">
-         <string notr="true">font: 10pt &quot;Times New Roman&quot;;</string>
-        </property>
-        <property name="text">
-         <string>Number of the buses:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <widget class="QLineEdit" name="numberOfBusesLineEdit"/>
-      </item>
-      <item row="2" column="0">
-       <widget class="QLabel" name="label_16">
-        <property name="styleSheet">
-         <string notr="true">font: 10pt &quot;Times New Roman&quot;;</string>
-        </property>
-        <property name="text">
-         <string>Vehicles frequency ( in sec ):</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="1">
-       <widget class="QLineEdit" name="vehiclesFrequencyLineEdit"/>
-      </item>
-      <item row="3" column="0">
-       <widget class="QLabel" name="label_14">
-        <property name="styleSheet">
-         <string notr="true">font: 10pt &quot;Times New Roman&quot;;</string>
-        </property>
-        <property name="text">
-         <string>Cars speed ( 1-5 ):</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="1">
-       <widget class="QLineEdit" name="carSpeedLineEdit"/>
-      </item>
-      <item row="4" column="0">
-       <widget class="QLabel" name="label_15">
-        <property name="styleSheet">
-         <string notr="true">font: 10pt &quot;Times New Roman&quot;;</string>
-        </property>
-        <property name="text">
-         <string>Bus speed ( 1-5 ):</string>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="1">
-       <widget class="QLineEdit" name="busSpeedLineEdit"/>
-      </item>
-      <item row="5" column="0">
-       <widget class="QLabel" name="label_18">
-        <property name="styleSheet">
-         <string notr="true">font: 10pt &quot;Times New Roman&quot;;</string>
-        </property>
-        <property name="text">
-         <string>Timeout:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="5" column="1">
-       <widget class="QLineEdit" name="timeoutLineEdit"/>
-      </item>
-     </layout>
-    </widget>
-    <zorder>label_11</zorder>
-    <zorder>closeButtonForGeneral</zorder>
-    <zorder>backButtonForGeneral</zorder>
-    <zorder>defaultValuesButtonForGeneral</zorder>
-    <zorder>gridLayoutWidget</zorder>
-    <zorder>label_12</zorder>
-   </widget>
-  </widget>
+   </item>
+  </layout>
  </widget>
  <resources/>
  <connections/>

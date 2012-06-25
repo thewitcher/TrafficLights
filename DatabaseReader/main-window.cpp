@@ -52,7 +52,7 @@ void MainWindow::createReport()
 {
     m_database->setExperimentId( experimentId() );
 
-    QString folderName  = ui->m_experimentsComboBox->currentText();
+    QString folderName  = QString::number( experimentId() );
 
     createFolder( folderName );
 
