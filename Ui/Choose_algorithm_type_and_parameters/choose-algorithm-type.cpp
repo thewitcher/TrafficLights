@@ -23,35 +23,67 @@ ChooseAlgorithmType::~ChooseAlgorithmType()
     delete ui;
 }
 
+void ChooseAlgorithmType::checkRadioButtons()
+{
+    m_radioButtonsList << ui->allGAradioButton << ui->OneGAradioButton
+                     << ui->AllFLradioButton << ui->OneFLradioButton
+                     << ui->standardRadioButton;
+
+    m_position = 0;
+    while( m_radioButtonsList.at( m_position )->isChecked() == false )
+    {
+        m_position++;
+    }
+}
+
+void ChooseAlgorithmType::setValues()
+{
+    ui->carSpeedLineEdit->setText( QString::number( Settings::takeValue( "S_CAR_SPEED", "GENERAL" ).toInt() ) );
+    ui->busSpeedLineEdit->setText( QString::number( Settings::takeValue( "S_BUS_SPEED", "GENERAL" ).toInt() ));
+    ui->numberOfBusesLineEdit->setText( QString::number( Settings::takeValue( "S_BUS_COUNT", "GENERAL" ).toInt() ));
+    ui->countOfVehiclesLineEdit->setText( QString::number( Settings::takeValue( "S_CAR_COUNT", "GENERAL" ).toInt() ));
+    ui->vehiclesFrequencyLineEdit->setText( QString::number( Settings::takeValue( "S_NEW_CAR_FREQUENCY", "GENERAL" ).toInt()) );
+    ui->timeoutLineEdit->setText( QString::number( Settings::takeValue( "S_TIMEOUT", "GENERAL" ).toInt() ));
+    if( m_position == 0 || m_position == 1 )
+    {
+        ui->replacementProbabilityLineEdit->setText( Settings::takeValue( "REPLACEMENT_PROBABILITY" ,
+                                                            "%" + m_radioButtonsList.at( m_position )->accessibleName() ).toString() );
+        ui->crossoverProbabilityLineEdit->setText( QString::number( Settings::takeValue( "CROSSOVER_PROBABILITY" ,
+                                                            "%" + m_radioButtonsList.at( m_position )->accessibleName() ).toDouble() ) );
+        ui->generationsLineEdit->setText( QString::number( Settings::takeValue( "GENERATIONS" ,
+                                                            "%" + m_radioButtonsList.at( m_position )->accessibleName() ).toInt()) );
+        ui->mutationProbabilityLineEdit->setText( QString::number( Settings::takeValue( "MUTATION_PROBABILITY" ,
+                                                            "%" + m_radioButtonsList.at( m_position )->accessibleName() ).toDouble() ) );
+        ui->populationSizeLineEdit->setText( QString::number( Settings::takeValue( "POPULATION_SIZE" ,
+                                                            "%" + m_radioButtonsList.at( m_position )->accessibleName() ).toInt() ) );
+    }
+}
+
 void ChooseAlgorithmType::nextPage()
 {
+    checkRadioButtons();
     if( ui->allGAradioButton->isChecked() || ui->OneGAradioButton->isChecked() )
+    {
         ui->stackedWidget->setCurrentIndex( 1 );
+        setValues();
+    }
     else if( ui->AllFLradioButton->isChecked() || ui->OneFLradioButton->isChecked()
              || ui->standardRadioButton->isChecked() )
+    {
         ui->stackedWidget->setCurrentIndex( 2 );
+        setValues();
+    }
 }
 
 void ChooseAlgorithmType::setParametersForAlgorithm()
 {
-    QList<QRadioButton*> radioButtonsList;
-    radioButtonsList << ui->allGAradioButton << ui->OneGAradioButton
-                     << ui->AllFLradioButton << ui->OneFLradioButton
-                     << ui->standardRadioButton;
-
-    int i = 0;
-    while( radioButtonsList.at( i )->isChecked() == false )
-    {
-        i++;
-    }
-
-    customParametersForGeneral( i, radioButtonsList );
-    customParametersForGA( i, radioButtonsList );
-    S_CAN_RUN = true; /* chyba tu */
+    customParametersForGeneral();
+    customParametersForGA();
+    S_CAN_RUN = true;
     close();
 }
 
-void ChooseAlgorithmType::customParametersForGeneral( const int& position, const QList<QRadioButton*> &list )
+void ChooseAlgorithmType::customParametersForGeneral()
 {
     int vehiclesFrequency = Settings::takeValue( "S_NEW_CAR_FREQUENCY", "GENERAL", 500 ).toInt();
     int numberOfCars = Settings::takeValue( "S_CAR_COUNT", "GENERAL", 200 ).toInt();
@@ -61,7 +93,7 @@ void ChooseAlgorithmType::customParametersForGeneral( const int& position, const
     int timeout = Settings::takeValue( "S_TIMEOUT", "GENERAL", 360 ).toInt();
 
     /* Algorithm type */
-    Settings::setValues( "ALGORITHM_TYPE", "GENERAL", list.at( position )->accessibleName() );
+    Settings::setValues( "ALGORITHM_TYPE", "GENERAL", m_radioButtonsList.at( m_position )->accessibleName() );
 
     /* Count of cars */
     if( ui->countOfVehiclesLineEdit->text().isEmpty() == false && ui->countOfVehiclesLineEdit->text().toInt() <= 300 )
@@ -71,7 +103,7 @@ void ChooseAlgorithmType::customParametersForGeneral( const int& position, const
     }
 
     /* Number of the buses */
-    if( ui->numberOfBusesLineEdit->text().isEmpty() == false )
+    if( ui->numberOfBusesLineEdit->text().isEmpty() == false && ui->numberOfBusesLineEdit->text().toInt() <= 300 )
     {
         numberOfTheBuses = ui->numberOfBusesLineEdit->text().toInt();
         Settings::setValues( "S_BUS_COUNT", "GENERAL", ui->numberOfBusesLineEdit->text() );
@@ -109,27 +141,27 @@ void ChooseAlgorithmType::customParametersForGeneral( const int& position, const
                                          vehiclesFrequency, carsSpeed, busesSpeed, timeout );
 }
 
-void ChooseAlgorithmType::customParametersForGA( const int& position, const QList<QRadioButton*> &list )
+void ChooseAlgorithmType::customParametersForGA()
 {
     /* GA parameters */
     if( ui->replacementProbabilityLineEdit->text().isEmpty() == false )
-    Settings::setValues( "REPLACEMENT_PROBABILITY", "%" + list.at( position )->accessibleName(),
+    Settings::setValues( "REPLACEMENT_PROBABILITY", "%" + m_radioButtonsList.at( m_position )->accessibleName(),
                          ui->replacementProbabilityLineEdit->text() );
 
     if( ui->populationSizeLineEdit->text().isEmpty() == false )
-    Settings::setValues( "POPULATION_SIZE", "%" + list.at( position )->accessibleName(),
+    Settings::setValues( "POPULATION_SIZE", "%" + m_radioButtonsList.at( m_position )->accessibleName(),
                          ui->populationSizeLineEdit->text() );
 
     if( ui->generationsLineEdit->text().isEmpty() == false )
-    Settings::setValues( "GENERATIONS", "%" + list.at( position )->accessibleName(),
+    Settings::setValues( "GENERATIONS", "%" + m_radioButtonsList.at( m_position )->accessibleName(),
                          ui->generationsLineEdit->text() );
 
     if( ui->mutationProbabilityLineEdit->text().isEmpty() == false )
-    Settings::setValues( "MUTATION_PROBABILITY", "%" + list.at( position )->accessibleName(),
+    Settings::setValues( "MUTATION_PROBABILITY", "%" + m_radioButtonsList.at( m_position )->accessibleName(),
                          ui->mutationProbabilityLineEdit->text() );
 
     if( ui->crossoverProbabilityLineEdit->text().isEmpty() == false )
-    Settings::setValues( "CROSSOVER_PROBABILITY", "%" + list.at( position )->accessibleName(),
+    Settings::setValues( "CROSSOVER_PROBABILITY", "%" + m_radioButtonsList.at( m_position )->accessibleName(),
                          ui->crossoverProbabilityLineEdit->text() );
 }
 
