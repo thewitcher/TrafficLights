@@ -84,12 +84,19 @@ int OneSubcycleAlgorithm::estimateGreenLight()
     steadyStateGA.selectScores( GAStatistics::AllScores );
     steadyStateGA.evolve();
 
+    int best = Helper::toDec( steadyStateGA.population().best() );
+
+    if( best <= 0 )
+    {
+        best = 1;
+    }
+
     LOG_INFO( "#%i# Best chromsome on junction with id: %i (best: %i)",
               m_junction->id(),
               m_junction->id(),
-              Helper::toDec( steadyStateGA.population().best() ) * 1000 );
+              best * 1000 );
 
-    return ( Helper::toDec( steadyStateGA.population().best() ) * 1000 );
+    return ( best * 1000 );
 }
 
 QVector<int> OneSubcycleAlgorithm::startAlgorithm()
@@ -139,6 +146,8 @@ QVector<int> OneSubcycleAlgorithm::startAlgorithm()
             vector << 0;
         }
     }
+
+    qDebug() << "Id: " << m_junction->id() << " " << vector;
 
     return vector;
 }

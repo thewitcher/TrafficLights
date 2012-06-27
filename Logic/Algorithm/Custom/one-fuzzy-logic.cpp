@@ -64,6 +64,8 @@ QVector<int> OneFuzzyLogic::startAlgorithm()
         }
     }
 
+    qDebug() << "Id: " << m_junction->id() << " " << vector;
+
     return vector;
 }
 
@@ -155,6 +157,11 @@ int OneFuzzyLogic::estimateGreenLight()
         LOG_INFO( "[FUZZY] firing strength: %f", block->rule(i)->firingStrength() );
     }
 #endif
+
+    if( result <= 0 )
+    {
+        result = 1;
+    }
 
     return ( result * 1000 );
 }
