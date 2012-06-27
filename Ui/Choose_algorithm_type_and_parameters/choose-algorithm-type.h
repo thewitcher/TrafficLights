@@ -24,10 +24,14 @@ private:
     void involvementForBackButtons();
     void involvementForOkOrNextOrDefaultButtons();
     void setNamesForRadioButtons();
+    void setValues();
+    void checkRadioButtons();
+    QList<QRadioButton*> m_radioButtonsList;
+    int m_position;
     QList<QString> defaultValuesForAllSubcycleAlgorithm();
     QList<QString> defaultValuesForOneSubcycleAlgorithm();
-    void customParametersForGA( const int& position, const QList<QRadioButton*> &list );
-    void customParametersForGeneral( const int& position, const QList<QRadioButton*> &list );
+    void customParametersForGA();
+    void customParametersForGeneral();
     QList<QString> defaultValuesForGeneral();
     void setAutoExclusiveForRadioButtons();
     void clearAll();

@@ -157,7 +157,7 @@ color: rgb(0, 0, 255);</string>
           <string notr="true">font: 10pt &quot;Times New Roman&quot;;</string>
          </property>
          <property name="text">
-          <string>Replacement probability</string>
+          <string>Replacement percentage</string>
          </property>
         </widget>
        </item>
