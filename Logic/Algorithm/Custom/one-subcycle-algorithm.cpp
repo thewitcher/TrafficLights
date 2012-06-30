@@ -70,6 +70,7 @@ OneSubcycleAlgorithm::OneSubcycleAlgorithm( Junction *junction, const QString &a
 int OneSubcycleAlgorithm::estimateGreenLight()
 {
     GA1DBinaryStringGenome genome( m_genomeSize, objective, this );
+    genome.crossover( GA1DBinaryStringGenome::UniformCrossover );
 
     GASteadyStateGA steadyStateGA( genome );
 
