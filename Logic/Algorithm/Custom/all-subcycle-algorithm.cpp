@@ -33,7 +33,8 @@ void AllSubcycleAlgorithm::allSubcycleFitness( float &score )
 {
     if( std::isnan( m_totalTimes ) == false && m_totalTimes != 0 )
     {
-        float expression = ( m_numberOfVehiclesThatWillDrive / m_totalTimes );
+        float sumVehiclesAtJunctionVariable = VehicleCountManager::sumVehiclesAtJunction( m_junction );
+        float expression = ( m_numberOfVehiclesThatWillDrive / sumVehiclesAtJunctionVariable );
         score = (((( expression * 10000 )
                    - theSumOfTheRemainingVehiclesAtJunction() ) * exp( m_alpha ) )
                + m_magicE );

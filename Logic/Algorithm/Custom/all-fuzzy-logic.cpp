@@ -282,7 +282,7 @@ int AllFuzzyLogic::startSimulation()
     inPutJunction->addTerm( new fl::ShoulderTerm( "SMALL_J", 0, 30, true ) );
     inPutJunction->addTerm( new fl::TriangularTerm( "MEDIUM_J", 0, 60 ) );
     fl::TrapezoidalTerm *trapezoidalTermJunction = new fl::TrapezoidalTerm( "LARGE_J", 30, 250 );
-    trapezoidalTermJunction->setB( 60 );
+    trapezoidalTermJunction->setB( 70 ); //60
     trapezoidalTermJunction->setC( 250 );
     trapezoidalTermJunction->setD( 250 );
     inPutJunction->addTerm( trapezoidalTermJunction );
