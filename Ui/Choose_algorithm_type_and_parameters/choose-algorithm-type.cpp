@@ -133,7 +133,7 @@ void ChooseAlgorithmType::customParametersForGeneral()
     /* Timeout */
     if( ui->timeoutLineEdit->text().isEmpty() == false )
     {
-        busesSpeed = ui->timeoutLineEdit->text().toInt();
+        timeout = ui->timeoutLineEdit->text().toInt();
         Settings::setValues( "S_TIMEOUT", "GENERAL", ui->timeoutLineEdit->text() );
     }
 

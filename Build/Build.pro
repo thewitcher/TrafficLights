@@ -21,11 +21,11 @@ RESOURCES += \
 # LIGHTS - to turn on light in vehicle
 # EVENTS - to turn on timer which manages global events like day and night for example
 DEFINES +=  EVENTS \
-            STATISTICS \
-            MUSIC \
-            LOGGER \
+            STATISTICS
+            #MUSIC \
+            #LOGGER \
             #DAY_PARTS \
-            COLLISIONS
+            #COLLISIONS \
             #LIGHTS
 
 
